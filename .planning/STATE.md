@@ -28,13 +28,14 @@
 ## Phase Progress
 
 ### Phase 1: Foundation & Data Pipeline
-- **Status:** Not started
+- **Status:** Planned ✓
 - **Goal:** PDF→Chunks→Embeddings pipeline
 - **Exit gate:** PDF ingestion, 300 chunks, embeddings load <3s
 - **Estimated hours:** 5
 - **Blocked by:** None
-- **Blocking:** Phase 2 (partially; can start in parallel)
-- **Last updated:** 2026-05-04 (created)
+- **Blocking:** Phase 2 (sequential; must complete before Phase 2 starts)
+- **Plan:** `.planning/phases/01-foundation/PLAN.md` (8 tasks, sequential execution)
+- **Last updated:** 2026-05-04 (planning complete)
 
 ### Phase 2: Core Logic – Retrieval & Normalization
 - **Status:** Not started
