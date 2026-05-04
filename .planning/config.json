@@ -1,0 +1,140 @@
+{
+  "project": {
+    "name": "HR Policy RAG Chatbot",
+    "version": "1.0.0",
+    "description": "Fully local, two-agent RAG chatbot for HR policy questions in Vietnamese",
+    "workspace": "d:\\Data_Ngoc\\Test\\TotNghiepProject",
+    "created": "2026-05-04T14:30:00Z",
+    "initialized_by": "GitHub Copilot GSD Workflow"
+  },
+  "workflow": {
+    "granularity": "coarse",
+    "execution_mode": "parallel",
+    "git_tracking": true,
+    "research_approach": "manual",
+    "commit_docs": true,
+    "use_agents": {
+      "researcher": false,
+      "synthesizer": false,
+      "roadmapper": false,
+      "planner": true,
+      "executor": true,
+      "verifier": true
+    }
+  },
+  "timeline": {
+    "total_weeks": 3,
+    "hours_per_week": 12.5,
+    "total_hours_estimate": 37.5,
+    "phases": 3
+  },
+  "team": {
+    "members": 1,
+    "role": "solo_developer",
+    "language": "Vietnamese (preferred) / English (fallback)"
+  },
+  "targets": {
+    "relevance_threshold": 0.80,
+    "response_latency_ms": 5000,
+    "response_latency_mean_ms": 4000,
+    "memory_target_gb": 6,
+    "memory_soft_limit_gb": 8,
+    "hardware": {
+      "cpu_cores_min": 4,
+      "ram_gb_min": 8,
+      "gpu_required": false,
+      "storage_gb_min": 3
+    }
+  },
+  "models": {
+    "preprocessor": {
+      "name": "Qwen-2.5-1.5B-Instruct-GGUF",
+      "role": "Question normalization (Agent 1)",
+      "size_gb": 1.0,
+      "format": "GGUF",
+      "source": "huggingface",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "latency_ms": 50
+    },
+    "embedding": {
+      "name": "all-MiniLM-L6-v2",
+      "role": "Semantic embedding (cross-lingual)",
+      "dimensions": 384,
+      "model_type": "sentence-transformers",
+      "size_gb": 0.09,
+      "url": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+      "latency_ms": 50,
+      "fallback": "multilingual-e5-small"
+    },
+    "responder": {
+      "name": "Phi-3-Mini-4k-Instruct-GGUF",
+      "role": "Answer generation (Agent 2)",
+      "size_gb": 2.4,
+      "format": "GGUF",
+      "source": "huggingface",
+      "url": "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf",
+      "latency_ms": 2000
+    }
+  },
+  "phases": {
+    "1": {
+      "name": "Foundation & Data Pipeline",
+      "duration_hours": 5,
+      "description": "PDF ingestion, chunking, embedding storage",
+      "status": "not_started",
+      "exit_gate": "PDF→300 chunks; embeddings load <3s",
+      "order": 1
+    },
+    "2": {
+      "name": "Core Logic – Retrieval & Normalization",
+      "duration_hours": 4,
+      "description": "Question normalizer (Qwen), semantic retrieval",
+      "status": "not_started",
+      "exit_gate": "80% retrieval relevance on 30-query test",
+      "order": 2,
+      "dependencies": ["1"]
+    },
+    "3": {
+      "name": "Responder, UI & Integration",
+      "duration_hours": 6,
+      "description": "Phi-3-Mini responder, Streamlit UI, E2E integration",
+      "status": "not_started",
+      "exit_gate": "≤5s latency; 80%+ validation pass; zero hallucination",
+      "order": 3,
+      "dependencies": ["2"]
+    }
+  },
+  "success_gates": {
+    "feature_complete": "All 5 features (upload, normalize, retrieve, generate, UI) working",
+    "relevance_80pct": "30–50 test queries show ≥80% retrieve relevant chunk",
+    "latency_5s": "E2E latency measured on target hardware, mean ≤4s, p95 ≤5s",
+    "vietnamese_fluency": "Manual review of 10 answer samples: no grammar errors, grounded in handbook",
+    "zero_hallucination": "Manual review confirms all answers traceable to source chunks",
+    "deployable": "Single-file entry point (streamlit run app.py) with no manual config needed"
+  },
+  "constraints": {
+    "hardware": "8GB RAM, 4 CPU cores, no GPU",
+    "latency": "≤5 seconds end-to-end",
+    "language": "Vietnamese input/output fluency required; English fallback for debugging",
+    "accuracy": "No hallucination; all answers traceable to handbook chunks",
+    "offline": "Zero external API calls (no OpenAI, no cloud)",
+    "handbook_size": "30–60 pages (~15k–30k words)"
+  },
+  "assumptions": [
+    "Vietnamese diacritics (UTF-8 encoding) handled by normalizer",
+    "Handbook is static for v1; manual re-index for new handbook",
+    "All GGUF models downloaded before first run",
+    "8GB RAM is target; acceptable if slower on lower-end machines",
+    "No internet required at runtime after model download"
+  ],
+  "outofscope_v1": [
+    "Multi-handbook support (v2)",
+    "Admin UI to upload handbooks (v2)",
+    "Fine-tuning on company data",
+    "Multi-language UI (Vietnamese only)",
+    "Typo tolerance beyond normalizer",
+    "Web API / FastAPI (local Streamlit only)",
+    "Analytics / logging beyond basic",
+    "Accessibility (A11y) features"
+  ]
+}
