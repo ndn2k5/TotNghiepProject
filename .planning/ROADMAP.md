@@ -5,8 +5,8 @@
 | Aspect | Value |
 |--------|-------|
 | **Total Duration** | 3 weeks (~15 hours/week) |
-| **Granularity** | Coarse (3 major phases) |
-| **Execution Model** | Parallel (independent phases can overlap) |
+| **Granularity** | Standard (3 weekly phases) |
+| **Execution Model** | Sequential (one phase at a time to avoid RAM contention on CPU) |
 | **Team** | 1 developer |
 | **Success Gate** | All requirements met, 80%+ validation pass, deployable |
 
@@ -16,9 +16,9 @@
 
 **Goal:** Build the PDF→Chunks→Embedding pipeline. Employees can upload a handbook; system auto-chunks and embeds it. No UI, no inference yet—just data plumbing.
 
-**Duration:** ~5 hours (Week 1, Mon–Tue)  
+**Duration:** ~5 hours (Week 1)  
 **Owner:** Solo dev  
-**Execution:** Sequential (setup → test)
+**Execution:** Sequential (setup → test → verification)
 
 ### Deliverables
 
@@ -57,9 +57,9 @@
 
 **Goal:** Build the retrieval pipeline + question normalizer. Given a query, retrieve top-3 relevant chunks and normalize Vietnamese questions. Still no inference yet.
 
-**Duration:** ~4 hours (Week 1–2, Wed–Fri)  
+**Duration:** ~4 hours (Week 2)  
 **Owner:** Solo dev  
-**Execution:** Can start in parallel with Phase 1 testing
+**Execution:** Sequential (starts after Phase 1 complete)
 
 ### Deliverables
 
@@ -101,9 +101,9 @@
 
 **Goal:** Add the answer generation step (Agent 2 – Phi-3-Mini) and Streamlit UI. Integrate everything into a deployable end-to-end chatbot.
 
-**Duration:** ~6 hours (Week 2–3)  
+**Duration:** ~6 hours (Week 3)  
 **Owner:** Solo dev  
-**Execution:** Can start in parallel with Phase 2; depends on Phase 2 retrieval being functional
+**Execution:** Sequential (starts after Phase 2 complete)
 
 ### Deliverables
 
@@ -150,16 +150,17 @@
 ## Dependency Graph
 
 ```
-Phase 1 (Foundation)
-    ↓
-Phase 2 (Retrieval) ← Can start in parallel with Phase 1 testing
-    ↓
-Phase 3 (UI & Integration) ← Depends on Phase 2 retrieval working
+Phase 1 (Foundation) — Week 1
+    ↓ (sequential)
+Phase 2 (Retrieval) — Week 2
+    ↓ (sequential)
+Phase 3 (UI & Integration) — Week 3
 ```
 
-**In practice (parallel execution):**
-- Weeks 1–2: Phase 1 + Phase 2 in parallel (models downloading, testing separately)
-- Week 2–3: Phase 2 refinement + Phase 3 full build + validation
+**In practice (sequential execution):**
+- Week 1: Phase 1 only (PDF ingestion, chunking, embedding storage)
+- Week 2: Phase 2 only (Question normalizer, semantic retrieval, validation)
+- Week 3: Phase 3 only (Responder, UI, E2E integration, final validation)
 
 ---
 

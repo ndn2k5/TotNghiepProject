@@ -16,8 +16,9 @@
 
 | Setting | Value | Rationale |
 |---------|-------|-----------|
-| **Granularity** | Coarse | 3 phases, ~5-6 hours each aligns with 3-week solo timeline |
-| **Execution** | Parallel | Phase 2 can start while Phase 1 testing is underway; independent work items |
+| **Granularity** | Standard | Weekly phases (Week 1, Week 2, Week 3); aligns with 3-week timeline |
+| **Execution** | Sequential | One phase at a time; prevents RAM contention between multiple GGUF models on 8GB CPU |
+| **Rationale** | Tuần tự, tuần lịch | Dễ theo dõi tiến độ; tránh crash do memory overcommit |
 | **Git tracking** | Yes | Planning docs committed to repo for audit trail |
 | **Research approach** | Manual | Developer has clear model requirements; no need for external research agents |
 | **Workspace** | d:\Data_Ngoc\Test\TotNghiepProject | Local Windows development |

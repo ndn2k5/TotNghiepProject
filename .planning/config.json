@@ -8,8 +8,8 @@
     "initialized_by": "GitHub Copilot GSD Workflow"
   },
   "workflow": {
-    "granularity": "coarse",
-    "execution_mode": "parallel",
+    "granularity": "standard",
+    "execution_mode": "sequential",
     "git_tracking": true,
     "research_approach": "manual",
     "commit_docs": true,
