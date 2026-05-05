@@ -1,0 +1,49 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project-specific
+chroma_db/
+models/
+*.log
+.env
+.env.local
+
+# Data
+data/sample_handbook.pdf
+documents/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
