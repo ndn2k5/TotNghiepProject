@@ -1,13 +1,14 @@
 """
 Local embedding using sentence-transformers (all-MiniLM-L6-v2).
-No API calls — runs entirely on CPU.
+No API calls — runs entirely on CPU or GPU with CUDA support.
 """
 
 from sentence_transformers import SentenceTransformer
 import chromadb
-from typing import List, Dict
+from typing import List, Dict, Optional
 import logging
 from pathlib import Path
+import torch
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,17 +19,28 @@ class LocalEmbedder:
 
     MODEL_DIMENSION = 384  # all-MiniLM-L6-v2 output dimension
 
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", device: Optional[str] = None):
         """
         Load the embedding model (cached after first download).
 
         Args:
             model_name: HuggingFace model name. Default is all-MiniLM-L6-v2.
+            device: Device to use ('cuda', 'cpu', or None for auto-detect).
         """
-        logger.info(f"Loading embedding model: {model_name} ...")
-        self.model = SentenceTransformer(model_name)
+        # Auto-detect device if not specified
+        if device is None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        
+        self.device = device
+        logger.info(f"Loading embedding model: {model_name} on {self.device.upper()} ...")
+        
+        self.model = SentenceTransformer(model_name, device=self.device)
         self.dimension = self.MODEL_DIMENSION
-        logger.info("Model loaded successfully.")
+        
+        if self.device == "cuda":
+            logger.info("✅ Model loaded successfully on GPU (CUDA)")
+        else:
+            logger.info("Model loaded successfully on CPU")
 
     def embed(self, texts: List[str], show_progress: bool = False) -> List[List[float]]:
         """

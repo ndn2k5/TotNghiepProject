@@ -51,7 +51,7 @@ def main():
 
     from src.rag_pipeline import RAGPipeline
 
-    pipeline = RAGPipeline(model_path)
+    pipeline = RAGPipeline(model_path, n_gpu_layers=-1)  # Enable CUDA
 
     # Ingest PDF if store is empty
     if pipeline.vector_store.count() == 0:

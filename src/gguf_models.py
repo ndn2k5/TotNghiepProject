@@ -21,6 +21,7 @@ class LocalGGUFModel:
         model_path: str,
         n_ctx: int = 2048,
         n_threads: Optional[int] = None,
+        n_gpu_layers: int = -1,
         verbose: bool = False,
     ):
         """
@@ -30,6 +31,7 @@ class LocalGGUFModel:
             model_path: Path to the .gguf model file
             n_ctx: Context window size (tokens). 2048 is safe for most models.
             n_threads: Number of CPU threads. Defaults to (cpu_count // 2).
+            n_gpu_layers: Number of layers to offload to GPU. -1 = all layers. 0 = CPU only.
             verbose: If True, print llama.cpp internal logs.
         """
         self.model_path = Path(model_path)
@@ -43,17 +45,19 @@ class LocalGGUFModel:
         if n_threads is None:
             n_threads = max(1, (os.cpu_count() or 4) // 2)
 
+        device_info = "GPU (CUDA)" if n_gpu_layers > 0 else "CPU"
         logger.info(f"Loading GGUF model: {self.model_path.name} "
-                     f"(ctx={n_ctx}, threads={n_threads}) ...")
+                     f"(ctx={n_ctx}, threads={n_threads}, device={device_info}) ...")
 
         self.llm = Llama(
             model_path=str(self.model_path),
             n_ctx=n_ctx,
             n_threads=n_threads,
+            n_gpu_layers=n_gpu_layers,
             verbose=verbose,
         )
         self.n_ctx = n_ctx
-        logger.info(f"Model loaded successfully: {self.model_path.name}")
+        logger.info(f"✅ Model loaded successfully: {self.model_path.name} (GPU acceleration enabled)")
 
     def generate(
         self,

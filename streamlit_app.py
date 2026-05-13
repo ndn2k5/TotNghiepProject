@@ -63,6 +63,7 @@ def initialize_components():
                 language="vi",
                 max_tokens=256,
                 temperature=0.3,
+                n_gpu_layers=-1,  # Enable CUDA - offload all layers to GPU
             )
 
             return {

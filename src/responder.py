@@ -72,6 +72,7 @@ Answer (concise, in English):"""
         max_tokens: int = 256,
         temperature: float = 0.3,
         n_ctx: int = 2048,
+        n_gpu_layers: int = -1,
     ):
         """
         Initialize the response generator.
@@ -82,6 +83,7 @@ Answer (concise, in English):"""
             max_tokens: Maximum tokens in response
             temperature: LLM temperature (0.0-1.0, lower = more deterministic)
             n_ctx: Context window size for LLM
+            n_gpu_layers: Number of layers to offload to GPU. -1 = all layers (CUDA). 0 = CPU only.
         """
         self.language = language
         self.max_tokens = max_tokens
@@ -93,9 +95,10 @@ Answer (concise, in English):"""
                 model_path,
                 n_ctx=n_ctx,
                 n_threads=4,  # Use 4 threads for 4-core CPU
+                n_gpu_layers=n_gpu_layers,
                 verbose=False,
             )
-            logger.info("✓ Phi-3-Mini loaded successfully")
+            logger.info("✓ Phi-3-Mini loaded successfully with GPU acceleration")
         except Exception as e:
             logger.error(f"Failed to load Phi-3-Mini: {e}")
             raise

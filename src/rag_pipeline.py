@@ -66,6 +66,7 @@ class RAGPipeline:
         collection_name: str = "handbook_chunks",
         n_ctx: int = 2048,
         language: str = "vi",
+        n_gpu_layers: int = -1,
     ):
         """
         Initialize the RAG pipeline with all local components.
@@ -76,25 +77,26 @@ class RAGPipeline:
             collection_name: Name of the vector collection
             n_ctx: Context window for the LLM
             language: Prompt language ('vi' for Vietnamese, 'en' for English)
+            n_gpu_layers: Number of layers to offload to GPU. -1 = all layers (CUDA). 0 = CPU only.
         """
         logger.info("Initializing RAG pipeline ...")
 
-        # Embedding model (sentence-transformers, local)
+        # Embedding model (sentence-transformers, local with CUDA support)
         self.embedder = LocalEmbedder()
 
         # Vector store (ChromaDB, local)
         self.vector_store = VectorStoreManager(persist_dir=persist_dir)
         self.vector_store.create_collection(name=collection_name)
 
-        # LLM (GGUF via llama-cpp, local)
-        self.llm = LocalGGUFModel(model_path, n_ctx=n_ctx)
+        # LLM (GGUF via llama-cpp, local with CUDA support)
+        self.llm = LocalGGUFModel(model_path, n_ctx=n_ctx, n_gpu_layers=n_gpu_layers)
 
         # Prompt template
         self.prompt_template = (
             PROMPT_TEMPLATE_VI if language == "vi" else PROMPT_TEMPLATE_EN
         )
 
-        logger.info("RAG pipeline ready.")
+        logger.info("✅ RAG pipeline ready with CUDA acceleration enabled")
 
     # ── Document Ingestion ──────────────────────────────────────────
 
