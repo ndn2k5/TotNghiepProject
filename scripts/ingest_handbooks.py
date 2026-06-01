@@ -6,6 +6,7 @@ import os
 import json
 import re
 from pathlib import Path
+from langchain_text_splitters import MarkdownTextSplitter
 
 HANDBOOKS = [
     {"name": "hshadab", "url": "https://github.com/hshadab/handbook"},
@@ -18,13 +19,11 @@ OUTPUT_FILE = Path("data/raw_chunks.jsonl")
 CHUNK_SIZE = 500  # chars
 CHUNK_OVERLAP = 50  # chars
 
-
 def clone_or_pull(repo_url: str, target_dir: Path):
     if target_dir.exists():
         print(f"  Already exists: {target_dir}, skipping clone")
         return
     subprocess.run(["git", "clone", "--depth=1", repo_url, str(target_dir)], check=True)
-
 
 def extract_markdown_files(repo_dir: Path) -> list[tuple[str, str]]:
     """Return list of (filename, content) for all .md files."""
@@ -37,39 +36,28 @@ def extract_markdown_files(repo_dir: Path) -> list[tuple[str, str]]:
             print(f"  Warning: could not read {md_file}: {e}")
     return results
 
-
-def clean_markdown(text: str) -> str:
-    """Strip markdown syntax, keep readable text."""
-    text = re.sub(r"```[\s\S]*?```", "", text)  # code blocks
-    text = re.sub(r"`[^`]+`", "", text)         # inline code
-    text = re.sub(r"!\[.*?\]\(.*?\)", "", text)  # images
-    text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)  # links → text
-    text = re.sub(r"#{1,6}\s*", "", text)        # headings → plain
-    text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)  # bold
-    text = re.sub(r"\*([^*]+)\*", r"\1", text)      # italic
-    text = re.sub(r"^\s*[-*+]\s+", "", text, flags=re.MULTILINE)  # bullets
-    text = re.sub(r"\n{3,}", "\n\n", text)          # collapse blank lines
-    return text.strip()
-
-
-def chunk_text(text: str, source: str, filename: str) -> list[dict]:
-    """Split text into overlapping chunks."""
+def chunk_text_with_langchain(text: str, source: str, filename: str) -> list[dict]:
+    """Split text into overlapping chunks using MarkdownTextSplitter."""
+    splitter = MarkdownTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+    docs = splitter.create_documents([text])
+    
     chunks = []
-    start = 0
-    while start < len(text):
-        end = start + CHUNK_SIZE
-        chunk = text[start:end].strip()
+    for doc in docs:
+        chunk = doc.page_content.strip()
+        # Clean up any remaining artifacts if needed, but MarkdownTextSplitter handles markdown.
+        # Removing raw HTML tags, URLs that are too long, or code blocks may still be needed,
+        # but let's keep it simple and just strip.
+        
+        # Strip long code blocks as they are not good QA material
+        chunk = re.sub(r"```[\s\S]*?```", "", chunk).strip()
+        
         if len(chunk) > 100:  # skip tiny chunks
             chunks.append({
                 "text": chunk,
                 "source": source,
                 "filename": filename,
-                "char_start": start,
-                "char_end": end
             })
-        start += CHUNK_SIZE - CHUNK_OVERLAP
     return chunks
-
 
 def main():
     RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -89,10 +77,9 @@ def main():
         print(f"[{name}] Found {len(md_files)} markdown files")
 
         for filename, content in md_files:
-            clean = clean_markdown(content)
-            if len(clean) < 200:
+            if len(content.strip()) < 200:
                 continue  # skip too-short files
-            file_chunks = chunk_text(clean, source=name, filename=filename)
+            file_chunks = chunk_text_with_langchain(content, source=name, filename=filename)
             all_chunks.extend(file_chunks)
 
         print(f"[{name}] Extracted chunks so far: {len(all_chunks)}")
@@ -105,7 +92,6 @@ def main():
             f.write(json.dumps(chunk, ensure_ascii=False) + "\n")
 
     print(f"\n✓ Saved {len(all_chunks)} chunks to {OUTPUT_FILE}")
-
 
 if __name__ == "__main__":
     main()
