@@ -262,15 +262,17 @@ python -c "import json; data=open('data/raw_chunks.jsonl').readlines(); print(f'
 ### Task 2: Text Cleaning & Quality Check (0.5 hours)
 
 **Owner:** Both developers  
-**Objective:** Review sample chunks, adjust cleaning, confirm chunk quality before spending LLM budget
+**Objective:** Review sample chunks, adjust cleaning, confirm chunk quality before spending H100 compute
+
+**Note from research:** Use `langchain_text_splitters.MarkdownTextSplitter` instead of custom regex — already installed (`langchain-text-splitters==1.1.2`). It preserves markdown headers as chunk prefixes for better context.
 
 **Acceptance Criteria:**
 
 - [ ] Manually review 20 random chunks — all readable English HR policy text
-- [ ] No chunks are code blocks, navigation menus, or boilerplate
+- [ ] No chunks are code blocks, navigation menus, or boilerplate (script already strips these)
 - [ ] Chunks with <100 chars filtered out
 - [ ] Total chunk count documented: target 600–900 chunks
-- [ ] If chunk count < 600: reduce CHUNK_SIZE to 400 and re-run Task 1
+- [ ] If chunk count < 600: reduce `CHUNK_SIZE` to 400 in `ingest_handbooks.py` and re-run Task 1
 
 **Deliverables:**
 
@@ -284,149 +286,207 @@ data/raw_chunks.jsonl  (verified, clean)
    ```python
    import json, random
    chunks = [json.loads(l) for l in open("data/raw_chunks.jsonl")]
+   print(f"Total chunks: {len(chunks)}")
    sample = random.sample(chunks, 20)
    for i, c in enumerate(sample):
        print(f"\n--- Chunk {i+1} ({c['source']}/{c['filename']}) ---")
        print(c["text"][:300])
    ```
-2. If chunks look bad (code, menus, garbage): adjust `clean_markdown()` and re-run Task 1
-3. Document total chunk count in task notes
+2. If chunks look bad (code, menus, garbage): adjust `clean_markdown()` in `ingest_handbooks.py` and re-run Task 1
+3. Document total chunk count — if < 600, lower `CHUNK_SIZE` to 400
 
 **Time Estimate:** ~20–30 min
 
 ---
 
-### Task 3: Vietnamese QA Generation (2–4 hours, mostly LLM API time)
+### Task 3: Vietnamese QA Generation (2–4 hours, mostly unattended on H100)
 
 **Owner:** Both developers  
-**Objective:** Use teacher LLM to generate 2–3 Vietnamese Q&A pairs per handbook chunk
+**Objective:** Use Qwen2.5-72B on H100 (via vLLM + ngrok tunnel) to generate 2–3 Vietnamese Q&A pairs per handbook chunk
+
+**Research finding:** Use self-hosted H100 model instead of paid API — free, no rate limits, higher quality at 72B scale.
 
 **Acceptance Criteria:**
 
+- [ ] vLLM running on H100 with Qwen2.5-72B (or 32B fallback)
+- [ ] ngrok tunnel active; URL passed to generation script
 - [ ] ≥1500 QA pairs total (≥400 per handbook)
-- [ ] Each pair: `{question: str, answer: str, source: str, chunk_text: str}`
-- [ ] Questions: natural Vietnamese; what an employee might ask
-- [ ] Answers: grounded strictly in the chunk text; no hallucinated facts
-- [ ] Saved to `data/qa_pairs.jsonl` with checkpoint recovery (resume on failure)
-- [ ] Cost estimate logged before running (use Claude API pricing)
+- [ ] Each pair: `{question, answer, source, filename, chunk_text}`
+- [ ] Questions: natural Vietnamese; what an employee might actually ask
+- [ ] Answers: grounded strictly in chunk text — no hallucination
+- [ ] `data/qa_pairs.jsonl` with checkpoint recovery (resume on failure)
 
 **Deliverables:**
 
 ```text
 scripts/generate_qa.py
-data/qa_pairs.jsonl           (≥1500 pairs)
-data/qa_generation_log.txt    (cost + timing log)
+data/qa_pairs.jsonl          (≥1500 pairs)
+data/qa_generation_log.txt   (timing + error log)
+data/qa_checkpoint.json      (resume state)
 ```
 
-**Teacher LLM: Claude claude-haiku-4-5-20251001 (cheap, fast, excellent Vietnamese)**
+**Prerequisites (install before running):**
 
-Cost estimate: ~1500 chunks × 2.5 QA pairs × ~500 tokens avg = 1.875M tokens → ~$0.50 at Haiku pricing. Acceptable.
+```powershell
+pip install openai          # OpenAI-compatible SDK for vLLM calls
+```
+
+**H100 setup (run on the H100 machine):**
+
+```bash
+# Step 1 — Start vLLM. Choose ONE option based on GPU count:
+
+# Option A: Single H100 96GB with FP8 (72B in BF16 won't fit — 146GB > 96GB)
+vllm serve Qwen/Qwen2.5-72B-Instruct \
+  --dtype fp8 \
+  --gpu-memory-utilization 0.92 \
+  --max-model-len 4096 \
+  --host 0.0.0.0 \
+  --port 8000
+
+# Option B: Two H100s (tensor parallel — full BF16 quality)
+vllm serve Qwen/Qwen2.5-72B-Instruct \
+  --tensor-parallel-size 2 \
+  --dtype bfloat16 \
+  --gpu-memory-utilization 0.90 \
+  --max-model-len 4096 \
+  --host 0.0.0.0 \
+  --port 8000
+
+# Option C: Single H100 96GB — Qwen2.5-32B BF16 fallback (~64GB, fits)
+vllm serve Qwen/Qwen2.5-32B-Instruct \
+  --dtype bfloat16 \
+  --gpu-memory-utilization 0.90 \
+  --max-model-len 4096 \
+  --host 0.0.0.0 \
+  --port 8000
+
+# Step 2 — In a second terminal on the H100 machine, start ngrok:
+ngrok http 8000
+# Note the HTTPS URL printed, e.g.: https://a1b2-x.ngrok-free.app
+# Pass that URL to generate_qa.py via --vllm-url argument
+```
 
 **Code Skeleton — `scripts/generate_qa.py`:**
 
 ```python
 """
-Generate Vietnamese Q&A pairs from handbook chunks using Claude Haiku.
-Saves checkpoints; safe to re-run after failure.
+Generate Vietnamese Q&A pairs from handbook chunks using
+Qwen2.5-72B served via vLLM + ngrok tunnel.
+Checkpoint-safe: re-run after failure to resume.
+
+Usage:
+    python scripts/generate_qa.py --vllm-url https://xxxx.ngrok-free.app
 """
-import anthropic
+import argparse
 import json
+import re
 import time
-import os
 from pathlib import Path
+
+import httpx
+from openai import OpenAI
 
 INPUT_FILE = Path("data/raw_chunks.jsonl")
 OUTPUT_FILE = Path("data/qa_pairs.jsonl")
 LOG_FILE = Path("data/qa_generation_log.txt")
 CHECKPOINT_FILE = Path("data/qa_checkpoint.json")
 
-QA_PER_CHUNK = 2  # min; model may return 3
-
-SYSTEM_PROMPT = """Bạn là chuyên gia tạo dữ liệu huấn luyện cho mô hình AI.
-Nhiệm vụ: Đọc đoạn văn chính sách nhân sự tiếng Anh, tạo 2-3 cặp hỏi-đáp tiếng Việt.
+SYSTEM_PROMPT = """Bạn là chuyên gia nhân sự. Hãy đọc đoạn văn bản từ sổ tay nhân viên \
+(bằng tiếng Anh) và tạo ra {n_pairs} cặp hỏi-đáp bằng tiếng Việt.
 
 Yêu cầu:
-- Câu hỏi: tự nhiên, như nhân viên thực tế hỏi HR, bằng tiếng Việt
-- Câu trả lời: dựa HOÀN TOÀN vào nội dung đoạn văn, không bịa đặt thêm
-- Ngôn ngữ: tiếng Việt chuẩn, văn phong trang trọng
-- Trả về JSON array chỉ, không giải thích thêm
+1. Câu hỏi phải là câu hỏi thực tế mà nhân viên có thể đặt ra.
+2. Câu trả lời phải DỰA HOÀN TOÀN vào đoạn văn bản được cung cấp — không thêm thông tin bên ngoài.
+3. Câu trả lời phải rõ ràng, ngắn gọn, bằng tiếng Việt chuẩn.
+4. Sử dụng đầy đủ dấu thanh tiếng Việt (ă, â, đ, ê, ô, ơ, ư và các dấu hỏi, ngã, nặng, sắc, huyền).
+5. Đầu ra phải là JSON hợp lệ theo định dạng sau, không thêm văn bản khác.
 
-Ví dụ output:
+Định dạng JSON:
 [
-  {"question": "Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?", "answer": "Theo chính sách, nhân viên được nghỉ phép 15 ngày có lương mỗi năm."},
-  {"question": "Quy trình xin nghỉ phép như thế nào?", "answer": "Nhân viên cần nộp đơn xin nghỉ ít nhất 3 ngày trước, được quản lý trực tiếp phê duyệt."}
+  {{"question": "...", "answer": "..."}},
+  {{"question": "...", "answer": "..."}}
 ]"""
 
-USER_TEMPLATE = """Đoạn chính sách nhân sự (tiếng Anh):
----
+USER_TEMPLATE = """Đoạn văn bản:
 {chunk_text}
----
 
-Hãy tạo 2-3 cặp hỏi-đáp tiếng Việt dựa trên đoạn văn trên. Chỉ trả về JSON array."""
+Hãy tạo {n_pairs} cặp hỏi-đáp từ đoạn văn bản trên."""
 
 
 def load_checkpoint() -> set:
-    """Load set of already-processed chunk indices."""
     if CHECKPOINT_FILE.exists():
-        data = json.loads(CHECKPOINT_FILE.read_text())
-        return set(data.get("processed_indices", []))
+        return set(json.loads(CHECKPOINT_FILE.read_text()).get("processed", []))
     return set()
 
 
 def save_checkpoint(processed: set):
-    CHECKPOINT_FILE.write_text(json.dumps({"processed_indices": list(processed)}))
+    CHECKPOINT_FILE.write_text(json.dumps({"processed": list(processed)}))
 
 
-def generate_qa_for_chunk(client: anthropic.Anthropic, chunk: dict) -> list[dict]:
-    """Call Claude Haiku to generate QA pairs for one chunk."""
-    prompt = USER_TEMPLATE.format(chunk_text=chunk["text"])
+def parse_json_response(raw: str) -> list[dict]:
+    """Strip markdown fences and parse JSON array."""
+    # Strip code fences if present
+    raw = re.sub(r"```(?:json)?\s*", "", raw).strip().rstrip("```").strip()
+    # Try to extract first [...] block
+    match = re.search(r"\[.*\]", raw, re.DOTALL)
+    if match:
+        raw = match.group(0)
+    return json.loads(raw)
 
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=800,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": prompt}]
+
+def generate_qa_for_chunk(client: OpenAI, chunk: dict, model_name: str) -> list[dict]:
+    n_pairs = 3 if len(chunk["text"]) >= 400 else 2
+    response = client.chat.completions.create(
+        model=model_name,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT.format(n_pairs=n_pairs)},
+            {"role": "user", "content": USER_TEMPLATE.format(
+                chunk_text=chunk["text"], n_pairs=n_pairs)},
+        ],
+        temperature=0.2,
+        top_p=0.9,
+        max_tokens=512,
     )
-
-    content = response.content[0].text.strip()
-
-    # Parse JSON (handle markdown code fences if present)
-    if content.startswith("```"):
-        content = content.split("```")[1]
-        if content.startswith("json"):
-            content = content[4:]
-    content = content.strip()
-
-    qa_pairs = json.loads(content)
-
-    # Attach metadata
-    for pair in qa_pairs:
+    raw = response.choices[0].message.content.strip()
+    pairs = parse_json_response(raw)
+    for pair in pairs:
         pair["source"] = chunk["source"]
         pair["filename"] = chunk["filename"]
         pair["chunk_text"] = chunk["text"]
-
-    return qa_pairs
+    return [p for p in pairs if len(p.get("question", "")) >= 10
+            and len(p.get("answer", "")) >= 20]
 
 
 def main():
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        raise ValueError("Set ANTHROPIC_API_KEY environment variable")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--vllm-url", required=True,
+                        help="ngrok HTTPS URL, e.g. https://xxxx.ngrok-free.app")
+    parser.add_argument("--model", default="Qwen/Qwen2.5-72B-Instruct",
+                        help="Model name as served by vLLM")
+    parser.add_argument("--test", action="store_true",
+                        help="Test mode: only process first 10 chunks")
+    args = parser.parse_args()
 
-    client = anthropic.Anthropic(api_key=api_key)
+    # Extend timeout — 72B model can take 30-90s per request
+    client = OpenAI(
+        base_url=f"{args.vllm_url}/v1",
+        api_key="fake",
+        http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=300, write=30, pool=10)),
+    )
 
     chunks = [json.loads(l) for l in open(INPUT_FILE, encoding="utf-8")]
+    if args.test:
+        chunks = chunks[:10]
+        print("TEST MODE: processing first 10 chunks only")
+
     processed = load_checkpoint()
-    print(f"Loaded {len(chunks)} chunks. Already processed: {len(processed)}")
+    existing_qa = sum(1 for _ in open(OUTPUT_FILE)) if OUTPUT_FILE.exists() else 0
+    print(f"Chunks: {len(chunks)} | Already processed: {len(processed)} | Existing QA: {existing_qa}")
 
-    total_qa = 0
+    total_qa = existing_qa
     errors = 0
-    start_time = time.time()
-
-    # Count existing QA pairs
-    if OUTPUT_FILE.exists():
-        total_qa = sum(1 for _ in open(OUTPUT_FILE))
-        print(f"Resuming — {total_qa} QA pairs already in output file")
+    start = time.time()
 
     with open(OUTPUT_FILE, "a", encoding="utf-8") as out_f, \
          open(LOG_FILE, "a", encoding="utf-8") as log_f:
@@ -434,51 +494,37 @@ def main():
         for idx, chunk in enumerate(chunks):
             if idx in processed:
                 continue
-
-            # Skip very short chunks
             if len(chunk["text"].split()) < 30:
                 processed.add(idx)
                 continue
 
             try:
-                qa_pairs = generate_qa_for_chunk(client, chunk)
-
-                for pair in qa_pairs:
+                pairs = generate_qa_for_chunk(client, chunk, args.model)
+                for pair in pairs:
                     out_f.write(json.dumps(pair, ensure_ascii=False) + "\n")
-                    total_qa += 1
-
+                total_qa += len(pairs)
                 processed.add(idx)
 
                 if idx % 10 == 0:
-                    elapsed = time.time() - start_time
-                    rate = (idx + 1) / elapsed if elapsed > 0 else 0
-                    remaining = (len(chunks) - idx - 1) / rate if rate > 0 else 0
-                    print(f"[{idx+1}/{len(chunks)}] QA pairs: {total_qa} | "
-                          f"Rate: {rate:.1f} chunks/s | ETA: {remaining/60:.1f}min")
+                    elapsed = time.time() - start
+                    rate = max((idx + 1) / elapsed, 1e-9)
+                    eta_min = (len(chunks) - idx - 1) / rate / 60
+                    print(f"[{idx+1}/{len(chunks)}] QA: {total_qa} | ETA: {eta_min:.1f}min")
                     save_checkpoint(processed)
-
-                time.sleep(0.1)  # rate limiting
 
             except json.JSONDecodeError as e:
                 errors += 1
-                log_f.write(f"JSON parse error at chunk {idx}: {e}\n")
-                print(f"  Warning: JSON parse error at chunk {idx}, skipping")
-                processed.add(idx)  # skip and continue
+                log_f.write(f"JSON error chunk {idx}: {e}\n")
+                processed.add(idx)  # skip malformed
 
             except Exception as e:
                 errors += 1
-                log_f.write(f"Error at chunk {idx}: {e}\n")
-                print(f"  Error at chunk {idx}: {e}. Retrying in 5s...")
-                time.sleep(5)
-                # Don't add to processed — will retry next run
+                log_f.write(f"Error chunk {idx}: {e}\n")
+                print(f"  Error chunk {idx}: {e} — retrying in 10s")
+                time.sleep(10)
 
     save_checkpoint(processed)
-
-    elapsed = time.time() - start_time
-    print(f"\n✓ Done. Total QA pairs: {total_qa}")
-    print(f"  Errors: {errors}")
-    print(f"  Time: {elapsed/60:.1f} min")
-    print(f"  Estimated cost: ~${total_qa * 0.0003:.2f}")
+    print(f"\n✓ Done. QA pairs: {total_qa} | Errors: {errors} | Time: {(time.time()-start)/60:.1f}min")
 
 
 if __name__ == "__main__":
@@ -487,42 +533,38 @@ if __name__ == "__main__":
 
 **Action Steps:**
 
-1. Set API key:
+1. Install dependency on local machine:
    ```powershell
-   $env:ANTHROPIC_API_KEY = "your-api-key-here"
+   pip install openai
    ```
-2. Test on 10 chunks first (edit `chunks = chunks[:10]` in main):
+2. On H100 machine: start vLLM (pick Option A/B/C above), then start ngrok
+3. Test on 10 chunks first:
    ```powershell
-   python scripts/generate_qa.py
+   python scripts/generate_qa.py --vllm-url https://xxxx.ngrok-free.app --test
    ```
-3. Review 5 generated pairs manually for quality
-4. If quality OK, remove the test limit and run full generation:
+4. Review 5 generated pairs manually for Vietnamese quality + grounding
+5. If quality OK, run full generation (runs unattended 1–3 hours):
    ```powershell
-   python scripts/generate_qa.py
+   python scripts/generate_qa.py --vllm-url https://xxxx.ngrok-free.app
    ```
-5. Script is checkpoint-safe — re-run if it crashes/times out
+6. Script is checkpoint-safe — re-run with same URL if it crashes
 
 **Verification Command:**
 
 ```powershell
 python -c "
-import json
+import json, random
 pairs = [json.loads(l) for l in open('data/qa_pairs.jsonl', encoding='utf-8')]
 print(f'Total QA pairs: {len(pairs)}')
-sources = {}
-for p in pairs:
-    sources[p['source']] = sources.get(p['source'], 0) + 1
-for src, count in sources.items():
-    print(f'  {src}: {count} pairs')
-print('Sample:')
-import random
+for src in set(p['source'] for p in pairs):
+    print(f'  {src}: {sum(1 for p in pairs if p[\"source\"]==src)}')
 s = random.choice(pairs)
-print(f'  Q: {s[\"question\"]}')
-print(f'  A: {s[\"answer\"]}')
+print(f'\nSample Q: {s[\"question\"]}')
+print(f'Sample A: {s[\"answer\"]}')
 "
 ```
 
-**Time Estimate:** ~30 min setup + 1–3 hours LLM API calls (runs unattended)
+**Time Estimate:** ~20 min setup + 1–3 hours unattended on H100
 
 ---
 
@@ -609,14 +651,19 @@ print(f"✓ Saved {len(valid)} filtered pairs to {OUTPUT}")
 ### Task 5: Training Format Conversion (1 hour)
 
 **Owner:** Both developers  
-**Objective:** Convert QA pairs to embedding triplet format and SFT JSONL; create train/dev/test splits. This task UNBLOCKS Phase 5 and Phase 6.
+**Objective:** Convert QA pairs to embedding triplet format (using `mine_hard_negatives`) and SFT JSONL (TRL `messages` format); create train/dev/test splits. This task UNBLOCKS Phase 5 and Phase 6.
+
+**Research findings applied:**
+
+- Hard negatives: use `sentence_transformers.util.mine_hard_negatives` (already installed v5.5.1) — semantic mining beats random selection
+- SFT format: TRL `messages` (conversational) not Alpaca — natively consumed by `SFTTrainer`, no formatting function needed
+- `multilingual-e5-small` requires `"query: "` prefix on anchors and `"passage: "` prefix on positives at inference time
 
 **Acceptance Criteria:**
 
-- [ ] `data/embedding_train.jsonl`: (anchor, positive, hard_negative) triplets — ≥1200 rows
-- [ ] `data/llm_train.jsonl`: SFT format `{system, instruction, output}` — ≥1200 rows
+- [ ] `data/embedding_train.jsonl`: `{anchor, positive, hard_negative}` triplets from `mine_hard_negatives` — ≥1200 rows
+- [ ] `data/llm_train.jsonl`: TRL `messages` format — ≥1200 rows
 - [ ] `data/splits/` with train/dev/test (80/10/10) for each format
-- [ ] Hard negatives: randomly sampled from different source handbook (not same chunk)
 - [ ] All files valid JSON (checked programmatically)
 
 **Deliverables:**
@@ -637,140 +684,131 @@ data/splits/llm_test_split.jsonl
 
 ```python
 """
-Convert QA pairs to embedding triplet format and LLM SFT format.
+Convert QA pairs to:
+  1. Embedding triplets (anchor, positive, hard_negative) via mine_hard_negatives
+  2. LLM SFT records in TRL conversational messages format
 Creates train/dev/test splits (80/10/10).
 """
 import json
 import random
 from pathlib import Path
 
+from datasets import Dataset
+from sentence_transformers import SentenceTransformer
+from sentence_transformers.util import mine_hard_negatives
+
 INPUT = Path("data/qa_pairs_filtered.jsonl")
 Path("data/splits").mkdir(parents=True, exist_ok=True)
 
-SYSTEM_PROMPT_VI = (
-    "Bạn là trợ lý nhân sự chuyên nghiệp. "
-    "Trả lời câu hỏi của nhân viên dựa trên nội dung sổ tay chính sách được cung cấp. "
-    "Trả lời bằng tiếng Việt, chính xác và ngắn gọn."
+SYSTEM_VI = (
+    "Bạn là trợ lý nhân sự chuyên nghiệp. Hãy trả lời câu hỏi của nhân viên "
+    "dựa trên thông tin từ sổ tay công ty được cung cấp. "
+    "Chỉ sử dụng thông tin trong ngữ cảnh — không thêm thông tin bên ngoài."
 )
 
 
-def load_pairs():
+def load_pairs() -> list:
     return [json.loads(l) for l in open(INPUT, encoding="utf-8")]
 
 
 def make_embedding_triplets(pairs: list) -> list:
     """
-    anchor = Vietnamese question
-    positive = handbook chunk (the source the answer came from)
-    hard_negative = chunk from a DIFFERENT handbook (same topic, wrong source)
+    Use mine_hard_negatives from sentence-transformers (v5.5.1, already installed).
+    anchor = Vietnamese question (with 'query: ' prefix for e5 model)
+    positive = English handbook chunk (with 'passage: ' prefix)
+    hard_negative = semantically similar but wrong chunk
     """
-    triplets = []
+    print("[Embedding] Building dataset for mine_hard_negatives...")
+    raw_dataset = Dataset.from_list([
+        {
+            "anchor": "query: " + p["question"],
+            "positive": "passage: " + p["chunk_text"],
+        }
+        for p in pairs
+    ])
 
-    # Group by source for hard negatives
-    by_source = {}
-    for p in pairs:
-        src = p["source"]
-        by_source.setdefault(src, []).append(p)
+    model = SentenceTransformer("intfloat/multilingual-e5-small")
 
-    all_sources = list(by_source.keys())
+    print("[Embedding] Mining hard negatives (semantic similarity)...")
+    dataset_with_neg = mine_hard_negatives(
+        dataset=raw_dataset,
+        model=model,
+        relative_margin=0.1,     # neg must be ≤90% as similar as positive
+        num_negatives=1,
+        sampling_strategy="top",
+        output_format="triplet", # columns: anchor, positive, negative
+        use_faiss=False,         # brute-force fine at <1000 chunks
+        batch_size=64,
+        verbose=True,
+    )
+    # Rename 'negative' → 'hard_negative' to match Phase 5 expectations
+    dataset_with_neg = dataset_with_neg.rename_column("negative", "hard_negative")
 
-    for pair in pairs:
-        anchor = pair["question"]
-        positive = pair["chunk_text"]
-
-        # Hard negative: random chunk from a different source
-        other_sources = [s for s in all_sources if s != pair["source"]]
-        if other_sources:
-            neg_source = random.choice(other_sources)
-            neg_pair = random.choice(by_source[neg_source])
-            hard_negative = neg_pair["chunk_text"]
-        else:
-            # Fallback: random chunk from same source, different file
-            candidates = [p for p in by_source[pair["source"]]
-                         if p["filename"] != pair["filename"]]
-            if candidates:
-                hard_negative = random.choice(candidates)["chunk_text"]
-            else:
-                hard_negative = random.choice(pairs)["chunk_text"]
-
-        triplets.append({
-            "anchor": anchor,
-            "positive": positive,
-            "hard_negative": hard_negative,
-            "source": pair["source"]
-        })
-
-    return triplets
+    return dataset_with_neg.to_list()
 
 
 def make_sft_records(pairs: list) -> list:
     """
-    SFT format for instruction tuning:
-    - system: HR assistant persona
-    - instruction: Vietnamese question
-    - input: relevant handbook context (the chunk)
-    - output: Vietnamese answer
+    TRL SFTTrainer conversational messages format.
+    English chunk goes in user message as context; Vietnamese answer from assistant.
+    SFTTrainer consumes this natively — no formatting_func needed.
+    Remove 'source' column before training (SFTTrainer passes all columns to model).
     """
     records = []
-    for pair in pairs:
+    for p in pairs:
         records.append({
-            "system": SYSTEM_PROMPT_VI,
-            "instruction": pair["question"],
-            "input": f"Nội dung sổ tay HR:\n{pair['chunk_text']}",
-            "output": pair["answer"],
-            "source": pair["source"]
+            "messages": [
+                {"role": "system", "content": SYSTEM_VI},
+                {
+                    "role": "user",
+                    "content": f"Ngữ cảnh:\n{p['chunk_text']}\n\nCâu hỏi: {p['question']}",
+                },
+                {"role": "assistant", "content": p["answer"]},
+            ]
         })
     return records
 
 
 def split_and_save(data: list, base_name: str):
-    """Split 80/10/10 and save to data/splits/."""
+    """Shuffle and split 80/10/10; save to data/splits/."""
+    data = list(data)  # copy
     random.shuffle(data)
     n = len(data)
-    train_end = int(n * 0.8)
-    dev_end = int(n * 0.9)
-
-    splits = {
-        "train": data[:train_end],
-        "dev": data[train_end:dev_end],
-        "test": data[dev_end:]
-    }
-
-    for split_name, records in splits.items():
-        path = Path(f"data/splits/{base_name}_{split_name}_split.jsonl")
+    cuts = (int(n * 0.8), int(n * 0.9))
+    for name, chunk in zip(
+        ["train", "dev", "test"],
+        [data[:cuts[0]], data[cuts[0]:cuts[1]], data[cuts[1]:]],
+    ):
+        path = Path(f"data/splits/{base_name}_{name}_split.jsonl")
         with open(path, "w", encoding="utf-8") as f:
-            for r in records:
+            for r in chunk:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
-        print(f"  {split_name}: {len(records)} records → {path}")
-
-    return splits
+        print(f"  {name}: {len(chunk)} → {path}")
 
 
 def main():
     pairs = load_pairs()
-    print(f"Loaded {len(pairs)} QA pairs")
+    print(f"Loaded {len(pairs)} filtered QA pairs")
 
-    # Embedding format
-    print("\n[Embedding] Creating triplets...")
+    # 1. Embedding triplets
+    print("\n[Embedding] Creating triplets with hard negative mining...")
     triplets = make_embedding_triplets(pairs)
     with open("data/embedding_train.jsonl", "w", encoding="utf-8") as f:
         for t in triplets:
             f.write(json.dumps(t, ensure_ascii=False) + "\n")
-    print(f"  Saved {len(triplets)} triplets to data/embedding_train.jsonl")
+    print(f"  Saved {len(triplets)} triplets → data/embedding_train.jsonl")
     split_and_save(triplets, "embedding")
 
-    # SFT format
-    print("\n[SFT] Creating instruction records...")
+    # 2. SFT records (TRL messages format)
+    print("\n[SFT] Creating messages-format records...")
     sft = make_sft_records(pairs)
     with open("data/llm_train.jsonl", "w", encoding="utf-8") as f:
         for r in sft:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    print(f"  Saved {len(sft)} SFT records to data/llm_train.jsonl")
+    print(f"  Saved {len(sft)} SFT records → data/llm_train.jsonl")
     split_and_save(sft, "llm")
 
-    print("\n✓ Done. Phase 5 (embedding) and Phase 6 (LLM) can now start.")
-    print(f"  Embedding train: data/splits/embedding_train_split.jsonl")
-    print(f"  LLM train: data/splits/llm_train_split.jsonl")
+    print("\n✓ Done. Upload data/splits/ to H100 — Phase 5 + Phase 6 can now start.")
 
 
 if __name__ == "__main__":
@@ -823,6 +861,8 @@ print('✓ Format validation passed')
 
 **Owner:** Both developers  
 **Objective:** Convert at least 1 handbook to PDF for use as a demo document in the existing Streamlit RAG app
+
+**Research note:** `weasyprint` has GTK dependency issues on Windows. Use `reportlab` as primary (no native deps). Pandoc is a good option if already installed.
 
 **Acceptance Criteria:**
 
@@ -951,16 +991,20 @@ if __name__ == "__main__":
 
 **Action Steps:**
 
-1. Check if pandoc is installed: `pandoc --version`
-2. If not: `pip install reportlab` for fallback
-3. Run conversion:
+1. Install reportlab (primary on Windows):
+   ```powershell
+   pip install reportlab
+   ```
+2. Run conversion:
    ```powershell
    python scripts/convert_md_to_pdf.py
    ```
-4. Verify PDF readable:
+3. Verify PDF readable:
    ```powershell
-   python -c "import fitz; doc=fitz.open('data/sample_handbook.pdf'); print(f'Pages: {len(doc)}')"
+   python -c "import fitz; doc=fitz.open('data/sample_handbook.pdf'); print(f'Pages: {len(doc)}, Chars: {sum(len(p.get_text()) for p in doc)}')"
    ```
+
+4. If char count < 5000: check that markdown files were read correctly in Task 1
 
 **Time Estimate:** ~20–30 min
 
