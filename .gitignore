@@ -47,3 +47,9 @@ documents/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Phase 4 Generated data
+data/qa_pairs.jsonl
+data/raw/
+data/qa_checkpoint.json
+data/raw_chunks.jsonl
