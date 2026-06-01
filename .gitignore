@@ -58,4 +58,5 @@ data/qa_pairs.jsonl
 data/raw/
 data/qa_checkpoint.json
 data/raw_chunks.jsonl
+!data/qa_pairs.jsonl
 !data/raw_chunks.jsonl

@@ -1,0 +1,731 @@
+question,answer
+Tại sao Clef coi việc cải thiện bản thân quan trọng hơn việc trở thành người tốt nhất?,"Bởi vì 'tốt nhất' đồng nghĩa với sự tự mãn, trong khi 'tốt hơn' đồng nghĩa với sự tiến bộ. Clef luôn luôn cải thiện và xem việc phản ánh bản thân là cần thiết để cải thiện."
+Clef khuyến khích nhân viên làm gì khi mắc lỗi?,Clef khuyến khích nhân viên nhận trách nhiệm về lỗi của mình và xem xét lại thói quen của mình.
+Tại sao chúng ta cần xem xét góc nhìn của khách hàng và đồng nghiệp?,"Bởi vì khách hàng và đồng nghiệp có những nhu cầu khác biệt, việc xem xét góc nhìn của họ giúp chúng ta giao tiếp hiệu quả hơn."
+Chúng ta tạo ra sản phẩm tốt nhất khi nào?,Khi chúng ta hiểu rõ người dùng mà chúng ta đang xây dựng sản phẩm cho.
+Tại sao việc xây dựng một đội ngũ đa dạng lại quan trọng?,Xây dựng một đội ngũ đa dạng là một nghĩa vụ đạo đức và giúp chúng ta xây dựng một doanh nghiệp và sản phẩm tốt hơn bằng cách đưa ra nhiều góc nhìn khác nhau.
+Chúng ta cần làm gì để tránh tình trạng bất bình đẳng và loại trừ trong ngành?,"Chúng ta cần nỗ lực có ý thức để tránh thừa hưởng những sai lầm này và làm xấu đi vấn đề, bằng cách tìm kiếm những tiếng nói khác biệt với chúng ta."
+Tại sao sự tin tưởng lẫn nhau lại quan trọng đối với thành công chung của đội ngũ?,"Sự tin tưởng lẫn nhau là nền tảng để chúng ta cùng thành công, vì nó giúp mọi người hợp tác hiệu quả hơn."
+Tại sao lòng tin lại quan trọng trong môi trường làm việc nhóm?,"Lòng tin là yếu tố quan trọng vì nó cho phép chúng ta chia sẻ phản hồi và ý kiến chân thành, giúp chúng ta sáng tạo và thành công hơn."
+Chúng ta có thể làm gì để xây dựng lòng tin trong đội ngũ?,"Chúng ta có thể xây dựng lòng tin bằng cách giao tiếp tốt, cung cấp cho đồng nghiệp cái nhìn sâu sắc về cách ra quyết định và tạo điều kiện dễ dàng để họ đưa ra ý kiến và hướng dẫn lộ trình."
+Lòng tin ảnh hưởng như thế nào đến giao tiếp trong tương lai?,"Khi chúng ta xây dựng lòng tin thông qua giao tiếp tốt, chúng ta tạo ra một môi trường thuận lợi cho giao tiếp hiệu quả hơn trong tương lai."
+Sứ mệnh của công ty là gì?,Sứ mệnh của công ty là trao quyền cho mọi người sở hữu danh tính trực tuyến của mình.
+Công ty xây dựng tiêu chuẩn danh tính như thế nào?,"Công ty xây dựng một tiêu chuẩn bảo mật về danh tính cho doanh nghiệp để thay thế mật khẩu, giúp người dùng có mối quan hệ đích thực và cá nhân với công nghệ họ sử dụng."
+Chính sách của công ty có thể thay đổi không?,"Có, chính sách của công ty có thể cải thiện và thay đổi khi công ty học hỏi và phát triển."
+Công ty sử dụng những công cụ nào để thu thập phản hồi và thảo luận về quyển sổ tay?,Công ty đang sử dụng nhiều công cụ và nền tảng khác nhau để thu thập phản hồi và thảo luận về quyển sổ tay.
+Github được sử dụng như thế nào trong việc đề xuất thay đổi chính sách?,"Github được sử dụng để thu thập phản hồi và thảo luận về quyển sổ tay, nhưng chi tiết cụ thể về cách sử dụng nó chưa được nêu rõ trong đoạn văn bản."
+Sổ tay nhân viên được lưu trữ ở đâu?,Sổ tay nhân viên được lưu trữ trên Github.
+Ai có thể tạo vấn đề hoặc mở yêu cầu kéo (pull request)?,Bất kỳ ai có tài khoản Github đều có thể tạo vấn đề hoặc mở yêu cầu kéo (pull request).
+Ai sẽ thường xuyên phản hồi các vấn đề và bình luận?,B sẽ thường xuyên phản hồi các vấn đề và bình luận.
+Chúng tôi có cần phải thảo luận tất cả các chủ đề nhạy cảm trên Github không?,"Không, các chủ đề nhạy cảm nên được thảo luận nội bộ."
+"Khi chúng tôi thực hiện thay đổi, có cần phải giải thích lý do trên Github không?","Có, khi thực hiện thay đổi, cần phải giải thích lý do trên Github."
+Những thành viên nào trong đội cần phải làm quen với Github?,Thành viên kỹ thuật của đội.
+"Đối với những đồng nghiệp không kỹ thuật, cần phải đảm bảo điều gì về Github?",Cần đảm bảo họ có tài khoản và hiểu cách tham gia.
+Địa chỉ của bảng Trello nội bộ là gì?,Địa chỉ của bảng Trello nội bộ là https://trello.com/b/gTmLFJgs.
+Nhân viên cần làm gì nếu muốn bắt đầu thảo luận về một vấn đề mới?,"Nếu nhân viên muốn bắt đầu thảo luận về một vấn đề mới, họ có thể thêm một thẻ vào bảng Trello nội bộ."
+Tôi nên sử dụng công cụ nào để viết đề xuất?,Bạn nên sử dụng Google Docs để viết đề xuất.
+Thư mục nào sẽ chứa các tài liệu nghiên cứu và đề xuất đang được thực hiện?,Thư mục ‘Handbook Research and Proposals’ trong ‘Active Projects’ sẽ chứa các tài liệu nghiên cứu và đề xuất đang được thực hiện.
+Chúng tôi nên làm gì khi nhận được phản hồi từ người dùng trên Twitter?,"Nên công nhận phản hồi của họ và đảm bảo ghi lại trong một kênh khác, đặc biệt là Github, để không bị mất."
+Nhân viên cá nhân có được phép chia sẻ ý kiến cá nhân về phản hồi không?,"Có, nhân viên cá nhân có thể tự do chia sẻ ý kiến cá nhân về phản hồi."
+"Khi cảm ơn người dùng vì phản hồi, chúng tôi cần lưu ý điều gì?",Cần cảm ơn người dùng vì phản hồi mà không tỏ ra phòng vệ.
+Kênh nào trên Slack dùng để thảo luận về các chính sách mới?,Kênh #handbook trên Slack.
+"Nếu một cuộc trò chuyện trên kênh #handbook đặc biệt thú vị, nó sẽ được ghi chép ở đâu?",Trong Google Docs hoặc trong một Github issue.
+B sẽ dành bao nhiêu thời gian mỗi tuần để xử lý công việc?,B sẽ dành vài giờ mỗi tuần vào sáng thứ Sáu để xử lý công việc.
+Những hoạt động nào B sẽ thực hiện trong thời gian này?,"B sẽ xem xét và phản hồi các vấn đề, tạo đề xuất dựa trên phản hồi, lên lịch thảo luận về các thay đổi với đội ngũ, và hợp nhất các thay đổi đã sẵn sàng."
+B sẽ tóm tắt những vấn đề và đề xuất nào trong buổi trưa hàng tuần của đội?,B sẽ tóm tắt các vấn đề và đề xuất đang mở trong buổi trưa hàng tuần của đội.
+Khi nào cần phải lập một đề xuất?,"Bất cứ khi nào có thay đổi quan trọng đối với quyển cẩm nang, cần phải lập một đề xuất để đội ngũ có thể bình luận và thảo luận."
+Đề xuất cần bao gồm những nội dung gì?,Đề xuất cần nêu rõ chi tiết của thay đổi và lý do cần thực hiện thay đổi đó.
+Ai sẽ chịu trách nhiệm tổ chức các cuộc họp thảo luận?,B sẽ chịu trách nhiệm tổ chức các cuộc họp này.
+Tham dự các cuộc họp thảo luận có bắt buộc không?,"Tham dự các cuộc họp thảo luận không bắt buộc, nhưng sự tham gia rất quan trọng."
+Tại sao việc tham gia các cuộc họp thảo luận lại quan trọng?,Việc tham gia các cuộc họp thảo luận rất quan trọng vì đây là nơi tốt nhất để chúng ta hiểu được cách các thành viên trong đội phản ứng hoặc bị ảnh hưởng bởi một chính sách nào đó.
+Nhân viên có thể nói chuyện riêng với quản lý về những lo ngại của mình không?,"Có, nhân viên có thể nói chuyện riêng với quản lý về những lo ngại liên quan đến một thay đổi hoặc chính sách cụ thể."
+Nhân viên có thể đề nghị quản lý đưa ra vấn đề nếu họ không thoải mái làm điều đó không?,"Có, nhân viên có thể đề nghị quản lý đưa ra vấn đề nếu họ không thoải mái làm điều đó."
+Nhân viên có thể bình luận về tài liệu đề xuất bằng cách nào?,"Nhân viên có thể bình luận về tài liệu đề xuất trước hoặc sau cuộc họp, trong cuộc họp trực tiếp, hoặc yêu cầu quản lý hoặc nhân viên khác đưa ra bình luận của họ một cách nặc danh."
+"Sau khi thay đổi được đề xuất và thảo luận, ai sẽ thực hiện việc hợp nhất vào sổ tay?",B sẽ thực hiện việc hợp nhất vào sổ tay trên Github.
+"Khi có thay đổi lớn, ai có thể viết bài blog về thay đổi đó?",B hoặc một thành viên khác trong đội có thể viết bài blog về thay đổi đó.
+Những người tham gia thảo luận có được công nhận trong bài blog không?,"Có, với sự đồng ý của họ, tất cả những người tham gia cộng đồng sẽ được công nhận trong bài blog."
+Tất cả nhân viên của Clef có cần ký nhận tài liệu hướng dẫn nhân viên không?,"Có, tất cả nhân viên của Clef đều cần ký nhận tài liệu hướng dẫn nhân viên."
+"Khi có thay đổi trong tài liệu hướng dẫn nhân viên, nhân viên cần làm gì?","Khi có thay đổi trong tài liệu hướng dẫn nhân viên, mỗi nhân viên cần ký nhận sự thay đổi đó."
+Thay đổi trong tài liệu hướng dẫn nhân viên thường xảy ra như thế nào?,Thay đổi trong tài liệu hướng dẫn nhân viên thường hiếm khi xảy ra.
+Chính sách sẽ được cập nhật khi nào?,Chính sách sẽ được cập nhật vào đầu mỗi quý.
+Các phiên bản chính của sổ tay nhân viên được lưu trữ ở đâu?,Các phiên bản chính của sổ tay nhân viên được lưu trữ tại [getclef.com/handbook](https://getclef.com/handbook).
+Làm thế nào để biết phiên bản chính sách nào đang áp dụng?,"Phiên bản chính sách sẽ được đánh dấu bằng ngày áp dụng, nên bạn có thể kiểm tra tại [getclef.com/handbook](https://getclef.com/handbook)."
+Clef đang cố gắng xây dựng công ty như thế nào?,Clef đang cố gắng xây dựng một công ty bao gồm và có văn hóa dựa trên giá trị.
+Tại sao việc xây dựng một công ty bao gồm lại khó khăn?,"Việc xây dựng một công ty bao gồm khó khăn vì sự loại trừ là điều mặc định trong ngành công nghiệp này, và cần nỗ lực tích cực để tìm và loại bỏ những định kiến ẩn trong công ty."
+Tại sao công ty quyết định viết một cuốn sổ tay nhân viên riêng?,"Công ty muốn đưa những điều đã học được về các vấn đề văn hóa và giải pháp vào thực tế, nên đã quyết định viết cuốn sổ tay nhân viên riêng và mở nguồn nó."
+Công ty đã làm gì để ứng dụng những kiến thức về văn hóa doanh nghiệp?,Công ty đã viết cuốn sổ tay nhân viên của riêng mình và mở nguồn nó.
+Từ đâu công ty lấy cảm hứng để viết cuốn sổ tay nhân viên?,"Công ty lấy cảm hứng từ nhiều nguồn khác nhau trên web, nơi đang có rất nhiều công việc tốt được thực hiện để thảo luận về các vấn đề văn hóa và giải pháp của chúng."
+Tôi có thể sử dụng các chính sách này cho công ty của mình không?,"Có, bạn có thể sử dụng bất kỳ hoặc tất cả các chính sách này và sửa đổi chúng theo cách phù hợp với công ty của bạn."
+Mục đích của việc công bố các chính sách này là gì?,Mục đích là để các công ty khác có thể học hỏi từ nghiên cứu của chúng tôi và làm cho chính sách của họ trở nên bao quát hơn.
+Có tài nguyên nào giúp tôi sử dụng cuốn sổ tay này làm điểm khởi đầu cho công ty của mình không?,"Có, [mccv] đã tạo ra một phiên bản mẫu của cuốn sổ tay Clef tại [đây](https://github.com/turbinelabs/handbook-template) để dễ dàng sử dụng làm điểm khởi đầu."
+Công ty có chấp nhận phản hồi và đề xuất từ nhân viên không?,"Công ty rất hoan nghênh tất cả các phản hồi và đề xuất, đặc biệt là dưới dạng pull requests."
+Công ty đã xem xét nhiều góc nhìn khác nhau để xây dựng chính sách chưa?,"Công ty đã nhận được nhiều góc nhìn khác nhau để giúp xây dựng các chính sách, nhưng vẫn còn thiếu sót và mắc phải một số sai lầm."
+"Nếu tôi quan tâm đến các chính sách này, tôi có thể tìm hiểu thêm về cơ hội việc làm ở đâu?","Nếu bạn quan tâm, hãy truy cập [getclef.com/about](https://getclef.com/about) để xem các vị trí tuyển dụng."
+Ai đã góp ý để tạo ra phiên bản đầu tiên của chính sách này?,Phiên bản đầu tiên của chính sách này không thể hoàn thành nếu thiếu những ý kiến đóng góp sâu sắc từ những người tuyệt vời.
+Chúng ta hy vọng điều gì từ mọi người về chính sách này?,Chúng ta hy vọng rằng nhiều người hơn sẽ đề xuất cách cải thiện các chính sách này.
+Clef có giá trị cốt lõi nào liên quan đến việc học tập và phát triển cá nhân?,Một trong những giá trị cốt lõi của Clef là 'Hãy tốt hơn hôm nay so với hôm qua'.
+"Tại sao Clef coi trọng việc hỗ trợ nhân viên học tập, phát triển và cải thiện bản thân?","Việc hỗ trợ nhân viên học tập, phát triển và cải thiện bản thân là một phần quan trọng của văn hóa công ty và là một trong những lợi ích chính khi làm việc tại Clef."
+Mỗi nhân viên được cấp ngân sách bao nhiêu để hỗ trợ hoạt động học tập?,Mỗi nhân viên được cấp ngân sách 4.000 đô la mỗi năm.
+Ngân sách này có thể được sử dụng cho những mục đích gì?,"Ngân sách này có thể được sử dụng để thanh toán học phí, vé, chuyến bay, khách sạn cho hội nghị ngành, lớp học, chương trình hướng dẫn, sách, chương trình, video hoặc các mục khác."
+Hoạt động học tập cần phải liên quan chặt chẽ đến vai trò hiện tại của nhân viên không?,"Không cần phải liên quan chặt chẽ đến vai trò hiện tại, nhưng phải giúp cải thiện kỹ năng có ích cho công việc tại Clef."
+Nhân viên cần làm gì trước khi đăng ký học các khóa học hoặc mua sách?,Nhân viên cần thảo luận chi phí với người quản lý trực tiếp và được người sáng lập phê duyệt.
+Ngân sách học tập có được chuyển sang năm sau không?,"Không, ngân sách học tập không được chuyển sang năm sau và sẽ được reset vào đầu mỗi năm dương lịch."
+Hạn mức ngân sách học tập trong năm đầu tiên là bao nhiêu?,Hạn mức ngân sách học tập trong năm đầu tiên là 2.000 đô la.
+Công ty Clef có chương trình hướng dẫn (mentorship) cho nhân viên không?,"Có, Clef hiểu giá trị của việc hướng dẫn và sẽ làm việc với mỗi nhân viên để đảm bảo họ có một người hướng dẫn trong lĩnh vực của mình từ bên ngoài công ty."
+Nhân viên có được khuyến khích gặp gỡ người hướng dẫn trong giờ làm việc không?,"Có, nhân viên được khuyến khích gặp gỡ người hướng dẫn trong giờ làm việc bình thường."
+Ai sẽ giúp kết nối nhân viên với người hướng dẫn?,Toàn bộ đội ngũ sẽ giúp tạo và hỗ trợ kết nối với người hướng dẫn.
+Công ty Clef có hỗ trợ gì cho nhân viên khi họ được mời nói chuyện tại hội nghị?,"Clef sẽ chi trả cho chuyến bay và khách sạn lên đến 1,000 đô la cho mỗi sự kiện."
+Nhân viên có thể sử dụng quyền lợi này bao nhiêu lần trong một năm?,Nhân viên có thể sử dụng quyền lợi này 4 lần trong một năm.
+Nhân viên cần làm gì trước khi quyết định tham dự hội nghị?,Nhân viên cần xin phép người sáng lập mà họ báo cáo về việc tham dự hội nghị nào là phù hợp.
+Công ty Clef cung cấp những loại bảo hiểm nào cho nhân viên và người phụ thuộc?,"Công ty Clef cung cấp bảo hiểm y tế, nha khoa và thị lực cho nhân viên và người phụ thuộc."
+Công ty Clef đóng góp bao nhiêu phần trăm chi phí cho bảo hiểm của nhân viên và người phụ thuộc?,Công ty Clef đóng góp 85% chi phí cho bảo hiểm của nhân viên và 50% cho người phụ thuộc.
+"Nhân viên có thể chọn kế hoạch bảo hiểm đắt hơn kế hoạch cơ bản không? Nếu có, ai sẽ chịu trách nhiệm về phần chênh lệch?","Nhân viên có thể chọn kế hoạch bảo hiểm đắt hơn kế hoạch cơ bản, và họ sẽ chịu trách nhiệm về phần chênh lệch."
+Khi nào tôi có thể tham gia bảo hiểm?,Bạn có thể tham gia bảo hiểm vào ngày đầu tiên của tháng tiếp theo sau khi bạn được tuyển dụng.
+Tôi có thể tìm thông tin chi tiết về các gói bảo hiểm ở đâu?,"Bạn có thể tìm thông tin chi tiết về các gói bảo hiểm, chi phí và phạm vi bảo hiểm thông qua TriNet."
+Nhân viên có được hưởng bảo hiểm tai nạn và tử vong không?,"Có, tất cả nhân viên đều được bảo hiểm tai nạn và tử vong với mức bồi thường bằng một lần thu nhập (có một số hạn chế về độ tuổi bắt đầu từ 65 tuổi)."
+"Nếu tôi đã có bảo hiểm y tế khác và không đăng ký bảo hiểm y tế qua TriNet, tôi có được hỗ trợ gì không?","Có, Clef cung cấp khoản hỗ trợ từ chối bảo hiểm y tế là 25 đô la mỗi tháng cho nhân viên có bảo hiểm y tế khác và chọn không đăng ký bảo hiểm y tế qua TriNet."
+Ngày Lao Động (Labor Day) được tổ chức vào thời điểm nào?,Ngày Thứ Hai cuối cùng của tháng 5
+Ngày Lao Động (Labor Day) được tổ chức vào ngày nào?,Ngày thứ Hai đầu tiên của tháng Chín.
+Ngày Lễ Tạ Ơn (Thanksgiving Day) và Ngày Sau Lễ Tạ Ơn được tổ chức khi nào?,Ngày thứ Năm thứ tư của tháng Mười Một và ngày Thứ Sáu kế tiếp.
+"Nếu ngày lễ rơi vào thứ Bảy, thì sẽ được nghỉ bù vào ngày nào?","Nếu ngày lễ rơi vào thứ Bảy, sẽ được nghỉ bù vào thứ Sáu trước đó."
+"Nếu ngày lễ rơi vào Chủ Nhật, thì sẽ được nghỉ bù vào ngày nào?","Nếu ngày lễ rơi vào Chủ Nhật, sẽ được nghỉ bù vào thứ Hai tiếp theo."
+Công ty Clef cung cấp bao nhiêu tuần nghỉ phép có lương cho nhân viên mới làm cha mẹ?,Công ty Clef cung cấp 12 tuần nghỉ phép có lương cho tất cả nhân viên toàn thời gian sau khi sinh hoặc nhận con nuôi.
+Nhân viên có thể nghỉ phép này trong bao lâu sau khi sinh hoặc nhận con nuôi?,Nhân viên nên nghỉ phép này trong vòng một năm sau khi sinh hoặc nhận con nuôi.
+Nhân viên cần thông báo trước bao lâu khi nghỉ sinh?,"Nhân viên nên thông báo trước cho đội ngũ càng sớm càng tốt khi dự định nghỉ sinh, nhưng không có quy định cụ thể về thời gian thông báo."
+Tại sao việc thông báo sớm về việc nghỉ sinh quan trọng?,Việc thông báo sớm giúp đội ngũ có thể chuẩn bị và xử lý việc vắng mặt một cách dễ dàng hơn.
+Nghỉ phép có lương có được tính thêm ngày nghỉ phép hay không?,"Không, bất kỳ loại nghỉ phép có lương nào, bao gồm nghỉ phép dành cho cha mẹ mới, đều không tích lũy thêm ngày nghỉ phép, ngày ốm, hoặc thời gian hướng tới kỳ nghỉ dài hạn."
+"Nếu tôi đã làm việc tại Clef được 4 năm, tôi cần làm việc thêm bao lâu nữa để được hưởng kỳ nghỉ dài hạn?",Bạn cần làm việc thêm 1 năm nữa để được hưởng kỳ nghỉ dài hạn.
+"Nếu tôi nghỉ phép dành cho cha mẹ mới trong 12 tuần, thời gian này có ảnh hưởng đến thời gian chờ để được hưởng kỳ nghỉ dài hạn không?","Không, thời gian nghỉ phép dành cho cha mẹ mới không ảnh hưởng đến thời gian chờ. Bạn vẫn cần làm việc thêm 1 năm đầy đủ sau khi trở lại để được hưởng kỳ nghỉ dài hạn."
+"Trong trường hợp nhân viên nghỉ vì mang thai hoặc sinh con tại California, họ sẽ nhận được hỗ trợ tài chính từ những chương trình nào?",Nhân viên sẽ nhận được hỗ trợ tài chính từ chương trình Bảo hiểm Khả năng Làm việc của Bang và Chương trình Nghỉ phép Gia đình Có lương.
+"Khi nhân viên sử dụng các chương trình hỗ trợ tài chính do bang cung cấp, Clef sẽ xử lý như thế nào để duy trì mức lương của nhân viên?",Clef sẽ bù đắp phần thiếu hụt để duy trì mức lương của nhân viên thay vì trả toàn bộ lương trên cơ sở các khoản hỗ trợ từ chương trình.
+Nhân viên mang thai có quyền nghỉ bao lâu?,Nhân viên mang thai có quyền nghỉ lên đến 4 tháng hoặc số ngày tương đương mà họ thường làm việc trong khoảng thời gian 4 tháng.
+Nhân viên có thể nghỉ không liên tục hoặc giảm giờ làm việc không?,"Có, nhân viên có thể nghỉ không liên tục hoặc giảm giờ làm việc."
+Nhân viên cần thông báo cho ai khi muốn nghỉ thai sản?,Nhân viên cần thông báo cho người sáng lập mà họ báo cáo trực tiếp.
+Nhân viên cần báo cáo cho ai khi muốn nghỉ vì mất người thân?,Nhân viên cần báo cáo cho người sáng lập mà họ trực tiếp làm việc.
+Những người thân nào được tính trong chế độ nghỉ phép tang?,"Chế độ nghỉ phép tang áp dụng cho vợ/chồng, bạn đời, người sống chung, con, con riêng, cháu, cha/mẹ, cha/mẹ kế, mẹ chồng, bố chồng, con rể, con dâu, ông bà nội/ngoại, cụ nội/ngoại, hoặc anh/em ruột."
+Nhân viên được nghỉ phép tang bao nhiêu ngày?,Nhân viên được nghỉ phép tang tối đa 3 ngày liên tục.
+Nhân viên được nghỉ bao nhiêu ngày lương khi tham gia làm bồi thẩm đoàn hoặc làm chứng?,Nhân viên được nghỉ tối đa 3 ngày lương.
+"Khi làm bồi thẩm đoàn hoặc làm chứng trong thời gian ít hơn 4 giờ mỗi ngày, nhân viên cần làm gì?",Nhân viên cần báo cáo với người sáng lập mà họ trực thuộc và có thể được yêu cầu làm việc từ xa.
+Nhân viên cần cung cấp những giấy tờ gì khi nhận nhiệm vụ làm bồi thẩm đoàn hoặc làm chứng?,Nhân viên cần cung cấp bản sao giấy triệu tập làm bồi thẩm đoàn hoặc làm chứng và tất cả các tài liệu liên quan cho người sáng lập mà họ trực thuộc càng sớm càng tốt.
+Công ty có cho phép nghỉ phép vì những lý do khác không?,Công ty Clef sẽ cho phép nghỉ phép vì những lý do khác theo yêu cầu của pháp luật.
+Nhân viên có được hưởng lương khi nghỉ phép vì những lý do khác không?,"Trừ khi pháp luật yêu cầu khác đi, nhân viên sẽ không được hưởng lương trong thời gian nghỉ phép vì những lý do khác."
+Tại sao Clef coi trọng việc giới thiệu ứng viên từ nhân viên hiện tại?,"Clef coi trọng việc giới thiệu ứng viên từ nhân viên hiện tại vì nhân viên hiểu rõ nhu cầu của Clef và môi trường làm việc, đồng thời họ biết nhiều hơn về ứng viên so với những gì có thể học được trong quá trình phỏng vấn."
+Nhân viên Clef có thể biết được những gì về ứng viên mà công ty không thể biết qua phỏng vấn?,"Nhân viên Clef có thể biết nhiều hơn về ứng viên thông qua mối quan hệ cá nhân, điều mà công ty không thể biết hết trong quá trình phỏng vấn."
+Những vị trí nào đang cần tuyển dụng sẽ được đăng ở đâu?,Những vị trí đang cần tuyển dụng sẽ được đăng trên getclef.com/about và trong kênh #hiring.
+Khi nào công ty tổ chức bữa trưa để thảo luận về các vị trí đang tuyển dụng?,Công ty tổ chức bữa trưa với thức ăn vào thứ Ba thứ hai của mỗi tháng để thảo luận về các vị trí đang tuyển dụng.
+Tại sao mọi người cần biết cách bắt đầu quy trình tuyển dụng?,Mọi người cần biết cách bắt đầu quy trình tuyển dụng để có thể giới thiệu ứng viên phù hợp cho các vị trí đang mở.
+Nhân viên sẽ làm gì khi tìm thấy ứng viên tiềm năng qua mạng lưới trực tuyến?,Nhân viên sẽ thực hiện liên hệ ban đầu với những kết nối thú vị.
+Mục đích của việc liên hệ ban đầu với ứng viên tiềm năng là gì?,Mục đích là để tạo không gian tốt để thảo luận về cách bắt đầu quá trình tuyển dụng.
+Mức thưởng giới thiệu nhân viên mới là bao nhiêu?,Mức thưởng giới thiệu nhân viên mới là 5.000 đô la.
+Những ai được hưởng thưởng giới thiệu nhân viên mới?,"Tất cả nhân viên, trừ các nhà sáng lập, đều được hưởng thưởng giới thiệu nhân viên mới."
+Thời hạn để tuyển dụng nhân viên được giới thiệu là bao lâu kể từ ngày giới thiệu đầu tiên?,Thời hạn để tuyển dụng nhân viên được giới thiệu là 180 ngày (sáu tháng) kể từ ngày giới thiệu đầu tiên.
+Nhân viên nào sẽ nhận được thưởng khi giới thiệu ứng viên?,Chỉ nhân viên đầu tiên giới thiệu ứng viên mới có thể nhận được thưởng.
+Người giới thiệu cần làm gì sau khi giới thiệu ứng viên?,"Người giới thiệu cần gửi thông tin ứng viên cho Brennen, giới thiệu với ứng viên và tham gia trong quá trình tuyển dụng và phỏng vấn."
+Khi nào người giới thiệu sẽ nhận được tiền thưởng?,Người giới thiệu sẽ được trả thưởng trong vòng 90 ngày kể từ ngày đầu tiên của ứng viên được tuyển dụng.
+Nhân viên được nghỉ phép sab-ba-tíc sau bao lâu làm việc tại Clef?,Sau mỗi 5 năm làm việc tại Clef.
+Nhân viên có thể làm gì trong thời gian sab-ba-tíc?,"Nhân viên nên làm những dự án đam mê, như nghiên cứu một chủ đề quan tâm, làm việc cho Dịch vụ Kỹ thuật Số Hoa Kỳ, giúp đỡ tổ chức phi lợi nhuận, hoặc bất kỳ hoạt động khác mà họ thấy thú vị và hứng khởi."
+Sứ mệnh của kỳ nghỉ sab-ba-ti-cơ là gì?,"Kỳ nghỉ sab-ba-ti-cơ nhằm giúp nhân viên khám phá và học hỏi về một lĩnh vực quan tâm khác, đồng thời góp phần thúc đẩy giá trị cốt lõi về sự cải tiến của công ty."
+Nhân viên cần làm gì khi trở lại văn phòng sau kỳ nghỉ sab-ba-ti-cơ?,Nhân viên cần chuẩn bị và trình bày một bài thuyết trình về kỳ nghỉ sab-ba-ti-cơ của mình cho đội ngũ khi trở lại văn phòng.
+Kỳ nghỉ sab-ba-ti-cơ có thể giúp gì cho nhân viên?,"Kỳ nghỉ sab-ba-ti-cơ có thể giúp nhân viên tránh tình trạng kiệt sức do làm việc quá lâu trên một lĩnh vực và đồng thời khám phá, học hỏi về lĩnh vực mới."
+Nhân viên cần phải thông báo với đội nhóm về việc nghỉ sab-ba-ti-cơ của mình như thế nào?,Nhân viên cần thông báo với đội nhóm rằng họ sẽ nghỉ sab-ba-ti-cơ ít nhất 4 tuần trước khi bắt đầu.
+Nhân viên có thể nghỉ bao nhiêu tuần phép lương trong năm trước khi nghỉ sab-ba-ti-cơ?,Nhân viên cần đã nghỉ ít hơn 12 tuần phép lương trong năm trước khi nghỉ sab-ba-ti-cơ.
+Công ty kỳ vọng gì về việc nhân viên trở lại làm việc sau khi nghỉ sab-ba-ti-cơ?,"Công ty kỳ vọng nhân viên sẽ trở lại làm việc tại Clef sau khi nghỉ sab-ba-ti-cơ, không sử dụng nó như một cách ra đi nhẹ nhàng khỏi công ty."
+"Khi tôi nghỉ phép có lương, tôi có được tích lũy thêm ngày nghỉ phép hay không?","Không, thời gian nghỉ phép có lương không được tính để tích lũy thêm ngày nghỉ phép, bao gồm cả ngày nghỉ phép năm, ngày ốm, hoặc thời gian hướng tới kỳ nghỉ dài hạn."
+"Nếu tôi đã tích lũy được 3 ngày ốm trước khi đi nghỉ dài hạn 12 tuần, tôi sẽ còn bao nhiêu ngày ốm khi quay trở lại làm việc?",Bạn vẫn sẽ có 3 ngày ốm khi quay trở lại làm việc.
+Công ty Clef cung cấp bao nhiêu ngày nghỉ phép có lương mỗi năm?,Công ty Clef cung cấp 3 tuần (15 ngày) nghỉ phép có lương mỗi năm.
+Tần suất tích lũy ngày nghỉ phép là bao nhiêu?,Ngày nghỉ phép tích lũy 1.25 ngày mỗi tháng làm việc.
+Nhân viên cần thông báo nghỉ phép như thế nào?,"Nhân viên nên lên lịch nghỉ, thông báo cho đội ngũ và thêm vào lịch làm việc chung ít nhất một tuần trước khi nghỉ."
+Nhân viên được tích lũy bao nhiêu giờ nghỉ ốm cho mỗi 30 giờ làm việc?,Nhân viên được tích lũy 1 giờ nghỉ ốm cho mỗi 30 giờ làm việc.
+Nhân viên cần báo cáo nghỉ phép và nghỉ ốm cho ai?,Nhân viên cần báo cáo nghỉ phép và nghỉ ốm cho người sáng lập mà họ báo cáo trực tiếp.
+Nhân viên mắc bệnh mãn tính hoặc bệnh hiểm nghèo nên làm gì để được hỗ trợ?,"Nhân viên mắc bệnh mãn tính hoặc bệnh hiểm nghèo nên nói chuyện với người sáng lập mà họ báo cáo trực tiếp về nhu cầu làm việc từ xa, thời gian linh hoạt, nghỉ dưỡng do bệnh tật và/hoặc các hỗ trợ khác."
+Tại sao tôi có thể chấm dứt hợp đồng làm việc bất cứ lúc nào?,"Bởi vì hợp đồng làm việc của bạn tại Clef là theo nguyên tắc tự nguyện, cho phép bạn chấm dứt hợp đồng bất cứ lúc nào, với hoặc không cần lý do."
+Ai có quyền thay đổi tình trạng làm việc tự nguyện của tôi?,Chỉ có Giám đốc điều hành (CEO) mới có quyền thay đổi tình trạng làm việc tự nguyện của bạn.
+Có ai khác trong công ty có thể cam kết về thời gian làm việc cụ thể với tôi không?,"Không, chỉ có Giám đốc điều hành (CEO) mới có quyền cam kết về thời gian làm việc cụ thể, và phải bằng văn bản."
+Mã quy tắc ứng xử áp dụng cho ai?,"Mã quy tắc ứng xử áp dụng cho thành viên cộng đồng và thành viên đội ngũ Clef trong tất cả các cộng đồng Clef trực tuyến, tại văn phòng Clef và tại tất cả sự kiện do Clef tổ chức."
+Các nền tảng trực tuyến nào được đề cập trong mã quy tắc ứng xử?,"Các nền tảng trực tuyến được đề cập bao gồm nhưng không giới hạn ở IRC, hỗ trợ trò chuyện, nhóm Slack cộng đồng Clef, Twitter và Facebook."
+Cộng đồng của chúng ta cam kết tạo môi trường bao gồm cho ai?,"Mọi người, bất kể chủng tộc, dân tộc, quốc tịch, tôn giáo, màu da, giới tính (có hoặc không có hành vi tình dục và bao gồm thai kỳ, xu hướng tình dục liên quan đến trạng thái chuyển giới/giới tính, và phân biệt giới tính), nguồn gốc quốc gia, tuổi, khuyết tật (thể chất hoặc tinh thần), thông tin di truyền, xu hướng tình dục, giới tính, tình trạng làm cha mẹ, tình trạng hôn nhân, và quan điểm chính trị cũng như biểu hiện giới tính, tinh thần."
+Cộng đồng có bao gồm những người có khuyết tật tinh thần hay không?,"Có, cộng đồng bao gồm cả những người có khuyết tật tinh thần."
+Tình trạng hôn nhân có được xem xét trong việc tạo môi trường bao gồm không?,"Có, tình trạng hôn nhân được xem xét trong việc tạo môi trường bao gồm."
+Công ty có chính sách nào về việc đối xử với sự khác biệt về giới tính hay không?,Công ty tôn trọng sự đa dạng về giới tính và không phân biệt đối xử dựa trên giới tính hoặc biểu hiện giới tính.
+Liệu việc đề cập đến sự khác biệt giữa nhân viên có thể gây ra cảm giác bị cô lập không?,"Việc đề cập đến sự khác biệt có thể khiến nhân viên cảm thấy bị cô lập, do đó cần cân nhắc kỹ khi nói về những điểm khác biệt này."
+Công ty có chấp nhận hành vi quấy rối thành viên cộng đồng dưới bất kỳ hình thức nào không?,"Không, công ty không chấp nhận hành vi quấy rối thành viên cộng đồng dưới bất kỳ hình thức nào."
+Những hành vi nào được coi là quấy rối theo chính sách của công ty?,"Quấy rối bao gồm những bình luận xúc phạm liên quan đến các nhóm được bảo vệ, hình ảnh tình dục trong không gian công cộng, gây sợ hãi cố ý, theo dõi, chụp ảnh hoặc ghi âm/ghi hình trái với sự đồng ý hợp lý, làm gián đoạn hoạt động một cách kéo dài, tiếp xúc vật lý không phù hợp, và sự chú ý tình dục không mong muốn."
+Liệu hành vi quấy rối có cần được xác nhận là không mong muốn bởi người khác ngoài nạn nhân không?,"Không, hành vi quấy rối chỉ cần được xác nhận là không mong muốn bởi nạn nhân."
+Những loại trò đùa nào bị coi là không phù hợp tại nơi làm việc?,"Trò đùa mang tính phân biệt giới tính, chủng tộc và những trò đùa gây xúc phạm khác đều bị coi là không phù hợp."
+Chính sách của công ty về những trò đùa gây xúc phạm như thế nào?,Những trò đùa gây xúc phạm sẽ không được dung thứ dưới bất kỳ hình thức nào.
+"Nếu tôi bị quấy rối, tôi nên liên hệ với ai?",Bạn nên liên hệ với B (b@getclef.com) hoặc một trong những người sáng lập khác ngay lập tức.
+Những người vi phạm quy tắc về quấy rối sẽ bị xử lý như thế nào?,Những người vi phạm quy tắc về quấy rối có thể bị xử phạt hoặc loại bỏ khỏi không gian cộng đồng.
+"Khi được yêu cầu ngừng hành vi quấy rối, tôi cần phải làm gì?","Khi được yêu cầu ngừng hành vi quấy rối, bạn cần phải tuân thủ ngay lập tức."
+Chính sách khiếu nại của Clef nhằm mục đích gì?,"Chính sách khiếu nại của Clef nhằm tạo ra một môi trường làm việc an toàn, tự do khỏi những mối đe dọa đến sức khỏe, an toàn và hạnh phúc của người lao động."
+Những hành vi nào bị coi là vi phạm chính sách an toàn và sức khỏe tại Clef?,"Những hành vi bị coi là vi phạm bao gồm quấy rối, phân biệt đối xử, vi phạm quy định về an toàn và sức khỏe, và bạo lực."
+"Nếu tôi có vấn đề công việc cần thảo luận, tôi nên liên hệ với ai?","Bạn nên thảo luận với người sáng lập mà bạn báo cáo trực tiếp. Nếu không thoải mái, bạn có thể nói chuyện với bất kỳ người sáng lập nào."
+Chính sách cửa mở của Clef có ý nghĩa gì?,"Chính sách cửa mở của Clef khuyến khích nhân viên báo cáo các vấn đề liên quan đến công việc. Bạn có thể thảo luận về bất kỳ câu hỏi, mối quan tâm, ý tưởng hoặc vấn đề nào liên quan đến công việc với người sáng lập mà bạn báo cáo trực tiếp, hoặc bất kỳ người sáng lập nào khác nếu bạn không cảm thấy thoải mái."
+"Nếu tôi chứng kiến hành vi không phù hợp tại nơi làm việc, tôi có thể báo cáo cho ai?",Bạn có thể báo cáo cho B (b@getclef.com) hoặc bất kỳ người sáng lập nào của Clef.
+Có cần phải báo cáo những vấn đề không được đề cập trong chính sách viết sẵn của công ty không?,"Có, chúng tôi khuyến khích nhân viên báo cáo bất kỳ khiếu nại nào tại nơi làm việc, kể cả những vấn đề không được đề cập trong chính sách viết sẵn."
+"Khi có khiếu nại, ai sẽ quyết định cách xử lý?",Các nhà sáng lập sẽ họp và quyết định cách xử lý.
+"Nếu một trong những nhà sáng lập là đối tượng của khiếu nại, ai sẽ quyết định cách xử lý?",Những nhà sáng lập còn lại sẽ quyết định cách xử lý.
+Trong trường hợp nào sẽ có điều tra từ bên ngoài?,Bất kỳ báo cáo về hành vi quấy rối hoặc vi phạm nghiêm trọng của nhà sáng lập đều sẽ kích hoạt điều tra từ bên ngoài.
+"Nếu tôi cảm thấy mình bị đối xử tiêu cực sau khi phàn nàn, tôi nên làm gì?",Bạn nên báo cáo ngay lập tức cho các nhà sáng lập.
+Công ty có cho phép trả thù những nhân viên phàn nàn hay tham gia điều tra không?,Công ty sẽ không tham gia hoặc cho phép trả thù bất kỳ nhân viên nào phàn nàn hoặc tham gia điều tra một cách thiện chí.
+"Hiện nay, Clef có bộ phận nào độc lập để xử lý khiếu nại không?","Hiện nay, Clef còn quá nhỏ để có một nhóm hoặc bộ phận độc lập có thể xử lý khiếu nại."
+"Khi có khiếu nại liên quan đến các nhà sáng lập, họ sẽ làm gì?","Các nhà sáng lập sẽ cố gắng giữ nhau chịu trách nhiệm. Nếu cần thiết, họ sẽ mời một bên thứ ba tiến hành điều tra kỹ lưỡng và đề xuất biện pháp khắc phục."
+Mục tiêu chính của chính sách về ma túy và rượu bia tại Clef là gì?,"Mục tiêu chính là tạo ra một môi trường làm việc an toàn, thoải mái và năng suất cho mọi người."
+Chính sách này nhằm ngăn chặn điều gì?,"Chính sách này nhằm ngăn chặn và tránh tình trạng quấy rối, đồng thời đảm bảo môi trường làm việc cảm thấy an toàn."
+Tại sao Clef lại quan tâm đến vấn đề ma túy và rượu bia trong công ty?,"Bởi vì ma túy và rượu bia có thể tạo ra một văn hóa quấy rối hoặc khiến một số nhân viên cảm thấy không an toàn, mặc dù chúng cũng có thể giúp tăng cường tình bạn và sự gắn kết giữa các nhân viên khác."
+Trách nhiệm của nhân viên trong việc đảm bảo môi trường làm việc thoải mái và an toàn là gì?,Mỗi nhân viên có trách nhiệm đảm bảo rằng hành vi cá nhân của họ không làm ai cảm thấy bất thoải mái hoặc không an toàn.
+Nhân viên sẽ bị xử lý như thế nào nếu vi phạm chính sách này?,"Nhân viên vi phạm chính sách có thể bị kỷ luật, bao gồm cả việc sa thải."
+Khi nào được phép mang rượu bia vào văn phòng?,"Rượu bia có thể được mang vào văn phòng để tổ chức các sự kiện như thành công, sinh nhật hoặc các cột mốc khác, nhưng chỉ dưới dạng bia hoặc rượu vang."
+Công ty Clef có mục tiêu gì khi theo dõi nhân viên?,Công ty Clef có mục tiêu theo dõi nhân viên ở mức tối thiểu để nhân viên cảm thấy chủ động trong không gian làm việc cá nhân và thoải mái tại văn phòng.
+Trong trường hợp nào công ty có quyền kiểm tra tài sản công ty?,Công ty có quyền kiểm tra tài sản công ty nếu quản lý phát hiện nhân viên mang vũ khí đến nơi làm việc hoặc trộm cắp tài sản công ty.
+Những tài sản nào của công ty có thể bị kiểm tra?,"Các tài sản của công ty như bàn làm việc, laptop và các thiết bị khác có thể bị kiểm tra."
+Công ty có quyền tìm kiếm tài sản của công ty khi nào?,"Công ty có quyền tìm kiếm tài sản của công ty bất cứ lúc nào, mà không cần báo trước."
+Nhân viên có quyền riêng tư trong không gian làm việc của mình không?,Nhân viên không có quyền riêng tư trong không gian làm việc của mình trên bất kỳ tài sản nào thuộc sở hữu của Clef.
+"Nếu tôi dùng ổ khóa cho tài sản của công ty, tôi cần làm gì?","Nếu bạn dùng ổ khóa cho bất kỳ tài sản nào của công ty, bạn phải cung cấp một chìa khóa sao cho công ty."
+Công ty có giám sát hoạt động email và internet của nhân viên không?,"Công ty không giám sát chủ động, nhưng có quyền và khả năng xem xét việc sử dụng email và internet của nhân viên để bảo vệ an toàn, sức khỏe của nhân viên và lợi ích của công ty."
+Nhân viên có nên mong đợi sự riêng tư khi sử dụng email và internet của công ty không?,"Nhân viên không nên mong đợi sự riêng tư khi sử dụng email và internet của công ty, vì đây là tài nguyên của công ty và được quản lý theo chính sách công ty."
+Tại sao công ty có quyền xem xét việc sử dụng email và internet của nhân viên?,"Công ty có quyền xem xét để bảo vệ an toàn, sức khỏe của nhân viên và bảo vệ tài sản, lợi ích của công ty."
+Email gửi từ địa chỉ email Clef có thuộc sở hữu của ai?,Email gửi từ địa chỉ email Clef thuộc sở hữu của Clef.
+Công ty có quyền truy cập và giám sát email của nhân viên không?,"Công ty có quyền truy cập, giám sát, đọc và/hoặc sao chép email của nhân viên bất cứ lúc nào, vì bất kỳ lý do nào."
+Nhân viên có thể mong đợi sự riêng tư khi gửi email từ địa chỉ email Clef không?,"Nhân viên không nên mong đợi sự riêng tư cho bất kỳ email nào gửi từ địa chỉ email Clef, kể cả những email được đánh dấu là 'cá nhân' hoặc 'riêng tư'."
+Email công ty có được sử dụng cho mục đích cá nhân hay không?,"Email công ty chủ yếu dành cho công việc chính thức của Công ty. Tuy nhiên, bạn có thể sử dụng để gửi một số tin nhắn cá nhân với điều kiện phải cẩn trọng về số lượng và loại tin nhắn."
+Có quy định gì về việc sử dụng email cá nhân trong giờ làm việc không?,Bạn phải đảm bảo rằng việc sử dụng email cá nhân không ảnh hưởng đến công việc và hiệu suất làm việc của bạn.
+Các quy tắc ứng xử có áp dụng cho việc sử dụng email không?,Tất cả các quy tắc ứng xử đều áp dụng cho việc sử dụng email.
+Các quy định về hành vi có áp dụng cho việc sử dụng email của nhân viên không?,"Có, tất cả các chính sách và quy định về hành vi đều áp dụng cho việc sử dụng hệ thống email của nhân viên."
+Nhân viên có được phép gửi những thông điệp quấy rối hoặc phân biệt đối xử qua email không?,"Không, nhân viên không được phép sử dụng hệ thống email để gửi những thông điệp quấy rối hoặc phân biệt đối xử, bao gồm cả nội dung tình dục rõ ràng hoặc hình ảnh khiêu dâm."
+Nhân viên có được phép tiết lộ bí mật kinh doanh của công ty qua email không?,"Không, nhân viên không được phép sử dụng hệ thống email để tiết lộ bí mật kinh doanh của công ty."
+"Khi sử dụng địa chỉ email của Clef, tôi cần lưu ý điều gì?","Khi sử dụng địa chỉ email của Clef, bạn cần đảm bảo rằng các thông điệp của bạn chuyên nghiệp và phù hợp về giọng điệu và nội dung, vì chúng có thể được in, lưu trữ và chuyển tiếp cho người nhận không mong muốn."
+Tại sao tôi cần cẩn thận khi gửi email hoặc cập nhật trên mạng xã hội của Clef?,"Bạn cần cẩn thận vì mặc dù email hoặc mạng xã hội có thể dường như là cuộc trò chuyện riêng tư, nhưng chúng có thể bị in, lưu trữ và chuyển tiếp cho người nhận không mong muốn."
+Tôi có nên gửi những thông điệp mà tôi không muốn đội ngũ của Clef thấy không?,"Không, bạn không nên gửi bất kỳ thông điệp nào mà bạn không muốn đội ngũ của Clef thấy."
+Nhân viên nên làm gì để tránh virus qua email?,"Nhân viên không nên mở phụ lục email từ người hoặc doanh nghiệp mà họ không nhận diện, đặc biệt nếu email có vẻ đã được chuyển tiếp nhiều lần hoặc có tiêu đề không tồn tại hoặc kỳ lạ."
+"Nếu nhận được email từ người quen nhưng có phụ lục kỳ lạ, nhân viên có nên mở không?","Không, nếu phụ lục có tên kỳ lạ hoặc không được đề cập trong nội dung email, nhân viên không nên mở vì nó có thể đã được truyền tự động mà người gửi không biết."
+"Tại sao nhân viên không nên mở phụ lục email có tiêu đề kỳ lạ, ngay cả khi biết người gửi?","Bởi vì phụ lục đó có thể đã được truyền tự động mà người gửi không biết, do đó có thể chứa virus hoặc mối đe dọa khác."
+"Nếu tôi nghi ngờ máy tính của mình bị nhiễm virus, tôi cần làm gì?",Bạn phải thông báo cho các nhà sáng lập ngay lập tức.
+Tôi có được phép chia sẻ mật khẩu email của mình với đồng nghiệp hoặc người thân không?,"Không, bạn không được chia sẻ mật khẩu email của mình với bất kỳ ai, kể cả đồng nghiệp hoặc người thân."
+Công ty có quyền giám sát việc sử dụng Internet của nhân viên không?,"Có, công ty có quyền giám sát việc sử dụng Internet của nhân viên bất cứ lúc nào."
+Nhân viên có thể mong đợi sự riêng tư khi sử dụng Internet tại công ty không?,"Không, nhân viên không nên mong đợi sự riêng tư khi sử dụng Internet, bao gồm các trang web họ truy cập, thời gian trực tuyến và các cuộc giao tiếp của họ."
+Công ty Clef có ủng hộ sự đa dạng và bao gồm hay không?,Công ty Clef ủng hộ sự đa dạng và bao gồm trong các giá trị cốt lõi của mình.
+Clef có phân biệt đối xử dựa trên giới tính hay không?,Clef không phân biệt đối xử dựa trên giới tính hoặc bất kỳ đặc điểm cá nhân nào khác được bảo vệ bởi luật pháp.
+Những đặc điểm cá nhân nào được bảo vệ khỏi sự phân biệt đối xử tại Clef?,"Tại Clef, những đặc điểm cá nhân được bảo vệ khỏi sự phân biệt đối xử bao gồm chủng tộc, màu da, tôn giáo, danh tính giới tính, giới tính, xu hướng tình dục, thai sản, nguồn gốc quốc gia, dòng dõi, quốc tịch, tuổi, tình trạng hôn nhân, khuyết tật vật lý, khuyết tật tâm thần, tình trạng sức khỏe, tình trạng quân sự, và bất kỳ đặc điểm nào khác được bảo vệ bởi luật liên bang, tiểu bang hoặc địa phương."
+Công ty có hỗ trợ người lao động hoặc ứng viên khuyết tật không?,"Có, khi cần thiết, công ty sẽ hỗ trợ hợp lý cho người lao động và ứng viên khuyết tật nếu họ đủ điều kiện để thực hiện an toàn tất cả các chức năng thiết yếu của vị trí."
+Điều kiện nào để công ty hỗ trợ người lao động hoặc ứng viên khuyết tật?,Người lao động hoặc ứng viên khuyết tật phải đủ điều kiện để thực hiện an toàn tất cả các chức năng thiết yếu của vị trí.
+Chính sách lương và cổ phần áp dụng cho bao nhiêu nhân viên đầu tiên tại Clef?,Chính sách này áp dụng cho 10 nhân viên đầu tiên tại Clef.
+"Sau khi tuyển dụng 10 người, công ty sẽ làm gì với bảng lương và số lượng cổ phần?","Sau khi tuyển dụng 10 người, công ty sẽ có khả năng xem xét và điều chỉnh bảng lương và số lượng cổ phần."
+Tại sao lương bổng lại quan trọng đối với Clef?,"Lương bổng công bằng là yếu tố quan trọng để Clef trở thành nơi làm việc hấp dẫn và giúp nhân viên có cuộc sống hạnh phúc, khỏe mạnh cả trong và ngoài văn phòng."
+Mục tiêu của Clef về lương bổng là gì?,"Mục tiêu của Clef về lương bổng là đảm bảo rằng nó đủ cho những người hào hứng làm việc tại đây (do môi trường, sản phẩm và cơ hội phát triển) và sau đó trở nên không còn là mối quan tâm chính."
+Clef có sử dụng lương bổng như một công cụ động viên không?,Clef không muốn sử dụng lương bổng như một công cụ động viên vì điều này có thể khuyến khích những loại tối ưu hóa sai lầm.
+Tại sao công ty sử dụng bảng tiêu chí chuẩn để xác định lương cho nhân viên?,"Để tránh thiên vị và đồng bộ hóa mục tiêu, công ty sử dụng bảng tiêu chí chuẩn để xác định lương cho tất cả nhân viên."
+Công ty chia nhân viên thành bao nhiêu nhóm dựa trên bảng tiêu chí lương?,Công ty chia nhân viên thành bốn nhóm dựa trên bảng tiêu chí lương.
+Những yếu tố nào được sử dụng để phân loại nhân viên trong bảng tiêu chí lương?,Những yếu tố được sử dụng để phân loại nhân viên trong bảng tiêu chí lương là mô tả công việc và số năm kinh nghiệm.
+Mức lương cho vị trí kỹ thuật có hơn 5 năm kinh nghiệm là bao nhiêu?,Mức lương cho vị trí kỹ thuật có hơn 5 năm kinh nghiệm là $120k.
+Kinh nghiệm được tính như thế nào tại Clef?,"Kinh nghiệm được tính là bất kỳ thời gian làm việc trong cùng loại công việc tại một công ty tương tự Clef, sao cho kinh nghiệm đó liên quan đến công việc được đề xuất tại Clef."
+Mức lương cho vị trí phi kỹ thuật có ít hơn 5 năm kinh nghiệm là bao nhiêu?,Mức lương cho vị trí phi kỹ thuật có ít hơn 5 năm kinh nghiệm là $70k.
+Nhân viên có thể chọn giảm lương để nhận thêm cổ phần không?,"Có, nhân viên có thể chọn giảm 5.000 đô la lương để nhận thêm khoảng 0,1% cổ phần."
+Lương của ba nhà sáng lập Clef là bao nhiêu mỗi năm?,Lương của ba nhà sáng lập Clef là 50.000 đô la mỗi năm.
+Mỗi nhân viên sẽ được nhận bao nhiêu cổ phiếu Clef?,"Mỗi nhân viên sẽ được nhận 41,963 cổ phiếu Clef."
+"Nếu nhân viên chọn giảm lương 5.000 USD/năm, họ sẽ nhận thêm bao nhiêu cổ phiếu?","Nếu nhân viên chọn giảm lương 5.000 USD/năm, họ sẽ nhận thêm 4,663 cổ phiếu."
+"So với ngành, quyền lợi cổ phần của công ty có gì khác biệt?","Quyền lợi cổ phần của công ty lớn hơn so với tiêu chuẩn ngành, nhưng thời gian vesting kéo dài hơn, lên đến 6 năm thay vì 4 năm."
+Thời gian vesting và cliff của quyền lợi cổ phần tại công ty là bao lâu?,Thời gian vesting là 6 năm với 1 năm cliff.
+Tại sao Clef lại chọn cách phân chia quyền sở hữu công ty trong thời gian dài?,"Clef muốn xây dựng một đội ngũ gắn bó lâu dài và phát triển cùng công ty, vì vậy việc phân chia quyền sở hữu lớn hơn trong thời gian dài phù hợp với mục tiêu này."
+"Nếu nhân viên rời Clef trước 6 năm, họ sẽ nhận được gì về quyền sở hữu?","Nếu nhân viên rời Clef trước 6 năm, họ vẫn sẽ sở hữu một phần của Clef nhiều hơn so với trường hợp công ty phân chia quyền sở hữu ít hơn nhưng nhanh hơn."
+Chính sách này áp dụng cho ai?,"Chính sách này áp dụng cho nhân viên làm việc tại văn phòng trong hầu hết thời gian làm việc trong tuần, bao gồm những trường hợp làm việc từ xa thường xuyên hoặc làm việc từ xa trong tối đa một tuần mỗi tháng."
+Chính sách này có áp dụng cho nhân viên làm việc hoàn toàn từ xa không?,"Không, chính sách này không áp dụng cho nhân viên làm việc hoàn toàn từ xa."
+Chính sách này có áp dụng cho đội ngũ phân tán không?,"Không, chính sách này không áp dụng cho đội ngũ phân tán."
+Khi nào công ty sẽ xem xét lại tình hình làm việc từ xa?,"Khi cấu trúc công ty hiện tại thay đổi, chúng ta sẽ xem xét lại các tình huống liên quan đến làm việc từ xa."
+Làm việc từ xa được coi là gì trong công ty?,Làm việc từ xa được coi là một đặc quyền đi kèm với cả lợi ích và chi phí.
+Lợi ích chính của việc làm việc linh hoạt là gì?,"Lợi ích chính là chúng ta có thể làm việc khi muốn và ở đâu muốn, giúp chúng ta làm việc tốt nhất và đóng góp cho đội ngũ trong một khung làm việc tự thiết kế, giúp cuộc sống trở nên ý nghĩa hơn."
+Nhược điểm chính của việc làm việc từ xa là gì?,Nhược điểm chính là vấn đề giao tiếp: làm việc ngoài văn phòng đòi hỏi nhiều công việc cơ bản và phức tạp hơn cho tất cả nhân viên.
+Việc làm việc từ xa yêu cầu điều gì từ nhân viên?,Việc làm việc từ xa yêu cầu cả nhân viên làm việc từ xa và nhân viên tại văn phòng phải nỗ lực hơn để giữ đồng bộ và hợp tác hiệu quả.
+"Khi làm việc từ xa, tôi có được phép làm việc ít hơn so với khi làm việc tại văn phòng không?","Không, một ngày làm việc từ xa không ngắn hơn một ngày làm việc tại văn phòng."
+Làm việc từ xa có được coi là lý do để bỏ lỡ các cam kết như họp hoặc hạn chót không?,"Không, làm việc từ xa không phải là lý do để bỏ lỡ các cam kết như họp hoặc hạn chót."
+"Khi làm việc từ xa, tôi cần phải đảm bảo điều gì để không ảnh hưởng đến công việc của đồng nghiệp?","Khi làm việc từ xa, bạn cần đảm bảo rằng công việc của bạn không kém hiệu quả và không ảnh hưởng đến công việc của đồng nghiệp, đồng thời vượt quá mong đợi của họ."
+Trách nhiệm của nhân viên văn phòng đối với nhân viên làm việc từ xa là gì?,Nhân viên văn phòng có trách nhiệm điều chỉnh lịch họp phù hợp với múi giờ khác nhau và quản lý kỳ vọng về phản hồi ngay lập tức.
+Nhân viên văn phòng cần làm gì để hỗ trợ nhân viên làm việc từ xa?,Nhân viên văn phòng cần sẵn sàng lịch họp dựa trên sự chênh lệch múi giờ và điều chỉnh kỳ vọng về phản hồi nhanh chóng.
+Các hướng dẫn trong tài liệu này giúp gì cho việc làm việc từ xa?,Các hướng dẫn trong tài liệu này cung cấp công cụ để làm cho việc làm việc từ xa dễ dàng hơn.
+"Ngoài việc sử dụng công cụ, nhân viên cần làm gì để làm việc từ xa hiệu quả?",Nhân viên cần bổ sung thêm công việc để làm cho việc làm việc từ xa hiệu quả cho cả người làm việc từ xa và đội ngũ còn lại.
+Chính sách hỗ trợ làm việc từ xa tại Clef áp dụng cho ai?,"Hầu hết chính sách hỗ trợ làm việc từ xa tại Clef áp dụng cho mọi người tại Clef, không chỉ riêng nhân viên làm việc từ xa."
+Khi nào được coi là làm việc từ xa kéo dài?,Làm việc từ xa kéo dài bao gồm bất kỳ khoảng thời gian nào dài hơn 2 ngày hoặc bất kỳ khoảng thời gian nào chúng ta làm việc từ một địa điểm không thường xuyên.
+Làm việc từ xa trong 3 ngày có được coi là làm việc từ xa kéo dài không?,"Có, làm việc từ xa trong 3 ngày được coi là làm việc từ xa kéo dài."
+Làm việc từ xa ở một địa điểm không thường xuyên có được coi là làm việc từ xa kéo dài không?,"Có, làm việc từ xa ở một địa điểm không thường xuyên được coi là làm việc từ xa kéo dài."
+Tôi cần làm gì nếu muốn làm việc từ xa hơn hai ngày liên tục?,Bạn cần tuân theo các hướng dẫn bổ sung nếu làm việc từ xa hơn hai ngày liên tục.
+Có cần tuân theo hướng dẫn bổ sung nếu tôi làm việc từ xa tại nhà người yêu ở thành phố khác không?,"Có, bạn cần tuân theo các hướng dẫn bổ sung nếu làm việc từ xa tại một nơi không phải nhà của bạn, như nhà người yêu ở thành phố khác."
+Làm việc từ xa trong thời gian dài có phải là một đặc quyền không?,"Có, làm việc từ xa trong thời gian dài là một đặc quyền và yêu cầu bạn phải nỗ lực nhiều hơn để đảm bảo hiệu quả công việc của đội ngũ."
+Tôi cần làm gì trước khi làm việc từ xa trong thời gian dài?,Bạn cần có sự đồng ý của quản lý và chuẩn bị kế hoạch về cách xử lý các vấn đề hậu cần và giao tiếp bổ sung liên quan đến làm việc từ xa kéo dài.
+Khi nào tôi nên thông báo cho quản lý về việc làm việc từ xa?,"Bạn nên thông báo cho quản lý ít nhất hai tuần trước khi bạn dự định làm việc từ xa, trước khi bạn đặt bất kỳ lịch trình di chuyển nào."
+Điều kiện gì để được làm việc từ xa trong thời gian dài?,"Để làm việc từ xa trong thời gian dài, bạn cần đã chứng minh trong quá khứ rằng bạn hiệu quả khi làm việc từ xa."
+Tôi cần thông báo cho đội của mình trước bao lâu khi làm việc từ xa?,Bạn nên thông báo cho mọi người trong đội ít nhất 7 ngày để họ có thể lên kế hoạch họp và công việc tương ứng.
+Cách nào để đảm bảo mọi người trong đội đều biết tôi sẽ làm việc từ xa?,"Bạn nên đăng thông báo trong kênh #office với thẻ @channel, giao tiếp trực tiếp với những người bạn làm việc gần gũi nhất, và cập nhật lịch làm việc của mình."
+Tôi cần làm gì để chuẩn bị trước khi làm việc từ xa?,"Bạn cần thông báo cho đội của mình, cập nhật lịch làm việc, và giao tiếp trực tiếp với những người bạn làm việc gần gũi nhất."
+Trách nhiệm của tôi khi làm việc từ xa là gì?,"Trách nhiệm của bạn là đảm bảo hiệu quả công việc và không để đồng đội thất vọng, bất kể bạn làm việc từ đâu."
+Tôi cần chuẩn bị những gì trước khi làm việc từ xa?,"Bạn cần lên kế hoạch và chuẩn bị trong thời gian rảnh trước khi rời đi làm việc từ xa, đảm bảo mọi thứ cần thiết đều sẵn sàng."
+"Khi làm việc từ xa, tôi có được đảm bảo kết nối internet ổn định không?","Có, bạn sẽ có kết nối wifi nhanh và ổn định."
+Tôi có được cung cấp không gian riêng tư để tham gia cuộc họp qua điện thoại khi làm việc từ xa không?,"Có, bạn sẽ có nơi yên tĩnh và riêng tư để thực hiện cuộc gọi và họp."
+Công ty Clef hỗ trợ bao nhiêu tiền cho chi phí không gian làm việc chung mỗi ngày?,Clef hỗ trợ lên đến 10 đô la mỗi ngày cho chi phí không gian làm việc chung.
+Khi nào công ty sẽ xem xét lại chính sách hỗ trợ này?,Công ty sẽ xem xét lại chính sách hỗ trợ này khi Clef đạt được lợi nhuận hoặc huy động vốn vòng tiếp theo.
+Nhân viên có thể đưa ra những lo ngại gì trong thời gian này?,"Nhân viên có thể đưa ra những lo ngại về các rào cản hạn chế khả năng làm việc hiệu quả của họ, bao gồm các vấn đề về cấu trúc nội bộ của Clef, cách thức làm việc của đồng nghiệp, hoặc bất kỳ yếu tố nào khác ảnh hưởng đến công việc của họ."
+Quản lý nên làm gì trong thời gian này?,Quản lý nên đưa ra phản hồi cụ thể về việc nhân viên có đang thực hiện đúng trách nhiệm khi làm việc từ xa hay không.
+Thời gian này dành cho mục đích gì?,Thời gian này dành để nhân viên có thể bày tỏ những lo ngại về các rào cản hạn chế khả năng làm việc hiệu quả và để quản lý đưa ra phản hồi cụ thể về việc nhân viên có đang thực hiện đúng trách nhiệm khi làm việc từ xa hay không.
+"Trước khi làm việc từ xa trong thời gian dài, tôi cần làm gì?","Trước khi làm việc từ xa trong thời gian dài, bạn cần lên lịch họp hồi cứu với quản lý của mình cho khi bạn trở lại."
+Mục đích của cuộc họp hồi cứu là gì?,"Mục đích của cuộc họp hồi cứu là để tổng kết những điều đã và chưa thành công trong thời gian bạn vắng mặt, và đảm bảo rằng những bài học rút ra được áp dụng vào cách làm việc tại Clef."
+"Nếu một nhân viên không thể duy trì trách nhiệm khi làm việc từ xa, quản lý sẽ làm gì?",Quản lý sẽ làm việc với nhân viên qua các buổi 1:1 và các phiên hồi cứu để giải quyết vấn đề.
+"Nếu vấn đề vẫn không được giải quyết, quản lý có quyền làm gì?",Quản lý có quyền thu hồi quyền làm việc từ xa của nhân viên.
+Khi nào những thay đổi trong Sổ Tay Nhân Viên sẽ có hiệu lực?,Những thay đổi trong Sổ Tay Nhân Viên sẽ có hiệu lực vào ngày được ghi trong đoạn văn bản.
+"Nếu tôi có câu hỏi về nội dung của Sổ Tay Nhân Viên, tôi nên làm gì?","Nếu bạn có câu hỏi về nội dung của Sổ Tay Nhân Viên, bạn nên hỏi một trong các nhà sáng lập để được giải thích rõ hơn."
+Các nội dung trong quyển cẩm nang có tạo ra bất kỳ nghĩa vụ pháp lý nào về việc làm hay không?,"Không, các nội dung trong quyển cẩm nang không tạo ra bất kỳ nghĩa vụ pháp lý hoặc hợp đồng về việc làm nào."
+"Công ty có quyền thay đổi các chính sách, lợi ích, hoặc thực hành được mô tả trong quyển cẩm nang không?","Có, công ty có quyền thay đổi, bãi bỏ, hoặc sửa đổi bất kỳ chính sách, lợi ích, hoặc thực hành nào được mô tả trong quyển cẩm nang, ngoại trừ chính sách tuyển dụng tự nguyện."
+Tôi có trách nhiệm gì đối với nội dung của quyển cẩm nang?,Bạn có trách nhiệm đọc và làm quen với nội dung của quyển cẩm nang.
+Tôi cần làm gì nếu tôi có thắc mắc về nội dung trong Sổ tay Nhân viên?,Bạn cần hỏi một trong những người sáng lập để được giải thích rõ hơn.
+Tôi có cần phải đọc và hiểu Sổ tay Nhân viên không?,"Có, bạn cần phải đọc và hiểu các quy định trong Sổ tay Nhân viên."
+Các nội dung trong sổ tay nhân viên có tạo ra nghĩa vụ pháp lý về hợp đồng lao động không?,"Không, các nội dung trong sổ tay nhân viên không tạo ra bất kỳ nghĩa vụ pháp lý hay hợp đồng lao động nào."
+"Công ty có quyền thay đổi chính sách, lợi ích hoặc quy định được mô tả trong sổ tay nhân viên không?","Có, công ty có quyền thay đổi, bãi bỏ hoặc sửa đổi bất kỳ chính sách, lợi ích hoặc quy định nào được mô tả trong sổ tay nhân viên, ngoại trừ chính sách tuyển dụng tự nguyện."
+Tôi có thể chấm dứt hợp đồng làm việc với Clef bất cứ lúc nào mà không cần lý do hay thông báo trước không?,"Có, bạn có thể chấm dứt hợp đồng làm việc với Clef bất cứ lúc nào mà không cần lý do hay thông báo trước."
+"Nếu có bất kỳ thông tin nào trong sổ tay nhân viên mâu thuẫn với điều khoản về việc chấm dứt hợp đồng, thì điều khoản nào sẽ được áp dụng?","Điều khoản về việc chấm dứt hợp đồng tại đây sẽ được áp dụng, và bất kỳ thông tin mâu thuẫn nào trong sổ tay nhân viên không được coi là có hiệu lực."
+Điều khoản về việc chấm dứt hợp đồng có thể được thay đổi như thế nào?,Điều khoản về việc chấm dứt hợp đồng chỉ có thể được thay đổi bằng văn bản có chữ ký của bạn và Giám đốc Điều hành (CEO).
+Sổ tay nhân viên Clef được lưu trữ ở đâu?,Sổ tay nhân viên Clef được lưu trữ trực tuyến tại github.com/clef/handbook.
+Sổ tay nhân viên Clef bao gồm những chính sách nào?,Sổ tay nhân viên Clef chỉ bao gồm những chính sách được liệt kê dưới đây.
+Tôi có thể tìm thấy thêm thông tin chi tiết về công việc tại Clef ở đâu?,Bạn có thể tìm thấy thêm thông tin chi tiết trong Sổ tay Nhân viên tại địa chỉ: https://github.com/clef/handbook.
+"Nếu tôi có câu hỏi không được đề cập trong thư mời hoặc Sổ tay Nhân viên, tôi nên làm gì?","Nếu bạn có câu hỏi không được đề cập trong thư mời hoặc Sổ tay Nhân viên, hãy liên hệ với người gửi thư để được hỗ trợ."
+Tôi sẽ nhận được mức lương khởi điểm là bao nhiêu?,Mức lương khởi điểm của bạn là SALARY mỗi năm.
+Số cổ phiếu tôi được quyền mua là bao nhiêu và chúng sẽ được phân bổ như thế nào?,"Bạn sẽ được quyền mua SHARES cổ phiếu của Clef, và số cổ phiếu này sẽ được phân bổ trong vòng sáu năm, với một năm đầu tiên không được phân bổ."
+Có tài liệu nào giải thích về quyền lợi cổ phần tại công ty khởi nghiệp không?,"Có, chúng tôi đã tạo một hướng dẫn giải thích cách phát hành, thực hiện quyền chọn và giá trị tiềm năng của chúng nếu Clef thành công."
+Quyền lợi lớn nhất khi làm việc tại Clef là gì?,Quyền lợi lớn nhất khi làm việc tại Clef là những đồng nghiệp mới tuyệt vời.
+Nhân viên còn được hưởng những quyền lợi khác gì từ kế hoạch phúc lợi của công ty?,Nhân viên còn được hưởng tất cả các quyền lợi áp dụng cho mình từ kế hoạch phúc lợi của công ty.
+Tôi có thể làm việc thêm ở nơi khác không?,"Không, bạn không nên nhận bất kỳ công việc khác mà không thảo luận với Clef trước."
+Tôi có thể giúp đỡ hoặc đầu tư vào đối thủ của Clef không?,"Không, bạn phải tránh mọi công việc có thể tạo ra xung đột lợi ích, bao gồm giúp đỡ hoặc đầu tư vào đối thủ của Clef, trừ khi được Clef phê duyệt trước."
+Công ty Clef có quyền thay đổi điều khoản và điều kiện làm việc của tôi không?,"Có, Clef có quyền thay đổi điều khoản và điều kiện làm việc, bao gồm vị trí, lương và lợi ích, tùy thuộc vào sự phát triển và nhu cầu của công ty."
+Clef có thể chấm dứt hợp đồng làm việc với tôi bất cứ lúc nào không?,"Có, Clef có quyền chấm dứt hợp đồng làm việc với bạn bất cứ lúc nào, với hoặc không cần thông báo trước, và vì bất kỳ lý do nào (hoặc không có lý do)."
+"Nếu có mâu thuẫn giữa thư này và Sổ tay Nhân viên, cái nào sẽ được áp dụng?",Thư này sẽ được áp dụng nếu có mâu thuẫn.
+Sổ tay Nhân viên có vai trò gì trong công ty Clef?,"Sổ tay Nhân viên là tài liệu chính thức quy định các chính sách và thực hành làm việc tại Clef, trừ khi có mâu thuẫn với thư cá nhân."
+Tài liệu này có hiệu lực pháp lý nếu tôi không ký tên không?,"Không, tài liệu này chỉ có hiệu lực khi bạn ký tên."
+Tôi cần làm gì trước khi tài liệu này có hiệu lực pháp lý?,"Trước khi tài liệu này có hiệu lực pháp lý, bạn cần điền vào Thỏa thuận Thông tin Sở hữu và Sáng chế (Proprietary Information and Inventions Agreement) và xác minh danh tính cũng như quyền hạn làm việc tại quốc gia đó."
+Thỏa thuận nào tôi cần điền để tài liệu này có hiệu lực?,Bạn cần điền vào Thỏa thuận Thông tin Sở hữu và Sáng chế (Proprietary Information and Inventions Agreement).
+Ban lãnh đạo công ty đã quyết định như thế nào về việc tuyển dụng tôi?,Ban lãnh đạo công ty đã quyết định rằng bạn là người phù hợp cho vị trí này.
+Cảm nhận của đội ngũ Clef về tôi qua quá trình phỏng vấn là gì?,Đội ngũ Clef rất vui mừng và tin tưởng rằng bạn là người phù hợp cho công việc này.
+Tôi có thể thay đổi các điều khoản trong thư này không?,Các điều khoản trong thư này chỉ có thể được thay đổi bằng thỏa thuận bằng văn bản có chữ ký của cả Clef và tôi.
+Thư này có phải là thỏa thuận hoàn chỉnh giữa tôi và Clef không?,"Đúng, thư này là thỏa thuận hoàn chỉnh và thay thế tất cả các thỏa thuận khác (trừ những thỏa thuận được đề cập trong thư này)."
+Tôi có cần dựa vào bất kỳ lời hứa nào khác ngoài những gì được ghi trong thư này không?,"Không, tôi ký thư này tự nguyện và không dựa vào bất kỳ lời hứa nào khác ngoài những gì được ghi trong thư này."
+Thỏa thuận này được gọi là gì?,Thỏa thuận này được gọi là Thỏa thuận Thông tin Sở hữu và Phát minh của Nhân viên (Employee Proprietary Information and Inventions Assignment Agreement).
+Các bên tham gia thỏa thuận này là ai?,"Các bên tham gia thỏa thuận này là Clef, Inc. (Công ty) và cá nhân ký tên (Nhân viên)."
+Nhân viên đồng ý với những hạn chế gì trong thỏa thuận này?,"Nhân viên đồng ý với các hạn chế được đặt lên việc sử dụng và phát triển thông tin sở hữu, công nghệ, ý tưởng."
+Nhân viên có được phép sử dụng Thông tin Sở hữu Trí tuệ của Công ty cho mục đích cá nhân không?,"Không, nhân viên phải giữ Thông tin Sở hữu Trí tuệ của Công ty trong sự bảo mật nghiêm ngặt và không được sử dụng hoặc tiết lộ thông tin này, ngoại trừ khi cần thiết để thực hiện trách nhiệm công việc hoặc được đại diện có thẩm quyền của Công ty viết giấy phép."
+Nhân viên có thể tiết lộ Thông tin Sở hữu Trí tuệ của Công ty cho bên thứ ba không?,"Không, nhân viên không được tiết lộ Thông tin Sở hữu Trí tuệ của Công ty cho bất kỳ ai, ngoại trừ khi cần thiết để thực hiện trách nhiệm công việc hoặc được đại diện có thẩm quyền của Công ty viết giấy phép."
+Nhân viên có cần giữ bí mật Thông tin Sở hữu Trí tuệ của Công ty sau khi kết thúc hợp đồng làm việc không?,"Có, nhân viên phải giữ bí mật Thông tin Sở hữu Trí tuệ của Công ty cả trong thời gian làm việc và sau khi kết thúc hợp đồng làm việc."
+Thông tin nào được coi là Thông tin Riêng tư của Công ty?,"Thông tin Riêng tư bao gồm tất cả thông tin liên quan đến hoạt động kinh doanh của Công ty hoặc các công ty liên kết, tư vấn viên, hoặc đối tác kinh doanh, trừ khi thông tin đó đã trở nên công khai và phổ biến trong các doanh nghiệp tương tự với Công ty."
+Thông tin nào không được coi là Thông tin Riêng tư?,Thông tin không được coi là Thông tin Riêng tư nếu: (i) thông tin đó đã trở nên công khai và phổ biến một cách hợp pháp; (ii) thông tin đó đã là kiến thức chung của nhân viên trước khi làm việc cho Công ty và có thể chứng minh bằng tài liệu; hoặc (iii)...
+Nhân viên cần chứng minh như thế nào để thông tin không được coi là Thông tin Riêng tư?,Nhân viên cần chứng minh rằng thông tin đó đã là kiến thức chung của họ trước khi làm việc cho Công ty và có thể chứng minh bằng tài liệu.
+Thông tin độc quyền bao gồm những gì?,"Thông tin độc quyền bao gồm, nhưng không giới hạn ở: dữ liệu kỹ thuật, nghiên cứu, ý tưởng hoặc kế hoạch sản phẩm hoặc dịch vụ, mã nguồn phần mềm và thiết kế, thuật toán, phát triển, phát minh, đơn đăng ký bằng sáng chế, sổ ghi chép văn phòng, quy trình, công thức, kỹ thuật, thiết kế và các tài liệu liên quan."
+Khi nào thông tin không được coi là thông tin độc quyền?,Thông tin không được coi là thông tin độc quyền khi: (i) thông tin đã được công bố rộng rãi và trở thành kiến thức chung; (ii) thông tin được chứng minh bằng tài liệu rằng nhân viên đã biết trước khi nhận từ công ty; (iii) thông tin được tiết lộ cho nhân viên không bị hạn chế bởi một bên thứ ba hợp pháp sở hữu thông tin và không học được từ công ty.
+Thông tin nào được coi là thông tin độc quyền của công ty?,Bất kỳ thông tin nào mà công ty cung cấp cho nhân viên và không thuộc các trường hợp ngoại lệ nêu trên đều được coi là thông tin độc quyền của công ty.
+Những loại thông tin kỹ thuật nào được đề cập trong đoạn văn?,"Thông tin kỹ thuật bao gồm quy trình, công thức, kỹ thuật, thiết kế và bản vẽ, thông tin cấu hình phần cứng, sơ đồ, công cụ phát triển, bản in máy tính, chương trình máy tính, bản vẽ thiết kế và hướng dẫn, mã điện tử, công thức và cải tiến, ý tưởng, phương pháp và kiến thức chuyên môn."
+Đoạn văn có đề cập đến những loại thông tin kinh doanh nào?,"Thông tin kinh doanh bao gồm kế hoạch kinh doanh và phương pháp, thông tin nghiên cứu và phát triển, chiến lược và kỹ thuật tiếp thị, thỏa thuận với bên thứ ba, danh sách hoặc thông tin liên quan đến nhà cung cấp và khách hàng."
+Danh sách hoặc thông tin liên quan đến ai được đề cập trong đoạn văn?,Danh sách hoặc thông tin liên quan đến nhà cung cấp và khách hàng.
+Những thông tin nào được coi là bí mật kinh doanh của công ty?,"Thông tin bao gồm danh sách khách hàng, phương pháp định giá, dữ liệu chi phí, dữ liệu thị phần, kế hoạch tiếp thị, giấy phép, thông tin hợp đồng, kế hoạch kinh doanh, dự báo tài chính, dữ liệu tài chính lịch sử, ngân sách hoặc bất kỳ thông tin kinh doanh khác mà công ty tiết lộ trực tiếp hoặc gián tiếp."
+Thông tin bí mật kinh doanh có thể được tiết lộ qua những hình thức nào?,"Thông tin bí mật kinh doanh có thể được tiết lộ bằng văn bản, điện tử, miệng hoặc bằng cách khác."
+Danh sách khách hàng bao gồm những ai?,Danh sách khách hàng bao gồm nhưng không giới hạn ở khách hàng của công ty mà nhân viên đã liên hệ hoặc quen biết trong thời gian làm việc.
+"Những loại thông tin nào về chi phí, lợi nhuận, thị trường, bán hàng và đấu thầu được coi là bí mật?","Thông tin về chi phí, lợi nhuận, thị trường, bán hàng và đấu thầu được coi là bí mật."
+Danh sách khách hàng hiện tại hoặc tiềm năng và đối tác chiến lược có được coi là thông tin bí mật không?,Danh sách khách hàng hiện tại hoặc tiềm năng và đối tác chiến lược được coi là thông tin bí mật.
+Thông tin nào về nhân viên và nhà tư vấn của công ty được coi là bí mật?,"Thông tin về hồ sơ nhân sự, mức lương và phúc lợi của nhân viên, danh sách hoặc thông tin liên quan đến nhân viên và nhà tư vấn của công ty được coi là bí mật."
+Nhân viên và tư vấn viên của công ty bao gồm những thông tin gì?,"Nhân viên và tư vấn viên của công ty bao gồm tên, thông tin liên lạc, công việc, mức lương và chuyên môn."
+Thông tin và tài liệu liên quan đến những nội dung nào được đề cập trong đoạn văn?,Thông tin và tài liệu liên quan đến bất kỳ thông tin nào được nêu hoặc có thể biết được (từ một nguồn thông tin đơn lẻ hoặc kết hợp với bất kỳ nguồn thông tin khác) từ những nội dung đã đề cập.
+"Nếu tôi đã làm việc cho công ty trước khi ký kết thỏa thuận này, liệu tôi có cần phải tiết lộ thông tin riêng tư của công ty mà tôi biết trước đó không?","Nếu bạn đã làm việc cho công ty trước khi ký kết thỏa thuận này, bạn chỉ cần tiết lộ thông tin riêng tư của công ty mà bạn biết sau khi được công ty thuê."
+Thông tin nào về công ty mà tôi không cần phải tiết lộ trong thỏa thuận này?,"Bạn không cần phải tiết lộ bất kỳ thông tin riêng tư của công ty mà bạn biết từ trước, ngoại trừ những thông tin được ghi trong **Lịch trình A** đính kèm."
+"Nếu tôi không biết gì về thông tin riêng tư của công ty, tôi có cần phải ghi điều này trong **Lịch trình A** không?","Nếu bạn không biết gì về thông tin riêng tư của công ty, ngoại trừ những thông tin bạn đã học được từ công ty sau khi được thuê, bạn không cần phải ghi điều này trong **Lịch trình A**."
+Nhân viên có cần giữ bí mật thông tin từ bên thứ ba không?,"Có, nhân viên phải giữ tất cả thông tin từ bên thứ ba trong sự bảo mật nghiêm ngặt."
+Nhân viên có được phép sử dụng thông tin từ bên thứ ba cho mục đích cá nhân không?,"Không, nhân viên không được sử dụng thông tin từ bên thứ ba, trừ khi cần thiết để thực hiện công việc cho Công ty theo thỏa thuận của Công ty với bên thứ ba đó."
+Nhân viên có thể chia sẻ thông tin từ bên thứ ba với ai?,"Nhân viên chỉ được chia sẻ thông tin từ bên thứ ba với những người cần biết, trong phạm vi công việc của mình và phù hợp với thỏa thuận của Công ty với bên thứ ba."
+Những phát minh nào được coi là 'Phát minh được giao'?,"Phát minh được giao bao gồm tất cả các phát minh được tạo ra hoặc chuẩn bị bởi nhân viên trong quá trình làm việc cho công ty, trong giờ làm việc bình thường của công ty, hoặc khi sử dụng bất kỳ thông tin độc quyền hay tài nguyên của công ty."
+Phát minh được tạo ra trong quá trình làm việc cho công ty có thuộc sở hữu của công ty không?,"Có, tất cả các phát minh được tạo ra trong quá trình làm việc cho công ty đều được coi là công việc được ủy thác đặc biệt và công việc được tạo ra cho công ty."
+Phát minh được tạo ra khi sử dụng tài nguyên của công ty có thuộc sở hữu của công ty không?,"Có, tất cả các phát minh được tạo ra khi sử dụng bất kỳ thông tin độc quyền hay tài nguyên của công ty đều thuộc sở hữu của công ty."
+Công ty có quyền sở hữu độc quyền đối với tất cả các phát minh được giao nhiệm vụ hay không?,"Có, công ty sở hữu độc quyền tất cả các phát minh được giao nhiệm vụ và tất cả quyền lợi liên quan."
+Nhân viên có cần phải chuyển nhượng quyền sở hữu đối với các phát minh được giao nhiệm vụ cho công ty không?,"Có, nhân viên đồng ý chuyển nhượng toàn bộ quyền, lợi ích và đặc quyền liên quan đến các phát minh được giao nhiệm vụ cho công ty mà không cần thêm bất kỳ khoản bồi thường nào."
+Quyền sở hữu của công ty đối với các phát minh được giao nhiệm vụ có áp dụng trên toàn thế giới không?,"Có, quyền sở hữu của công ty áp dụng trên toàn thế giới, bao gồm cả Hoa Kỳ và tất cả các quốc gia, khu vực pháp lý khác."
+Nhân viên có cần phải chuyển giao quyền sở hữu đối với tất cả các phát minh được chỉ định không?,"Có, nhân viên phải chuyển giao quyền sở hữu đối với tất cả các phát minh được chỉ định, miễn phí và không bị ràng buộc bởi bất kỳ khoản nợ nào."
+Nhân viên có cần ký các văn bản cần thiết để xác nhận việc chuyển giao quyền sở hữu không?,"Có, nhân viên đồng ý ký bất kỳ văn bản nào cần thiết hoặc mong muốn để thực hiện, cho phép, xác nhận hoặc chứng minh việc chuyển giao quyền sở hữu."
+Công ty có thể cung cấp bồi thường cho một số phát minh nhất định không?,"Có, công ty có thể tự quyết định cung cấp bồi thường cho một số phát minh nhất định thông qua thỏa thuận viết giữa công ty và nhân viên."
+Nhân viên có cần ghi chép chi tiết về quá trình phát triển của các Sáng chế đã giao?,"Có, nhân viên phải duy trì hồ sơ viết đầy đủ và cập nhật về sự phát triển của tất cả các Sáng chế đã giao, và những hồ sơ này cũng thuộc sở hữu độc quyền của Công ty."
+Sáng chế đã giao có thuộc sở hữu của Công ty không?,"Có, Sáng chế đã giao thuộc sở hữu độc quyền của Công ty, dù có được cấp bằng sáng chế hay không."
+Trong trường hợp nào Công ty sẽ trả tiền cho nhân viên vì Sáng chế đã giao?,"Chỉ trong trường hợp có thỏa thuận cụ thể giữa Công ty và nhân viên quy định việc trả tiền. Trong tất cả các trường hợp khác, không có khoản tiền nào được trả."
+"""Sáng chế"" trong văn bản này bao gồm những gì?","Sáng chế bao gồm tất cả ý tưởng, quy trình, sáng chế, tác phẩm của tác giả, công nghệ, thiết kế, công thức, phát hiện, thiết bị, biểu tượng, dấu hiệu, phương pháp (kinh doanh hoặc khác), và tất cả nội dung có thể được bảo hộ bằng bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu, hoặc bất kỳ quyền sở hữu trí tuệ khác, cùng với tất cả đơn đăng ký, giấy chứng nhận, cấp phép chính phủ, và quyền liên quan, cũng như tất cả cải tiến, tiếp tục (dạng nào), quyền và yêu cầu liên quan."
+"Những quyền nào có thể bảo hộ cho ""sáng chế""?","Sáng chế có thể được bảo hộ bằng bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu, hoặc bất kỳ quyền sở hữu trí tuệ khác."
+Sáng chế có bao gồm các cải tiến và tiếp tục không?,"Có, sáng chế bao gồm tất cả cải tiến, tiếp tục (dạng nào), quyền và yêu cầu liên quan."
+Những phát minh nào thuộc quyền sở hữu của Công ty?,"Công ty có quyền sở hữu đối với tất cả các phát minh, sáng chế, quyền và yêu cầu liên quan do nhân viên tạo ra, tác giả, thực hiện, phát minh, khám phá, nghĩ ra, phát triển hoặc đưa vào thực tế, dù là một mình hay cùng người khác, trừ những mục cụ thể được liệt kê trong **Lịch A** đính kèm."
+Quyền sở hữu của Công ty đối với các phát minh có bị ảnh hưởng khi nhân viên nghỉ việc không?,"Quyền, tài sản, lợi ích và đặc quyền của Công ty đối với các phát minh đã được gán quyền không bị ảnh hưởng theo bất kỳ cách nào bởi việc chấm dứt hợp đồng lao động của nhân viên với Công ty, dù vì lý do gì."
+Có những mục nào được miễn khỏi quyền sở hữu của Công ty không?,"Có, những mục cụ thể được miễn khỏi quyền sở hữu của Công ty được liệt kê chi tiết trong **Lịch A** đính kèm."
+"Nếu tôi đưa một phát minh của mình vào tài sản công ty, công ty có quyền gì đối với phát minh đó?","Công ty được cấp phép không độc quyền, miễn phí bản quyền, không thể thu hồi, vĩnh viễn và toàn cầu để sử dụng, sửa đổi, cấp phép phụ và bán phát minh đó như một phần của tài sản công ty."
+Phạm vi của quyền mà công ty nhận được đối với phát minh của tôi là gì?,"Quyền này bao gồm việc sử dụng, sửa đổi, cấp phép phụ và bán phát minh như một phần của tài sản công ty, và được áp dụng trên phạm vi toàn cầu."
+Liệu tôi có thể thu hồi quyền đã cấp cho công ty đối với phát minh của mình không?,"Không, quyền này là không thể thu hồi và vĩnh viễn."
+Trong trường hợp nào nhân viên cần hỗ trợ công ty?,"Khi bất kỳ Sáng chế được giao nào được công ty cho là có thể đăng ký bằng sáng chế hoặc đăng ký khác, nhân viên cần hỗ trợ công ty."
+Nhân viên cần làm gì khi công ty yêu cầu hỗ trợ?,"Nhân viên cần hỗ trợ công ty trong việc xin cấp và duy trì bằng sáng chế hoặc các đăng ký khác, và chuyển nhượng quyền sở hữu đầy đủ cho công ty."
+Công ty sẽ chịu trách nhiệm về chi phí nào khi nhân viên hỗ trợ?,Công ty sẽ chịu toàn bộ chi phí liên quan đến việc nhân viên hỗ trợ trong quá trình xin cấp và duy trì bằng sáng chế hoặc các đăng ký khác.
+Nhân viên có cần ký tên vào các tài liệu liên quan đến việc xin cấp bằng sáng chế hay không?,"Có, nhân viên cần ký tên vào các tài liệu cần thiết để xin cấp, bảo vệ hoặc thực thi bằng sáng chế hoặc quyền bảo hộ khác liên quan đến bất kỳ Sáng chế Đã giao."
+"Nếu nhân viên không thể ký tên do bị mất năng lực, công ty sẽ làm gì?","Nếu nhân viên không thể ký tên do mất năng lực hoặc bất kỳ lý do nào khác, nhân viên đã chỉ định và ủy quyền không thể thu hồi cho công ty và mỗi người được ủy quyền chính thức của công ty."
+Việc ký tên của nhân viên có mục đích gì?,"Việc ký tên của nhân viên nhằm mục đích xin cấp, bảo vệ hoặc thực thi bằng sáng chế hoặc quyền bảo hộ khác liên quan đến bất kỳ Sáng chế Đã giao."
+Công ty được uỷ quyền làm gì liên quan đến bằng sáng chế?,"Công ty và các đại diện được uỷ quyền của nó được uỷ quyền thực hiện tất cả các hành động được pháp luật cho phép để thúc đẩy, cấp phát và thi hành bằng sáng chế hoặc các quyền bảo hộ khác với cùng hiệu lực như khi nhân viên thực hiện."
+Những ai được chỉ định làm đại diện và luật sư của nhân viên?,Công ty và mỗi đại diện được uỷ quyền của nó được chỉ định làm đại diện và luật sư của nhân viên.
+Nhân viên cần đảm bảo điều gì khi thực hiện các điều khoản của Thỏa thuận này?,Nhân viên cần đảm bảo rằng việc thực hiện các điều khoản của Thỏa thuận này sẽ không vi phạm bất kỳ thỏa thuận nào về việc giữ bí mật thông tin sở hữu trí tuệ mà nhân viên đã biết trước khi làm việc cho công ty.
+Nhân viên cần liệt kê những thỏa thuận nào trong **Lịch A**?,Nhân viên cần liệt kê tất cả các thỏa thuận khác liên quan đến thông tin sở hữu trí tuệ hoặc phát minh mà nhân viên là một bên trong **Lịch A**.
+"Theo hiểu biết của nhân viên, có hợp đồng nào khác giữa nhân viên và công ty không?","Theo hiểu biết của nhân viên, không có hợp đồng nào khác giữa nhân viên và công ty."
+Nhân viên có được ký kết hợp đồng với bất kỳ cá nhân hay tổ chức nào khác không?,"Không, nhân viên không được ký kết bất kỳ hợp đồng nào khác với cá nhân hay tổ chức khác nếu hợp đồng đó xung đột với Thỏa thuận này hoặc liên quan đến thông tin độc quyền, Sáng chế, giao nộp ý tưởng, hoặc bất kỳ tài sản trí tuệ nào."
+Hợp đồng của nhân viên có được phép đề cập đến tài sản trí tuệ không?,"Không, hợp đồng của nhân viên không được đề cập đến tài sản trí tuệ, thông tin độc quyền, Sáng chế, hoặc giao nộp ý tưởng."
+"Trong thời gian làm việc tại công ty, tôi có được phép tiết lộ thông tin độc quyền hoặc bí mật kinh doanh của người khác không?","Không, trong thời gian làm việc tại công ty, bạn không được tiết lộ, sử dụng hoặc khuyến khích công ty sử dụng bất kỳ thông tin độc quyền hoặc bí mật kinh doanh của người khác."
+Điều khoản nào trong sổ tay nhân viên đề cập đến việc chấm dứt hợp đồng lao động?,Điều khoản 4 trong sổ tay nhân viên đề cập đến việc chấm dứt hợp đồng lao động.
+Khi nào nhân viên phải trả lại tài sản của công ty?,"Nhân viên phải trả lại tài sản của công ty ngay lập tức khi chấm dứt hợp đồng lao động, bất kể lý do gì."
+Những tài sản nào nhân viên phải trả lại cho công ty?,"Nhân viên phải trả lại tất cả thông tin độc quyền, tất cả vật phẩm có thể tiết lộ thông tin độc quyền, và tất cả tài sản cá nhân do công ty cung cấp hoặc do nhân viên chuẩn bị trong quá trình làm việc."
+Có cần phải trả lại tài sản của công ty nếu hợp đồng lao động kết thúc mà không có lý do cụ thể không?,"Có, nhân viên vẫn phải trả lại tài sản của công ty ngay lập tức, kể cả khi hợp đồng lao động kết thúc mà không có lý do cụ thể."
+"Sau khi bị chấm dứt hợp đồng, tôi có được giữ lại bất kỳ tài liệu nào chứa Thông Tin Riêng Tư hay không?","Không, bạn không được giữ lại bất kỳ tài liệu viết hoặc vật chất hữu hình nào chứa Thông Tin Riêng Tư hoặc thông tin liên quan đến bất kỳ Sáng Chế Đã Giao Nhượng nào."
+"Nếu tôi bị sa thải, tôi có cần phải trả lại tất cả các tài liệu liên quan đến Sáng Chế Đã Giao Nhượng không?","Có, bạn phải trả lại tất cả các tài liệu viết hoặc vật chất hữu hình chứa Thông Tin Riêng Tư hoặc thông tin liên quan đến bất kỳ Sáng Chế Đã Giao Nhượng nào."
+"Nếu tôi bị chấm dứt hợp đồng lao động, tôi có cần ký giấy chứng nhận chấm dứt không?","Nếu công ty yêu cầu, bạn phải ký và nộp giấy chứng nhận chấm dứt, được đính kèm trong Phụ lục B."
+Phụ lục B chứa nội dung gì?,Phụ lục B chứa giấy chứng nhận chấm dứt (Termination Certificate).
+"Sau khi chấm dứt hợp đồng lao động với công ty, tôi có cần thông báo cho nhà tuyển dụng mới về nghĩa vụ của mình theo thỏa thuận này không?","Có, bạn phải thông báo cho tất cả nhà tuyển dụng sau này về nghĩa vụ của bạn theo thỏa thuận này."
+Tôi có được phép ký kết các thỏa thuận khác sau khi chấm dứt hợp đồng lao động với công ty không?,Bạn không được ký kết bất kỳ thỏa thuận nào xung đột với nghĩa vụ của bạn theo thỏa thuận này sau khi chấm dứt hợp đồng lao động với công ty.
+"Nhân viên có được phép sử dụng thông tin riêng tư của công ty về nhân viên, tư vấn viên, khách hàng và các bên khác không?","Không, nhân viên không được sử dụng hoặc tiết lộ thông tin riêng tư của công ty về nhân viên, tư vấn viên, khách hàng và các bên khác, trừ khi được công ty ủy quyền."
+Nhân viên có cần phải đồng ý với việc không sử dụng hoặc tiết lộ thông tin riêng tư của công ty không?,"Có, nhân viên phải đồng ý không sử dụng hoặc tiết lộ thông tin riêng tư của công ty, ngoại trừ khi được công ty ủy quyền."
+Nhân viên có được phép tuyển dụng người của công ty sau khi nghỉ việc không?,"Không, trong vòng 12 tháng sau khi chấm dứt hợp đồng, nhân viên không được trực tiếp hay gián tiếp tuyển dụng, khuyến khích hoặc thuyết phục bất kỳ nhân viên hay tư vấn viên nào của công ty rời bỏ công ty."
+Thời gian cấm tuyển dụng nhân viên cũ của công ty kéo dài bao lâu sau khi nghỉ việc?,Thời gian cấm tuyển dụng kéo dài 12 tháng kể từ ngày chấm dứt hợp đồng.
+Nhân viên có được phép liên hệ với tư vấn viên của công ty sau khi nghỉ việc không?,"Không, nhân viên không được trực tiếp hay gián tiếp liên hệ, tuyển dụng, khuyến khích hoặc thuyết phục tư vấn viên của công ty trong vòng 12 tháng sau khi chấm dứt hợp đồng."
+"Trong thời gian làm việc, tôi có được phép ảnh hưởng tiêu cực đến khách hàng của công ty không?","Không, bạn không được phép ảnh hưởng tiêu cực đến bất kỳ khách hàng, người cấp phép, người được cấp phép hoặc khách hàng của công ty."
+Tôi có được phép thuyết phục khách hàng mua sản phẩm hoặc dịch vụ từ đối thủ cạnh tranh không?,"Không, bạn không được phép thuyết phục hoặc cố gắng thuyết phục bất kỳ khách hàng, người cấp phép, người được cấp phép hoặc khách hàng khác để mua sản phẩm hoặc dịch vụ từ bất kỳ đối thủ cạnh tranh nào."
+Tôi có được phép trực tiếp hoặc gián tiếp ảnh hưởng đến quyết định mua hàng của khách hàng không?,"Không, bạn không được phép trực tiếp hoặc gián tiếp ảnh hưởng đến quyết định mua hàng của bất kỳ khách hàng, người cấp phép, người được cấp phép hoặc khách hàng khác."
+"Dù không có lý do cụ thể, tôi có thể chấm dứt hợp đồng lao động bất cứ lúc nào không?","Có, bạn có thể chấm dứt hợp đồng lao động bất cứ lúc nào, với hoặc không có lý do, theo quy định về việc làm tự nguyện."
+Công ty có thể chấm dứt hợp đồng lao động của tôi mà không cần thông báo trước không?,"Có, công ty có thể chấm dứt hợp đồng lao động của bạn mà không cần thông báo trước, theo quy định về việc làm tự nguyện."
+"Nếu không có thỏa thuận bằng văn bản ký bởi người đại diện hợp pháp của công ty, việc làm của tôi có được đảm bảo trong một khoảng thời gian nhất định không?","Không, nếu không có thỏa thuận bằng văn bản ký bởi người đại diện hợp pháp của công ty, việc làm của bạn không được đảm bảo trong một khoảng thời gian nhất định."
+Thỏa thuận này có hạn chế quyền của công ty trong việc bảo vệ bí mật kinh doanh theo luật liên bang hay tiểu bang không?,"Không, thỏa thuận này không hạn chế bất kỳ quyền nào của công ty theo luật liên bang hay tiểu bang về bí mật kinh doanh."
+"Nếu nhân viên vi phạm thỏa thuận, công ty sẽ chịu tổn thất như thế nào?","Nếu nhân viên vi phạm thỏa thuận, công ty sẽ chịu tổn thất không thể bù đắp hoàn toàn bằng tiền."
+"Trong trường hợp nhân viên vi phạm hoặc đe dọa vi phạm thỏa thuận, công ty có quyền làm gì?","Trong trường hợp nhân viên vi phạm hoặc đe dọa vi phạm thỏa thuận, công ty có quyền yêu cầu các biện pháp khắc phục phù hợp."
+"Nếu tôi vi phạm thỏa thuận, công ty có thể yêu cầu những biện pháp gì?","Công ty có thể yêu cầu lệnh cấm tạm thời, lệnh cấm sơ bộ và lệnh cấm vĩnh viễn để ngăn chặn hoặc hạn chế vi phạm của bạn."
+Những biện pháp pháp lý mà công ty có thể áp dụng có bao gồm những gì khác không?,Những biện pháp pháp lý này bổ sung cho bất kỳ biện pháp nào khác mà công ty có quyền áp dụng theo quy định của pháp luật hoặc công lý.
+Tôi có phải bồi thường chi phí pháp lý cho công ty nếu họ thực thi nghĩa vụ của tôi không?,"Có, bạn đồng ý hoàn trả cho công ty tất cả các chi phí và khoản chi tiêu, bao gồm cả thù lao hợp lý cho luật sư, mà công ty phải chịu khi thực thi nghĩa vụ của bạn."
+Thỏa thuận này được điều chỉnh bởi luật pháp của bang nào?,Thỏa thuận này được điều chỉnh bởi luật pháp của bang California.
+Luật pháp của bang California có áp dụng cho việc giải thích thỏa thuận này không?,"Có, luật pháp của bang California được áp dụng để giải thích thỏa thuận này."
+"Nếu một điều khoản trong Thỏa Thuận bị coi là bất hợp pháp, vô hiệu hoặc không thể thi hành, điều gì sẽ xảy ra?","Nếu một điều khoản hoặc phần của Thỏa Thuận bị coi là bất hợp pháp, vô hiệu hoặc không thể thi hành, thì điều khoản hoặc phần đó sẽ được tách ra và phần còn lại của Thỏa Thuận vẫn có hiệu lực."
+"Nếu một tòa án cho rằng một điều khoản trong Thỏa Thuận tạo ra vấn đề, điều gì sẽ xảy ra với điều khoản đó?","Nếu một tòa án cho rằng một điều khoản trong Thỏa Thuận tạo ra vấn đề, thì điều khoản đó sẽ được tách ra và phần còn lại của Thỏa Thuận vẫn có hiệu lực."
+"Nhân viên có đồng ý rằng nếu một điều khoản bị tách ra, phần còn lại của Thỏa Thuận vẫn có hiệu lực không?","Nhân viên đồng ý rằng nếu một điều khoản bị tách ra, phần còn lại của Thỏa Thuận vẫn có hiệu lực."
+"Nếu một tòa án cho rằng một điều khoản trong Thỏa thuận này tạo ra hạn chế không hợp lý về phạm vi, thời gian hoặc khu vực địa lý, thì điều gì sẽ xảy ra?","Nhân viên đồng ý rằng các điều khoản của Thỏa thuận sẽ được thi hành trong phạm vi, thời gian và khu vực địa lý mà tòa án có thẩm quyền xác định là hợp lý."
+Nhân viên có đồng ý rằng các điều khoản của Thỏa thuận sẽ được thi hành theo quyết định của tòa án không?,"Có, nhân viên đồng ý rằng các điều khoản của Thỏa thuận sẽ được thi hành theo phạm vi, thời gian và khu vực địa lý mà tòa án có thẩm quyền xác định là hợp lý."
+Thỏa thuận này có phải là biểu hiện cuối cùng của sự đồng ý giữa nhân viên và công ty không?,"Có, các điều khoản của Thỏa thuận này là biểu hiện cuối cùng của sự đồng ý giữa nhân viên và công ty."
+Thỏa thuận này có thể bị bác bỏ bởi bằng chứng từ các thỏa thuận trước đó hay không?,"Không, Thỏa thuận này không thể bị bác bỏ bởi bằng chứng từ các thỏa thuận trước đó hoặc cùng thời điểm."
+Nhân viên có được công ty cam kết về bất kỳ nội dung nào khác liên quan đến chủ đề của Thỏa thuận này không?,"Không, nhân viên thừa nhận rằng công ty không đưa ra bất kỳ cam kết nào khác liên quan đến chủ đề của Thỏa thuận này."
+Thỏa thuận này có thể được sửa đổi như thế nào?,Thỏa thuận này chỉ có thể được sửa đổi hoặc chấm dứt bằng một thỏa thuận viết có chữ ký của cả hai bên.
+"Nếu một bên không thực hiện quyền của mình ngay lập tức, điều đó có nghĩa là họ từ bỏ quyền đó không?","Không, việc không thực hiện hoặc chậm trễ trong việc thực hiện bất kỳ quyền nào theo thỏa thuận này không được coi là từ bỏ quyền đó."
+Thỏa thuận này có ràng buộc đối với những người thừa kế của nhân viên không?,"Có, thỏa thuận này ràng buộc đối với nhân viên và những người thừa kế, quản lý di sản, người đại diện của nhân viên."
+Thỏa thuận này có lợi ích cho ai?,"Thỏa thuận này mang lại lợi ích cho các bên kế thừa và chuyển nhượng của công ty, bao gồm bất kỳ người mua nào của toàn bộ hoặc hầu hết tài sản của công ty hoặc đa số cổ phiếu phổ thông đang lưu hành của công ty."
+"Nếu tôi ký thỏa thuận này sau khi đã bắt đầu làm việc cho công ty, thì ngày hiệu lực của thỏa thuận sẽ là khi nào?",Ngày hiệu lực của thỏa thuận sẽ là ngày bạn bắt đầu làm việc cho công ty.
+Thỏa thuận này có áp dụng cho tất cả thông tin độc quyền mà tôi đã nhận được trước khi ký thỏa thuận không?,"Có, thỏa thuận này áp dụng cho tất cả thông tin độc quyền mà bạn đã nhận được."
+Thỏa thuận này có áp dụng cho tất cả các phát minh mà tôi đã tạo ra trước khi ký thỏa thuận không?,"Có, thỏa thuận này áp dụng cho tất cả các phát minh mà bạn đã tạo ra."
+Nhân viên cần làm gì với thông tin độc quyền mà họ muốn loại trừ khỏi thỏa thuận này?,Nhân viên cần ghi rõ thông tin độc quyền đó trong **SCHEDULE A** của thỏa thuận.
+Thỏa thuận này yêu cầu nhân viên phải làm gì trước khi ký kết?,Nhân viên phải đọc kỹ thỏa thuận và hiểu rõ các điều khoản của nó.
+Những loại thông tin nào có thể được ghi trong **SCHEDULE A** để loại trừ khỏi thỏa thuận?,"Thông tin độc quyền, ý tưởng, quy trình, phát minh, công nghệ, tác phẩm viết, chương trình, thiết kế, công thức, phát hiện, bằng sáng chế, bản quyền, hoặc nhãn hiệu, cũng như các cải tiến, quyền, hoặc yêu cầu liên quan đến những điều trên."
+Nhân viên có được phép chia sẻ Thông tin Riêng tư của công ty với người khác không?,"Không, nhân viên công nhận rằng họ không biết gì về kinh doanh hay Thông tin Riêng tư của công ty, ngoại trừ những thông tin đã học được từ công ty trong quá trình được tuyển dụng."
+Thông tin nào được xem là Thông tin Riêng tư của công ty?,"Thông tin Riêng tư của công ty bao gồm tất cả thông tin về kinh doanh mà nhân viên biết được từ công ty, ngoại trừ những thông tin đã được công bố rộng rãi."
+Nhân viên có cần phải công nhận việc họ không biết gì về kinh doanh hay Thông tin Riêng tư của công ty trước khi bắt đầu làm việc không?,"Có, nhân viên cần phải công nhận rằng tại thời điểm bắt đầu làm việc, họ chỉ biết những thông tin đã học được từ công ty trong quá trình được tuyển dụng."
+Nhân viên có thể loại trừ những phát minh nào khỏi thỏa thuận này?,"Nhân viên có thể loại trừ những ý tưởng, quy trình, phát minh, công nghệ, tác phẩm viết, chương trình, thiết kế, công thức, khám phá, bằng sáng chế, bản quyền, hoặc nhãn hiệu, cũng như bất kỳ yêu cầu, quyền, hoặc cải tiến nào liên quan đến những mục trên, nếu được nêu rõ trong thỏa thuận."
+Phần nào của thỏa thuận đề cập đến các phát minh trước đây của nhân viên?,Phần 2 của thỏa thuận đề cập đến các phát minh trước đây của nhân viên.
+Nhân viên cần làm gì nếu họ có các thỏa thuận trước đây về thông tin độc quyền hoặc phát minh?,Nhân viên cần khai báo các thỏa thuận đó trong phần 'Prior Agreements' của sổ tay nhân viên.
+"Nếu nhân viên không có bất kỳ thỏa thuận nào trước đây về thông tin độc quyền hoặc phát minh, họ cần làm gì?","Nhân viên chỉ cần xác nhận rằng họ không có bất kỳ thỏa thuận nào như vậy, theo như nội dung đã nêu trong đoạn văn bản."
+"Tôi cần phải trả lại những tài sản cá nhân nào của công ty Clef, Inc.?","Bạn cần phải trả lại tất cả tài sản cá nhân của công ty, bao gồm nhưng không giới hạn ở các danh sách mã nguồn, sách, hướng dẫn sử dụng, hồ sơ, mô hình, bản vẽ, báo cáo, ghi chú, hợp đồng, danh sách, bản vẽ kỹ thuật, và các tài liệu, vật liệu, Thông tin Riêng tư, và thiết bị doanh nghiệp cung cấp hoặc do bạn chuẩn bị trong quá trình làm việc."
+Tôi có cần phải trả lại cả các bản sao chép của tài sản công ty không?,"Có, bạn phải trả lại tất cả các bản sao chép của tài sản công ty mà bạn đã tạo ra hoặc phân phối."
+Tôi có cần phải xác nhận rằng tôi đã trả lại tất cả tài sản công ty không?,"Có, bạn cần phải xác nhận rằng bạn đã trả lại tất cả tài sản công ty và không giữ lại bất kỳ bản sao chép nào."
+Tôi cần phải làm gì với Thỏa thuận Thông tin Sở hữu Trí tuệ và Sáng chế của Nhân viên mà tôi đã ký?,"Bạn cần xác nhận rằng bạn đã xem xét thỏa thuận này và tuân thủ, cũng như sẽ tiếp tục tuân thủ tất cả các điều khoản của nó."
+Những gì tôi cần báo cáo theo Thỏa thuận Thông tin Sở hữu Trí tuệ và Sáng chế của Nhân viên bao gồm những gì?,"Bạn cần báo cáo bất kỳ ý tưởng, quy trình, phát minh, công nghệ, tác phẩm viết, chương trình, thiết kế, công thức, phát hiện, bằng sáng chế, bản quyền, hoặc nhãn hiệu, hoặc bất kỳ cải tiến, quyền, hoặc yêu cầu liên quan đến những điều trên, do bạn nghĩ ra hoặc phát triển và được bao gồm trong thỏa thuận."
+Thỏa thuận Thông tin Sở hữu Trí tuệ và Sáng chế của Nhân viên có yêu cầu tôi tuân thủ các điều khoản trong tương lai không?,"Có, thỏa thuận yêu cầu bạn tuân thủ và sẽ tiếp tục tuân thủ tất cả các điều khoản của nó."
+Tôi cần giữ bí mật những thông tin nào liên quan đến Công ty?,Bạn cần giữ bí mật tất cả thông tin sở hữu trí tuệ liên quan đến Công ty.
+Chứng thư này có hạn chế trách nhiệm của tôi theo Hiệp định không?,"Không, chứng thư này không hạn chế trách nhiệm của bạn hoặc quyền của Công ty theo Hiệp định."
+"Khi tôi chấm dứt hợp đồng làm việc với công ty hiện tại, tôi sẽ làm việc cho ai?",Bạn sẽ làm việc cho [Name of New Employer].
+"Sau khi chuyển sang công ty mới, tôi sẽ tham gia vào những dự án nào?",Bạn sẽ tham gia vào các dự án được mô tả như sau: [generally describe the projects].
+"Hiện tại, số lượng cổ phiếu phổ thông của Clef đang lưu hành là bao nhiêu?","Hiện tại, số lượng cổ phiếu phổ thông của Clef đang lưu hành là 4,662,658 cổ phiếu."
+"Nếu tôi có thắc mắc về báo cáo định giá 409A, giá cổ phiếu hoặc định giá, tôi nên liên hệ ai?","Nếu bạn có thắc mắc về báo cáo định giá 409A, giá cổ phiếu hoặc định giá, bạn nên liên hệ với B."
+Mục đích của hướng dẫn này là gì?,"Mục đích của hướng dẫn này là giúp bạn hiểu rõ phần cổ phiếu mà bạn sẽ sở hữu, và nó đơn giản hơn so với Kế hoạch Kích thích Cổ phiếu và Thỏa thuận Trao tặng đầy đủ, nơi chứa các chi tiết pháp lý."
+Tôi nên làm gì nếu có câu hỏi về quyền chọn cổ phiếu của mình?,Bạn nên tham khảo ý kiến của luật sư lao động nếu có bất kỳ câu hỏi nào về việc điều hướng quyền chọn cổ phiếu và trước khi đưa ra các quyết định quan trọng.
+Sở hữu cổ phiếu của Clef mang lại lợi ích gì cho tôi?,"Sở hữu cổ phiếu của Clef cho bạn một phần trong thành công của công ty. Khi Clef phát triển và tăng giá trị, bạn sẽ sở hữu một phần của sự tăng trưởng và giá trị đó."
+"Nếu Clef giảm giá trị, điều gì sẽ xảy ra với cổ phiếu của tôi?","Nếu Clef giảm giá trị, thì các quyền chọn cổ phiếu của bạn sẽ không còn giá trị gì."
+Có rủi ro gì khi nhận cổ phiếu làm một phần của lương?,"Có rủi ro là bạn đang đánh cược với phần lương này. Nếu Clef giảm giá trị, các quyền chọn cổ phiếu của bạn sẽ không còn giá trị."
+Công ty Clef cấp quyền mua cổ phiếu như thế nào?,Công ty Clef cấp quyền mua cổ phiếu dưới dạng Quyền Chọn Cổ Phiếu Kích Thích (ISOs).
+Quyền chọn cổ phiếu (ISOs) là gì?,"Quyền chọn cổ phiếu (ISOs) là quyền được mua cổ phiếu của Clef với giá cố định tại thời điểm quyền chọn được cấp, bất kể giá cổ phiếu có tăng lên sau này."
+"Nếu giá cổ phiếu Clef tăng từ $1 lên $20, tôi có thể mua cổ phiếu với giá bao nhiêu?","Nếu giá cổ phiếu Clef tăng từ $1 lên $20, bạn vẫn có thể mua cổ phiếu với giá $1."
+Tại sao công ty lại cấp quyền chọn cổ phiếu thay vì cổ phiếu trực tiếp?,Bởi vì điều này giúp bạn tránh bị đánh thuế trên cổ phiếu cho đến khi bạn thực sự sử dụng nó.
+"Nếu tôi nhận được quyền chọn cổ phiếu trị giá 10.000 đô la, tôi có cần phải trả thuế ngay lập tức không?","Không, bạn không phải trả thuế cho đến khi bạn thực hiện quyền chọn (tức là mua cổ phiếu)."
+Quá trình nhận quyền chọn cổ phiếu dần dần theo thời gian được gọi là gì?,Quá trình này được gọi là vesting.
+"Nếu tôi có kỳ hạn vesting cơ bản là 2 năm, tôi sẽ sở hữu bao nhiêu phần trăm cổ phiếu của mình sau 1 năm?","Sau 1 năm, bạn sẽ sở hữu một nửa số cổ phiếu của mình."
+Thời gian vesting cổ phiếu tại Clef là bao lâu?,Thời gian vesting cổ phiếu tại Clef là 6 năm.
+"So với tiêu chuẩn ngành, Clef cung cấp quyền sở hữu cổ phiếu như thế nào?",Clef cung cấp quyền sở hữu cổ phiếu cao hơn khoảng 2 lần so với tiêu chuẩn ngành.
+Tại sao Clef áp dụng thời gian vesting dài hơn?,"Clef áp dụng thời gian vesting dài hơn để khuyến khích nhân viên xây dựng sự nghiệp lâu dài tại công ty, nhưng vẫn đảm bảo rằng nhân viên luôn có lợi, kể cả khi họ rời đi trước khi cổ phiếu của họ hoàn toàn vesting."
+Cliff là gì trong quá trình vesting?,"Cliff là khoảng thời gian đầu tiên trong quá trình vesting, khi quyền sở hữu cổ phiếu của bạn không được phân chia hàng tháng mà thay vào đó sẽ được cấp một lần vào cuối khoảng thời gian này."
+Thời gian cliff tại Clef là bao lâu?,Thời gian cliff tại Clef là một năm.
+"Nếu tôi rời công ty trước khi làm việc đủ một năm, điều gì sẽ xảy ra với quyền sở hữu cổ phiếu của tôi?","Nếu bạn rời công ty trước khi làm việc đủ một năm, bạn sẽ không được cấp bất kỳ quyền sở hữu cổ phiếu nào."
+"Khi Clef huy động vốn từ các nhà đầu tư bên ngoài, điều gì xảy ra với số cổ phiếu tôi đang sở hữu?","Số cổ phiếu bạn sở hữu sẽ không thay đổi, nhưng tỷ lệ phần trăm sở hữu của bạn trong công ty sẽ giảm do tổng số cổ phiếu tăng lên."
+Dilution là gì trong trường hợp này?,Dilution là hiện tượng tỷ lệ phần trăm sở hữu của bạn trong công ty giảm khi công ty phát hành thêm cổ phiếu để bán cho các nhà đầu tư mới.
+"Khi công ty tăng vốn, giá trị của quyền chọn cổ phiếu của tôi có thay đổi không?","Nếu công ty được định giá công bằng, giá trị của quyền chọn cổ phiếu của bạn sẽ không thay đổi."
+"Nếu Clef có giá trị 20 triệu đô la và huy động thêm 5 triệu đô la, giá trị mới của công ty là bao nhiêu?",Giá trị mới của công ty sẽ là 25 triệu đô la.
+"Nếu tôi sở hữu 5% của công ty trước khi huy động vốn, tôi sẽ sở hữu bao nhiêu phần trăm sau khi công ty huy động thêm 5 triệu đô la?","Sau khi công ty huy động thêm 5 triệu đô la, bạn sẽ sở hữu 4% của công ty."
+Công ty Clef cấp quyền chọn cổ phiếu cho nhân viên mới như thế nào?,"Clef cấp quyền chọn cổ phiếu cho nhân viên mới từ một quỹ quyền chọn, hay nhóm quyền chọn mà hội đồng quản trị của Clef tạo ra cùng một lúc."
+Khi nào tôi sẽ bị pha loãng cổ phần?,"Bạn sẽ chỉ bị pha loãng cổ phần khi công ty cần tạo ra một quỹ quyền chọn mới, chứ không phải mỗi lần chúng tôi tuyển dụng nhân viên mới."
+Quỹ quyền chọn hiện tại của Clef dự kiến bao phủ bao nhiêu nhân viên?,Quỹ quyền chọn hiện tại của Clef dự kiến bao phủ 10 nhân viên đầu tiên (sau ba người sáng lập) trước khi cần được làm mới.
+Trong trường hợp nào hội đồng quản trị có thể phê duyệt việc cấp quyền chọn cổ phiếu nằm ngoài quỹ cổ phần?,Hội đồng quản trị có thể phê duyệt việc cấp quyền chọn cổ phiếu nằm ngoài quỹ cổ phần cho một số vị trí tuyển dụng cấp cao.
+Mục đích của việc cấp quyền chọn cổ phiếu hoặc cổ phần cho nhân viên là gì?,Mục đích là hy vọng rằng nhân viên sẽ mang lại giá trị lớn hơn cho công ty so với cổ phần họ nhận được.
+Việc nhà đầu tư bị pha loãng có ảnh hưởng gì đến giá trị cổ phiếu của tôi không?,Việc nhà đầu tư bị pha loãng không ảnh hưởng đến giá trị cổ phiếu của bạn.
+Những yếu tố nào ảnh hưởng đến giá trị của công ty trong thị trường riêng tư?,"Giá trị của công ty trong thị trường riêng tư bị ảnh hưởng bởi sự cạnh tranh giữa các nhà đầu tư, hiệu suất chung của thị trường, giá trị dự kiến trong tương lai và kỹ năng đàm phán của chúng ta."
+Giá trị của quyền chọn cổ phiếu của tôi có bị ảnh hưởng bởi những yếu tố nào?,"Giá trị của quyền chọn cổ phiếu của bạn sẽ bị ảnh hưởng bởi sự cạnh tranh giữa các nhà đầu tư, hiệu suất chung của thị trường, giá trị dự kiến trong tương lai và kỹ năng đàm phán của chúng ta."
+“Exercising your options” có nghĩa là gì?,“Exercising your options” có nghĩa là mua cổ phiếu được bảo đảm bởi quyền chọn của bạn. Bạn phải trả giá thực hiện đã được xác định khi quyền chọn được cấp lần đầu và nhận chứng chỉ cổ phiếu.
+Tôi có thể thực hiện quyền chọn cổ phiếu khi nào?,"Bạn chỉ có thể thực hiện quyền chọn đối với cổ phiếu đã vesting, nhưng bạn có thể làm điều này bất kỳ lúc nào bằng cách điền vào một biểu mẫu và trả số tiền mặt tương ứng cho cổ phiếu."
+Khi nào tôi nên thực hiện quyền mua cổ phiếu?,Bạn thường chỉ nên thực hiện quyền mua cổ phiếu khi có cơ hội bán nó với giá cao hơn giá mua hoặc khi nó sắp hết hạn.
+Tại sao tôi nên thực hiện quyền mua cổ phiếu khi nó sắp hết hạn?,Bạn nên thực hiện quyền mua cổ phiếu khi nó sắp hết hạn để tránh mất quyền mua đó.
+Tôi có bao lâu để thực hiện quyền chọn cổ phiếu sau khi ngừng làm việc tại Clef?,Bạn có 7 năm để thực hiện quyền chọn cổ phiếu sau khi ngừng làm việc tại Clef.
+Quyền chọn cổ phiếu của tôi sẽ bị coi là gì sau 90 ngày kể từ khi tôi ngừng làm việc?,"Sau 90 ngày kể từ khi bạn ngừng làm việc, quyền chọn cổ phiếu sẽ bị coi là quyền chọn cổ phiếu không hợp chuẩn và sẽ bị tính thuế thu nhập khi bạn thực hiện chúng."
+Tại sao các công ty thường cho quyền chọn cổ phiếu của nhân viên hết hạn nhanh chóng sau khi họ nghỉ việc?,Bởi vì công ty cũng phải chịu thuế trên quyền chọn cổ phiếu khi chúng không đủ điều kiện và được coi là thu nhập.
+Những hậu quả gì xảy ra khi quyền chọn cổ phiếu của nhân viên hết hạn nhanh chóng sau khi họ nghỉ việc?,"Nhân viên có thể mất đi quyền sở hữu cổ phần mà họ đã làm việc chăm chỉ để đạt được, hoặc họ phải ở lại công ty cho đến khi có đủ tiền để thực hiện quyền chọn."
+Tình huống nào được gọi là 'cặp tay vàng' trong bối cảnh này?,Khi nhân viên phải ở lại công ty cho đến khi họ có đủ tiền để thực hiện quyền chọn cổ phiếu.
+Công ty Clef có chính sách gì về việc giữ quyền sở hữu cổ phần cho nhân viên sau khi họ rời công ty?,"Tại Clef, nhân viên có thể thực hiện quyền mua cổ phiếu của họ lên đến 7 năm sau khi rời công ty."
+Tại sao Clef cho phép nhân viên thực hiện quyền mua cổ phiếu sau khi họ rời công ty?,Clef muốn nhân viên giữ được quyền sở hữu cổ phần họ đã kiếm được và không muốn giữ những người không hạnh phúc làm việc tại đây.
+"Sau khi rời Clef, tôi sẽ gặp phải vấn đề gì liên quan đến thuế nếu tôi thực hiện quyền chọn của mình sau 90 ngày?","Sau 90 ngày rời Clef, bạn sẽ phải chịu một mức thuế cao hơn đáng kể khi thực hiện quyền chọn."
+Tôi nên làm gì để quyết định xem nên thực hiện quyền chọn của mình khi nào?,Bạn nên tham khảo ý kiến của một luật sư thuế để quyết định thời điểm thực hiện quyền chọn phù hợp nhất.
+"Nếu tôi chờ đợi quá lâu để thực hiện quyền chọn, điều gì sẽ xảy ra với giá trị của quyền chọn?","Nếu bạn chờ đợi quá lâu, bạn sẽ mất một phần đáng kể giá trị của quyền chọn."
+Giá thực hiện là gì?,Giá thực hiện là giá trị của cổ phiếu Clef khi bạn nhận được quyền chọn cổ phiếu.
+Tại sao việc xác định giá thực hiện đúng đắn lại quan trọng?,Việc xác định giá thực hiện đúng đắn quan trọng vì nó giúp giữ cho IRS hài lòng và cũng giúp làm cho các quyền chọn cổ phiếu có giá trị.
+Tại sao Clef không sử dụng cùng một giá trị mà nhà đầu tư đã trả để định giá cổ phiếu phổ thông của bạn?,Clef không sử dụng cùng một giá trị mà nhà đầu tư đã trả để định giá cổ phiếu phổ thông của bạn vì nhà đầu tư nhận được cổ phiếu ưu đãi với một số đặc quyền đặc biệt.
+Tại sao công ty muốn giá thực hiện cho cổ phiếu phổ thông càng thấp càng tốt?,"Vì giá thực hiện càng thấp, số tiền mà quyền chọn cổ phiếu của bạn mang lại càng nhiều."
+"Trước đây, công ty thường xác định giá thực hiện cho cổ phiếu phổ thông như thế nào?",Công ty thường chia giá cổ phiếu ưu đãi cho 10 hoặc nhiều hơn để xác định giá thực hiện.
+"Hiện nay, công ty cần làm gì để xác định giá thực hiện cho cổ phiếu?",Công ty cần thực hiện đánh giá 409a để xác định giá thực hiện cho cổ phiếu.
+"Khi tôi thực hiện quyền chọn cổ phiếu ưu đãi (ISOs), tôi có phải chịu thuế không?","Không, bạn không phải chịu thuế khi thực hiện quyền chọn ISOs."
+Lợi nhuận từ việc bán cổ phiếu sau khi thực hiện quyền chọn ISOs được đánh thuế như thế nào?,"Lợi nhuận giữa giá thực hiện và giá bán cổ phiếu được đánh thuế như lợi tức vốn, với mức thuế thấp hơn thuế thu nhập."
+Tiền lãi từ ISOs có được coi là 'ưu đãi thuế' cho Thuế Tối thiểu Thay thế (AMT) không?,"Có, tiền lãi từ ISOs được coi là 'ưu đãi thuế' và được tính vào Thuế Tối thiểu Thay thế (AMT)."
+"Nếu tôi thực hiện quyền chọn cổ phiếu trong vòng 2 năm kể từ ngày cấp, quyền chọn của tôi sẽ được coi là gì?",Quyền chọn của bạn sẽ tự động được coi là Quyền chọn cổ phiếu không đủ điều kiện (NSOs) thay vì Quyền chọn cổ phiếu khuyến khích (ISOs).
+Tại sao Quyền chọn cổ phiếu không đủ điều kiện (NSOs) bị đối xử kém thuận lợi hơn dưới luật thuế?,"Bởi vì NSOs có thể được cấp cho những người không làm việc tại Clef, điều này làm phức tạp luật thuế."
+NSOs có thể được cấp cho ai?,NSOs có thể được cấp cho những người không làm việc tại Clef.
+"Khi Clef huy động vốn từ bên ngoài, nhà đầu tư sẽ mua loại cổ phiếu nào?",Nhà đầu tư sẽ mua loại cổ phiếu ưu đãi (Preferred Stock).
+Mỗi vòng gọi vốn tiếp theo sẽ tạo ra gì?,Mỗi vòng gọi vốn tiếp theo sẽ tạo ra một lớp cổ phiếu mới với quyền lợi riêng.
+Các lớp cổ phiếu mới thường được đặt tên như thế nào?,"Các lớp cổ phiếu mới thường được đặt tên theo các vòng gọi vốn, ví dụ: Cổ phiếu ưu đãi Series A, Cổ phiếu ưu đãi Series B, v.v."
+Cổ đông sở hữu cổ phiếu ưu đãi loại A có quyền bầu chọn bao nhiêu ghế trong hội đồng quản trị?,Cổ đông sở hữu cổ phiếu ưu đãi loại A có thể bầu chọn một người vào hội đồng quản trị của Clef.
+Cổ đông sở hữu cổ phiếu ưu đãi có thể bầu chọn ghế trong hội đồng quản trị độc lập với cổ đông khác không?,"Có, cổ đông sở hữu cổ phiếu ưu đãi có thể bầu chọn một số ghế trong hội đồng quản trị độc lập với các cổ đông khác."
+"Trong trường hợp Clef bị bán hoặc niêm yết công khai, ai sẽ được trả tiền trước?",Nhà đầu tư có quyền ưu tiên thanh lý sẽ được trả tiền trước.
+Quyền ưu tiên thanh lý ảnh hưởng như thế nào đến giá trị cổ phiếu?,Quyền ưu tiên thanh lý làm giảm giá trị của cổ phiếu.
+"Nếu nhà đầu tư Series A đã đầu tư 5 triệu đô la với quyền ưu tiên thanh lý 2 lần và Clef bị bán, họ sẽ nhận được bao nhiêu tiền trước khi người khác được trả?",Nhà đầu tư Series A sẽ nhận được 10 triệu đô la trước khi bất kỳ ai khác được trả tiền.
+"Nếu Clef được bán với giá 10 triệu đô la hoặc ít hơn, ai sẽ nhận được tiền?","Chỉ những người có cổ phiếu ưu đãi sẽ nhận được tiền, còn những người có cổ phiếu phổ thông (nhà sáng lập và nhân viên) sẽ không nhận được gì."
+"Nếu Clef được bán với giá 15 triệu đô la, số tiền nào sẽ được phân phối cho cổ đông phổ thông?",5 triệu đô la sẽ được phân phối cho cổ đông phổ thông.
+Tại sao các công ty khởi nghiệp thường chọn sử dụng ghi chú chuyển đổi để huy động vốn?,Bởi vì nó cho phép họ hoãn việc xác định giá trị công ty.
+"Khi sử dụng ghi chú chuyển đổi, công ty khởi nghiệp bán cổ phần như thế nào?","Thay vì bán cổ phần với giá cố định, công ty vay tiền dưới hình thức nợ."
+Ghi chú chuyển đổi chuyển thành cổ phần như thế nào khi công ty huy động vốn lần tiếp theo?,"Nợ sẽ chuyển thành cổ phần với mức chiết khấu, nhằm thưởng cho các nhà đầu tư ban đầu đã đầu tư vào công ty sớm."
+Nhà đầu tư sẽ nhận được ưu đãi gì khi nợ chuyển thành cổ phần?,Nhà đầu tư sẽ nhận được ưu đãi là một tỷ lệ phần trăm cố định (20% đối với Clef) khi nợ chuyển thành cổ phần.
+Giá trị tối đa mà nhà đầu tư đầu tiên phải trả cho cổ phiếu là gì?,Giá trị tối đa mà nhà đầu tư đầu tiên phải trả cho cổ phiếu là mức giá trị trần (cap).
+Clef đã huy động được bao nhiêu tiền với mức giá trị trần là 6 triệu đô la?,Clef đã huy động được 1.683.555 đô la với mức giá trị trần là 6 triệu đô la.
+Công ty đã huy động được bao nhiêu tiền qua hình thức phát hành trái phiếu?,Công ty đã huy động được 1.683.555 đô la qua hình thức phát hành trái phiếu với mức trần là 6 triệu đô la.
+Nhân viên nên làm gì trước khi đưa ra quyết định tài chính quan trọng liên quan đến cổ phần của mình?,"Nhân viên nên tham khảo ý kiến của luật sư trước khi đưa ra quyết định tài chính quan trọng liên quan đến cổ phần của mình, vì có thể có những yêu cầu pháp lý và thuế phức tạp."
+Mục đích của quyển sổ tay nhân viên này là gì?,Mục đích của quyển sổ tay này là để giúp bạn làm quen với cách chúng tôi làm việc và tham gia vào cộng đồng.
+Công ty Clef đang xây dựng đội ngũ như thế nào?,"Công ty Clef đang xây dựng một đội ngũ hiểu rõ sứ mệnh và giá trị cốt lõi của công ty, và sẽ giúp công ty đạt được các mục tiêu này."
+Nhân viên có thể góp ý gì cho công ty?,"Nhân viên có thể đưa ra các gợi ý, câu hỏi hoặc ý kiến đóng góp bất cứ lúc nào, điều này sẽ giúp công ty cải thiện khi phát triển."
+Nhân viên có trách nhiệm gì đối với quyển sổ tay này?,"Nhân viên có trách nhiệm đọc, hiểu và tuân thủ nội dung của quyển sổ tay này."
+Mục tiêu của công ty đối với môi trường làm việc là gì?,"Mục tiêu của công ty là cung cấp một môi trường làm việc xây dựng, hỗ trợ sự phát triển cá nhân và chuyên môn của nhân viên."
+Công ty có quyền thay đổi nội dung của quyển sổ tay không?,"Công ty có quyền sửa đổi, cập nhật và/hoặc bãi bỏ các quy định được nêu trong quyển sổ tay."
+Tại sao việc cập nhật thông tin về những lĩnh vực mà tôi không tham gia trực tiếp tại Clef lại quan trọng?,"Việc này quan trọng vì nó giúp mọi người đều nắm bắt được những gì đang diễn ra tại Clef, từ đó đưa ra quyết định tốt hơn cho công ty."
+"Theo văn bản, điều gì cần thiết để mọi người có thể đưa ra quyết định tốt cho Clef?","Để đưa ra quyết định tốt cho Clef, mọi người cần có tất cả thông tin về những gì đang diễn ra tại công ty."
+Thông tin minh bạch trong công ty có khó khăn gì?,"Việc giữ cho mọi người cập nhật và đồng bộ, đặc biệt là đối với những dự án mà họ không làm việc hàng ngày, là một thách thức lớn."
+Công ty Clef sử dụng chính sách gì để tăng tính minh bạch?,"Công ty Clef sử dụng các chính sách để làm cho thông tin dễ tiếp cận hơn, nhưng công việc này vẫn đang tiếp tục."
+Nhân viên Clef cập nhật thông tin như thế nào vào mỗi thứ Sáu?,"Mỗi thứ Sáu, mọi thành viên trong đội ngũ đăng một bản cập nhật trong kênh #updates trên Slack, bao gồm các thông tin cần thiết."
+Việc ghi chú những gì đã hoàn thành trong tuần có mục đích gì?,Điều này giúp dễ dàng theo dõi các dự án và đảm bảo mọi người tại Clef đều chịu trách nhiệm với nhau để hoàn thành phần việc của mình.
+Tại sao Clef lại khuyến khích việc cập nhật kế hoạch cho tuần tới?,Để dễ dàng theo dõi các dự án và đảm bảo mọi người tại Clef đều chịu trách nhiệm với nhau để hoàn thành phần việc của mình.
+"Khi làm việc từ xa, tại sao chúng ta cần thông báo cho đồng nghiệp biết khi mình có mặt?","Khi làm việc từ xa, chúng ta cần thông báo cho đồng nghiệp biết khi mình có mặt để họ biết khi nào mình có thể liên lạc và hợp tác."
+Cách đơn giản nhất để thông báo cho đồng nghiệp biết khi mình đến hoặc rời khỏi văn phòng là gì?,Cách đơn giản nhất là đăng một tin nhắn trên Slack để thông báo khi bạn đến hoặc rời khỏi văn phòng.
+Tại sao Kate Garklavs gửi các bản cập nhật tiến độ ngắn cho đội ngũ của mình?,"Kate Garklavs gửi các bản cập nhật tiến độ ngắn để giữ cho mọi người trong đội ngũ biết về công việc cô đang làm, ngay cả khi không yêu cầu họp hàng ngày."
+Kate Garklavs sống ở đâu?,Kate Garklavs sống ở Portland.
+Kate Garklavs hy vọng gì khi gửi các bản cập nhật tiến độ?,"Kate Garklavs hy vọng rằng bằng cách gửi các bản cập nhật tiến độ, cô sẽ giữ cho mọi người trong đội ngũ biết về những gì cô đã làm."
+"Khi làm việc từ xa, tôi cần phải làm gì để thông báo cho mọi người biết?",Bạn nên tạo một sự kiện trên lịch để chỉ rõ nơi bạn đang làm việc trong suốt thời gian bạn vắng mặt tại văn phòng.
+Tại sao chúng ta cần cập nhật lịch khi làm việc từ xa?,"Để thông báo cho mọi người biết khi nào và ở đâu bạn đang làm việc, giúp tăng tính linh hoạt cá nhân và đảm bảo mọi người đều biết khi bạn có mặt."
+Tôi nên làm gì với tên của mình trên Slack khi tôi đang làm việc từ nhà?,"Khi bạn đang làm việc từ nhà, bạn nên cập nhật tên cuối (tên họ) trên Slack để phản ánh điều này."
+Có bao nhiêu trạng thái mà một đồng nghiệp có thể có trên Slack?,Có 4 trạng thái mà một đồng nghiệp có thể có trên Slack.
+"Khi trạng thái của đồng nghiệp là 'Active (green)', tôi có thể mong đợi họ phản hồi trong bao lâu?",Trong vòng vài phút đến một giờ.
+"Nếu đồng nghiệp có trạng thái 'Do not disturb (green)', điều đó có nghĩa là gì?",Họ đang tập trung làm việc và sẽ phản hồi khi hoàn thành công việc đang tập trung.
+"Khi đồng nghiệp có trạng thái 'Do not disturb (gray)', tôi nên mong đợi phản hồi vào lúc nào?",Vào ngày làm việc tiếp theo.
+Khi nào một đồng nghiệp được coi là 'away'?,Một đồng nghiệp được coi là 'away' khi họ nghỉ làm hoặc tạm thời vắng mặt.
+"Nếu một đồng nghiệp đăng tin trong kênh #office rằng họ đang ra ngoài nhưng sẽ quay lại, tôi nên làm gì?",Bạn nên đợi phản hồi khi họ quay lại.
+"Nếu một đồng nghiệp đăng tin trong kênh #office rằng họ đã kết thúc công việc cho ngày hôm đó, tôi nên làm gì?",Bạn nên đợi phản hồi vào ngày làm việc tiếp theo.
+Tại sao việc duy trì kỳ vọng trong giao tiếp quan trọng?,Việc duy trì kỳ vọng trong giao tiếp quan trọng để mọi người trong đội ngũ có thể lên kế hoạch công việc hiệu quả.
+Có nên tạo kênh Slack công cộng hay không?,"Theo đoạn văn, nên tạo kênh Slack công cộng để đảm bảo tính minh bạch."
+Tại sao hầu hết các cuộc trò chuyện trên Slack nên diễn ra trong các kênh công khai?,"Để toàn đội có thể xem và tìm kiếm lại các cuộc trò chuyện, giúp mọi người biết cách chúng ta quyết định một hành động nào đó."
+Có cần phải theo dõi tất cả các kênh Slack không?,"Không, bạn không cần phải theo dõi hoặc chú ý đến mọi kênh, nhưng các cuộc trò chuyện trong kênh công khai có thể được tìm kiếm và đọc bởi toàn đội."
+Lợi ích của việc sử dụng các kênh Slack công khai là gì?,"Lợi ích là các cuộc trò chuyện có thể được lưu trữ, tìm kiếm và đọc lại, giúp mọi người hiểu rõ hơn về quá trình ra quyết định của đội."
+Tại sao nên đăng bài công khai khi không chắc chắn?,"Khi không chắc chắn, bạn nên đăng bài công khai để đảm bảo thông tin được chia sẻ rộng rãi."
+Hiện tại bao nhiêu phần trăm cuộc trò chuyện của chúng ta diễn ra ở kênh công khai?,Hiện tại khoảng 60% cuộc trò chuyện của chúng ta diễn ra ở kênh công khai.
+Tại sao chúng ta cần chia sẻ lịch làm việc?,Để dễ dàng lên lịch họp và cho cả đội thấy chúng ta dành thời gian vào những công việc gì.
+Lịch cá nhân có nên được chia sẻ không?,"Không, vì lịch cá nhân thường chứa thông tin nhạy cảm và nên được giữ riêng."
+Tại sao chúng ta cần phải công khai các số liệu thống kê trong đội ngũ?,"Để mọi người trong đội có thể cùng nhìn thấy, giúp đỡ nhau giải quyết những vấn đề khi số liệu không tốt."
+Chúng ta nên làm gì với những số liệu quan trọng nhất?,Cố gắng giữ chúng được đăng công khai trong văn phòng.
+Tại sao giao tiếp trung thực giữa các nhóm người lại quan trọng?,Giao tiếp trung thực giúp chúng ta dễ dàng tin tưởng lẫn nhau và cùng làm việc như một đội nhóm hiệu quả.
+Tại sao sự mở cửa và trung thực được coi là một trong những giá trị cốt lõi của công ty?,"Sự mở cửa và trung thực là yếu tố quan trọng để thành công, vì vậy nó được coi là một trong những giá trị cốt lõi của công ty."
+Nhân viên tại Clef sẽ báo cáo cho ai?,"Nhân viên tại Clef sẽ báo cáo cho Mark, Jesse, hoặc B."
+Mục đích của mối quan hệ báo cáo này là gì?,Mục đích của mối quan hệ báo cáo này là để cung cấp hỗ trợ và hướng dẫn cho nhân viên.
+Nhân viên sẽ gặp người quản lý trực tiếp của mình để làm gì?,"Nhân viên sẽ gặp người quản lý trực tiếp của mình để thảo luận về mục tiêu, họp định kỳ, và giải quyết các câu hỏi đầu tiên."
+Mối quan hệ một đối một trong công ty có mục đích gì?,Mối quan hệ một đối một không nhằm chia công ty thành các đội nhóm.
+Tại sao mọi người nên cảm thấy như họ đang ở vị trí bình đẳng?,"Vì ở quy mô hiện tại, tổ chức của Clef không cần phân cấp sâu hơn mức đầu tiên, nên mọi người nên cảm thấy như họ đang ở vị trí bình đẳng."
+OKRs là gì?,OKRs là phương pháp để xác định và theo dõi mục tiêu cùng kết quả của chúng.
+Mục tiêu và kết quả chính trong OKRs được chia thành những gì?,"Mục tiêu (objectives) là những khát vọng cấp cao, còn kết quả chính (key results) là những kết quả đo lường được để xác định xem có đạt được mục tiêu hay không."
+OKRs được áp dụng ở mức độ nào trong công ty?,"OKRs được thiết lập ở cả cấp công ty và cá nhân để giúp mọi người thấy cách mục tiêu cá nhân của họ phù hợp với mục tiêu của Clef, cũng như cách mọi người trong tổ chức đang làm việc hướng tới cùng một kết quả từ các góc độ khác nhau."
+Mục tiêu nào liên quan đến việc cải thiện trải nghiệm lần đầu sử dụng sản phẩm?,Cải thiện trải nghiệm lần đầu sử dụng Clef (onboarding)
+Mục tiêu nào nhằm giảm thời gian chờ phản hồi của vé hỗ trợ?,Giảm thời gian chờ trung bình cho phản hồi vé hỗ trợ
+Key results trong mục tiêu cần phải đo lường như thế nào?,Key results phải được đo lường trên thang điểm từ 0 đến 10.
+Một ví dụ về key result cho việc phỏng vấn người dùng sau khi họ trải qua quá trình onboarding là gì?,Phỏng vấn 20 người dùng sau khi họ trải qua quá trình onboarding (tỷ lệ hoàn thành).
+"Nếu không hoàn thành đúng hạn việc viết spec cho 3 cải tiến lớn nhất, sẽ bị trừ bao nhiêu điểm?",Sẽ bị trừ 2 điểm cho mỗi ngày trễ.
+Hạn chót để hoàn thành cải tiến là khi nào?,Hạn chót là ngày 15 tháng 9.
+Mỗi tuần trễ hạn sẽ bị trừ bao nhiêu điểm?,Mỗi tuần trễ hạn sẽ bị trừ 3 điểm.
+Mục tiêu tăng tỷ lệ chuyển đổi qua quy trình đăng ký là bao nhiêu phần trăm?,Mục tiêu là tăng 10% từ mức 50% hiện tại.
+Mỗi người cần đặt bao nhiêu mục tiêu cho mỗi quý?,Mỗi người nên đặt từ 3 đến 5 mục tiêu cho mỗi quý.
+Mỗi mục tiêu cần có bao nhiêu kết quả then chốt?,Mỗi mục tiêu nên có tối đa 4 kết quả then chốt.
+"Mỗi quý, tôi cần đặt bao nhiêu mục tiêu học tập hoặc cải thiện?","Mỗi quý, bạn cần đặt một mục tiêu học tập hoặc cải thiện."
+Tôi nên ghi chép OKRs của mình ở đâu?,Bạn nên ghi chép OKRs của mình trong Google Spreadsheet riêng của bạn trong thư mục OKRs.
+"Trong Google Spreadsheet, tôi cần tạo bao nhiêu sheet cho mỗi quý?","Trong Google Spreadsheet, bạn cần tạo một sheet mới cho mỗi quý."
+OKRs nên được thảo luận khi nào?,OKRs nên được thảo luận mỗi tuần trong các cuộc họp 1:1.
+"Trong cuộc họp 1:1, những gì cần được xem xét khi thảo luận về OKRs?","Cần xem xét tiến độ của từng mục tiêu, nơi cần hỗ trợ, và mức độ phản ánh đúng các mục tiêu hiện tại của các OKRs."
+OKRs được chấm điểm như thế nào?,"OKRs được chấm điểm vào cuối quý, với mỗi Kết Quả Chính được gán một điểm số. Điểm trung bình của các Kết Quả Chính cho ra điểm số của mỗi Mục Tiêu, và điểm trung bình của các Mục Tiêu cho ra điểm tổng thể của quý."
+Có những cách phổ biến nào để đánh giá Kết Quảthen Chìa Khóa?,"Có một số cách phổ biến để đánh giá Kết Quảthen Chìa Khóa, bao gồm % hoàn thành."
+"Nếu mục tiêu là đăng 3 bài viết trên blog, thì việc đăng 2 bài sẽ được đánh giá như thế nào?","Việc đăng 2 bài trong tổng số 3 bài sẽ được đánh giá là ⅔ x 10, tương đương với 6.7 điểm."
+Tổng số điểm có thể đạt được cho một Kết Quảthen Chìa Khóa là bao nhiêu?,Tổng số điểm có thể đạt được cho một Kết Quảthen Chìa Khóa là 10 điểm.
+"Nếu một tài nguyên cần được giao vào ngày cụ thể, điều gì sẽ xảy ra nếu tôi giao trễ?","Số điểm cố định có thể bị trừ dựa trên số ngày trễ. Ví dụ, nếu phạt là -2 điểm mỗi ngày, thì việc hoàn thành trễ 3 ngày sẽ bị trừ 6 điểm."
+Phạt cho việc trễ hạn có thay đổi không?,"Có, phạt sẽ thay đổi tùy thuộc vào mức độ nhạy cảm về thời gian của kết quả. Nếu đồng nghiệp cần bạn hoàn thành đúng hạn để sử dụng, thì phạt sẽ nặng hơn."
+Làm thế nào để xác định mức phạt cho việc trễ hạn?,Mức phạt nên được thiết lập dựa trên key result và tùy thuộc vào mức độ nhạy cảm về thời gian của kết quả.
+Khi nào điểm số dựa trên độ chênh lệch?,"Khi bạn muốn đạt một mục tiêu chính xác và không muốn vượt quá hoặc thấp hơn nó, điểm số có thể dựa trên mức độ chênh lệch."
+Tại sao cần phải có phương pháp chấm điểm cho mỗi kết quả quan trọng?,"Phương pháp chấm điểm cần được bao gồm trong mỗi kết quả quan trọng để đảm bảo rằng nếu hai người đánh giá độc lập cùng lúc, họ sẽ đưa ra cùng một điểm số vì tiêu chí đánh giá phải rõ ràng, không gây hiểu lầm."
+OKRs có được sử dụng để đánh giá hiệu quả công việc của nhân viên không?,"Không, OKRs không nên được sử dụng để đánh giá hiệu quả công việc của nhân viên."
+Điểm trung bình lý tưởng cho OKRs là bao nhiêu?,Điểm trung bình lý tưởng cho OKRs là 7.
+Cuộc họp một đối một giữa nhân viên và quản lý diễn ra như thế nào?,"Mỗi tuần, mỗi thành viên của đội Clef gặp quản lý của mình trong một cuộc họp mở không giới hạn chủ đề, kéo dài ít nhất ba mươi phút."
+Ai là người đặt lịch trình cho cuộc họp một đối một?,Lịch trình cho cuộc họp một đối một do nhân viên đặt.
+Mục đích chính của cuộc họp một đối một là gì?,"Mục đích chính của cuộc họp một đối một là xây dựng mối quan hệ tin cậy, không phải để kiểm tra tình hình công việc hay đánh giá hiệu suất."
+Tại sao các cuộc họp một đối một giữa quản lý và nhân viên lại quan trọng?,"Bởi vì chúng là nơi dễ dàng nhất để xây dựng lòng tin, giúp quản lý xây dựng mối quan hệ cá nhân với mỗi nhân viên và thiết lập kênh giao tiếp đáng tin cậy."
+Quản lý dành bao nhiêu thời gian cho mỗi nhân viên trực thuộc mỗi tuần?,Quản lý dành thời gian cho mỗi nhân viên trực thuộc mỗi tuần để xây dựng mối quan hệ cá nhân và thiết lập kênh giao tiếp đáng tin cậy.
+Liệu họp một đối một có cần phải diễn ra vào cùng một thời gian mỗi tuần không?,"Có, họp một đối một nên là sự kiện lịch cố định vào cùng một thời gian mỗi tuần, nhưng lịch trình này cần linh hoạt, không cứng nhắc."
+"Nếu có sự kiện khác diễn ra cùng thời gian, liệu có thể dời lịch họp một đối một không?","Có, cuộc họp có thể được dời nếu có sự kiện khác diễn ra cùng thời gian hoặc nếu thành viên đội cảm thấy cần nhiều thời gian hơn trong tuần đó."
+Tại sao việc dành thời gian cho các cuộc họp một đối một lại quan trọng?,Việc dành thời gian cho các cuộc họp một đối một giúp mỗi thành viên trong đội cảm thấy quản lý của họ quan tâm đến mối quan hệ và ưu tiên nhu cầu của họ.
+Cuộc họp một đối một có tác động gì đến mối quan hệ giữa quản lý và nhân viên?,Cuộc họp một đối một giúp mỗi thành viên trong đội cảm thấy quản lý của họ quan tâm đến mối quan hệ và ưu tiên nhu cầu của họ.
+Ai nên kiểm soát nội dung cuộc họp một đối một?,Nhân viên trong đội ngũ nên có quyền kiểm soát tối đa.
+Cuộc họp một đối một nên bao gồm những nội dung gì?,"Cuộc họp nên bao gồm cả vấn đề hiện tại và cách giải quyết, cũng như mục tiêu và kế hoạch tương lai."
+Một-on-một là nơi tốt để làm gì?,"Một-on-một là nơi tốt để cho và nhận phản hồi, nói về những điều đang hoạt động tốt và tại sao chúng hiệu quả, cũng như hỏi về những điều có thể cải thiện."
+Quản lý nên làm gì trong cuộc họp một-on-một?,"Quản lý nên đưa ra các câu hỏi theo dõi, đào sâu hơn và tái khẳng định các ý tưởng phức tạp để đảm bảo hiểu đúng."
+Tại sao việc lắng nghe quan trọng trong cuộc họp một-on-một?,Việc lắng nghe quan trọng vì nó giúp bạn học hỏi nhiều hơn và xây dựng lòng tin hơn so với việc nói.
+Tại sao việc ghi chú trong cuộc họp lại quan trọng?,Việc ghi chú trong cuộc họp giúp bạn có thể hỏi về những thay đổi trong tương lai.
+"Nếu tôi nhận thấy điều gì đó cần thảo luận, tôi nên làm gì?","Nếu bạn nhận thấy điều gì đó cần thảo luận, hãy ghi chú lại để đảm bảo bạn sẽ đề cập đến nó trong cuộc họp một đối một tiếp theo."
+"Khi một nhân viên gặp vấn đề với đồng nghiệp, tôi cần làm gì trước khi can thiệp?",Bạn cần hỏi ý kiến nhân viên đó trước khi can thiệp.
+Tại sao lại cần hỏi ý kiến nhân viên trước khi can thiệp vào vấn đề của họ với đồng nghiệp?,"Bởi vì can thiệp có thể khiến tình hình làm việc của họ trở nên tồi tệ hơn, và bạn cần tôn trọng mong muốn và mục tiêu giải quyết của họ."
+"Khi giải quyết vấn đề cho khách hàng, tại sao tôi cần phải theo dõi và nói về cách giải quyết?",Bởi vì điều này cho thấy bạn coi trọng vấn đề của họ và cũng mở ra cơ hội để thảo luận về nguyên nhân gây ra vấn đề và cách tránh chúng trong tương lai hoặc cải thiện cách xử lý.
+Theo dõi và nói về cách giải quyết vấn đề có lợi ích gì?,"Có hai lợi ích chính: thứ nhất, nó cho thấy bạn coi trọng vấn đề của khách hàng; thứ hai, nó mở ra cơ hội để thảo luận về nguyên nhân gây ra vấn đề và cách cải thiện việc xử lý trong tương lai."
+Các chỉ số nào mà Clef có thể sử dụng để so sánh với mật khẩu truyền thống và xác thực hai yếu tố?,Các chỉ số bao gồm mức độ bảo mật mà Clef có thể cung cấp cho khách hàng và tốc độ của mỗi lần đăng nhập.
+Tại sao Clef cần tối ưu hóa cho các chỉ số này?,Clef cần tối ưu hóa cho các chỉ số này để mang lại lợi ích tăng dần cho người dùng hoặc trang web quyết định sử dụng Clef.
+Những lợi ích tăng dần mà Clef có thể mang lại cho người dùng hoặc trang web là gì?,Những lợi ích tăng dần bao gồm cải thiện mức độ bảo mật và tăng tốc độ đăng nhập.
+"Trong hai năm đầu tiên, Clef đã gặp khó khăn gì?",Clef thường đi sai hướng dựa trên trực giác nhưng không thể giải thích tại sao.
+"Khi so sánh với các giải pháp khác, Clef cảm thấy như thế nào?",Clef lo lắng về việc có thể bỏ qua những tối ưu hóa khiến sản phẩm trở nên tốt hơn.
+Các quyết định của Clef dựa trên điều gì trong thời gian đó?,Các quyết định của Clef dựa vào cảm giác đúng đắn nhưng không được hỗ trợ bởi các chỉ số cốt lõi cần đo lường.
+Người dùng đã phản ứng như thế nào với Clef so với các lựa chọn khác?,"Người dùng đã chọn Clef và kết nối với nó theo cách hoàn toàn khác biệt, họ yêu thích việc sử dụng Clef hơn là chỉ đơn giản sử dụng các lựa chọn khác."
+Điều gì đã khiến công ty nhận ra rằng các chỉ số cốt lõi không giải quyết được vấn đề thực sự của người dùng?,"Công ty nhận ra rằng mặc dù các chỉ số cốt lõi có thể phản ánh sự bất tiện với mật khẩu và các cách đăng nhập hiện tại, nhưng chúng không giải quyết được nỗi đau thực sự mà người dùng đang trải qua."
+Tại sao người dùng lại yêu thích Clef hơn các phương thức đăng nhập khác?,Người dùng yêu thích Clef vì họ cảm thấy kết nối với nó theo cách khác biệt và sâu sắc hơn so với các phương thức đăng nhập khác.
+Tại sao người dùng thường cảm thấy có lỗi khi đăng nhập?,Người dùng thường cảm thấy có lỗi vì họ không áp dụng những 'thực hành tốt nhất' về bảo mật mà họ được nhắc đi nhắc lại.
+Người dùng thường lo lắng điều gì khi đăng nhập?,"Người dùng thường lo lắng rằng họ có thể không nhớ mật khẩu, dẫn đến không thể truy cập vào những thông tin quan trọng và/hoặc khẩn cấp."
+"Theo đoạn văn, điều gì quan trọng hơn khi người dùng đăng nhập?","Theo đoạn văn, điều quan trọng hơn là những cảm xúc mà người dùng trải qua khi đăng nhập, như cảm giác có lỗi và lo lắng."
+Tại sao nhân viên cảm thấy lo lắng về việc sử dụng mật khẩu?,"Nhân viên cảm thấy lo lắng vì sợ rằng mật khẩu của họ không bảo vệ được danh tính cá nhân, và điều này thường bị kích thích bởi các vụ việc rò rỉ thông tin và trộm cắp danh tính được đưa tin trên truyền thông."
+Danh tính có vai trò gì trong việc tạo ra phản ứng cảm xúc khi sử dụng mật khẩu?,"Danh tính là điều cơ bản của con người, vì vậy việc sử dụng mật khẩu để đăng nhập hoặc đăng ký có thể gây ra các phản ứng cảm xúc mạnh mẽ."
+Những cảm xúc nào thường liên quan đến việc sử dụng mật khẩu?,"Các cảm xúc thường liên quan đến việc sử dụng mật khẩu bao gồm cảm giác tội lỗi, lo lắng và sợ hãi, dẫn đến việc chúng ta liên kết *sự xấu hổ* với danh tính."
+Giải pháp cho vấn đề mật khẩu là gì theo đoạn văn?,Giải pháp là tháo gỡ những liên tưởng tiêu cực hoặc dựa trên sự xấu hổ về danh tính bằng cách trao quyền cho người dùng và cung cấp trải nghiệm mà họ có thể hiểu và cảm thấy tích cực.
+Giá trị cốt lõi của sản phẩm tại Clef là gì?,Giá trị cốt lõi của sản phẩm tại Clef là sự minh bạch.
+Giá trị cốt lõi của sản phẩm tại Clef là gì?,Giá trị cốt lõi của sản phẩm tại Clef là sự rõ ràng.
+Sự rõ ràng tại Clef giúp người dùng cảm thấy như thế nào?,"Sự rõ ràng tại Clef giúp người dùng cảm thấy kiểm soát và bảo vệ được danh tính của mình, đồng thời hiểu và tham gia vào khái niệm về bảo mật trực tuyến."
+Tại sao sự rõ ràng lại quan trọng đối với thành công của Clef?,"Sự rõ ràng có tác động tích cực đến cách người dùng cảm nhận, và cảm giác tích cực này là chìa khóa cho thành công của đội ngũ và công ty."
+Chúng ta nên hướng tới điều gì mỗi khi ra mắt sản phẩm mới?,Chúng ta nên hướng tới việc tạo ra cảm giác tích cực cho người dùng mỗi khi ra mắt sản phẩm mới.
+Tại sao công ty Clef lại chào đón tôi?,"Công ty Clef rất háo hức khi có bạn tham gia và hy vọng bạn sẽ học được nhiều điều khi làm việc tại đây, đồng thời công ty cũng sẽ học hỏi được nhiều từ bạn."
+Đoạn văn bản này có mục đích gì?,Đoạn văn bản này nhằm giúp bạn bắt đầu hiểu cách thức hoạt động của Clef và cách mọi người cùng làm việc với nhau.
+Công ty Clef có chính sách như thế nào về việc xây dựng tổ chức?,"Clef đang cố gắng xây dựng một tổ chức bao gồm và dựa trên giá trị, vì vậy nhiều chính sách của công ty khác biệt so với các công ty khác."
+Nhân viên có thể góp ý về cách làm việc của công ty không?,"Có, nếu bạn có bất kỳ câu hỏi hoặc đề xuất về cách làm việc của công ty, hãy cho chúng tôi biết hoặc viết bình luận trong các tài liệu."
+Nhân viên có quyền truy cập để bình luận vào sổ tay nhân viên không?,"Có, bạn đã có quyền truy cập để bình luận vào mọi tài liệu trong sổ tay nhân viên của Clef."
+"Trước khi bắt đầu làm việc tại Clef, tôi cần hoàn thành những gì?","Trước khi bắt đầu làm việc tại Clef, bạn cần hoàn thành việc điền các giấy tờ cần thiết."
+"Khi đến công ty vào ngày đầu tiên, tôi sẽ nhận được những gì?","Khi đến công ty vào ngày đầu tiên, bạn sẽ nhận được một bàn làm việc với máy tính mới và các phụ kiện phù hợp với phong cách làm việc của bạn."
+Mục tiêu hôm nay của tôi là gì?,Mục tiêu hôm nay của bạn là xuất bản một điều gì đó trực tuyến.
+"Nếu tôi là nhà thiết kế, tôi có thể làm gì để đạt mục tiêu?","Nếu bạn là nhà thiết kế, bạn có thể thay đổi màu sắc của một nút."
+"Trong ngày đầu tiên làm việc, tôi có cần phải làm gì đặc biệt không?","Ngày đầu tiên chủ yếu để bạn làm quen với môi trường làm việc, gặp gỡ mọi người và sắp xếp không gian làm việc theo ý thích của bạn."
+Có hoạt động nào đặc biệt trong ngày đầu tiên không?,"Có, hôm nay sẽ có bữa trưa cùng đội ngũ. Nếu bạn có bất kỳ yêu cầu về thức ăn, hãy thông báo cho chúng tôi."
+Công ty có mong muốn gì ở tôi trong quá trình làm việc tại đây?,Công ty mong muốn bạn xây dựng sự nghiệp lâu dài tại đây và cùng đồng hành với thành công của đội nhóm.
+Tôi có cần phải vội vàng hoàn thành mọi việc trong ngày đầu tiên không?,"Không, bạn không cần phải vội vàng. Bạn sẽ có nhiều thời gian để làm mọi việc đúng đắn."
+Có những cách nào để kết thúc ngày đầu tiên của tôi cùng đội nhóm?,Bạn có thể chọn một trong ba cách: cả nhóm cùng vỗ tay và cổ vũ cho bạn.
+Chúng tôi có thể làm gì sau khi kết thúc ngày đầu tiên?,"Có thể đi uống nước, ăn tráng miệng hoặc đi ăn tối gần nơi làm việc."
+"Nếu tôi cảm thấy mệt mỏi sau ngày đầu tiên, tôi có thể về nhà không?","Có, nếu bạn cảm thấy mệt mỏi, chúng tôi sẽ cùng nhau cổ vũ và cho bạn về nhà để chuẩn bị cho ngày thứ hai."
+"Nếu tôi muốn tham gia hoạt động sôi nổi hơn, có lựa chọn nào không?","Có, nếu bạn cảm thấy hào hứng và muốn ở lại với đội, bạn có thể chọn một trong những hoạt động sôi nổi hơn."
+Công ty Clef coi trọng điều gì?,Clef là một công ty coi trọng giá trị.
+Có bao nhiêu giá trị cơ bản của Clef?,"Clef có ba giá trị cơ bản: 1) Mỗi ngày đều tốt hơn ngày hôm qua, 2) Đối xử với người khác như cách họ muốn được đối xử, 3) Chống lại sự loại trừ."
+Giá trị nào của Clef đề cập đến việc cải thiện bản thân mỗi ngày?,Giá trị 'Mỗi ngày đều tốt hơn ngày hôm qua' của Clef đề cập đến việc cải thiện bản thân mỗi ngày.
+Clef có phải là một công ty an ninh thông thường không?,"Không, Clef không phải là một công ty an ninh thông thường. Clef đang cố gắng làm cho an ninh trở nên dễ dàng và gần gũi với mọi người."
+Mục tiêu của Clef trong lĩnh vực an ninh là gì?,"Mục tiêu của Clef là làm cho an ninh trở nên dễ dàng và tiếp cận được với mọi người, thay vì chỉ là một lĩnh vực kỹ thuật và khó tiếp cận."
+Thái độ của Clef đối với khách hàng như thế nào?,"Thái độ của Clef đối với khách hàng là thân thiện và vui vẻ, không bao giờ tỏ ra tự cao hay khinh thường."
+Mục tiêu của công ty là gì?,Mục tiêu của công ty là xây dựng tiêu chuẩn danh tính cho Internet.
+Tại sao công ty cho rằng mục tiêu này khó khăn?,"Công ty cho rằng mục tiêu này khó khăn vì đây là một nhiệm vụ lớn, đòi hỏi phải có chút điên rồ mới tin rằng có thể thực hiện được."
+Công ty đã đạt được những thành tựu gì trong quá trình thực hiện mục tiêu?,Công ty đã đạt được nhiều tiến bộ mỗi ngày và đã đưa dự án này xa hơn nhiều so với những gì mọi người nói là có thể.
+Clef hiện đang hoạt động như thế nào?,"Hiện nay, Clef hoạt động như một đội ngũ duy nhất, nơi mọi người đều hướng tới mục tiêu chung của công ty."
+Có những cuộc họp riêng biệt cho từng bộ phận không?,Có những cuộc họp kỹ thuật cụ thể và các cuộc thảo luận về tiếp thị diễn ra riêng biệt.
+"Khi đặt mục tiêu, mọi người nghĩ về điều gì?","Khi đặt mục tiêu, mọi người đều suy nghĩ trực tiếp về cách họ đóng góp vào mục tiêu chung của công ty."
+Tại sao công ty tạo ra một văn hóa không dựa trên sự khan hiếm?,"Để tạo ra không gian và thời gian cho nhân viên suy nghĩ và lên kế hoạch cho tương lai, giúp họ có tư duy rộng mở hơn."
+Công ty tin rằng điều gì sẽ xảy ra nếu nhân viên có quá nhiều công việc?,Nhân viên chỉ có thể tập trung vào những việc đang diễn ra trước mắt và không có thời gian để suy nghĩ về tương lai.
+Một tuần làm việc tiêu chuẩn tại Clef kéo dài bao lâu?,Một tuần làm việc tiêu chuẩn tại Clef kéo dài từ 45 đến 50 giờ.
+Nhân viên thường đến công ty và về nhà vào khoảng thời gian nào?,"Nhân viên thường đến công ty giữa 9 giờ và 10 giờ, và về nhà giữa 6 giờ và 7 giờ."
+Công ty có cố gắng tạo môi trường làm việc thân thiện và tôn trọng mọi người không?,"Có, công ty cố gắng tạo môi trường làm việc chào đón và tôn trọng mọi người từ các nền tảng khác nhau."
+"Nếu tôi muốn đề xuất cải thiện điều gì đó trong văn phòng, tôi có thể làm thế nào?",Bạn có thể thông báo cho công ty nếu có những điều bạn thích hoặc muốn thay đổi. Công ty luôn sẵn sàng lắng nghe và cải thiện.
+Công ty Clef đang trong tình trạng như thế nào?,Clef là một công ty nhỏ đang thay đổi và phát triển nhanh chóng.
+"Trong vòng 5 đến 10 năm nữa, công ty Clef sẽ ra sao?",Rất khó để tưởng tượng công ty Clef sẽ như thế nào trong 5 đến 10 năm nữa.
+Ngân sách cho những khoản chi tiêu nào sẽ do các nhà sáng lập quyết định?,Ngân sách cho tất cả các khoản chi tiêu ngoại trừ lương (lương của 10 nhân viên đầu tiên sẽ không được bao gồm trong ngân sách này) sẽ do các nhà sáng lập quyết định.
+Ngân sách sẽ được phân chia thành những hạng mục nào?,"Ngân sách sẽ được phân chia thành: Cơ sở hạ tầng kỹ thuật, Tiếp thị, Phát triển kinh doanh, Liên kết cộng đồng, Bảo mật, Thuê nhà, Quản trị, Tài nguyên thiết kế, Pháp lý."
+Khi nào ngân sách sẽ được xác định?,"Ngân sách sẽ được xác định ngay sau khi các mục tiêu OKR của công ty được thiết lập, để phản ánh mục tiêu của công ty trong quý."
+Ai sẽ chịu trách nhiệm phê duyệt các khoản chi tiêu liên quan?,Một người sẽ chịu trách nhiệm cho mỗi lĩnh vực chi tiêu và sẽ phê duyệt tất cả các khoản chi tiêu liên quan.
+Ngân sách công ty có được công khai nội bộ không?,"Có, ngân sách sẽ được công khai nội bộ để tất cả nhân viên có thể xem nơi công ty sử dụng nguồn lực."
+Ai chịu trách nhiệm bắt đầu cuộc họp đúng giờ?,Người dẫn dắt cuộc họp chịu trách nhiệm bắt đầu cuộc họp đúng giờ.
+"Nếu tôi tham dự cuộc họp, tôi cần làm gì để đảm bảo cuộc họp diễn ra đúng giờ?","Nếu bạn tham dự cuộc họp, bạn cần đến đúng giờ."
+Cuộc họp nên diễn ra vào thời gian nào?,Cuộc họp nên diễn ra trong giờ làm việc thường xuyên.
+Thời gian nào trong ngày là phù hợp để tổ chức họp mặt đối mặt?,Từ 10:30 sáng đến 1:00 chiều theo múi giờ Thái Bình Dương.
+"Nếu cần tổ chức họp ngoài khung giờ quy định, tôi cần làm gì?",Cần lên lịch họp ít nhất một tuần trước.
+"Khi tổ chức cuộc họp có nhân viên làm việc từ xa tham dự, ai phải cung cấp đường dẫn video?",Người chủ trì cuộc họp phải cung cấp đường dẫn video.
+Đường dẫn video cần được cung cấp khi nào?,Đường dẫn video cần được cung cấp trước khi cuộc họp bắt đầu.
+Tôi cần làm gì để tham dự họp từ xa?,"Bạn cần tham gia cuộc gọi video trước khi cuộc họp bắt đầu, đảm bảo bạn ở nơi yên tĩnh và có kết nối internet nhanh."
+Có được phép gọi điện thoại tham dự cuộc họp không?,"Gọi điện thoại hoặc tham dự từ nơi công cộng là không được chấp nhận. Tuy nhiên, đối với một số cuộc họp, cuộc gọi âm thanh có thể đủ, tùy thuộc vào quyết định của người tổ chức cuộc họp."
+Ai quyết định liệu cuộc họp có cần cuộc gọi video hay chỉ cần cuộc gọi âm thanh?,Người tổ chức cuộc họp sẽ quyết định liệu cuộc họp cần cuộc gọi video hay chỉ cần cuộc gọi âm thanh khi họ tạo cuộc họp.
+Những điều kiện cần thiết nào để đảm bảo cuộc họp nhóm thành công?,"Cần có kết nối internet nhanh và ổn định, cũng như một nơi yên tĩnh để tham gia cuộc họp."
+Nhân viên làm việc từ xa cần làm gì để giảm thiểu độ trễ trong cuộc gọi video?,Nhân viên làm việc từ xa nên cố gắng hết sức để giảm thiểu độ trễ trong cuộc gọi video.
+"Khi lên kế hoạch làm việc cùng một người khác trong đội, tôi cần chuẩn bị những gì?","Khi lên kế hoạch làm việc cùng một người khác trong đội, bạn cần đảm bảo có kết nối internet nhanh và ổn định, cũng như một nơi yên tĩnh để tham gia cuộc họp."
+"Mỗi quý, Clef dành bao nhiêu tuần để tổ chức hack week?",Clef dành một tuần thứ sáu của mỗi quý để tổ chức hack week.
+Nhân viên có thể đề xuất dự án gì trong hack week?,"Bất kỳ nhân viên nào cũng có thể đề xuất dự án, miễn là dự án liên quan đến Clef."
+Nhân viên cần làm gì nếu muốn tham gia vào dự án yêu cầu nhiều người?,Nhân viên cần thuyết phục các nhân viên khác cùng tham gia vào dự án của họ.
+Một dự án có thể có tối đa bao nhiêu người tham gia?,Một dự án có thể có tối đa 4 người tham gia.
+Tại sao nên khuyến khích các đội ngũ đa tổ chức?,Các đội ngũ đa tổ chức được khuyến khích để cho mọi người có cơ hội làm việc với những người mà họ không thường xuyên làm việc cùng hàng ngày.
+Tại sao nên đặt cơm trưa hoặc chuẩn bị cơm trưa theo nhóm?,"Để mọi người cùng ăn cùng nhau, tạo không khí cộng đồng, nơi mọi người làm việc, trò chuyện và suy nghĩ cùng nhau."
+Mục tiêu của tuần làm việc này là gì?,"Hoàn thành dự án trong một tuần và đảm bảo mọi người làm việc trên những dự án mà họ cảm thấy hứng thú, tạo ra một không khí năng động chung."
+Chúng ta có thể tổ chức hack weeks ở đâu?,Chúng ta có thể tổ chức hack weeks tại địa điểm khác và mời những diễn giả thú vị để kích thích sự sáng tạo vào đầu tuần.
+"Sau khi các đội trình bày dự án, công ty sẽ làm gì?","Sau khi các đội trình bày dự án, công ty sẽ tổ chức một buổi lễ kỷ niệm hack week."
+"Trước khi phỏng vấn, ứng viên cần làm gì để giúp chúng tôi có cái nhìn ban đầu về họ?",Ứng viên nên trình bày một số công việc liên quan để giúp chúng tôi có màn lọc sơ bộ và có nội dung để thảo luận trong cuộc phỏng vấn cà phê đầu tiên.
+Ứng viên cần nhận được những thông tin gì về công ty Clef trước khi phỏng vấn?,"Ứng viên nên nhận được một đoạn giới thiệu ngắn về Clef, vị trí tuyển dụng, và giá trị cốt lõi của công ty để họ có thể tự đánh giá xem văn hóa công ty có phù hợp với mong muốn của họ hay không."
+Tại sao giá trị cốt lõi của công ty lại được nhấn mạnh cho ứng viên?,Giá trị cốt lõi được nhấn mạnh để ứng viên hiểu tầm quan trọng của chúng đối với đội ngũ Clef và đảm bảo rằng giá trị của họ phù hợp với công ty.
+Phỏng vấn sơ bộ có thể diễn ra ở đâu?,"Phỏng vấn sơ bộ có thể diễn ra qua điện thoại, Skype, tại văn phòng hoặc quán cà phê."
+Mục đích chính của phỏng vấn sơ bộ là gì?,Mục đích chính của phỏng vấn sơ bộ là tìm hiểu xem ứng viên muốn làm gì tiếp theo và liệu điều đó có phù hợp với những gì Clef đang tìm kiếm hay không.
+Mục đích chính của cuộc phỏng vấn này là gì?,Để hiểu về ứng viên và cho họ cơ hội đặt câu hỏi về Clef và vị trí công việc.
+Cuộc phỏng vấn này có vai trò gì trong quá trình tuyển dụng?,"Giúp sàng lọc khoảng 80% ứng viên và là cơ hội để giới thiệu Clef, thu hút những ứng viên tiềm năng."
+Phỏng vấn kỹ thuật kéo dài bao lâu?,Phỏng vấn kỹ thuật kéo dài 2 giờ.
+Người phụ trách tuyển dụng cần chuẩn bị những gì cho phỏng vấn kỹ thuật?,"Người phụ trách tuyển dụng cần chuẩn bị hai bài tập, mỗi bài tập kéo dài 45 phút, một bài tập tập trung vào tư duy chiến lược cho vị trí và bài tập còn lại tập trung vào triển khai chi tiết."
+Phỏng vấn kỹ thuật có thể diễn ra qua video chat không?,"Phỏng vấn kỹ thuật có thể diễn ra qua video chat, nhưng nên cố gắng tổ chức trực tiếp khi có thể."
+Thời gian cuối cùng của buổi phỏng vấn nên dùng để làm gì?,Thời gian cuối cùng 30 phút nên được sử dụng để đặt câu hỏi và trả lời từ cả hai phía.
+Buổi phỏng vấn này nên loại bỏ bao nhiêu phần trăm ứng viên?,Buổi phỏng vấn này nên loại bỏ 50-70% ứng viên.
+Buổi phỏng vấn nên diễn ra như thế nào?,"Buổi phỏng vấn có thể diễn ra qua video chat, tuy nhiên nên cố gắng tổ chức trực tiếp khi có thể."
+Ứng viên sẽ làm gì trong buổi sáng của ngày Team Fit?,"Trong buổi sáng, ứng viên sẽ giải quyết một vấn đề khó khăn hơn nhiều so với phần phỏng vấn kỹ thuật trước đó."
+Mục đích của việc cho ứng viên giải quyết vấn đề khó khăn trong buổi sáng là gì?,Mục đích là để đánh giá cách ứng viên xử lý những vấn đề nằm ngoài vùng an toàn của họ và cách họ xin sự giúp đỡ.
+Tại sao phần này của quy trình cần phải khó?,Phần này cần phải khó để ứng viên cảm thấy họ đã xứng đáng nhận được lời mời làm việc.
+"Sau buổi tập buổi sáng, ứng viên sẽ làm gì?",Ứng viên sẽ đi ăn trưa cùng đội ngũ trước khi quay lại văn phòng để phỏng vấn riêng với mọi người.
+Ai sẽ chi trả cho các chi phí đi lại của ứng viên trong quá trình phỏng vấn?,Clef sẽ chi trả toàn bộ chi phí đi lại của ứng viên.
+Tài liệu này nói về điều gì?,Tài liệu này nói về các ưu tiên và chính sách chung của công ty trong việc đưa nhân viên mới vào đội ngũ.
+"Nếu tôi là người mới, tôi nên xem tài liệu nào để biết thêm về ngày đầu làm việc tại Clef?",Bạn nên xem tài liệu 'Your First Day at Clef' tại đường dẫn https://docs.google.com/document/d/1vvJfWH7lP808mAlKPr8JwUx0HvkiidzS_bkwB8wqA7M.
+Công ty có kế hoạch tạo hướng dẫn cụ thể cho từng vị trí không?,Công ty có thể sẽ tạo các hướng dẫn onboarding cụ thể cho các vị trí khác nhau trong tương lai.
+"Trước khi nhân viên mới đến, chúng ta cần chuẩn bị những gì?","Chúng ta cần chuẩn bị các giấy tờ tuyển dụng, bao gồm thư mời làm việc đã ký, và chia sẻ thư mục Nhân sự của họ trên Google Drive."
+Thư mời làm việc đã ký cần được lưu ở đâu?,"Thư mời làm việc đã ký cần được lưu trong thư mục Nhân sự của nhân viên, và thư mục này cần được chia sẻ với họ trên Google Drive."
+Tôi cần tạo tài khoản nào khi bắt đầu làm việc?,"Bạn cần tạo tài khoản Google Apps, bao gồm Gmail, Google Drive, Calendar, và cài đặt xác thực hai yếu tố. Ngoài ra, bạn cũng cần tạo tài khoản Slack và Trello."
+Tài khoản Gmail của tôi sẽ có địa chỉ gì?,Tài khoản Gmail của bạn sẽ có địa chỉ NAME@getclef.com.
+Cần làm gì với tài khoản Google Drive?,Các thư mục cơ bản nên được cấu hình sẵn cho bạn.
+Có tài liệu nào giới thiệu về mật mã học mà Jesse đã trình bày không?,"Có, Jesse đã trình bày một bài nói chuyện về mật mã học tại WordPress.tv."
+Có tài liệu nào giải thích về mật mã công khai mà Clef sử dụng không?,"Có, trên Medium có một bài viết giải thích về mật mã công khai mà Clef sử dụng."
+Có tài liệu nào giải thích về Bitcoin không?,"Có, Priceonomics có một bài viết giải thích về Bitcoin."
+Ai sẽ quản lý quá trình thiết lập lương và các lợi ích khác?,Patricia sẽ quản lý quá trình này.
+Có những sự kiện nào được đặt trong lịch của cả đội?,"Có ba sự kiện: Ngày đầu tiên của NAME, Bữa trưa chào mừng NAME, và Lễ kỷ niệm Ngày đầu tiên của NAME."
+Mục tiêu chính của ngày đầu tiên cho nhân viên mới tại Clef là gì?,"Mục tiêu của ngày đầu tiên là giúp nhân viên mới làm quen, ổn định và cảm thấy thoải mái với đội ngũ."
+Người nào chịu trách nhiệm đảm bảo nhân viên mới được đón tiếp chu đáo vào ngày đầu tiên?,Người chịu trách nhiệm là người đã dẫn dắt quá trình tuyển dụng của họ.
+Thời gian bắt đầu làm việc vào ngày đầu tiên của nhân viên mới là khi nào?,Ngày đầu tiên của nhân viên mới bắt đầu lúc 10:00.
+"Khi nhân viên mới đến, máy tính của họ đã được cài đặt những gì?","Máy tính đã được mở, cập nhật phần mềm và cài đặt các công cụ cần thiết."
+Tại sao máy tính mới lại được đóng gói lại sau khi cài đặt?,Để tiết kiệm thời gian phiền phức cho nhân viên mới vào ngày đầu tiên làm việc.
+Những vật phẩm nào khác sẽ có trên bàn làm việc của nhân viên mới?,"Có một lá thư chào mừng do đội ký tên, cuốn sách Daring Greatly, và bất kỳ vật phẩm nào khác mang tính đón tiếp hoặc cá nhân hóa."
+Ai chịu trách nhiệm chính cho quá trình onboard nhân viên mới?,Có một người chịu trách nhiệm chính cho quá trình onboard.
+Những thông tin nào cần biết về nhân viên mới?,"Cần biết họ là ai, tên của họ, giới tính (pronouns) và công việc họ sẽ làm."
+Người phụ trách hướng dẫn mới vào cần dành bao nhiêu thời gian cho nhân viên mới?,Người phụ trách hướng dẫn mới vào nên dành cả ngày để giúp nhân viên mới làm quen và cài đặt mọi thứ.
+Tại sao người phụ trách hướng dẫn cần dành cả ngày cho nhân viên mới?,"Mặc dù nhân viên mới không cần sự chú ý suốt cả ngày, nhưng họ không nên bị bỏ rơi khi họ cần hỗ trợ."
