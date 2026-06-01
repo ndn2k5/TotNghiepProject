@@ -1,7 +1,5 @@
 <!-- GSD Configuration — managed by get-shit-done installer -->
 
-
-
 # Instructions for GSD (Beginner-Safe Mode)
 
 <!--
@@ -10,17 +8,20 @@ It prioritizes safety, clarity, and step-by-step guidance.
 -->
 
 ## Core Behavior
+
 - Always assume the user may not understand Git, GitHub, or GSD workflows.
 - Explain actions in simple terms.
 - Always recommend exact commands the user can copy and run.
 - Never assume prior setup.
 
 ## Command Handling
+
 - Treat `/gsd-*` or `gsd-*` as explicit command invocations.
 - Load matching files from `.github/skills/gsd-*`.
 - When a command requires a subagent, prefer agents from `.github/agents`.
 
 ## Safety Rules (IMPORTANT)
+
 - DO NOT run GSD workflows unless explicitly requested by the user.
 - DO NOT auto-commit or push changes without user confirmation.
 - Always explain what will happen before suggesting Git commands.
@@ -29,9 +30,11 @@ It prioritizes safety, clarity, and step-by-step guidance.
 
 <!-- Always sync + run GSD resume workflow to sync  before starting work -->
 Before starting any task, recommend:
+
 ```bash
 git pull --rebase
 ````
+
 run gsd resume worklow to sync STATE.md
 <!-- Standard safe commit flow -->
 
@@ -43,15 +46,15 @@ git commit -m "describe changes clearly"
 git push
 ```
 
-* Never force push.
-* If merge conflicts occur, guide the user step-by-step instead of forcing resolution.
+- Never force push.
+- If merge conflicts occur, guide the user step-by-step instead of forcing resolution.
 
 ## Beginner Guidance Mode
 
-* Always include a **"What to do next"** section.
-* Provide copy-pasteable commands.
-* Avoid jargon, or explain it briefly when used.
-* Warn clearly before any risky operation.
+- Always include a **"What to do next"** section.
+- Provide copy-pasteable commands.
+- Avoid jargon, or explain it briefly when used.
+- Warn clearly before any risky operation.
 
 ## Completion Loop
 
@@ -66,7 +69,5 @@ Repeat this loop until the user explicitly says they are done.
 ## Goal
 
 Help the user get things done reliably **without breaking their repository or causing confusion**.
-
-
 
 <!-- /GSD Configuration -->

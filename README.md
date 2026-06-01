@@ -11,6 +11,7 @@ A **fully local, two-stage RAG chatbot** that answers Vietnamese HR policy quest
 ## 🎯 Quick Start
 
 ### 1. Prerequisites
+
 - **Python:** 3.12+
 - **RAM:** 8GB minimum (4GB for vector store + models, 4GB system)
 - **Disk:** 3.5GB (2.3GB Phi-3-Mini model + 1.2GB embeddings + cache)
@@ -54,6 +55,7 @@ huggingface-cli download microsoft/Phi-3-mini-4k-instruct-gguf phi-3-mini-4k-ins
 ```
 
 **Verify model loaded:**
+
 ```bash
 python -c "from src.gguf_models import LocalGGUFModel; m = LocalGGUFModel('./models/phi-3-mini.gguf'); print('✓ Model loaded')"
 ```
@@ -360,11 +362,13 @@ temperature = st.slider(
 ## ⚠️ Known Limitations
 
 ### Performance
+
 - **CPU-Only Inference:** Response generation ~25-40s on 4-core CPU (vs ~2s on GPU)
   - Trade-off: Prioritize accuracy/cost over speed for MVP
   - Solution: Deploy GPU for production (AWS g4dn.xlarge, ~1s response)
 
 ### Scope
+
 - **HR Domain Only:** Answers questions only from provided handbook
 - **Vietnamese Primarily:** Supports English but optimized for Vietnamese
 - **Single User:** Streamlit doesn't scale to concurrent users
@@ -372,6 +376,7 @@ temperature = st.slider(
 - **2.3GB Model:** Phi-3-Mini is large; requires ~3GB free disk
 
 ### Model Limitations
+
 - **3.8B Parameters:** Smaller model (trade-off: faster CPU inference vs accuracy)
 - **4K Token Context:** Limited to ~4000 tokens per prompt
 - **Quantized (Q4):** ~2% quality loss vs full precision
@@ -381,42 +386,55 @@ temperature = st.slider(
 ## 🛠️ Troubleshooting
 
 ### Issue: Model not found
+
 ```
 ❌ Model not found: ./models/phi-3-mini.gguf
 ```
+
 **Solution:**
+
 1. Create `models/` directory: `mkdir models`
 2. Download Phi-3-Mini from HuggingFace (see Setup section)
 3. Verify: `python -c "from pathlib import Path; print(Path('./models/phi-3-mini.gguf').exists())"`
 
 ### Issue: Out of memory (OOM)
+
 ```
 MemoryError: Unable to allocate X GB
 ```
+
 **Solution:**
+
 1. Reduce `top_k` from 5 to 3
 2. Reduce `max_tokens` from 256 to 128
 3. Disable re-ranking (already disabled in default config)
 4. Ensure no other processes running
 
 ### Issue: Slow response generation
+
 ```
 Response takes 40+ seconds...
 ```
+
 **This is normal on CPU.** Expected times:
+
 - Retrieval: ~8ms (instant)
 - Response: 25-40s (CPU Phi-3-Mini inference)
 
 **Workarounds:**
+
 - Reduce `max_tokens` (default: 256 → try 128)
 - Reduce `n_ctx` in responder (default: 2048 → try 1024)
 - Use smaller model (Phi-2-Mini instead of Phi-3-Mini)
 
 ### Issue: Encoding errors in terminal
+
 ```
 UnicodeEncodeError: 'charmap' codec can't encode character
 ```
+
 **Solution (Windows PowerShell):**
+
 ```powershell
 $env:PYTHONIOENCODING = "utf-8"
 python streamlit_app.py
@@ -429,6 +447,7 @@ python streamlit_app.py
 ### Adding a New Question Category
 
 1. Add keywords to `src/question_normalizer.py`:
+
 ```python
 HR_KEYWORDS = {
     # ... existing categories
@@ -436,7 +455,8 @@ HR_KEYWORDS = {
 }
 ```
 
-2. Add test questions to `tests/test_retrieval_validation.py`:
+1. Add test questions to `tests/test_retrieval_validation.py`:
+
 ```python
 test_questions = [
     # ... existing questions
@@ -444,7 +464,8 @@ test_questions = [
 ]
 ```
 
-3. Run tests:
+1. Run tests:
+
 ```bash
 pytest tests/test_retrieval_validation.py -v
 ```
@@ -453,10 +474,13 @@ pytest tests/test_retrieval_validation.py -v
 
 1. Replace `data/sample_handbook.pdf` with your handbook
 2. Re-populate vector store:
+
 ```bash
 python scripts/populate_vector_store.py
 ```
-3. Run validation tests:
+
+1. Run validation tests:
+
 ```bash
 pytest tests/test_retrieval_validation.py::TestRetrievalValidation::test_retrieval_quality_all_questions -v
 ```
@@ -464,6 +488,7 @@ pytest tests/test_retrieval_validation.py::TestRetrievalValidation::test_retriev
 ### Switching to English
 
 Change language in `streamlit_app.py`:
+
 ```python
 responder = ResponseGenerator(
     model_path=str(model_path),
@@ -504,6 +529,7 @@ MIT License - See LICENSE file for details
 ## 📞 Support
 
 For issues or questions:
+
 1. Check troubleshooting section above
 2. Review test output: `pytest tests/ -v -s`
 3. Check logs: `PYTHONIOENCODING=utf-8 streamlit run streamlit_app.py --logger.level=debug`
