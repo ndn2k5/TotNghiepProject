@@ -5,11 +5,11 @@
 | Item | Value |
 |------|-------|
 | **Milestone** | Milestone 2 — Fine-Tuning & Dataset Synthesis |
-| **Phase** | Phase 4 (Data Synthesis) — ready to start |
-| **Progress** | 0% of Milestone 2 (Milestone 1 complete ✓) |
+| **Phase** | Phase 6 (QLoRA Fine-Tuning) — COMPLETE ✓ |
+| **Progress** | ~100% of Milestone 2 (Phases 4, 5, 6 complete) |
 | **Last update** | 2026-06-01 |
 | **Owner** | 2 developers (solo + collaborator) |
-| **Blocker** | None — datasets and H100 compute confirmed |
+| **Blocker** | None — fine-tuned model integrated at models/phi-3-mini.gguf |
 
 ---
 
@@ -30,7 +30,7 @@
 
 ### Phase 4: Data Synthesis Pipeline
 
-- **Status:** Planned ✓ — ready to execute
+- **Status:** Complete ✓ — 730 QA pairs in data/qa_training_data.csv
 - **Goal:** Vietnamese QA dataset from 3 GitHub handbooks (≥1500 pairs)
 - **Exit gate:** All splits valid, notebook runs, Phase 5+6 unblocked
 - **Estimated hours:** 6 developer hours (~10 clock hours, Task 3 unattended)
