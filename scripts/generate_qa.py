@@ -94,6 +94,12 @@ def main():
                         help="Model name as served by vLLM")
     parser.add_argument("--test", action="store_true",
                         help="Test mode: only process first 10 chunks")
+    parser.add_argument("--target-qa-pairs", type=int, default=0,
+                        help="Stop early once the output file contains at least this many Q&A pairs")
+    parser.add_argument("--max-new-chunks", type=int, default=0,
+                        help="Stop after processing this many new chunks in the current run")
+    parser.add_argument("--progress-every", type=int, default=10,
+                        help="Print progress every N newly processed chunks")
     args = parser.parse_args()
 
     # Extend timeout — 72B model can take 30-90s per request
@@ -115,11 +121,18 @@ def main():
     total_qa = existing_qa
     errors = 0
     start = time.time()
+    new_chunks_processed = 0
 
     with open(OUTPUT_FILE, "a", encoding="utf-8") as out_f, \
          open(LOG_FILE, "a", encoding="utf-8") as log_f:
 
         for idx, chunk in enumerate(chunks):
+            if args.target_qa_pairs and total_qa >= args.target_qa_pairs:
+                print(f"Reached target QA pair budget: {total_qa}/{args.target_qa_pairs}. Stopping early.")
+                break
+            if args.max_new_chunks and new_chunks_processed >= args.max_new_chunks:
+                print(f"Reached max new chunk budget: {new_chunks_processed}/{args.max_new_chunks}. Stopping early.")
+                break
             if idx in processed:
                 continue
             if len(chunk["text"].split()) < 30:
@@ -132,12 +145,21 @@ def main():
                     out_f.write(json.dumps(pair, ensure_ascii=False) + "\n")
                 total_qa += len(pairs)
                 processed.add(idx)
+                new_chunks_processed += 1
 
-                if idx % 10 == 0:
+                if args.progress_every > 0 and new_chunks_processed % args.progress_every == 0:
                     elapsed = time.time() - start
-                    rate = max((idx + 1) / elapsed, 1e-9)
-                    eta_min = (len(chunks) - idx - 1) / rate / 60
-                    print(f"[{idx+1}/{len(chunks)}] QA: {total_qa} | ETA: {eta_min:.1f}min")
+                    rate = max(new_chunks_processed / elapsed, 1e-9)
+                    remaining_budget_chunks = None
+                    if args.max_new_chunks:
+                        remaining_budget_chunks = max(args.max_new_chunks - new_chunks_processed, 0)
+                    remaining_unprocessed_chunks = sum(1 for chunk_idx in range(len(chunks)) if chunk_idx not in processed)
+                    remaining_chunks = remaining_unprocessed_chunks if remaining_budget_chunks is None else min(remaining_unprocessed_chunks, remaining_budget_chunks)
+                    eta_min = remaining_chunks / rate / 60
+                    print(
+                        f"[chunk {idx+1}/{len(chunks)} | new {new_chunks_processed}] "
+                        f"QA: {total_qa} | ETA: {eta_min:.1f}min"
+                    )
                     save_checkpoint(processed)
 
             except json.JSONDecodeError as e:
