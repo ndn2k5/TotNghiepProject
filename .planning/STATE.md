@@ -28,6 +28,17 @@
 
 ## Phase Progress
 
+### Phase 4: Data Synthesis Pipeline
+
+- **Status:** Planned ✓ — ready to execute
+- **Goal:** Vietnamese QA dataset from 3 GitHub handbooks (≥1500 pairs)
+- **Exit gate:** All splits valid, notebook runs, Phase 5+6 unblocked
+- **Estimated hours:** 6 developer hours (~10 clock hours, Task 3 unattended)
+- **Plan:** `.planning/phases/04-data-synthesis/PLAN.md` (8 tasks)
+- **Last updated:** 2026-06-01
+
+---
+
 ### Phase 1: Foundation & Data Pipeline
 
 - **Status:** Complete ✓
