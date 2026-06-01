@@ -331,40 +331,31 @@ data/qa_checkpoint.json      (resume state)
 pip install openai          # OpenAI-compatible SDK for vLLM calls
 ```
 
-**H100 setup (run on the H100 machine):**
+**H100 setup (run on Google Colab with H100 or A100 instance):**
 
-```bash
-# Step 1 — Start vLLM. Choose ONE option based on GPU count:
+Open a new Google Colab notebook, select the H100 or A100 runtime, and run the following in a cell to install and start vLLM with ngrok:
 
-# Option A: Single H100 96GB with FP8 (72B in BF16 won't fit — 146GB > 96GB)
-vllm serve Qwen/Qwen2.5-72B-Instruct \
-  --dtype fp8 \
-  --gpu-memory-utilization 0.92 \
-  --max-model-len 4096 \
-  --host 0.0.0.0 \
-  --port 8000
+```python
+!pip install vllm pyngrok
+import subprocess
+import time
+from pyngrok import ngrok
 
-# Option B: Two H100s (tensor parallel — full BF16 quality)
-vllm serve Qwen/Qwen2.5-72B-Instruct \
-  --tensor-parallel-size 2 \
-  --dtype bfloat16 \
-  --gpu-memory-utilization 0.90 \
-  --max-model-len 4096 \
-  --host 0.0.0.0 \
-  --port 8000
+# Authenticate ngrok (replace with your actual token)
+ngrok.set_auth_token("YOUR_NGROK_TOKEN")
 
-# Option C: Single H100 96GB — Qwen2.5-32B BF16 fallback (~64GB, fits)
-vllm serve Qwen/Qwen2.5-32B-Instruct \
-  --dtype bfloat16 \
-  --gpu-memory-utilization 0.90 \
-  --max-model-len 4096 \
-  --host 0.0.0.0 \
-  --port 8000
+# Start vLLM in the background (using Qwen2.5-32B or 72B FP8 depending on Colab memory)
+vllm_cmd = "python -m vllm.entrypoints.openai.api_server --model Qwen/Qwen2.5-32B-Instruct --dtype bfloat16 --max-model-len 4096 --host 0.0.0.0 --port 8000"
+process = subprocess.Popen(vllm_cmd.split())
 
-# Step 2 — In a second terminal on the H100 machine, start ngrok:
-ngrok http 8000
-# Note the HTTPS URL printed, e.g.: https://a1b2-x.ngrok-free.app
-# Pass that URL to generate_qa.py via --vllm-url argument
+# Wait for server to initialize
+print("Starting vLLM server... this will take a few minutes.")
+time.sleep(30) 
+
+# Open ngrok tunnel
+public_url = ngrok.connect(8000).public_url
+print(f"Ngrok URL: {public_url}")
+# Pass this URL to generate_qa.py via --vllm-url argument
 ```
 
 **Code Skeleton — `scripts/generate_qa.py`:**
