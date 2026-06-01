@@ -39,6 +39,11 @@ models/
 .env
 .env.local
 
+# Track the Colab notebook but keep other .env contents ignored.
+!.env/
+.env/*
+!.env/qwen72b.ipynb
+
 # Data
 data/sample_handbook.pdf
 documents/
@@ -53,3 +58,4 @@ data/qa_pairs.jsonl
 data/raw/
 data/qa_checkpoint.json
 data/raw_chunks.jsonl
+!data/raw_chunks.jsonl
