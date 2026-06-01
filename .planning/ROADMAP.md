@@ -1,14 +1,23 @@
-# Roadmap – HR Policy RAG Chatbot v1
+# Roadmap – HR Policy RAG Chatbot
 
-## Scope & Timeline
+## Milestone 1 (v1 — Complete ✓)
 
 | Aspect | Value |
 |--------|-------|
-| **Total Duration** | 3 weeks (~15 hours/week) |
-| **Granularity** | Standard (3 weekly phases) |
-| **Execution Model** | Sequential (one phase at a time to avoid RAM contention on CPU) |
+| **Duration** | 3 weeks |
 | **Team** | 1 developer |
-| **Success Gate** | All requirements met, 80%+ validation pass, deployable |
+| **Status** | Complete — all 9 tests passing, thesis defense ready |
+
+## Milestone 2 (v2 — Fine-Tuning & Dataset Synthesis)
+
+| Aspect | Value |
+|--------|-------|
+| **Duration** | 2–3 weeks |
+| **Team** | 2 developers (solo + collaborator) |
+| **Training hardware** | H100 96GB (cloud), A100 80GB (fallback) |
+| **Deploy hardware** | T1000 4GB VRAM (local) |
+| **Success Gate** | ≥85% retrieval, 0 hallucinations, Vietnamese-native answers, all tests pass |
+| **Requirements** | `.planning/REQUIREMENTS_M2.md` |
 
 ---
 
@@ -147,59 +156,231 @@
 
 ---
 
-## Dependency Graph
+## Dependency Graph (Milestone 1)
 
-```
+```text
 Phase 1 (Foundation) — Week 1
-    ↓ (sequential)
+    ↓
 Phase 2 (Retrieval) — Week 2
-    ↓ (sequential)
-Phase 3 (UI & Integration) — Week 3
+    ↓
+Phase 3 (UI & Integration) — Week 3  ← COMPLETE ✓
 ```
 
-**In practice (sequential execution):**
-- Week 1: Phase 1 only (PDF ingestion, chunking, embedding storage)
-- Week 2: Phase 2 only (Question normalizer, semantic retrieval, validation)
-- Week 3: Phase 3 only (Responder, UI, E2E integration, final validation)
+---
+
+## Milestone 2 Phases
 
 ---
 
-## Key Milestones
+## Phase 4: Data Synthesis Pipeline
 
-| Milestone | Target Date | Owner | Gate |
-|-----------|------------|-------|------|
-| **Phase 1 complete** | End of Week 1 | Dev | PDF → 300 chunks; embeddings load in <3s |
-| **Phase 2 complete** | Mid-Week 2 | Dev | 80%+ retrieval relevance on 30-query test |
-| **Phase 3 complete** | End of Week 3 | Dev | Full E2E working; ≤5s response time |
-| **Validation & UAT** | End of Week 3 | Dev | 50-query test pass; zero hallucination |
-| **Ship** | Week 3 | Dev | README, quick start, one-click deployment |
+**Goal:** Build a Vietnamese HR Q&A dataset from 3 public English handbooks using synthetic data generation. No manual labeling — teacher LLM writes the questions and answers.
+
+**Duration:** ~1 week  
+**Owner:** Both developers  
+**Hardware:** CPU + LLM API calls  
+**Notebook:** `notebooks/FINETUNING_A0-DataPreparation.ipynb`
+
+**Phase 4 Deliverables:**
+
+1. **Handbook Ingestion Script**
+   - Clone/fetch 3 GitHub handbooks: `hshadab/handbook`, `cuesoftinc/handbook`, `ultralytics/handbook`
+   - Parse all `.md` files, extract and clean text
+   - Split into ~500-char chunks with section headers preserved
+   - Output: `data/raw_chunks.jsonl`
+
+2. **Vietnamese QA Generator**
+   - For each chunk: teacher LLM generates 2–3 Vietnamese Q&A pairs
+   - Questions: what an employee might ask about that policy
+   - Answers: grounded strictly in the chunk (no hallucination)
+   - Output: `data/qa_pairs.jsonl` (≥1500 pairs)
+
+3. **Training Format Conversion**
+   - Embedding training: `(anchor_question, positive_chunk, hard_negative_chunk)` triplets
+   - LLM training: `{system, instruction, input, output}` JSONL records
+   - Train/dev/test split: 80/10/10
+   - Output: `data/embedding_train.jsonl`, `data/llm_train.jsonl`, `data/test.jsonl`
+
+4. **Handbook → PDF Conversion**
+   - Convert at least 1 handbook to PDF for demo use in existing RAG pipeline
+   - Output: `data/sample_handbook.pdf`
+
+**Phase 4 Exit Gate:**
+
+- ≥1500 Vietnamese QA pairs generated and spot-checked (10 manual review)
+- Train/dev/test splits created and valid JSON
+- Both training format files ready for Phase 5 and 6
+- `notebooks/FINETUNING_A0-DataPreparation.ipynb` runs end-to-end
 
 ---
 
-## Risks & Mitigations
+## Phase 5: Embedding Model Fine-Tuning
+
+**Goal:** Fine-tune `multilingual-e5-small` on HR domain to dramatically improve retrieval of relevant handbook chunks.
+
+**Duration:** ~3–5 days  
+**Owner:** Both developers  
+**Hardware:** H100 96GB (training), CPU (export)  
+**Notebook:** `notebooks/FINETUNING_01-Embedding_Finetuning.ipynb`
+
+**Phase 5 Deliverables:**
+
+1. **Fine-Tuning Script**
+   - Load `intfloat/multilingual-e5-small`
+   - Train with MultipleNegativesRankingLoss on (anchor, positive, hard_negative) triplets
+   - Learning rate: 2e-5, batch size: 32, epochs: 5
+   - Checkpoint every epoch; early stop on dev loss plateau
+   - Output: `models/fine-tuned-embedding/`
+
+2. **Evaluation**
+   - Benchmark: top-1 and top-3 retrieval accuracy on held-out test set (20 questions)
+   - Compare: off-the-shelf `multilingual-e5-small` vs. fine-tuned version
+   - Report: `models/fine-tuned-embedding/eval_results.json`
+
+3. **Integration Drop-in**
+   - Fine-tuned model loads via `SentenceTransformer('models/fine-tuned-embedding')`
+   - No other code changes required
+
+**Phase 5 Exit Gate:**
+
+- Fine-tuned model achieves >85% top-1 retrieval accuracy on test set
+- Training notebook runs end-to-end on H100 in ≤30 minutes
+- `models/fine-tuned-embedding/` saved and loadable
+- Improvement over v1 embedding documented in eval report
+
+---
+
+## Phase 6: LLM Fine-Tuning & GGUF Export
+
+**Goal:** QLoRA fine-tune `Qwen2.5-3B-Instruct` on Vietnamese HR Q&A, then export Q4_K_M GGUF for deployment on T1000 4GB VRAM.
+
+**Duration:** ~1 week  
+**Owner:** Both developers  
+**Hardware:** H100 96GB (QLoRA), CPU (GGUF export)  
+**Notebooks:** `notebooks/FINETUNING_02-QLoRA_Recommended.ipynb`, `notebooks/FINETUNING_A1-Export_Integration.ipynb`
+
+**Phase 6 Deliverables:**
+
+1. **QLoRA Fine-Tuning Script**
+   - Base: `Qwen/Qwen2.5-3B-Instruct`
+   - Config: 4-bit NF4, r=16, alpha=32, dropout=0.05
+   - Target modules: `q_proj, k_proj, v_proj, o_proj`
+   - Data: LLM training JSONL from Phase 4 (≥1500 examples)
+   - System prompt: Vietnamese HR policy assistant persona
+   - Epochs: 3 (with dev loss monitoring)
+   - Output: LoRA adapter weights in `models/qlora-adapter/`
+
+2. **Merge & Export**
+   - Merge LoRA adapter into base model
+   - Export to GGUF Q4_K_M via `llama.cpp/convert_hf_to_gguf.py`
+   - Output: `models/qwen2.5-3b-hr-vietnamese-q4.gguf` (≤3GB)
+
+3. **T1000 Validation**
+   - Load GGUF on T1000 via llama.cpp; measure VRAM usage
+   - Run 20 held-out HR questions; manually review for hallucinations
+   - Measure inference latency (target: ≤5s E2E with RAG)
+
+**Phase 6 Exit Gate:**
+
+- GGUF file ≤3GB and loads on T1000 in ≤3.5GB VRAM
+- 0 hallucinations on 20 held-out test questions
+- Vietnamese answer quality: native-level diacritics and formal register (manual review)
+- Training notebook runs on H100 in ≤2 hours
+- Export notebook runs end-to-end
+
+---
+
+## Phase 7: Integration, Validation & Deployment
+
+**Goal:** Swap v2 models into existing RAG pipeline. All existing tests pass. Publish updated notebooks and guide for collaborator.
+
+**Duration:** ~3–5 days  
+**Owner:** Both developers  
+**Hardware:** T1000 4GB (validation)  
+**Notebook:** `notebooks/FINETUNING_QUICKSTART.ipynb`
+
+**Phase 7 Deliverables:**
+
+1. **RAG Pipeline Update**
+   - `src/embeddings.py`: swap to fine-tuned embedding model
+   - `src/generation.py` (or equivalent): swap to new GGUF path
+   - No external service changes; offline-capable
+
+2. **Benchmark Comparison Report**
+   - 30-query test: v1 vs. v2 retrieval accuracy
+   - 20-question hallucination test: v1 vs. v2
+   - Latency: v1 vs. v2 on T1000
+   - Output: `.planning/docs/BENCHMARK_REPORT.md`
+
+3. **Notebook Finalization**
+   - All 6 notebooks in `notebooks/` run end-to-end without errors
+   - `FINETUNING_GUIDE_00-Overview.ipynb` updated with v2 decisions
+   - `FINETUNING_QUICKSTART.ipynb` usable by collaborator with zero setup
+
+4. **Regression: Existing Tests**
+   - `pytest tests/` passes all 9 tests with v2 models
+
+**Phase 7 Exit Gate:**
+
+- All 9 existing pytest tests pass
+- v2 retrieval ≥85% on 30-query benchmark (vs. ≥80% v1)
+- 0 hallucinations in held-out test (vs. "zero" claimed in v1)
+- E2E latency ≤5s on T1000
+- Collaborator can run quickstart notebook with no explanation needed
+
+---
+
+## Milestone 2 Dependency Graph
+
+```text
+Phase 4 (Data Synthesis)
+    ↓ provides datasets for both
+    ├── Phase 5 (Embedding Fine-Tune) ─┐
+    └── Phase 6 (LLM QLoRA Fine-Tune) ─┤
+                                        ↓
+                               Phase 7 (Integration & Validation)
+```
+
+Phase 5 and Phase 6 can run **in parallel** on H100 once Phase 4 datasets are ready.
+
+---
+
+## Milestone 2 Key Milestones
+
+| Milestone | Target | Owner | Gate |
+|-----------|--------|-------|------|
+| **Phase 4 complete** | Week 1 | Both | ≥1500 QA pairs, training files ready |
+| **Phase 5 complete** | Week 2 | Both | >85% retrieval; H100 training done |
+| **Phase 6 complete** | Week 2 | Both | GGUF ≤3GB; 0 hallucinations; T1000 verified |
+| **Phase 7 complete** | Week 3 | Both | All 9 tests pass; benchmark report done |
+
+---
+
+## Milestone 2 Risks & Mitigations
 
 | Risk | Impact | Mitigation |
 |------|--------|-----------|
-| **Vietnamese model underperformance** | Low relevance for Vietnam-specific phrasings | Benchmark all-MiniLM-L6-v2 vs. multilingual-e5-small in Phase 2 |
-| **Inference too slow on CPU** | Violates ≤5s SLA | Profile in Phase 3; consider quantization or model swap if needed |
-| **Model download failures** | Blocks start | Download models in Phase 1; verify checksums |
-| **PDF parsing edge cases** | Data loss or corruption | Test with varied handbook formats (scanned, native PDF, etc.) |
-| **Memory pressure** | OOM on 8GB hardware | Monitor in Phase 3; stream inference if needed |
-| **Hallucination in answers** | User gets wrong info | Manual fluency + grounding review before ship |
+| **Synthetic QA quality** | Garbage data → worse models | Manual review of 50 random QA pairs before training |
+| **H100 compute limit** | Can't finish fine-tuning in 4 hours | Phase 5+6 in parallel; checkpoint frequently |
+| **T1000 VRAM overflow** | GGUF doesn't fit | Target Q4_K_M (2.0GB); fallback to CPU inference via llama.cpp |
+| **English→Vietnamese quality** | Synthetic Vietnamese is unnatural | Use Qwen/GPT-4o as teacher; review samples |
+| **Test regressions** | New models break existing tests | Run tests after each model swap |
+| **Notebook rot** | Notebooks incomplete, confuse collaborator | Each notebook tested cell-by-cell before milestone closes |
 
 ---
 
-## Success Criteria (Across All Phases)
+## Success Criteria (Milestone 2)
 
-✅ **Functionally complete:** All 5 features (upload, normalize, retrieve, generate, UI) working  
-✅ **80% relevance:** Test queries show relevant chunks retrieved  
-✅ **≤5s latency:** E2E measured on target hardware  
-✅ **Fluent Vietnamese:** Manual review confirms quality  
-✅ **Zero hallucination:** All answers traceable to handbook  
-✅ **Deployable:** `streamlit run app.py` is the full setup  
-✅ **Documented:** README, quick-start, assumptions logged
+✅ **Dataset:** ≥1500 Vietnamese HR QA pairs generated and formatted  
+✅ **Embedding:** >85% top-1 retrieval on test set  
+✅ **LLM:** 0 hallucinations; native Vietnamese fluency  
+✅ **GGUF:** Fits T1000 (≤3.5GB VRAM)  
+✅ **Tests:** All 9 existing tests pass  
+✅ **Notebooks:** All 6 runnable end-to-end  
+✅ **Benchmark:** v2 measurably better than v1 on all metrics  
 
 ---
 
-**Last updated:** 2026-05-04 (Roadmap created)  
-**Next step:** `/gsd-plan-phase 1` to start Phase 1 detailed planning
+**Milestone 1 last updated:** 2026-05-04  
+**Milestone 2 created:** 2026-06-01  
+**Next step:** `/gsd-plan-phase 4` to start Phase 4 detailed planning

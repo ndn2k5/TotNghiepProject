@@ -4,11 +4,12 @@
 
 | Item | Value |
 |------|-------|
-| **Phase** | All phases complete — thesis defense ready |
-| **Progress** | 100% (9/9 tests passing) |
+| **Milestone** | Milestone 2 — Fine-Tuning & Dataset Synthesis |
+| **Phase** | Phase 4 (Data Synthesis) — ready to start |
+| **Progress** | 0% of Milestone 2 (Milestone 1 complete ✓) |
 | **Last update** | 2026-06-01 |
-| **Owner** | Solo developer |
-| **Blocker** | None |
+| **Owner** | 2 developers (solo + collaborator) |
+| **Blocker** | None — datasets and H100 compute confirmed |
 
 ---
 
