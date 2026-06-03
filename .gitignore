@@ -53,10 +53,11 @@ documents/
 .coverage
 htmlcov/
 
-# Phase 4 Generated data
-data/qa_pairs.jsonl
-data/raw/
-data/qa_checkpoint.json
-data/raw_chunks.jsonl
-!data/qa_pairs.jsonl
-!data/raw_chunks.jsonl
+# Phase 4 Generated data — checkpoints ignored, source chunks + QA tracked
+data/qa_checkpoint*.json
+data/qa_generation_log*.txt
+data/qa_pairs_viet.jsonl
+data/raw/cuesoftinc/
+data/raw/hshadab/
+data/raw/ultralytics/
+data/raw/pdf/*.pdf

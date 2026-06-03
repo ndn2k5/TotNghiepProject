@@ -7,21 +7,27 @@ Usage:
     python scripts/generate_qa.py --vllm-url https://xxxx.ngrok-free.app
 """
 import argparse
+import io
 import json
 import re
+import sys
 import time
 from pathlib import Path
 
 import httpx
 from openai import OpenAI
 
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
 INPUT_FILE = Path("data/raw_chunks.jsonl")
 OUTPUT_FILE = Path("data/qa_pairs.jsonl")
+
 LOG_FILE = Path("data/qa_generation_log.txt")
 CHECKPOINT_FILE = Path("data/qa_checkpoint.json")
 
 SYSTEM_PROMPT = """Bạn là chuyên gia nhân sự. Hãy đọc đoạn văn bản từ sổ tay nhân viên \
-(bằng tiếng Anh) và tạo ra {n_pairs} cặp hỏi-đáp bằng tiếng Việt.
+và tạo ra {n_pairs} cặp hỏi-đáp bằng tiếng Việt.
 
 Yêu cầu:
 1. Câu hỏi phải là câu hỏi thực tế mà nhân viên có thể đặt ra.
@@ -89,9 +95,13 @@ def generate_qa_for_chunk(client: OpenAI, chunk: dict, model_name: str) -> list[
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--vllm-url", required=True,
-                        help="ngrok HTTPS URL, e.g. https://xxxx.ngrok-free.app")
+                        help="API base URL — ngrok (https://xxxx.ngrok-free.app) or Groq (https://api.groq.com/openai)")
+    parser.add_argument("--api-key", default="fake",
+                        help="API key — 'fake' for local vLLM, real key for Groq/OpenRouter")
     parser.add_argument("--model", default="Qwen/Qwen2.5-72B-Instruct",
-                        help="Model name as served by vLLM")
+                        help="Model name — e.g. llama-3.1-70b-versatile for Groq")
+    parser.add_argument("--input", default=str(INPUT_FILE),
+                        help="Input JSONL chunks file (default: data/raw_chunks.jsonl)")
     parser.add_argument("--test", action="store_true",
                         help="Test mode: only process first 10 chunks")
     parser.add_argument("--target-qa-pairs", type=int, default=0,
@@ -102,20 +112,35 @@ def main():
                         help="Print progress every N newly processed chunks")
     args = parser.parse_args()
 
+    input_file = Path(args.input)
+
+    # Derive output + checkpoint from input stem when using non-default input
+    global OUTPUT_FILE, CHECKPOINT_FILE, LOG_FILE
+    if str(input_file) != str(INPUT_FILE):
+        stem = input_file.stem.replace("raw_chunks", "qa_pairs").replace("raw_chunks_", "qa_pairs_")
+        if stem == input_file.stem:
+            stem = "qa_pairs_" + input_file.stem
+        OUTPUT_FILE = input_file.parent / f"{stem}.jsonl"
+        CHECKPOINT_FILE = input_file.parent / f"qa_checkpoint_{input_file.stem}.json"
+        LOG_FILE = input_file.parent / f"qa_generation_log_{input_file.stem}.txt"
+        print(f"Output:     {OUTPUT_FILE}")
+        print(f"Checkpoint: {CHECKPOINT_FILE}")
+
     # Extend timeout — 72B model can take 30-90s per request
+    base_url = args.vllm_url if args.vllm_url.endswith("/v1") else f"{args.vllm_url}/v1"
     client = OpenAI(
-        base_url=f"{args.vllm_url}/v1",
-        api_key="fake",
+        base_url=base_url,
+        api_key=args.api_key,
         http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=300, write=30, pool=10)),
     )
 
-    chunks = [json.loads(l) for l in open(INPUT_FILE, encoding="utf-8")]
+    chunks = [json.loads(l) for l in open(input_file, encoding="utf-8")]
     if args.test:
         chunks = chunks[:10]
         print("TEST MODE: processing first 10 chunks only")
 
     processed = load_checkpoint()
-    existing_qa = sum(1 for _ in open(OUTPUT_FILE)) if OUTPUT_FILE.exists() else 0
+    existing_qa = sum(1 for _ in open(OUTPUT_FILE, encoding="utf-8")) if OUTPUT_FILE.exists() else 0
     print(f"Chunks: {len(chunks)} | Already processed: {len(processed)} | Existing QA: {existing_qa}")
 
     total_qa = existing_qa
@@ -174,7 +199,7 @@ def main():
                 time.sleep(10)
 
     save_checkpoint(processed)
-    print(f"\n✓ Done. QA pairs: {total_qa} | Errors: {errors} | Time: {(time.time()-start)/60:.1f}min")
+    print(f"\nDone. QA pairs: {total_qa} | Errors: {errors} | Time: {(time.time()-start)/60:.1f}min")
 
 
 if __name__ == "__main__":
