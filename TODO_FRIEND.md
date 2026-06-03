@@ -1,128 +1,123 @@
-# TODO — Vietnamese QA Generation (Run Overnight)
+# HƯỚNG DẪN — Tạo dữ liệu QA tiếng Việt (Chạy qua đêm)
 
-**Goal:** Generate ~1500 Vietnamese HR Q&A pairs from chunked PDF data using Groq AI (free).  
-These pairs will be used to fine-tune Phi-3-Mini in the next step.
-
-**Time needed:** ~2–4 hours unattended (run before sleeping)  
-**Cost:** Free (Groq free tier)
+**Mục tiêu:** Tạo ~1500 cặp hỏi-đáp nhân sự tiếng Việt từ dữ liệu PDF để huấn luyện mô hình AI.  
+**Thời gian:** 2–4 tiếng chạy tự động (bật máy trước khi ngủ)  
+**Chi phí:** Miễn phí (Groq free tier)  
+**Hệ điều hành:** Windows
 
 ---
 
-## Step 0 — Get the code
+## Bước 0 — Tải code về máy
 
-```bash
+Mở **Command Prompt** (nhấn `Win + R`, gõ `cmd`, Enter):
+
+```cmd
 git clone https://github.com/ndn2k5/TotNghiepProject
 cd TotNghiepProject
 ```
 
-Or if already cloned:
+Nếu đã clone rồi thì chỉ cần:
 
-```bash
+```cmd
 git pull
 ```
 
 ---
 
-## Step 1 — Install Python dependencies
+## Bước 1 — Cài thư viện Python
 
-Need Python 3.10+ installed. Then:
-
-```bash
-pip install openai httpx duckduckgo-search ddgs beautifulsoup4 pymupdf
+```cmd
+pip install openai httpx ddgs beautifulsoup4 pymupdf
 ```
 
----
-
-## Step 2 — Get a FREE Groq API key (5 minutes)
-
-1. Go to **https://console.groq.com**
-2. Sign up with Google or email (free)
-3. Click **"API Keys"** in the left sidebar
-4. Click **"Create API Key"**
-5. Copy the key — looks like `gsk_xxxxxxxxxxxxxxxxxxxx`
-6. Save it somewhere safe
-
-> Groq free tier: 14,400 requests/day, no credit card needed.
+Chờ cài xong (1–2 phút).
 
 ---
 
-## Step 3 — Download Vietnamese HR PDFs
+## Bước 2 — Lấy API key Groq miễn phí (5 phút)
 
-Run the crawler to download real Vietnamese company handbooks:
+1. Vào **[https://console.groq.com](https://console.groq.com)**
+2. Đăng ký bằng Gmail hoặc email (miễn phí, không cần thẻ)
+3. Sau khi đăng nhập, nhấn **"API Keys"** ở thanh bên trái
+4. Nhấn **"Create API Key"**
+5. Copy key — trông giống như: `gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+6. Dán vào Notepad để dùng ở Bước 5
 
-```bash
+> Groq miễn phí: 14.400 request/ngày, đủ để chạy qua đêm.
+
+---
+
+## Bước 3 — Tải PDF sổ tay nhân viên
+
+```cmd
 python scripts/crawl_hr_pdfs.py --limit 10
 ```
 
-This searches for `so-tay-nhan-vien`, `noi-quy-cong-ty` etc. and downloads to `data/raw/pdf/`.
+Script tự tìm và tải PDF sổ tay nhân viên Việt Nam về thư mục `data\raw\pdf\`.
 
-**Check what was downloaded:**
+**Kiểm tra đã tải được gì:**
 
-```bash
-ls data/raw/pdf/
+```cmd
+dir data\raw\pdf\
 ```
 
-You should see files like:
+Nên thấy các file như:
 - `SO-TAY-NHAN-VIEN-THAI-SAN.pdf`
 - `HACOM_So-tay-Nhan-vien-2025-2.pdf`
-- etc.
+- v.v.
 
-If the folder looks empty or has unrelated PDFs (Medicare, road rules, etc.) — delete those and re-run:
+**Nếu thấy file không liên quan** (Medicare, luật giao thông, v.v.) thì xóa đi:
 
-```bash
-# Windows
-del data\raw\pdf\*.pdf
-python scripts/crawl_hr_pdfs.py --limit 10
+```cmd
+del "data\raw\pdf\tên-file-rác.pdf"
+```
+
+Chạy lại nếu cần thêm file:
+
+```cmd
+python scripts/crawl_hr_pdfs.py --limit 20
 ```
 
 ---
 
-## Step 4 — Extract and chunk the PDFs
+## Bước 4 — Trích xuất và chia nhỏ nội dung PDF
 
-```bash
+```cmd
 python scripts/ingest_pdf_handbooks.py
 ```
 
-Output: `data/raw_chunks_viet.jsonl`
+Kết quả xuất ra file `data\raw_chunks_viet.jsonl`.
 
-Expected output:
+Ví dụ output đúng:
 ```
-Found X PDFs in data\raw\pdf
+Found 8 PDFs in data\raw\pdf
   Processing: SO-TAY-NHAN-VIEN-THAI-SAN.pdf
     -> 350 chunks
+  Processing: HACOM_So-tay-Nhan-vien-2025-2.pdf
+    -> 280 chunks
   ...
-Total: ~1500-3000 chunks -> data/raw_chunks_viet.jsonl
+Total: 1500 chunks -> data\raw_chunks_viet.jsonl
 ```
 
-> If a PDF shows `0 chunks` — it is a scanned image PDF with no text layer. Delete it and find another.
+> Nếu file PDF nào hiện `-> 0 chunks` — đó là file scan ảnh, không đọc được chữ. Xóa đi và tìm file khác.
 
 ---
 
-## Step 5 — Run QA generation overnight
+## Bước 5 — Chạy sinh câu hỏi qua đêm
 
-Replace `gsk_YOUR_KEY_HERE` with your actual Groq key from Step 2.
+Thay `gsk_KEY_CUA_BAN` bằng key đã copy ở Bước 2.
 
-**Windows (cmd):**
 ```cmd
 python scripts/generate_qa.py ^
   --vllm-url https://api.groq.com/openai ^
-  --api-key gsk_YOUR_KEY_HERE ^
+  --api-key gsk_KEY_CUA_BAN ^
   --model llama-3.3-70b-versatile ^
   --input data/raw_chunks_viet.jsonl
 ```
 
-**Linux/Mac:**
-```bash
-python scripts/generate_qa.py \
-  --vllm-url https://api.groq.com/openai \
-  --api-key gsk_YOUR_KEY_HERE \
-  --model llama-3.3-70b-versatile \
-  --input data/raw_chunks_viet.jsonl
-```
+**Bật lên rồi đi ngủ.** Kết quả lưu vào `data\qa_pairs_viet.jsonl`.
 
-**Let it run overnight.** Output goes to `data/qa_pairs_viet.jsonl`.
-
-Progress looks like:
+Trong lúc chạy sẽ hiển thị:
 ```
 [chunk 10/1500 | new 10] QA: 25 | ETA: 45.2min
 [chunk 20/1500 | new 20] QA: 51 | ETA: 40.1min
@@ -130,79 +125,56 @@ Progress looks like:
 Done. QA pairs: 3200 | Errors: 2 | Time: 87.3min
 ```
 
-> Safe to Ctrl+C and resume later — script has auto-checkpoint. Re-run same command to continue.
+> **Bị ngắt giữa chừng không sao** — script tự lưu checkpoint. Chạy lại cùng lệnh là tiếp tục từ chỗ dừng.
 
 ---
 
-## Step 6 — Verify the output
+## Bước 6 — Kiểm tra kết quả sáng hôm sau
 
-```bash
-python -c "
-pairs = open('data/qa_pairs_viet.jsonl', encoding='utf-8').readlines()
-print('Total QA pairs:', len(pairs))
-import json
-sample = json.loads(pairs[0])
-print('Sample Q:', sample['question'])
-print('Sample A:', sample['answer'][:100])
-"
+```cmd
+python -c "import json; pairs=open('data/qa_pairs_viet.jsonl',encoding='utf-8').readlines(); print('Tong so cap QA:', len(pairs)); p=json.loads(pairs[0]); print('Cau hoi mau:', p['question']); print('Tra loi mau:', p['answer'][:100])"
 ```
 
-Expected: **1000–3000 pairs**. If less than 500, re-run Step 3 with more PDFs.
+**Mục tiêu: trên 1000 cặp.** Nếu ít hơn 500 thì quay lại Bước 3 tải thêm PDF.
 
 ---
 
-## Step 7 — Convert to CSV for training
+## Bước 7 — Chuyển sang CSV
 
-```bash
-python -c "
-import json, csv
-pairs = [json.loads(l) for l in open('data/qa_pairs_viet.jsonl', encoding='utf-8')]
-with open('data/qa_training_data_viet.csv','w',encoding='utf-8',newline='') as f:
-    w = csv.DictWriter(f, fieldnames=['question','answer'])
-    w.writeheader()
-    w.writerows({'question':p['question'],'answer':p['answer']} for p in pairs)
-print(len(pairs), 'pairs written to data/qa_training_data_viet.csv')
-"
+```cmd
+python -c "import json,csv; pairs=[json.loads(l) for l in open('data/qa_pairs_viet.jsonl',encoding='utf-8')]; f=open('data/qa_training_data_viet.csv','w',encoding='utf-8',newline=''); w=csv.DictWriter(f,fieldnames=['question','answer']); w.writeheader(); w.writerows({'question':p['question'],'answer':p['answer']} for p in pairs); f.close(); print(len(pairs),'cap da luu vao data/qa_training_data_viet.csv')"
 ```
 
 ---
 
-## Step 8 — Commit and push
+## Bước 8 — Commit và push lên GitHub
 
-```bash
-git add data/raw_chunks_viet.jsonl data/qa_pairs_viet.jsonl data/qa_training_data_viet.csv
-git commit -m "Add Vietnamese HR QA dataset from PDF handbooks"
+```cmd
+git add data\qa_pairs_viet.jsonl data\qa_training_data_viet.csv
+git commit -m "Add Vietnamese QA dataset from HR PDFs"
 git push
 ```
 
 ---
 
-## Step 9 — Fine-tune (next session, needs GPU)
+## Bước 9 — Huấn luyện mô hình (bước tiếp theo, cần GPU)
 
-After push, open **Google Colab** (free T4 GPU):
-
-1. Open `notebooks/FINETUNE QLORA.ipynb`
-2. In cell `103b763b`, change CSV path:
-   ```python
-   csv_path = DATA_DIR / "qa_training_data_viet.csv"  # changed from qa_training_data.csv
-   ```
-3. Run all cells
-4. Download the GGUF file when prompted
-5. Replace `models/phi-3-mini.gguf` with the new file
+Sau khi push xong, nhắn tin cho Minh để chạy Colab training với file CSV mới.
 
 ---
 
-## Troubleshooting
+## Xử lý lỗi thường gặp
 
-| Problem | Fix |
-|---------|-----|
-| `ModuleNotFoundError` | Run `pip install openai httpx ddgs pymupdf beautifulsoup4` |
-| `0 PDFs found` by crawler | Check internet; try `--dry-run` first to see URLs |
-| PDF gives `0 chunks` | Scanned PDF — delete it, find text-based one |
-| Groq `rate limit` error | Script auto-retries; or wait 1 min and re-run |
-| Script crashes mid-run | Re-run same command — checkpoint auto-resumes |
-| Less than 500 QA pairs | Download more PDFs (Step 3 with `--limit 20`) |
+| Lỗi | Cách xử lý |
+| --- | --- |
+| `ModuleNotFoundError` | Chạy lại: `pip install openai httpx ddgs pymupdf beautifulsoup4` |
+| `Found 0 candidate PDF URLs` | Kiểm tra mạng internet; thử `python scripts/crawl_hr_pdfs.py --dry-run` |
+| PDF hiện `0 chunks` | File scan ảnh — xóa, tìm file khác có chữ thật |
+| Lỗi `rate limit` từ Groq | Script tự thử lại; hoặc chờ 1 phút rồi chạy lại |
+| Script bị tắt giữa chừng | Chạy lại cùng lệnh — tự tiếp tục từ chỗ dừng |
+| Ít hơn 500 cặp QA | Tải thêm PDF: `python scripts/crawl_hr_pdfs.py --limit 20` |
+| Không có Python | Tải tại: [python.org/downloads](https://www.python.org/downloads/) (chọn Python 3.11) |
 
 ---
 
-**Contact:** Push your results and message when done. Next step is Colab training.
+**Xong Bước 8 thì nhắn Minh biết để bước tiếp theo.**
