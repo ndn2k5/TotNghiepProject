@@ -36,14 +36,18 @@ Context files are resolved in-workflow using `init phase-op` and roadmap/state t
 <process>
 **Mode routing:**
 ```bash
-DISCUSS_MODE=$(gsd-sdk query config-get workflow.discuss_mode 2>/dev/null || echo "discuss")
+DISCUSS_MODE=$(gsd-tools query config-get workflow.discuss_mode 2>/dev/null || echo "discuss")
 ```
 
-If `DISCUSS_MODE` is `"assumptions"`:
-Read and execute `.agent/get-shit-done/workflows/discuss-phase-assumptions.md` end-to-end.
+If `--assumptions` is in $ARGUMENTS:
+Read and execute `~/.gemini/antigravity/get-shit-done/workflows/list-phase-assumptions.md` end-to-end.
+Stop here.
 
-If `DISCUSS_MODE` is `"discuss"` (or unset, or any other value):
-Read and execute `.agent/get-shit-done/workflows/discuss-phase.md` end-to-end.
+Otherwise, if `DISCUSS_MODE` is `"assumptions"`:
+Read and execute `~/.gemini/antigravity/get-shit-done/workflows/discuss-phase-assumptions.md` end-to-end.
+
+Otherwise (`"discuss"` / unset / any other value):
+Read and execute `~/.gemini/antigravity/get-shit-done/workflows/discuss-phase.md` end-to-end.
 
 **MANDATORY:** Read the appropriate workflow file BEFORE taking any action. The objective and success_criteria sections in this command file are summaries — the workflow file contains the complete step-by-step process with all required behaviors, config checks, and interaction patterns. Do not improvise from the summary.
 

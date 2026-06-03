@@ -13,7 +13,7 @@ Output: updated SECURITY.md.
 </objective>
 
 <execution_context>
-@.agent/get-shit-done/workflows/secure-phase.md
+@~/.gemini/antigravity/get-shit-done/workflows/secure-phase.md
 </execution_context>
 
 <context>
@@ -21,6 +21,6 @@ Phase: $ARGUMENTS — optional, defaults to last completed phase.
 </context>
 
 <process>
-Execute @.agent/get-shit-done/workflows/secure-phase.md.
+Execute end-to-end.
 Preserve all workflow gates.
 </process>
