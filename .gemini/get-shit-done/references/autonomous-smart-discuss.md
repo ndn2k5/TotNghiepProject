@@ -5,7 +5,7 @@ Smart discuss is the autonomous-optimized variant of `gsd-discuss-phase`. It pro
 **Inputs:** `PHASE_NUM` from execute_phase. Run init to get phase paths:
 
 ```bash
-PHASE_STATE=$(gsd-sdk query init.phase-op ${PHASE_NUM})
+PHASE_STATE=$(gsd-tools query init.phase-op ${PHASE_NUM})
 ```
 
 Parse from JSON: `phase_dir`, `phase_slug`, `padded_phase`, `phase_name`.
@@ -94,7 +94,7 @@ Read the 3-5 most relevant files to understand existing patterns.
 **Get phase details:**
 
 ```bash
-DETAIL=$(gsd-sdk query roadmap.get-phase ${PHASE_NUM})
+DETAIL=$(gsd-tools query roadmap.get-phase ${PHASE_NUM})
 ```
 
 Extract `goal`, `requirements`, `success_criteria` from the JSON response.
@@ -154,21 +154,21 @@ Display a table:
 | 4 | {question} | {answer} — {rationale} | {alt1} |
 ```
 
-Then prompt the user via **AskUserQuestion**:
+Then prompt the user via **conversational prompting**:
 - **header:** "Area {M}/{N}"
 - **question:** "Accept these answers for {Area Name}?"
-- **options:** Build dynamically — always "Accept all" first, then "Change Q1" through "Change QN" for each question (up to 4), then "Discuss deeper" last. Cap at 6 explicit options max (AskUserQuestion adds "Other" automatically).
+- **options:** Build dynamically — always "Accept all" first, then "Change Q1" through "Change QN" for each question (up to 4), then "Discuss deeper" last. Cap at 6 explicit options max (conversational prompting adds "Other" automatically).
 
 **On "Accept all":** Record all recommended answers for this area. Move to next area.
 
-**On "Change QN":** Use AskUserQuestion with the alternatives for that specific question:
+**On "Change QN":** Use conversational prompting with the alternatives for that specific question:
 - **header:** "{Area Name}"
 - **question:** "Q{N}: {question text}"
 - **options:** List the 1-2 alternatives plus "You decide" (maps to Claude's Discretion)
 
 Record the user's choice. Re-display the updated table with the change reflected. Re-present the full acceptance prompt so the user can make additional changes or accept.
 
-**On "Discuss deeper":** Switch to interactive mode for this area only — ask questions one at a time using AskUserQuestion with 2-3 concrete options per question plus "You decide". After 4 questions, prompt:
+**On "Discuss deeper":** Switch to interactive mode for this area only — ask questions one at a time using conversational prompting with 2-3 concrete options per question plus "You decide". After 4 questions, prompt:
 - **header:** "{Area Name}"
 - **question:** "More questions about {area name}, or move to next?"
 - **options:** "More questions" / "Next area"
@@ -266,7 +266,7 @@ Write the file.
 **Commit:**
 
 ```bash
-gsd-sdk query commit "docs(${PADDED_PHASE}): smart discuss context" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
+gsd-tools query commit "docs(${PADDED_PHASE}): smart discuss context" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
 ```
 
 Display confirmation:

@@ -9,6 +9,7 @@ color: "#A78BFA"
 #       hooks:
 #         - type: command
 #           command: "echo 'AI-SPEC domain section written' 2>/dev/null || true"
+effort: high
 ---
 
 <role>
@@ -40,7 +41,7 @@ works via Bash and produces equivalent output.
 </documentation_lookup>
 
 <required_reading>
-Read `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ai-evals.md` — specifically the rubric design and domain expert sections.
+Read `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ai-evals.md` — specifically the rubric design and domain expert sections.
 </required_reading>
 
 <input>

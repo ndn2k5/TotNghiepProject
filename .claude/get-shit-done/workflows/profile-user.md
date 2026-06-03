@@ -1,16 +1,16 @@
 <purpose>
 Orchestrate the full developer profiling flow: consent, session analysis (or questionnaire fallback), profile generation, result display, and artifact creation.
 
-This workflow wires Phase 1 (session pipeline) and Phase 2 (profiling engine) into a cohesive user-facing experience. All heavy lifting is done by existing `gsd-sdk query` handlers (with legacy `gsd-tools.cjs` parity where needed) and the gsd-user-profiler agent -- this workflow orchestrates the sequence, handles branching, and provides the UX.
+This workflow wires Phase 1 (session pipeline) and Phase 2 (profiling engine) into a cohesive user-facing experience. All heavy lifting is done by existing `gsd-tools.cjs query` handlers (with legacy `gsd-tools.cjs` parity where needed) and the gsd-user-profiler agent -- this workflow orchestrates the sequence, handles branching, and provides the UX.
 </purpose>
 
 <required_reading>
 Read all files referenced by the invoking prompt's execution_context before starting.
 
 Key references:
-- @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md (display patterns)
-- @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/agents/gsd-user-profiler.md (profiler agent definition)
-- @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md (profiling reference doc)
+- @D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md (display patterns)
+- @D:/PROJEct/AI MODELS/TotNghiepProject/.claude/agents/gsd-user-profiler.md (profiler agent definition)
+- @D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md (profiling reference doc)
 </required_reading>
 
 <process>
@@ -24,7 +24,7 @@ Parse flags from $ARGUMENTS:
 Check for existing profile:
 
 ```bash
-PROFILE_PATH="C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md"
+PROFILE_PATH="D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md"
 [ -f "$PROFILE_PATH" ] && echo "EXISTS" || echo "NOT_FOUND"
 ```
 
@@ -48,7 +48,7 @@ If "Cancel": Display "No changes made." and exit.
 
 Backup existing profile:
 ```bash
-cp "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/USER-PROFILE.backup.md"
+cp "D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" "D:/PROJEct/AI MODELS/TotNghiepProject/.claude/USER-PROFILE.backup.md"
 ```
 
 Display: "Re-analyzing your sessions to update your profile."
@@ -92,7 +92,7 @@ Your recent Claude Code sessions, looking for patterns in these
 
 ✓ Reads session files locally (read-only, nothing modified)
 ✓ Analyzes message patterns (not content meaning)
-✓ Stores profile at C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md
+✓ Stores profile at D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md
 ✗ Nothing is sent to external services
 ✗ Sensitive content (API keys, passwords) is automatically excluded
 ```
@@ -130,7 +130,8 @@ Display: "◆ Scanning sessions..."
 
 Run session scan:
 ```bash
-SCAN_RESULT=$(gsd-sdk query scan-sessions --json 2>/dev/null)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+SCAN_RESULT=$(gsd_run query scan-sessions --json 2>/dev/null)
 ```
 
 Parse the JSON output to get session count and project count.
@@ -150,7 +151,7 @@ Display: "◆ Sampling messages..."
 
 Run profile sampling:
 ```bash
-SAMPLE_RESULT=$(gsd-sdk query profile-sample --json 2>/dev/null)
+SAMPLE_RESULT=$(gsd_run query profile-sample --json 2>/dev/null)
 ```
 
 Parse the JSON output to get the temp directory path and message count.
@@ -163,13 +164,13 @@ Display: "◆ Analyzing patterns..."
 
 Use the Task tool to spawn the `gsd-user-profiler` agent. Provide it with:
 - The sampled JSONL file path from profile-sample output
-- The user-profiling reference doc at `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md`
+- The user-profiling reference doc at `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md`
 
 The agent prompt should follow this structure:
 ```
 Read the profiling reference document and the sampled session messages, then analyze the developer's behavioral patterns across all 8 dimensions.
 
-Reference: @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md
+Reference: @D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/user-profiling.md
 Session data: @{temp_dir}/profile-sample.jsonl
 
 Analyze these messages and return your analysis in the <analysis> JSON format specified in the reference document.
@@ -201,7 +202,7 @@ Display: "Using questionnaire to build your profile."
 
 **Get questions:**
 ```bash
-QUESTIONS=$(gsd-sdk query profile-questionnaire --json 2>/dev/null)
+QUESTIONS=$(gsd_run query profile-questionnaire --json 2>/dev/null)
 ```
 
 Parse the questions JSON. It contains 8 questions, one per dimension.
@@ -224,7 +225,7 @@ Write the answers JSON to `$ANSWERS_PATH`.
 
 **Convert answers to analysis:**
 ```bash
-ANALYSIS_RESULT=$(gsd-sdk query profile-questionnaire --answers "$ANSWERS_PATH" --json 2>/dev/null)
+ANALYSIS_RESULT=$(gsd_run query profile-questionnaire --answers "$ANSWERS_PATH" --json 2>/dev/null)
 ```
 
 Parse the analysis JSON from the result.
@@ -271,10 +272,10 @@ Write updated analysis JSON back to `$ANALYSIS_PATH`.
 Display: "◆ Writing profile..."
 
 ```bash
-gsd-sdk query write-profile --input "$ANALYSIS_PATH" --json
+gsd_run query write-profile --input "$ANALYSIS_PATH" --json
 ```
 
-Display: "✓ Profile written to C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md"
+Display: "✓ Profile written to D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md"
 
 ---
 
@@ -337,9 +338,9 @@ Use AskUserQuestion with multiSelect:
 - options (ALL pre-selected by default):
   - "/gsd-dev-preferences command file" -- "Load your preferences in any session"
   - "CLAUDE.md profile section" -- "Add profile to this project's CLAUDE.md"
-  - "Global CLAUDE.md" -- "Add profile to C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/CLAUDE.md for all projects"
+  - "Global CLAUDE.md" -- "Add profile to D:/PROJEct/AI MODELS/TotNghiepProject/.claude/CLAUDE.md for all projects"
 
-**If no artifacts selected:** Display "No artifacts generated. Your profile is saved at C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" and jump to step 10.
+**If no artifacts selected:** Display "No artifacts generated. Your profile is saved at D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" and jump to step 10.
 
 ---
 
@@ -350,15 +351,15 @@ Generate selected artifacts sequentially (file I/O is fast, no benefit from para
 **For /gsd-dev-preferences (if selected):**
 
 ```bash
-gsd-sdk query generate-dev-preferences --analysis "$ANALYSIS_PATH" --json
+gsd_run query generate-dev-preferences --analysis "$ANALYSIS_PATH" --json
 ```
 
-Display: "✓ Generated /gsd-dev-preferences at C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/skills/gsd-dev-preferences/SKILL.md"
+Display: "✓ Generated /gsd-dev-preferences at D:/PROJEct/AI MODELS/TotNghiepProject/.claude/skills/gsd-dev-preferences/SKILL.md"
 
 **For CLAUDE.md profile section (if selected):**
 
 ```bash
-gsd-sdk query generate-claude-profile --analysis "$ANALYSIS_PATH" --json
+gsd_run query generate-claude-profile --analysis "$ANALYSIS_PATH" --json
 ```
 
 Display: "✓ Added profile section to CLAUDE.md"
@@ -366,12 +367,12 @@ Display: "✓ Added profile section to CLAUDE.md"
 **For Global CLAUDE.md (if selected):**
 
 ```bash
-gsd-sdk query generate-claude-profile --analysis "$ANALYSIS_PATH" --global --json
+gsd_run query generate-claude-profile --analysis "$ANALYSIS_PATH" --global --json
 ```
 
-Display: "✓ Added profile section to C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/CLAUDE.md"
+Display: "✓ Added profile section to D:/PROJEct/AI MODELS/TotNghiepProject/.claude/CLAUDE.md"
 
-**Error handling:** If any `gsd-sdk query` or gsd-tools.cjs call fails, display the error message and use AskUserQuestion to offer "Retry" or "Skip this artifact". On retry, re-run the command. On skip, continue to next artifact.
+**Error handling:** If any `gsd-tools.cjs query` or gsd-tools.cjs call fails, display the error message and use AskUserQuestion to offer "Retry" or "Skip this artifact". On retry, re-run the command. On skip, continue to next artifact.
 
 ---
 
@@ -383,7 +384,7 @@ Read both old backup and new analysis to compare dimension ratings/confidence.
 
 Read the backed-up profile:
 ```bash
-BACKUP_PATH="C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/USER-PROFILE.backup.md"
+BACKUP_PATH="D:/PROJEct/AI MODELS/TotNghiepProject/.claude/USER-PROFILE.backup.md"
 ```
 
 Compare each dimension's rating and confidence between old and new. Display diff table showing only changed dimensions:
@@ -406,15 +407,15 @@ If nothing changed: Display "No changes detected -- your profile is already up t
  GSD > PROFILE COMPLETE ✓
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Your profile:    C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md
+Your profile:    D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md
 ```
 
 Then list paths for each generated artifact:
 ```
 Artifacts:
-  ✓ /gsd-dev-preferences   C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/skills/gsd-dev-preferences/SKILL.md
+  ✓ /gsd-dev-preferences   D:/PROJEct/AI MODELS/TotNghiepProject/.claude/skills/gsd-dev-preferences/SKILL.md
   ✓ CLAUDE.md section       ./CLAUDE.md
-  ✓ Global CLAUDE.md        C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/CLAUDE.md
+  ✓ Global CLAUDE.md        D:/PROJEct/AI MODELS/TotNghiepProject/.claude/CLAUDE.md
 ```
 
 (Only show artifacts that were actually generated.)
@@ -446,7 +447,7 @@ rm -f "$ANALYSIS_PATH" 2>/dev/null
 - [ ] Profile written to USER-PROFILE.md via write-profile subcommand
 - [ ] Result display shows report card table and highlight reel with evidence
 - [ ] Artifact selection uses multiSelect with all options pre-selected
-- [ ] Artifacts generated sequentially via gsd-sdk query (or gsd-tools.cjs) subcommands
+- [ ] Artifacts generated sequentially via gsd-tools.cjs query (or gsd-tools.cjs) subcommands
 - [ ] Refresh diff shows changed dimensions when --refresh was used
 - [ ] Temp files cleaned up on completion
 </success_criteria>

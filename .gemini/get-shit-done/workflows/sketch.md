@@ -11,10 +11,10 @@ Supports two modes:
 <required_reading>
 Read all files referenced by the invoking prompt's execution_context before starting.
 
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/sketch-theme-system.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/sketch-variant-patterns.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/sketch-interactivity.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/sketch-tooling.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/sketch-theme-system.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/sketch-variant-patterns.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/sketch-interactivity.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/sketch-tooling.md
 </required_reading>
 
 <process>
@@ -32,7 +32,7 @@ Parse `$ARGUMENTS` for:
 - `frontier` or empty → set `FRONTIER_MODE=true`
 - Remaining text → the design idea to sketch
 
-**Text mode:** If TEXT_MODE is enabled, replace AskUserQuestion calls with plain-text numbered lists.
+**Text mode:** If TEXT_MODE is enabled, replace conversational prompting calls with plain-text numbered lists.
 </step>
 
 <step name="route">
@@ -99,7 +99,8 @@ ls -d .planning/sketches/[0-9][0-9][0-9]-* 2>/dev/null | sort | tail -1
 
 Check `commit_docs` config:
 ```bash
-COMMIT_DOCS=$(gsd-sdk query config-get commit_docs 2>/dev/null || echo "true")
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+COMMIT_DOCS=$(gsd_run query config-get commit_docs 2>/dev/null || echo "true")
 ```
 </step>
 
@@ -108,7 +109,7 @@ COMMIT_DOCS=$(gsd-sdk query config-get commit_docs 2>/dev/null || echo "true")
 
 **Otherwise:**
 
-Before sketching anything, explore the design intent through conversation. Ask one question at a time — using AskUserQuestion in normal mode, or a plain-text numbered list if TEXT_MODE is active.
+Before sketching anything, explore the design intent through conversation. Ask one question at a time — using conversational prompting in normal mode, or a plain-text numbered list if TEXT_MODE is active.
 
 **Questions to cover (adapt to what the user has already shared):**
 
@@ -296,7 +297,7 @@ Iterate until satisfied.
 
 **h.** Commit (if `COMMIT_DOCS` is true):
 ```bash
-gsd-sdk query commit "docs(sketch-NNN): [winning direction] — [key visual insight]" --files .planning/sketches/NNN-descriptive-name/ .planning/sketches/MANIFEST.md
+gsd_run query commit "docs(sketch-NNN): [winning direction] — [key visual insight]" --files .planning/sketches/NNN-descriptive-name/ .planning/sketches/MANIFEST.md
 ```
 
 **i.** Report:

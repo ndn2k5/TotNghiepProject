@@ -56,7 +56,7 @@ Rotate through these perspectives — each naturally surfaces different blindspo
 ## Step 1: Initialize
 
 ```bash
-INIT=$(node "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" init phase-op "${PHASE}")
+INIT=$(node "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" init phase-op "${PHASE}")
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -80,7 +80,7 @@ If SPEC.md already exists:
 
 **If `--auto`:** Auto-select "Update it". Log: `[auto] SPEC.md exists — updating.`
 
-**Otherwise:** Use AskUserQuestion:
+**Otherwise:** Use conversational prompting:
 - header: "Spec"
 - question: "Phase [X] already has a SPEC.md. What do you want to do?"
 - options:
@@ -160,7 +160,7 @@ If gate passes (ambiguity ≤ 0.20 AND all minimums met):
 
 **If `--auto`:** Jump to Step 6.
 
-**Otherwise:** AskUserQuestion:
+**Otherwise:** conversational prompting:
 - header: "Spec Gate Passed"
 - question: "Ambiguity is [score] — requirements are clear enough to write SPEC.md. Proceed?"
 - options:
@@ -172,7 +172,7 @@ If gate passes (ambiguity ≤ 0.20 AND all minimums met):
 
 **If `--auto`:** Write SPEC.md anyway — flag unresolved dimensions. Log: `[auto] Max rounds reached. Writing SPEC.md with [N] dimensions below minimum. Planner will need to treat these as assumptions.`
 
-**Otherwise:** AskUserQuestion:
+**Otherwise:** conversational prompting:
 - header: "Max Rounds"
 - question: "After 6 rounds, ambiguity is [score]. [List dimensions still below minimum.] What would you like to do?"
 - options:
@@ -180,15 +180,15 @@ If gate passes (ambiguity ≤ 0.20 AND all minimums met):
   - "Keep talking" → Continue (no round limit from here)
   - "Abandon" → Exit without writing
 
-**If `--auto` mode throughout:** Replace all AskUserQuestion calls above with Claude's recommended choice. Log decisions inline. Apply the same logic as `--auto` in discuss-phase.
+**If `--auto` mode throughout:** Replace all conversational prompting calls above with Claude's recommended choice. Log decisions inline. Apply the same logic as `--auto` in discuss-phase.
 
-**Text mode (`workflow.text_mode: true` or `--text` flag):** Use plain-text numbered lists instead of AskUserQuestion TUI menus.
+**Text mode (`workflow.text_mode: true` or `--text` flag):** Use plain-text numbered lists instead of conversational prompting TUI menus.
 
 ## Step 5: (covered inline — ambiguity scoring is per-round)
 
 ## Step 6: Generate SPEC.md
 
-Use the SPEC.md template from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/spec.md.
+Use the SPEC.md template from @D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/spec.md.
 
 **Requirements for every requirement entry:**
 - One specific, testable statement

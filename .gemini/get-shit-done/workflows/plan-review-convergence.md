@@ -8,9 +8,9 @@ Orchestrator only does: init, loop control, parse CYCLE_SUMMARY for HIGH count, 
 <required_reading>
 Read all files referenced by the invoking prompt's execution_context before starting.
 
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/revision-loop.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/gates.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/agent-contracts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/revision-loop.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/gates.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/agent-contracts.md
 </required_reading>
 
 <process>
@@ -43,7 +43,8 @@ echo "$ARGUMENTS" | grep -qE '\-\-ws\s+\S+' && GSD_WS=$(echo "$ARGUMENTS" | grep
 ## 1.5. Config Gate (feature disabled by default)
 
 ```bash
-CONVERGENCE_ENABLED=$(gsd-sdk query config-get workflow.plan_review_convergence 2>/dev/null || echo "false")
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+CONVERGENCE_ENABLED=$(gsd_run query config-get workflow.plan_review_convergence 2>/dev/null || echo "false")
 ```
 
 **If `CONVERGENCE_ENABLED` is not `"true"`:** Display and exit:
@@ -62,7 +63,7 @@ Then re-run: /gsd:plan-review-convergence {PHASE}
 ## 2. Initialize
 
 ```bash
-INIT=$(node "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" init plan-phase "$PHASE")
+INIT=$(node "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" init plan-phase "$PHASE")
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -70,12 +71,12 @@ Parse JSON for: `phase_dir`, `phase_number`, `padded_phase`, `phase_name`, `has_
 
 **If `response_language` is set:** All user-facing output should be in `{response_language}`.
 
-Set `TEXT_MODE=true` if `--text` is present in $ARGUMENTS OR `text_mode` from init JSON is `true`. When `TEXT_MODE` is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number.
+Set `TEXT_MODE=true` if `--text` is present in $ARGUMENTS OR `text_mode` from init JSON is `true`. When `TEXT_MODE` is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number.
 
 ## 3. Validate Phase + Pre-flight Gate
 
 ```bash
-PHASE_INFO=$(node "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" roadmap get-phase "${PHASE}")
+PHASE_INFO=$(node "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" roadmap get-phase "${PHASE}")
 ```
 
 **If `found` is false:** Error with available phases. Exit.
@@ -175,6 +176,22 @@ Your final response MUST also include this section immediately after the CYCLE_S
 )
 ```
 
+### Source-grounding pass (config: `plan_review.source_grounding`, default on)
+
+Run this pass unless `plan_review.source_grounding` is `false`. It verifies every symbol the plan cites against the project source before approval, catching hallucinated symbols at review time instead of execution time.
+
+1. **Enumerate cited symbols.** List every referenced symbol by kind, quoting the plan line for each (coverage must be auditable): decorators (`@name`), classes/methods (`Class.method`), functions (`module.function`), CLI flags (`--name`), file paths, dataclass/struct fields.
+2. **Exclude new artifacts.** Do NOT verify symbols the plan declares under its "Artifacts this phase produces" section — those are created by this phase, not references to existing code.
+3. **Resolve each remaining symbol** using the adapter named by `plan_review.source_grounding_authority` (default `grep`):
+   - `grep` — ripgrep / Read the source; confirm the name appears as a real declaration.
+   - `intel` — consult `.planning/intel/API-SURFACE.md` / `api-map.json` (only when `intel.enabled`).
+   Record one verdict per symbol: **VERIFIED** (quote `file:line`), **MISSING** (adapter can check this language/kind and the symbol is absent), **AMBIGUOUS** (multiple candidates), or **UNCHECKABLE** (adapter cannot analyze this language/kind — e.g. non-JS under `intel`, or any signature under `grep`). Never treat UNCHECKABLE as verified or missing.
+4. **Severity & gating:**
+   - **MISSING** at authority `grep`/`intel` → `needs-acknowledgement`: the plan proceeds only if the author confirms the symbol is genuinely new or dynamically resolved, and that acknowledgement is recorded. A hard block is reserved for higher-authority adapters (LSP/SCIP) that can prove absence.
+   - **AMBIGUOUS** → MEDIUM. **UNCHECKABLE** → INFO.
+   - Signature mismatches cannot be asserted under `grep`/`intel`; report the signature as UNCHECKABLE.
+5. **Coverage block.** Append a "Verification coverage" section to `REVIEWS.md` listing every UNCHECKABLE/skipped symbol and why — a clean review must never silently mean "nothing was checked."
+
 After agent returns, verify REVIEWS.md exists:
 ```bash
 REVIEWS_FILE=$(ls ${phase_dir}/${padded_phase}-REVIEWS.md 2>/dev/null)
@@ -213,7 +230,7 @@ fi
 **If HIGH_COUNT == 0 (converged):**
 
 ```bash
-node "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" state planned-phase --phase "${PHASE}" --name "${phase_name}" --plans "${PLAN_COUNT}"
+node "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/gsd-tools.cjs" state planned-phase --phase "${PHASE}" --name "${phase_name}" --plans "${PLAN_COUNT}"
 ```
 
 Display:
@@ -260,9 +277,9 @@ How would you like to proceed?
 Enter number:
 ```
 
-Otherwise use AskUserQuestion:
+Otherwise use conversational prompting:
 ```js
-AskUserQuestion([
+conversational prompting([
   {
     question: "Plan convergence did not complete after {MAX_CYCLES} cycles. {HIGH_COUNT} HIGH concerns remain:\n\n{HIGH_LINES}\n\nHow would you like to proceed?",
     header: "Convergence",

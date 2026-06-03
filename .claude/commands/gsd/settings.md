@@ -1,11 +1,12 @@
 ---
-name: gsd:settings
+name: gsd-settings
 description: Configure GSD workflow toggles and model profile
 allowed-tools:
   - Read
   - Write
   - Bash
   - AskUserQuestion
+requires: [quick]
 ---
 
 <objective>
@@ -20,17 +21,9 @@ Routes to the settings workflow which handles:
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/settings.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/settings.md
 </execution_context>
 
 <process>
-**Follow the settings workflow** from `@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/settings.md`.
-
-The workflow handles all logic including:
-1. Config file creation with defaults if missing
-2. Current config reading
-3. Interactive settings presentation with pre-selection
-4. Answer parsing and config merging
-5. File writing
-6. Confirmation display
+Execute end-to-end.
 </process>

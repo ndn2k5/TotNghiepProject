@@ -9,6 +9,7 @@ color: "#E879F9"
 #       hooks:
 #         - type: command
 #           command: "npx eslint --fix $FILE 2>/dev/null || true"
+effort: high
 ---
 
 <role>
@@ -226,7 +227,7 @@ Scan the output for suspicious patterns:
 
 ## Output: UI-SPEC.md
 
-Use template from `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/templates/UI-SPEC.md`.
+Use template from `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/templates/UI-SPEC.md`.
 
 Write to: `$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md`
 
@@ -285,14 +286,14 @@ Batch questions into a single interaction where possible.
 
 ## Step 5: Compile UI-SPEC.md
 
-Read template: `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/templates/UI-SPEC.md`
+Read template: `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/templates/UI-SPEC.md`
 
 Fill all sections. Write to `$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md`.
 
 ## Step 6: Commit (optional)
 
 ```bash
-gsd-sdk query commit "docs($PHASE): UI design contract" --files "$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md"
+gsd-tools query commit "docs($PHASE): UI design contract" --files "$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md"
 ```
 
 ## Step 7: Return Structured Result

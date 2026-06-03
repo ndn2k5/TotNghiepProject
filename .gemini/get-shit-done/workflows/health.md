@@ -40,16 +40,17 @@ The model running this workflow self-reports the current session's
 approximate `tokensUsed` and the active model's `contextWindow`. Use the values
 visible in your runtime (Claude Code's `/context` slash command output, or the
 model's own session telemetry). If the runtime exposes neither, prompt the user
-once via AskUserQuestion for both numbers.
+once via conversational prompting for both numbers.
 
 **TEXT_MODE fallback:** when `text_mode` is true (config or `--text` flag) the
-runtime is non-Claude (Codex, Gemini, etc.) and `AskUserQuestion` is not
+runtime is non-Claude (Codex, Gemini, etc.) and `conversational prompting` is not
 available — replace the prompt with a plain-text two-question sequence
 ("Approximate tokens used? Context window size?") and read the answers as
 plain text from the user's response.
 
 ```bash
-gsd-sdk query validate.context \
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+gsd_run query validate.context \
   --tokens-used "$TOKENS_USED" \
   --context-window "$CONTEXT_WINDOW"
 ```
@@ -64,7 +65,7 @@ health output, the two modes are independent diagnostics.
 **Run health validation:**
 
 ```bash
-gsd-sdk query validate.health $REPAIR_FLAG $BACKFILL_FLAG
+gsd_run query validate.health $REPAIR_FLAG $BACKFILL_FLAG
 ```
 
 Parse JSON output:
@@ -151,7 +152,7 @@ If yes, re-run with --repair flag and display results.
 Re-run health check without --repair to confirm issues are resolved:
 
 ```bash
-gsd-sdk query validate.health
+gsd_run query validate.health
 ```
 
 Report final status.
@@ -208,13 +209,13 @@ When `--repair` is active, detect and clean up:
 
 ```bash
 # Check for stale task directories (older than 24 hours)
-TASKS_DIR="C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/tasks"
+TASKS_DIR="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/tasks"
 if [ -d "$TASKS_DIR" ]; then
   STALE_COUNT=$( (find "$TASKS_DIR" -maxdepth 1 -type d -mtime +1 2>/dev/null || true) | wc -l )
   if [ "$STALE_COUNT" -gt 0 ]; then
-    echo "⚠️  Found $STALE_COUNT stale task directories in C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/tasks/"
+    echo "⚠️  Found $STALE_COUNT stale task directories in D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/tasks/"
     echo "   These are leftover from crashed subagent sessions."
-    echo "   Run: rm -rf C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/tasks/*  (safe — only affects dead sessions)"
+    echo "   Run: rm -rf D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/tasks/*  (safe — only affects dead sessions)"
   fi
 fi
 ```

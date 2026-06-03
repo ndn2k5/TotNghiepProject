@@ -5,9 +5,9 @@ You are a thinking partner, not an interviewer. The user is the visionary — yo
 </purpose>
 
 <required_reading>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/domain-probes.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/gate-prompts.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/universal-anti-patterns.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/domain-probes.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/gate-prompts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/universal-anti-patterns.md
 </required_reading>
 
 <progressive_disclosure>
@@ -93,12 +93,12 @@ Phase: "API documentation"       → Structure/navigation, Code examples depth, 
 </gray_area_identification>
 
 <answer_validation>
-**IMPORTANT: Answer validation** — After every AskUserQuestion call, if the response is empty/whitespace-only:
+**IMPORTANT: Answer validation** — After every conversational prompting call, if the response is empty/whitespace-only:
 
-- **"Other" with empty text** (the user wants to type freeform): output `"What would you like to discuss?"`, STOP generating, wait for the user's next message, then reflect it back and continue. Do NOT retry AskUserQuestion or call any tools.
+- **"Other" with empty text** (the user wants to type freeform): output `"What would you like to discuss?"`, STOP generating, wait for the user's next message, then reflect it back and continue. Do NOT retry conversational prompting or call any tools.
 - **Any other empty response:** retry once with the same parameters; if still empty, present options as a plain-text numbered list. Never proceed with empty input.
 
-**Text mode** (`--text` or `workflow.text_mode: true`): follow `workflows/discuss-phase/modes/text.md` — do not use AskUserQuestion at all.
+**Text mode** (`--text` or `workflow.text_mode: true`): follow `workflows/discuss-phase/modes/text.md` — do not use conversational prompting at all.
 </answer_validation>
 
 <process>
@@ -109,9 +109,9 @@ Phase: "API documentation"       → Structure/navigation, Code examples depth, 
 Phase number from argument (required).
 
 ```bash
-INIT=$(gsd-sdk query init.phase-op "${PHASE}")
-if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
-AGENT_SKILLS_ADVISOR=$(gsd-sdk query agent-skills gsd-advisor-researcher)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.phase-op "${PHASE}"); [[ "$INIT" == @file:* ]] && INIT=$(cat "${INIT#@file:}")
+AGENT_SKILLS_ADVISOR=$(gsd_run query agent-skills gsd-advisor-researcher)
 ```
 
 Parse JSON for: `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `has_research`, `has_context`, `has_plans`, `has_verification`, `plan_count`, `roadmap_exists`, `planning_exists`, `response_language`.
@@ -129,7 +129,7 @@ Exit workflow.
 
 ```bash
 # Detect advisor mode (file-existence guard — no Read until needed)
-if [ -f "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/USER-PROFILE.md" ]; then
+if [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/USER-PROFILE.md" ]; then
   ADVISOR_MODE=true
 else
   ADVISOR_MODE=false
@@ -141,7 +141,7 @@ fi
   - `--all` → Read `workflows/discuss-phase/modes/all.md` before `present_gray_areas`.
   - `--auto` → Read `workflows/discuss-phase/modes/auto.md` before `check_existing` (it overrides several steps).
   - `--chain` → Read `workflows/discuss-phase/modes/chain.md` before `auto_advance`.
-  - `--text` (or `workflow.text_mode: true`) → Read `workflows/discuss-phase/modes/text.md` before any AskUserQuestion call.
+  - `--text` (or `workflow.text_mode: true`) → Read `workflows/discuss-phase/modes/text.md` before any conversational prompting call.
   - `--batch` → Read `workflows/discuss-phase/modes/batch.md` before `discuss_areas`.
   - `--analyze` → Read `workflows/discuss-phase/modes/analyze.md` before `discuss_areas`.
   - `ADVISOR_MODE = true` → Read `workflows/discuss-phase/modes/advisor.md` before `analyze_phase` (it changes the discussion flow and adds an `advisor_research` substep).
@@ -201,7 +201,7 @@ ls ${phase_dir}/*-CONTEXT.md 2>/dev/null || true
 
 **If `--auto`:** Auto-select "Update it" — load existing context and continue to `analyze_phase`. Log: `[auto] Context exists — updating with auto-selected decisions.`
 
-**Otherwise:** AskUserQuestion (header: "Context"; question: "Phase [X] already has context. What do you want to do?"; options: "Update it" / "View it" / "Skip"). Branch accordingly.
+**Otherwise:** conversational prompting (header: "Context"; question: "Phase [X] already has context. What do you want to do?"; options: "Update it" / "View it" / "Skip"). Branch accordingly.
 
 **If doesn't exist:**
 
@@ -214,13 +214,13 @@ If a checkpoint file exists:
 
 **If `--auto`:** Auto-select "Resume" — load checkpoint and continue from last completed area.
 
-**Otherwise:** AskUserQuestion (header: "Resume"; question: "Found interrupted discussion checkpoint ({N} areas completed out of {M}). Resume from where you left off?"; options: "Resume" / "Start fresh"). On "Resume", parse the checkpoint JSON, load `decisions` into the internal accumulator, set `areas_completed` to skip those areas, continue to `present_gray_areas` with only the remaining areas. On "Start fresh", delete the checkpoint and continue.
+**Otherwise:** conversational prompting (header: "Resume"; question: "Found interrupted discussion checkpoint ({N} areas completed out of {M}). Resume from where you left off?"; options: "Resume" / "Start fresh"). On "Resume", parse the checkpoint JSON, load `decisions` into the internal accumulator, set `areas_completed` to skip those areas, continue to `present_gray_areas` with only the remaining areas. On "Start fresh", delete the checkpoint and continue.
 
 Check `has_plans` and `plan_count` from init. **If `has_plans` is true:**
 
 **If `--auto`:** Auto-select "Continue and replan after". Log: `[auto] Plans exist — continuing with context capture, will replan after.`
 
-**Otherwise:** AskUserQuestion (header: "Plans exist"; question: "Phase [X] already has {plan_count} plan(s) created without user context. Your decisions here won't affect existing plans unless you replan."; options: "Continue and replan after" / "View existing plans" / "Cancel"). Branch accordingly.
+**Otherwise:** conversational prompting (header: "Plans exist"; question: "Phase [X] already has {plan_count} plan(s) created without user context. Your decisions here won't affect existing plans unless you replan."; options: "Continue and replan after" / "View existing plans" / "Cancel"). Branch accordingly.
 
 **If `has_plans` is false:** Continue to `load_prior_context`.
 </step>
@@ -244,8 +244,8 @@ For each CONTEXT.md read: extract `<decisions>` (locked preferences), `<specific
 
 **Spike/sketch findings:** Check for project-local skills:
 ```bash
-SPIKE_FINDINGS=$(ls ./.gemini/skills/spike-findings-*/SKILL.md 2>/dev/null | head -1)
-SKETCH_FINDINGS=$(ls ./.gemini/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1)
+SPIKE_FINDINGS=$(ls ./.gemini/skills/spike-findings-*/SKILL.md 2>/dev/null | head -1 || true)
+SKETCH_FINDINGS=$(ls ./.gemini/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1 || true)
 RAW_SPIKES=$(ls .planning/spikes/MANIFEST.md 2>/dev/null)
 RAW_SKETCHES=$(ls .planning/sketches/MANIFEST.md 2>/dev/null)
 ```
@@ -265,14 +265,14 @@ Build internal `<prior_decisions>` with sections for Project-Level (from PROJECT
 Check pending todos for matches with this phase's scope.
 
 ```bash
-TODO_MATCHES=$(gsd-sdk query todo.match-phase "${PHASE_NUMBER}")
+TODO_MATCHES=$(gsd_run query todo.match-phase "${PHASE_NUMBER}")
 ```
 
 Parse JSON for: `todo_count`, `matches[]` (each with `file`, `title`, `area`, `score`, `reasons`).
 
 **If `todo_count` is 0 or `matches` is empty:** Skip silently.
 
-**If matches found:** Present each match (title, area, why it matched). AskUserQuestion (multiSelect) asking which to fold. Folded → `<folded_todos>` for CONTEXT.md `<decisions>`. Reviewed but not folded → `<reviewed_todos>` for CONTEXT.md `<deferred>`.
+**If matches found:** Present each match (title, area, why it matched). conversational prompting (multiSelect) asking which to fold. Folded → `<folded_todos>` for CONTEXT.md `<decisions>`. Reviewed but not folded → `<reviewed_todos>` for CONTEXT.md `<deferred>`.
 
 **Auto mode (`--auto`):** Fold all todos with score >= 0.4 automatically. Log the selection.
 </step>
@@ -280,7 +280,7 @@ Parse JSON for: `todo_count`, `matches[]` (each with `file`, `title`, `area`, `s
 <step name="scout_codebase">
 Lightweight scan of existing code to inform gray area identification (~10% context).
 
-Read `@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/scout-codebase.md` — it contains the phase-type→map selection table, single-read rule, no-maps fallback, and `<codebase_context>` output schema. Then execute:
+Read `@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/scout-codebase.md` — it contains the phase-type→map selection table, single-read rule, no-maps fallback, and `<codebase_context>` output schema. Then execute:
 1. `ls .planning/codebase/*.md` to find existing maps
 2. Select 2–3 maps via the reference's table; or grep fallback if none exist
 3. Build internal `<codebase_context>` per the reference's output schema
@@ -323,9 +323,9 @@ We'll clarify HOW to implement this. (New capabilities belong in other phases.)
 - [Decision from Phase N that applies here]
 ```
 
-**If `--auto` or `--all`** (per `modes/auto.md` or `modes/all.md`): Auto-select ALL gray areas. Log: `[--auto/--all] Selected all gray areas: [list area names].` Skip the AskUserQuestion below and continue directly to `discuss_areas` with all areas selected.
+**If `--auto` or `--all`** (per `modes/auto.md` or `modes/all.md`): Auto-select ALL gray areas. Log: `[--auto/--all] Selected all gray areas: [list area names].` Skip the conversational prompting below and continue directly to `discuss_areas` with all areas selected.
 
-**Otherwise, use AskUserQuestion (multiSelect: true):**
+**Otherwise, use conversational prompting (multiSelect: true):**
 - header: "Discuss"
 - question: "Which areas do you want to discuss for [phase name]?"
 - options: 3-4 phase-specific gray areas, each with a concrete label (not generic), 1-2 questions in description, and code-context / prior-decision annotations:
@@ -346,11 +346,11 @@ Continue to `discuss_areas` with selected areas (or to `advisor_research` per `m
 Discussion behavior is defined by the active mode file(s):
 
 - **Advisor mode (ADVISOR_MODE = true):** follow `workflows/discuss-phase/modes/advisor.md` — research-backed comparison tables, table-first selection.
-- **--auto:** follow `workflows/discuss-phase/modes/auto.md` — Claude picks recommended option for every question; no AskUserQuestion. Single-pass cap enforced.
+- **--auto:** follow `workflows/discuss-phase/modes/auto.md` — Claude picks recommended option for every question; no conversational prompting. Single-pass cap enforced.
 - **Default (no flags):** follow `workflows/discuss-phase/modes/default.md` — 4 single-question turns per area, then check whether to continue.
 
 Overlays (combine with the active mode):
-- `--text` → `workflows/discuss-phase/modes/text.md` (replace AskUserQuestion with plain-text numbered lists)
+- `--text` → `workflows/discuss-phase/modes/text.md` (replace conversational prompting with plain-text numbered lists)
 - `--batch` → `workflows/discuss-phase/modes/batch.md` (group 2–5 questions per turn)
 - `--analyze` → `workflows/discuss-phase/modes/analyze.md` (trade-off table before each question)
 
@@ -373,10 +373,12 @@ DISCUSSION-LOG.md is for human reference only (audits, retrospectives) and is NO
 
 **Find or create phase directory:**
 
-Use values from init: `phase_dir`, `phase_slug`, `padded_phase`. If `phase_dir` is null:
+Use values from init: `phase_dir`, `expected_phase_dir`, `phase_slug`, `padded_phase`. If `phase_dir` is null:
 ```bash
-mkdir -p ".planning/phases/${padded_phase}-${phase_slug}"
+mkdir -p "${expected_phase_dir}"
 ```
+
+Set `phase_dir="${expected_phase_dir}"` after creation.
 
 **File location:** `${phase_dir}/${padded_phase}-CONTEXT.md`
 
@@ -445,7 +447,7 @@ rm -f "${phase_dir}/${padded_phase}-DISCUSS-CHECKPOINT.json"
 
 Commit phase context and discussion log:
 ```bash
-gsd-sdk query commit "docs(${padded_phase}): capture phase context" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
+gsd_run query commit "docs(${padded_phase}): capture phase context" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
 ```
 
 Confirm: "Committed: docs(${padded_phase}): capture phase context"
@@ -455,11 +457,11 @@ Confirm: "Committed: docs(${padded_phase}): capture phase context"
 Update STATE.md with session info:
 
 ```bash
-gsd-sdk query state.record-session \
+gsd_run query state.record-session \
   --stopped-at "Phase ${PHASE} context gathered" \
   --resume-file "${phase_dir}/${padded_phase}-CONTEXT.md"
 
-gsd-sdk query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
+gsd_run query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
 ```
 </step>
 

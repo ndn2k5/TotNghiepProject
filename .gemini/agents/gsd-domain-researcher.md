@@ -1,6 +1,6 @@
 ---
 name: gsd-domain-researcher
-description: Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, regulatory context, and what "good" looks like for practitioners in this field — before the eval-planner turns it into measurable rubrics. Spawned by /gsd-ai-integration-phase orchestrator.
+description: Researches the business domain and real-world application context of the AI system being built. Surfaces domain expert evaluation criteria, industry-specific failure modes, regulatory context, and what "good" looks like for practitioners in this field — before the eval-planner turns it into measurable rubrics. Spawned by /gsd:ai-integration-phase orchestrator.
 # hooks:
 #   PostToolUse:
 #     - matcher: "Write|Edit"
@@ -46,7 +46,7 @@ works via Bash and produces equivalent output.
 </documentation_lookup>
 
 <required_reading>
-Read `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/ai-evals.md` — specifically the rubric design and domain expert sections.
+Read `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/ai-evals.md` — specifically the rubric design and domain expert sections.
 </required_reading>
 
 <input>

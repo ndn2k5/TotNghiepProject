@@ -29,7 +29,7 @@ consumed by downstream agents — those read CONTEXT.md only.
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| [Option 1] | [Description from AskUserQuestion] | |
+| [Option 1] | [Description from conversational prompting] | |
 | [Option 2] | [Description] | ✓ |
 | [Option 3] | [Description] | |
 

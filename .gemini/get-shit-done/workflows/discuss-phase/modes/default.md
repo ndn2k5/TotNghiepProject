@@ -44,10 +44,10 @@ check whether to continue. Each answer should reveal the next question.
    Let's talk about [Area].
    ```
 
-2. **Ask 4 questions using AskUserQuestion:**
+2. **Ask 4 questions using conversational prompting:**
    - header: "[Area]" (max 12 chars — abbreviate if needed)
    - question: Specific decision for this area
-   - options: 2-3 concrete choices (AskUserQuestion adds "Other" automatically), with the recommended choice highlighted and brief explanation why
+   - options: 2-3 concrete choices (conversational prompting adds "Other" automatically), with the recommended choice highlighted and brief explanation why
    - **Annotate options with code context** when relevant:
      ```text
      "How should posts be displayed?"
@@ -71,7 +71,7 @@ check whether to continue. Each answer should reveal the next question.
 
 4. **After all initially-selected areas complete:**
    - Summarize what was captured from the discussion so far
-   - AskUserQuestion:
+   - conversational prompting:
      - header: "Done"
      - question: "We've discussed [list areas]. Which gray areas remain unclear?"
      - options: "Explore more gray areas" / "I'm ready for context"
@@ -92,7 +92,7 @@ These user-referenced docs are often MORE important than ROADMAP.md refs because
 **Question design:**
 - Options should be concrete, not abstract ("Cards" not "Option A")
 - Each answer should inform the next question or next batch
-- If user picks "Other" to provide freeform input (e.g., "let me describe it", "something else", or an open-ended reply), ask your follow-up as plain text — NOT another AskUserQuestion. Wait for them to type at the normal prompt, then reflect their input back and confirm before resuming AskUserQuestion or the next numbered batch.
+- If user picks "Other" to provide freeform input (e.g., "let me describe it", "something else", or an open-ended reply), ask your follow-up as plain text — NOT another conversational prompting. Wait for them to type at the normal prompt, then reflect their input back and confirm before resuming conversational prompting or the next numbered batch.
 
 **Thinking partner (conditional):**
 If `features.thinking_partner` is enabled in config, check the user's answer for tradeoff signals

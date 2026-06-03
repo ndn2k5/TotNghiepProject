@@ -3,8 +3,8 @@ Safe git revert workflow. Rolls back GSD phase or plan commits using the phase m
 </purpose>
 
 <required_reading>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/ui-brand.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/gate-prompts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/gate-prompts.md
 </required_reading>
 
 <process>
@@ -64,8 +64,8 @@ Recent GSD commits:
 ```
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-Use AskUserQuestion to ask:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+Use conversational prompting to ask:
 - question: "Which commits to revert? Enter numbers (e.g., 1,3) or 'all'"
 - header: "Select"
 
@@ -156,7 +156,7 @@ If any later plan references the target plan's outputs, collect warnings:
 
 If any warnings exist (from either mode):
 - Display all warnings
-- Use AskUserQuestion with approve-revise-abort pattern:
+- Use conversational prompting with approve-revise-abort pattern:
   - question: "Downstream work depends on the target being reverted. Proceed anyway?"
   - header: "Confirm"
   - options: Proceed | Abort
@@ -178,7 +178,7 @@ The following commits will be reverted (in reverse chronological order):
 Total: {N} commit(s) to revert
 ```
 
-Use AskUserQuestion:
+Use conversational prompting:
 - question: "Proceed with revert?"
 - header: "Approve?"
 - options: Approve | Abort
@@ -187,7 +187,7 @@ If "Abort": display "Revert cancelled. No changes made." and exit.
 If "Approve": ask for a reason:
 
 ```
-AskUserQuestion(
+conversational prompting(
   header: "Reason",
   question: "Brief reason for the revert (used in commit message):",
   options: []

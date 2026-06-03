@@ -63,7 +63,7 @@ reads is inert — the consumption mechanism is what gives an artifact meaning.
 ### USER-PROFILE.md
 - **Shape**: Calibration tier and preferences profile
 - **Lifecycle**: Created by `profile-user` → Updated as preferences are observed
-- **Location**: `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md`
+- **Location**: `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md`
 - **Consumed by**: `discuss-phase-assumptions` (calibration tier), `plan-phase`
 
 ### SPIKE.md / DESIGN.md (per-spike)

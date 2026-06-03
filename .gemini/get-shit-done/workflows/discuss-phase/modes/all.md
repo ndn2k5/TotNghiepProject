@@ -6,7 +6,7 @@
 ## Effect
 
 - In `present_gray_areas`: auto-select ALL gray areas without asking the user
-  (skips the AskUserQuestion area-selection step).
+  (skips the conversational prompting area-selection step).
 - Discussion for each area proceeds **fully interactively** — the user drives
   every question for every area (use the default-mode `discuss_areas` flow).
 - Does NOT auto-advance to plan-phase afterward — use `--chain` or `--auto`

@@ -8,7 +8,7 @@
 ## Dispatch
 
 ```
-Read @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/workflows/discuss-phase-power.md
+Read @D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/workflows/discuss-phase-power.md
 ```
 
 Execute it end-to-end. Do not continue with the standard interactive steps.

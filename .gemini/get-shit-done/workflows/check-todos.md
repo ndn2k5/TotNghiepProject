@@ -12,7 +12,8 @@ Read all files referenced by the invoking prompt's execution_context before star
 Load todo context:
 
 ```bash
-INIT=$(gsd-sdk query init.todos)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.todos)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -103,8 +104,8 @@ If `.planning/ROADMAP.md` exists:
 **If todo maps to a roadmap phase:**
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-Use AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+Use conversational prompting:
 - header: "Action"
 - question: "This todo relates to Phase [N]: [name]. What would you like to do?"
 - options:
@@ -115,7 +116,7 @@ Use AskUserQuestion:
 
 **If no roadmap match:**
 
-Use AskUserQuestion:
+Use conversational prompting:
 - header: "Action"
 - question: "What would you like to do with this todo?"
 - options:
@@ -157,7 +158,7 @@ If todo was moved to done/, commit the change:
 
 ```bash
 git rm --cached .planning/todos/pending/[filename] 2>/dev/null || true
-gsd-sdk query commit "docs: start work on todo - [title]" --files .planning/todos/completed/[filename] .planning/STATE.md
+gsd_run query commit "docs: start work on todo - [title]" --files .planning/todos/completed/[filename] .planning/STATE.md
 ```
 
 Tool respects `commit_docs` config and gitignore automatically.

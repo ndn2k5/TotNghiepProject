@@ -19,7 +19,8 @@ Read all files referenced by the invoking prompt's execution_context before star
 Bootstrap via manager init:
 
 ```bash
-INIT=$(gsd-sdk query init.manager)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.manager)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -30,7 +31,7 @@ Parse JSON for: `milestone_version`, `milestone_name`, `phase_count`, `completed
 - `manager_flags.plan` — appended to plan agent init command
 - `manager_flags.execute` — appended to execute agent init command
 
-These are empty strings by default. Set via: `gsd-sdk query config-set manager.flags.discuss "--auto --analyze"`
+These are empty strings by default. Set via: `gsd-tools.cjs query config-set manager.flags.discuss "--auto --analyze"`
 
 **If error:** Display the error message and exit.
 
@@ -60,7 +61,7 @@ Proceed to dashboard step.
 **Every time this step is reached**, re-read state from disk to pick up changes from background agents:
 
 ```bash
-INIT=$(gsd-sdk query init.manager)
+INIT=$(gsd_run query init.manager)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -140,8 +141,8 @@ All {phase_count} phases done. Ready for final steps:
 ```
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-Ask user via AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+Ask user via conversational prompting:
 - **question:** "All phases complete. What next?"
 - **options:** "Verify work" / "Complete milestone" / "Exit manager"
 
@@ -194,9 +195,9 @@ Continue:
 
 **Auto-refresh:** If background agents are running (`is_active` is true for any phase), set a 60-second auto-refresh cycle. After presenting the action menu, if no user input is received within 60 seconds, automatically refresh the dashboard. This interval is configurable via `manager_refresh_interval` in GSD config (default: 60 seconds, set to 0 to disable).
 
-Present via AskUserQuestion:
+Present via conversational prompting:
 - **question:** "What would you like to do?"
-- **options:** (compound options as built above + refresh + exit, AskUserQuestion auto-adds "Other")
+- **options:** (compound options as built above + refresh + exit, conversational prompting auto-adds "Other")
 
 **On "Other" (free text):** Parse intent — if it mentions a phase number and action, dispatch accordingly. If unclear, display available actions and loop to action_menu.
 
@@ -244,7 +245,7 @@ After discuss completes, loop back to dashboard step.
 Planning runs autonomously. Spawn a background agent that delegates to the Skill pipeline with any configured flags:
 
 ```
-Task(
+Agent(
   description="Plan phase {N}: {phase_name}",
   run_in_background=true,
   prompt="You are running the GSD plan-phase workflow for phase {N} of the project.
@@ -259,11 +260,11 @@ Skill(skill=\"gsd-plan-phase\", args=\"{N} --auto {manager_flags.plan}\")
 
 This delegates to the full plan-phase pipeline including local patches, research, plan-checker, and all quality gates.
 
-Important: You are running in the background. Do NOT use AskUserQuestion — make autonomous decisions based on project context. If you hit a blocker, write it to STATE.md as a blocker and stop. Do NOT silently work around permission or file access errors — let them fail so the manager can surface them with resolution hints. Do NOT use --no-verify on git commits."
+Important: You are running in the background. Do NOT use conversational prompting — make autonomous decisions based on project context. If you hit a blocker, write it to STATE.md as a blocker and stop. Do NOT silently work around permission or file access errors — let them fail so the manager can surface them with resolution hints. Do NOT use --no-verify on git commits."
 )
 ```
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Task() above with `run_in_background=true`, do NOT do any planning work for this phase independently. Return to the dashboard immediately and wait for the background agent to report back. Only resume planning-related work when the subagent result is available.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above with `run_in_background=true`, do NOT do any planning work for this phase independently. Return to the dashboard immediately and wait for the background agent to report back. Only resume planning-related work when the subagent result is available.
 
 Display:
 
@@ -278,7 +279,7 @@ Loop back to dashboard step.
 Execution runs autonomously. Spawn a background agent that delegates to the Skill pipeline with any configured flags:
 
 ```
-Task(
+Agent(
   description="Execute phase {N}: {phase_name}",
   run_in_background=true,
   prompt="You are running the GSD execute-phase workflow for phase {N} of the project.
@@ -293,11 +294,11 @@ Skill(skill=\"gsd-execute-phase\", args=\"{N} {manager_flags.execute}\")
 
 This delegates to the full execute-phase pipeline including local patches, branching, wave-based execution, verification, and all quality gates.
 
-Important: You are running in the background. Do NOT use AskUserQuestion — make autonomous decisions. Do NOT use --no-verify on git commits — let pre-commit hooks run normally. If you hit a permission error, file lock, or any access issue, do NOT work around it — let it fail and write the error to STATE.md as a blocker so the manager can surface it with resolution guidance."
+Important: You are running in the background. Do NOT use conversational prompting — make autonomous decisions. Do NOT use --no-verify on git commits — let pre-commit hooks run normally. If you hit a permission error, file lock, or any access issue, do NOT work around it — let it fail and write the error to STATE.md as a blocker so the manager can surface it with resolution guidance."
 )
 ```
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Task() above with `run_in_background=true`, do NOT do any execution work for this phase independently. Return to the dashboard immediately and wait for the background agent to report back. Only resume execution-related work when the subagent result is available.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above with `run_in_background=true`, do NOT do any execution work for this phase independently. Return to the dashboard immediately and wait for the background agent to report back. Only resume execution-related work when the subagent result is available.
 
 Display:
 
@@ -339,7 +340,7 @@ Classify the error:
   - "Skip and continue": Loop to dashboard (phase stays in current state).
 
 **Other errors** (git lock, file conflict, logic error, etc.):
-- Display the error, then offer options via AskUserQuestion:
+- Display the error, then offer options via conversational prompting:
   - **question:** "Background agent for Phase {N} encountered an issue: {error}. What next?"
   - **options:** "Retry" / "Run inline instead" / "Skip and continue" / "View details"
   - "Retry": Re-spawn the same background agent. Loop to dashboard.

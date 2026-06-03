@@ -1,5 +1,5 @@
 ---
-name: gsd:plan-review-convergence
+name: gsd-plan-review-convergence
 description: "Cross-AI plan convergence loop — replan with review feedback until no HIGH concerns remain."
 argument-hint: "<phase> [--codex] [--gemini] [--claude] [--opencode] [--ollama] [--lm-studio] [--llama-cpp] [--text] [--ws <name>] [--all] [--max-cycles N]"
 allowed-tools:
@@ -10,6 +10,7 @@ allowed-tools:
   - Grep
   - Agent
   - AskUserQuestion
+requires: [phase, review]
 ---
 
 <objective>
@@ -24,10 +25,10 @@ Replaces gsd-plan-phase's internal gsd-plan-checker with external AI reviewers (
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/plan-review-convergence.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/revision-loop.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/gates.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/agent-contracts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/plan-review-convergence.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/revision-loop.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/gates.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/agent-contracts.md
 </execution_context>
 
 <runtime_note>
@@ -53,6 +54,6 @@ Phase number: extracted from $ARGUMENTS (required)
 </context>
 
 <process>
-Execute the plan-review-convergence workflow from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/plan-review-convergence.md end-to-end.
+Execute end-to-end.
 Preserve all workflow gates (pre-flight, revision loop, stall detection, escalation).
 </process>

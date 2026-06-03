@@ -1,13 +1,14 @@
 ---
-name: gsd:new-milestone
+name: gsd-new-milestone
 description: Start a new milestone cycle — update PROJECT.md and route to requirements
 argument-hint: "[milestone name, e.g., 'v1.1 Notifications']"
 allowed-tools:
   - Read
   - Write
   - Bash
-  - Task
+  - Agent
   - AskUserQuestion
+requires: [new-project, phase, plan-phase]
 ---
 <objective>
 Start a new milestone: questioning → research (optional) → requirements → roadmap.
@@ -25,11 +26,11 @@ Brownfield equivalent of new-project. Project exists, PROJECT.md has history. Ga
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/new-milestone.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/questioning.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/templates/project.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/templates/requirements.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/new-milestone.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/questioning.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/templates/project.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/templates/requirements.md
 </execution_context>
 
 <context>
@@ -39,6 +40,6 @@ Project and milestone context files are resolved inside the workflow (`init new-
 </context>
 
 <process>
-Execute the new-milestone workflow from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/new-milestone.md end-to-end.
+Execute end-to-end.
 Preserve all workflow gates (validation, questioning, research, requirements, roadmap approval, commits).
 </process>

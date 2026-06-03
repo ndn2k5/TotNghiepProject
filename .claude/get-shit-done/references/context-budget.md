@@ -69,7 +69,7 @@ Each item disabled removes its schema from every subsequent turn for the rest of
 
 ### How to toggle
 
-The keys live in `.claude/settings.json` (project) or `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/settings.json` (global) — **not** in `.planning/config.json`:
+The keys live in `.claude/settings.json` (project) or `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/settings.json` (global) — **not** in `.planning/config.json`:
 
 ```json
 {

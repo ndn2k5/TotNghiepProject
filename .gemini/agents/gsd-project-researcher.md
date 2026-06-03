@@ -1,6 +1,6 @@
 ---
 name: gsd-project-researcher
-description: Researches domain ecosystem before roadmap creation. Produces files in .planning/research/ consumed during roadmap creation. Spawned by /gsd-new-project or /gsd-new-milestone orchestrators.
+description: Researches domain ecosystem before roadmap creation. Produces files in .planning/research/ consumed during roadmap creation. Spawned by /gsd:new-project or /gsd:new-milestone orchestrators.
 # hooks:
 #   PostToolUse:
 #     - matcher: "Write|Edit"
@@ -134,7 +134,7 @@ Use multiple query variations. Mark WebSearch-only findings as LOW confidence. D
 Check `brave_search` from orchestrator context. If `true`, use Brave Search for higher quality results:
 
 ```bash
-gsd-sdk query websearch "your query" --limit 10
+gsd-tools query websearch "your query" --limit 10
 ```
 
 **Options:**

@@ -1,4 +1,4 @@
-# --text mode — plain-text overlay (no AskUserQuestion)
+# --text mode — plain-text overlay (no conversational prompting)
 
 > **Lazy-loaded overlay.** Read this file from `workflows/discuss-phase.md`
 > when `--text` is present in `$ARGUMENTS`, OR when
@@ -6,10 +6,10 @@
 
 ## Effect
 
-When text mode is active, **do not use AskUserQuestion at all**. Instead,
+When text mode is active, **do not use conversational prompting at all**. Instead,
 present every question as a plain-text numbered list and ask the user to
 type their choice number. Free-text input maps to the "Other" branch of
-the equivalent AskUserQuestion call.
+the equivalent conversational prompting call.
 
 This is required for Claude Code remote sessions (`/rc` mode) where the
 Claude App cannot forward TUI menu selections back to the host.
@@ -18,7 +18,7 @@ Claude App cannot forward TUI menu selections back to the host.
 
 - Per-session: pass `--text` flag to any command (e.g.,
   `/gsd:discuss-phase --text`)
-- Per-project: `gsd-sdk query config-set workflow.text_mode true`
+- Per-project: `gsd-tools.cjs query config-set workflow.text_mode true`
 
 Text mode applies to ALL workflows in the session, not just discuss-phase.
 
@@ -26,7 +26,7 @@ Text mode applies to ALL workflows in the session, not just discuss-phase.
 
 Replace this:
 ```text
-AskUserQuestion(
+conversational prompting(
   header="Layout",
   question="How should posts be displayed?",
   options=["Cards", "List", "Timeline"]

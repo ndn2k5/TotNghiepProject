@@ -9,6 +9,7 @@ color: "#F59E0B"
 #       hooks:
 #         - type: command
 #           command: "echo 'AI-SPEC eval sections written' 2>/dev/null || true"
+effort: xhigh
 ---
 
 <role>
@@ -17,7 +18,7 @@ Turn domain rubric ingredients into measurable, tooled evaluation criteria. Writ
 </role>
 
 <required_reading>
-Read `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ai-evals.md` before planning. This is your evaluation framework.
+Read `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ai-evals.md` before planning. This is your evaluation framework.
 </required_reading>
 
 <input>

@@ -1,5 +1,5 @@
 ---
-name: gsd:ui-review
+name: gsd-ui-review
 description: Retroactive 6-pillar visual audit of implemented frontend code
 argument-hint: "[phase]"
 allowed-tools:
@@ -8,8 +8,9 @@ allowed-tools:
   - Bash
   - Glob
   - Grep
-  - Task
+  - Agent
   - AskUserQuestion
+requires: [phase]
 ---
 <objective>
 Conduct a retroactive 6-pillar visual audit. Produces UI-REVIEW.md with
@@ -18,8 +19,8 @@ Output: {phase_num}-UI-REVIEW.md
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/ui-review.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/ui-review.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
 </execution_context>
 
 <context>
@@ -27,6 +28,6 @@ Phase: $ARGUMENTS — optional, defaults to last completed phase.
 </context>
 
 <process>
-Execute @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/ui-review.md end-to-end.
+Execute end-to-end.
 Preserve all workflow gates.
 </process>

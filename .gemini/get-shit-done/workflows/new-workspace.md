@@ -13,7 +13,8 @@ Read all files referenced by the invoking prompt's execution_context before star
 **MANDATORY FIRST STEP — Execute init command:**
 
 ```bash
-INIT=$(gsd-sdk query init.new-workspace)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.new-workspace)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -32,8 +33,8 @@ Extract from $ARGUMENTS:
 **If `--name` is missing and not `--auto`:**
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-Use AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+Use conversational prompting:
 - header: "Workspace Name"
 - question: "What should this workspace be called?"
 - requireAnswer: true
@@ -51,7 +52,7 @@ Use AskUserQuestion:
 
 Present child repos for selection:
 
-Use AskUserQuestion:
+Use conversational prompting:
 - header: "Select Repos"
 - question: "Which repos should be included in the workspace?"
 - options: List each child repo from `child_repos` array by name
@@ -59,7 +60,7 @@ Use AskUserQuestion:
 
 **If `child_repo_count` is 0 and `is_git_repo` is true:**
 
-Use AskUserQuestion:
+Use conversational prompting:
 - header: "Current Repo"
 - question: "No child repos found. Create a workspace with the current repo?"
 - options:
@@ -94,7 +95,7 @@ Exit.
 
 **If `--strategy` is NOT provided and not `--auto`:**
 
-Use AskUserQuestion:
+Use conversational prompting:
 - header: "Strategy"
 - question: "How should repos be copied into the workspace?"
 - options:
@@ -221,7 +222,7 @@ Next steps:
 
 **Offer to initialize GSD (if not `--auto`):**
 
-Use AskUserQuestion:
+Use conversational prompting:
 - header: "Initialize GSD"
 - question: "Would you like to initialize a GSD project in the new workspace?"
 - options:

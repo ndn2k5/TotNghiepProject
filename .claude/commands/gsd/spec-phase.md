@@ -1,5 +1,5 @@
 ---
-name: gsd:spec-phase
+name: gsd-spec-phase
 description: Clarify WHAT a phase delivers with ambiguity scoring; produces a SPEC.md before discuss-phase.
 argument-hint: "<phase> [--auto] [--text]"
 allowed-tools:
@@ -9,6 +9,7 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
+requires: [discuss-phase, execute-phase, phase, plan-phase]
 ---
 
 <objective>
@@ -28,8 +29,8 @@ Clarify phase requirements through structured Socratic questioning with quantita
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/spec-phase.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/templates/spec.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/spec-phase.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/templates/spec.md
 </execution_context>
 
 <runtime_note>
@@ -47,7 +48,7 @@ Context files are resolved in-workflow using `init phase-op`.
 </context>
 
 <process>
-Execute the spec-phase workflow from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/spec-phase.md end-to-end.
+Execute end-to-end.
 
 **MANDATORY:** Read the workflow file BEFORE taking any action. The workflow contains the complete step-by-step process including the Socratic interview loop, ambiguity scoring gate, and SPEC.md generation. Do not improvise from the objective summary above.
 </process>

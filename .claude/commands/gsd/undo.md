@@ -1,5 +1,5 @@
 ---
-name: gsd:undo
+name: gsd-undo
 description: "Safe git revert. Roll back phase or plan commits using the phase manifest with dependency checks."
 argument-hint: "--last N | --phase NN | --plan NN-MM"
 allowed-tools:
@@ -8,6 +8,7 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
+requires: [phase]
 ---
 
 <objective>
@@ -20,9 +21,9 @@ Three modes:
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/undo.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/undo.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
 </execution_context>
 
 <context>
@@ -30,5 +31,5 @@ $ARGUMENTS
 </context>
 
 <process>
-Execute the undo workflow from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/undo.md end-to-end.
+Execute end-to-end.
 </process>

@@ -41,10 +41,10 @@ If the flag is absent, keep the current behavior of continuing phase numbering f
 **If no context file:**
 - Present what shipped in last milestone
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-- Ask inline (freeform, NOT AskUserQuestion): "What do you want to build next?"
-- Wait for their response, then use AskUserQuestion to probe specifics
-- If user selects "Other" at any point to provide freeform input, ask follow-up as plain text — not another AskUserQuestion
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+- Ask inline (freeform, NOT conversational prompting): "What do you want to build next?"
+- Wait for their response, then use conversational prompting to probe specifics
+- If user selects "Other" at any point to provide freeform input, ask follow-up as plain text — not another conversational prompting
 
 ## 2.5. Scan Planted Seeds
 
@@ -78,9 +78,9 @@ Seeds that match your milestone goals:
 Enter numbers to include (comma-separated), or "none" to skip:
 ```
 
-**Normal mode:** Present via AskUserQuestion:
+**Normal mode:** Present via conversational prompting:
 ```
-AskUserQuestion(
+conversational prompting(
   header: "Seeds",
   question: "These planted seeds match your milestone goals. Include any in this milestone's scope?",
   multiSelect: true,
@@ -122,14 +122,14 @@ Before writing any files, present a summary of what was gathered and ask for con
 **Key context:** [Any important constraints, decisions, or notes from questioning]
 ```
 
-AskUserQuestion:
+conversational prompting:
 - header: "Confirm?"
 - question: "Does this capture what you want to build in this milestone?"
 - options:
   - "Looks good" — Proceed to write PROJECT.md
   - "Adjust" — Let me correct or add details
 
-**If "Adjust":** Ask what needs changing (plain text, NOT AskUserQuestion). Incorporate changes, re-present the summary. Loop until "Looks good" is selected.
+**If "Adjust":** Ask what needs changing (plain text, NOT conversational prompting). Incorporate changes, re-present the summary. Loop until "Looks good" is selected.
 
 **If "Looks good":** Proceed to Step 4.
 
@@ -181,7 +181,8 @@ blockers, todos) is preserved across the switch — symmetric with
 `milestone.complete`.
 
 ```bash
-gsd-sdk query state.milestone-switch --milestone "v[X.Y]" --name "[Name]"
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+gsd_run query state.milestone-switch --milestone "v[X.Y]" --name "[Name]"
 ```
 
 The resulting Current Position section looks like:
@@ -208,21 +209,21 @@ Delete MILESTONE-CONTEXT.md if exists (consumed).
 Clear leftover phase directories from the previous milestone:
 
 ```bash
-gsd-sdk query phases.clear --confirm
+gsd_run query phases.clear --confirm
 ```
 
 ```bash
-gsd-sdk query commit "docs: start milestone v[X.Y] [Name]" --files .planning/PROJECT.md .planning/STATE.md
+gsd_run query commit "docs: start milestone v[X.Y] [Name]" --files .planning/PROJECT.md .planning/STATE.md
 ```
 
 ## 7. Load Context and Resolve Models
 
 ```bash
-INIT=$(gsd-sdk query init.new-milestone)
+INIT=$(gsd_run query init.new-milestone)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
-AGENT_SKILLS_RESEARCHER=$(gsd-sdk query agent-skills gsd-project-researcher)
-AGENT_SKILLS_SYNTHESIZER=$(gsd-sdk query agent-skills gsd-research-synthesizer)
-AGENT_SKILLS_ROADMAPPER=$(gsd-sdk query agent-skills gsd-roadmapper)
+AGENT_SKILLS_RESEARCHER=$(gsd_run query agent-skills gsd-project-researcher)
+AGENT_SKILLS_SYNTHESIZER=$(gsd_run query agent-skills gsd-research-synthesizer)
+AGENT_SKILLS_ROADMAPPER=$(gsd_run query agent-skills gsd-roadmapper)
 ```
 
 Extract from init JSON: `researcher_model`, `synthesizer_model`, `roadmapper_model`, `commit_docs`, `research_enabled`, `current_milestone`, `project_exists`, `roadmap_exists`, `latest_completed_milestone`, `phase_dir_count`, `phase_archive_path`, `agents_installed`, `missing_agents`.
@@ -235,7 +236,7 @@ Extract from init JSON: `researcher_model`, `synthesizer_model`, `roadmapper_mod
 Subagent spawns (gsd-project-researcher, gsd-research-synthesizer, gsd-roadmapper) will fail
 with "agent type not found". Run the installer with --global to make agents available:
 
-  npx get-shit-done-cc@latest --global
+  npx @opengsd/gsd-core@latest --global
 
 Proceeding without research subagents — roadmap will be generated inline.
 ```
@@ -267,13 +268,13 @@ Check `research_enabled` from init JSON (loaded from config).
 
 **If `research_enabled` is `true`:**
 
-AskUserQuestion: "Research the domain ecosystem for new features before defining requirements?"
+conversational prompting: "Research the domain ecosystem for new features before defining requirements?"
 - "Research first (Recommended)" — Discover patterns, features, architecture for NEW capabilities
 - "Skip research for this milestone" — Go straight to requirements (does not change your default)
 
 **If `research_enabled` is `false`:**
 
-AskUserQuestion: "Research the domain ecosystem for new features before defining requirements?"
+conversational prompting: "Research the domain ecosystem for new features before defining requirements?"
 - "Skip research (current default)" — Go straight to requirements
 - "Research first" — Discover patterns, features, architecture for NEW capabilities
 
@@ -297,8 +298,8 @@ mkdir -p .planning/research
 Spawn 4 parallel gsd-project-researcher agents. Each uses this template with dimension-specific fields:
 
 **Common structure for all 4 researchers:**
-```
-Task(prompt="
+```text
+Agent(prompt="
 <research_type>Project Research — {DIMENSION} for [new features].</research_type>
 
 <milestone_context>
@@ -321,7 +322,7 @@ ${AGENT_SKILLS_RESEARCHER}
 
 <output>
 Write to: .planning/research/{FILE}
-Use template: C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/research-project/{FILE}
+Use template: D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/research-project/{FILE}
 </output>
 ", subagent_type="gsd-project-researcher", model="{researcher_model}", description="{DIMENSION} research")
 ```
@@ -336,12 +337,12 @@ Use template: C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN
 | GATES | Versions current (verify with Context7), rationale explains WHY, integration considered | Categories clear, complexity noted, dependencies identified | Integration points identified, new vs modified explicit, build order considers deps | Pitfalls specific to adding these features, integration pitfalls covered, prevention actionable |
 | FILE | STACK.md | FEATURES.md | ARCHITECTURE.md | PITFALLS.md |
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling all 4 researcher Task() calls above, do NOT read research files or synthesize content independently while the subagents are active. Wait for all 4 researchers to complete before spawning the synthesizer. This prevents duplicate work and wasted context.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling all 4 researcher Agent() calls above, do NOT read research files or synthesize content independently while the subagents are active. Wait for all 4 researchers to complete before spawning the synthesizer. This prevents duplicate work and wasted context.
 
 After all 4 complete, spawn synthesizer:
 
-```
-Task(prompt="
+```text
+Agent(prompt="
 Synthesize research outputs into SUMMARY.md.
 
 <files_to_read>
@@ -354,12 +355,12 @@ Synthesize research outputs into SUMMARY.md.
 ${AGENT_SKILLS_SYNTHESIZER}
 
 Write to: .planning/research/SUMMARY.md
-Use template: C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/research-project/SUMMARY.md
+Use template: D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/research-project/SUMMARY.md
 Commit after writing.
 ", subagent_type="gsd-research-synthesizer", model="{synthesizer_model}", description="Synthesize research")
 ```
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Task() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
 
 Display key findings from SUMMARY.md:
 ```
@@ -398,14 +399,14 @@ Present features by category:
 
 **If no research:** Gather requirements through conversation. Ask: "What are the main things users need to do with [new features]?" Clarify, probe for related capabilities, group into categories.
 
-**Scope each category** via AskUserQuestion (multiSelect: true, header max 12 chars):
+**Scope each category** via conversational prompting (multiSelect: true, header max 12 chars):
 - "[Feature 1]" — [brief description]
 - "[Feature 2]" — [brief description]
 - "None for this milestone" — Defer entire category
 
 Track: Selected → this milestone. Unselected table stakes → future. Unselected differentiators → out of scope.
 
-**Identify gaps** via AskUserQuestion:
+**Identify gaps** via conversational prompting:
 - "No, research covered it" — Proceed
 - "Yes, let me add some" — Capture additions
 
@@ -444,7 +445,7 @@ If "adjust": Return to scoping.
 
 **Commit requirements:**
 ```bash
-gsd-sdk query commit "docs: define milestone v[X.Y] requirements" --files .planning/REQUIREMENTS.md
+gsd_run query commit "docs: define milestone v[X.Y] requirements" --files .planning/REQUIREMENTS.md
 ```
 
 ## 10. Create Roadmap
@@ -461,8 +462,8 @@ gsd-sdk query commit "docs: define milestone v[X.Y] requirements" --files .plann
 - If `--reset-phase-numbers` is active, start at **Phase 1**
 - Otherwise, continue from the previous milestone's last phase number (v1.0 ended at phase 5 → v1.1 starts at phase 6)
 
-```
-Task(prompt="
+```text
+Agent(prompt="
 <planning_context>
 <files_to_read>
 - .planning/PROJECT.md
@@ -493,7 +494,7 @@ Write files first, then return.
 ", subagent_type="gsd-roadmapper", model="{roadmapper_model}", description="Create roadmap")
 ```
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Task() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
 
 **Handle return:**
 
@@ -520,7 +521,7 @@ Success criteria:
 2. [criterion]
 ```
 
-**Ask for approval** via AskUserQuestion:
+**Ask for approval** via conversational prompting:
 - "Approve" — Commit and continue
 - "Adjust phases" — Tell me what to change
 - "Review full file" — Show raw ROADMAP.md
@@ -530,7 +531,7 @@ Success criteria:
 
 **Commit roadmap** (after approval):
 ```bash
-gsd-sdk query commit "docs: create milestone v[X.Y] roadmap ([N] phases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md
+gsd_run query commit "docs: create milestone v[X.Y] roadmap ([N] phases)" --files .planning/ROADMAP.md .planning/STATE.md .planning/REQUIREMENTS.md
 ```
 
 ## 10.5. Link Pending Todos to Roadmap Phases
@@ -573,7 +574,7 @@ files: [existing]
 
 **If any todos were linked:**
 ```bash
-gsd-sdk query commit "docs: tag [count] pending todos with resolves_phase after milestone v[X.Y] roadmap" --files .planning/todos/pending/*.md
+gsd_run query commit "docs: tag [count] pending todos with resolves_phase after milestone v[X.Y] roadmap" --files .planning/todos/pending/*.md
 ```
 
 Print a summary:

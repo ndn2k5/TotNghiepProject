@@ -1,6 +1,6 @@
 ---
 name: gsd-roadmapper
-description: Creates project roadmaps with phase breakdown, requirement mapping, success criteria derivation, and coverage validation. Spawned by /gsd-new-project orchestrator.
+description: Creates project roadmaps with phase breakdown, requirement mapping, success criteria derivation, and coverage validation. Spawned by /gsd:new-project orchestrator.
 # hooks:
 #   PostToolUse:
 #     - matcher: "Write|Edit"
@@ -206,7 +206,7 @@ Track coverage as you go.
 **Integer phases (1, 2, 3):** Planned milestone work.
 
 **Decimal phases (2.1, 2.2):** Urgent insertions after planning.
-- Created via `/gsd-insert-phase`
+- Created via `/gsd:phase --insert`
 - Execute between integers: 1 → 1.1 → 1.2 → 2
 
 **Starting number:**
@@ -378,11 +378,11 @@ This annotation is consumed by downstream workflows (`new-project`, `progress`) 
 | 2. Name | 0/2 | Not started | - |
 ```
 
-Reference full template: `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/roadmap.md`
+Reference full template: `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/roadmap.md`
 
 ## STATE.md Structure
 
-Use template from `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/state.md`.
+Use template from `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/state.md`.
 
 Key sections:
 - Project Reference (core value, current focus)
@@ -564,7 +564,7 @@ When files are written and returning to orchestrator:
 
 ### Files Ready for Review
 
-User can review actual files in the editor or via SDK queries (e.g. `node ./node_modules/@gsd-build/sdk/dist/cli.js query roadmap.analyze` and `query state.load`) instead of ad-hoc shell `cat`.
+User can review actual files in the editor or via SDK queries (e.g. `gsd-tools query roadmap.analyze` and `gsd-tools query state.load`) instead of ad-hoc shell `cat`.
 
 {If gaps found during creation:}
 

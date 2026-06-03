@@ -48,7 +48,8 @@ When `--interactive` is set, discuss runs inline with questions (not auto-answer
 Bootstrap via milestone-level init:
 
 ```bash
-INIT=$(gsd-sdk query init.milestone-op)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.milestone-op)
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
@@ -82,7 +83,7 @@ If `INTERACTIVE` is set, display: `Mode: Interactive (discuss inline, plan+execu
 Run phase discovery:
 
 ```bash
-ROADMAP=$(gsd-sdk query roadmap.analyze)
+ROADMAP=$(gsd_run query roadmap.analyze)
 ```
 
 Parse the JSON `phases` array.
@@ -141,7 +142,7 @@ Exit cleanly.
 **Fetch details for each phase:**
 
 ```bash
-DETAIL=$(gsd-sdk query roadmap.get-phase ${PHASE_NUM})
+DETAIL=$(gsd_run query roadmap.get-phase ${PHASE_NUM})
 ```
 
 Extract `phase_name`, `goal`, `success_criteria` from each. Store for use in execute_phase and transition messages.
@@ -169,7 +170,7 @@ Where N = current phase number (from the ROADMAP, e.g., 63), T = total milestone
 Check if CONTEXT.md already exists for this phase:
 
 ```bash
-PHASE_STATE=$(gsd-sdk query init.phase-op ${PHASE_NUM})
+PHASE_STATE=$(gsd_run query init.phase-op ${PHASE_NUM})
 ```
 
 Parse `has_context` from JSON.
@@ -185,7 +186,7 @@ Proceed to 3b.
 **If has_context is false:** Check if discuss is disabled via settings:
 
 ```bash
-SKIP_DISCUSS=$(gsd-sdk query config-get workflow.skip_discuss 2>/dev/null || echo "false")
+SKIP_DISCUSS=$(gsd_run query config-get workflow.skip_discuss 2>/dev/null || echo "false")
 ```
 
 **If SKIP_DISCUSS is `true`:** Skip discuss entirely — the ROADMAP phase description is the spec. Display:
@@ -197,7 +198,7 @@ Phase ${PHASE_NUM}: Discuss skipped (workflow.skip_discuss=true) — using ROADM
 Write a minimal CONTEXT.md so downstream plan-phase has valid input. Get phase details:
 
 ```bash
-DETAIL=$(gsd-sdk query roadmap.get-phase ${PHASE_NUM})
+DETAIL=$(gsd_run query roadmap.get-phase ${PHASE_NUM})
 ```
 
 Extract `goal` and `requirements` from JSON. Write `${phase_dir}/${padded_phase}-CONTEXT.md` with:
@@ -249,7 +250,7 @@ None — discuss phase skipped.
 Commit the minimal context:
 
 ```bash
-gsd-sdk query commit "docs(${PADDED_PHASE}): auto-generated context (discuss skipped)" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
+gsd_run query commit "docs(${PADDED_PHASE}): auto-generated context (discuss skipped)" --files "${phase_dir}/${padded_phase}-CONTEXT.md"
 ```
 
 Proceed to 3b.
@@ -270,7 +271,7 @@ Skill(skill="gsd-discuss-phase", args="${PHASE_NUM}")
 After discuss completes (either mode), verify context was written:
 
 ```bash
-PHASE_STATE=$(gsd-sdk query init.phase-op ${PHASE_NUM})
+PHASE_STATE=$(gsd_run query init.phase-op ${PHASE_NUM})
 ```
 
 Check `has_context`. If false → go to handle_blocker: "Discuss for phase ${PHASE_NUM} did not produce CONTEXT.md."
@@ -280,8 +281,13 @@ Check `has_context`. If false → go to handle_blocker: "Discuss for phase ${PHA
 Check if this phase has frontend indicators and whether a UI-SPEC already exists:
 
 ```bash
-PHASE_SECTION=$(gsd-sdk query roadmap.get-phase ${PHASE_NUM} 2>/dev/null)
-echo "$PHASE_SECTION" | grep -iE "UI|interface|frontend|component|layout|page|screen|view|form|dashboard|widget" > /dev/null 2>&1
+PHASE_SECTION=$(gsd_run query roadmap.get-phase ${PHASE_NUM} 2>/dev/null)
+# Shell-free word-boundary gate (#3718): Node.js helper — no locale env-var dependency.
+# Reads via stdin to avoid OS ARG_MAX limits on large phase text.
+# Path anchored to repo root; falls back to CWD if git is unavailable
+# Exit codes mirror grep: 0 = UI tokens found, 1 = not found.
+GSD_REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo ".")
+printf '%s' "$PHASE_SECTION" | node "${GSD_REPO_ROOT}/bin/lib/ui-safety-gate.cjs" > /dev/null 2>&1
 HAS_UI=$?
 UI_SPEC_FILE=$(ls "${PHASE_DIR}"/*-UI-SPEC.md 2>/dev/null | head -1)
 ```
@@ -289,7 +295,7 @@ UI_SPEC_FILE=$(ls "${PHASE_DIR}"/*-UI-SPEC.md 2>/dev/null | head -1)
 Check if UI phase workflow is enabled:
 
 ```bash
-UI_PHASE_CFG=$(gsd-sdk query config-get workflow.ui_phase 2>/dev/null || echo "true")
+UI_PHASE_CFG=$(gsd_run query config-get workflow.ui_phase 2>/dev/null || echo "true")
 ```
 
 **If `HAS_UI` is 0 (frontend indicators found) AND `UI_SPEC_FILE` is empty (no UI-SPEC exists) AND `UI_PHASE_CFG` is not `false`:**
@@ -362,7 +368,7 @@ Auto-invoke code review and fix chain. Autonomous mode chains both review and fi
 
 **Config gate:**
 ```bash
-CODE_REVIEW_ENABLED=$(gsd-sdk query config-get workflow.code_review 2>/dev/null || echo "true")
+CODE_REVIEW_ENABLED=$(gsd_run query config-get workflow.code_review 2>/dev/null || echo "true")
 ```
 If `"false"`: display "Code review skipped (workflow.code_review=false)" and proceed to 3d.
 
@@ -390,7 +396,7 @@ VERIFY_STATUS=$(grep "^status:" "${PHASE_DIR}"/*-VERIFICATION.md 2>/dev/null | h
 Where `PHASE_DIR` comes from the `init phase-op` call already made in step 3a. If the variable is not in scope, re-fetch:
 
 ```bash
-PHASE_STATE=$(gsd-sdk query init.phase-op ${PHASE_NUM})
+PHASE_STATE=$(gsd_run query init.phase-op ${PHASE_NUM})
 ```
 
 Parse `phase_dir` from the JSON.
@@ -413,8 +419,8 @@ Proceed to iterate step.
 Read the human_verification section from VERIFICATION.md to get the count and items requiring manual testing.
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-Display the items, then ask user via AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+Display the items, then ask user via conversational prompting:
 - **question:** "Phase ${PHASE_NUM} has items needing manual verification. Validate now or continue to next phase?"
 - **options:** "Validate now" / "Continue without validation"
 
@@ -436,7 +442,7 @@ Read gap summary from VERIFICATION.md (score and missing items). Display:
 Score: {N}/{M} must-haves verified
 ```
 
-Ask user via AskUserQuestion:
+Ask user via conversational prompting:
 - **question:** "Gaps found in phase ${PHASE_NUM}. How to proceed?"
 - **options:** "Run gap closure" / "Continue without fixing" / "Stop autonomous mode"
 
@@ -460,7 +466,7 @@ VERIFY_STATUS=$(grep "^status:" "${PHASE_DIR}"/*-VERIFICATION.md 2>/dev/null | h
 
 If `passed` or `human_needed`: Route normally (continue or ask user as above).
 
-If still `gaps_found` after this retry: Display "Gaps persist after closure attempt." and ask via AskUserQuestion:
+If still `gaps_found` after this retry: Display "Gaps persist after closure attempt." and ask via conversational prompting:
 - **question:** "Gap closure did not fully resolve issues. How to proceed?"
 - **options:** "Continue anyway" / "Stop autonomous mode"
 
@@ -486,7 +492,7 @@ UI_SPEC_FILE=$(ls "${PHASE_DIR}"/*-UI-SPEC.md 2>/dev/null | head -1)
 Check if UI review is enabled:
 
 ```bash
-UI_REVIEW_CFG=$(gsd-sdk query config-get workflow.ui_review 2>/dev/null || echo "true")
+UI_REVIEW_CFG=$(gsd_run query config-get workflow.ui_review 2>/dev/null || echo "true")
 ```
 
 **If `UI_SPEC_FILE` is not empty AND `UI_REVIEW_CFG` is not `false`:**
@@ -517,7 +523,7 @@ Smart discuss is an autonomous-optimized variant of `gsd-discuss-phase`. It prop
 
 **Inputs:** `PHASE_NUM` from execute_phase.
 
-Read and execute: `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/autonomous-smart-discuss.md`
+Read and execute: `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/autonomous-smart-discuss.md`
 
 </step>
 
@@ -545,7 +551,7 @@ Proceed directly to lifecycle step (which handles partial completion — skips a
 **Otherwise:** After each phase completes, re-read ROADMAP.md to catch phases inserted mid-execution (decimal phases like 5.1):
 
 ```bash
-ROADMAP=$(gsd-sdk query roadmap.analyze)
+ROADMAP=$(gsd_run query roadmap.analyze)
 ```
 
 Re-filter incomplete phases using the same logic as discover_phases:
@@ -641,7 +647,7 @@ Read the gaps summary from the audit file. Display:
 ⚠ Audit: Gaps Found
 ```
 
-Ask user via AskUserQuestion:
+Ask user via conversational prompting:
 - **question:** "Milestone audit found gaps. How to proceed?"
 - **options:** "Continue anyway — accept gaps" / "Stop — fix gaps manually"
 
@@ -656,7 +662,7 @@ Read the tech debt summary from the audit file. Display:
 ⚠ Audit: Tech Debt Identified
 ```
 
-Show the summary, then ask user via AskUserQuestion:
+Show the summary, then ask user via conversational prompting:
 - **question:** "Milestone audit found tech debt. How to proceed?"
 - **options:** "Continue with tech debt" / "Stop — address debt first"
 
@@ -708,7 +714,7 @@ Display final completion banner:
 
 ## 6. Handle Blocker
 
-When any phase operation fails or a blocker is detected, present 3 options via AskUserQuestion:
+When any phase operation fails or a blocker is detected, present 3 options via conversational prompting:
 
 **Prompt:** "Phase {N} ({Name}) encountered an issue: {description}"
 

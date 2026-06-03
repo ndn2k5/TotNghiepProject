@@ -1,5 +1,5 @@
 ---
-name: gsd:ingest-docs
+name: gsd-ingest-docs
 description: Bootstrap or merge a .planning/ setup from existing ADRs, PRDs, SPECs, and docs in a repo.
 argument-hint: "[path] [--mode new|merge] [--manifest <file>] [--resolve auto|interactive]"
 allowed-tools:
@@ -10,7 +10,7 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - Task
+  - Agent
 ---
 
 <objective>
@@ -27,10 +27,10 @@ Auto-synthesizes most conflicts using the precedence rule `ADR > SPEC > PRD > DO
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/ingest-docs.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/doc-conflict-engine.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/ingest-docs.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/doc-conflict-engine.md
 </execution_context>
 
 <context>

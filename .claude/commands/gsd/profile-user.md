@@ -1,5 +1,5 @@
 ---
-name: gsd:profile-user
+name: gsd-profile-user
 description: Generate developer behavioral profile and create Claude-discoverable artifacts
 argument-hint: "[--questionnaire] [--refresh]"
 allowed-tools:
@@ -9,18 +9,18 @@ allowed-tools:
   - Glob
   - Grep
   - AskUserQuestion
-  - Task
+  - Agent
 ---
 
 <objective>
-Generate a developer behavioral profile from session analysis (or questionnaire) and produce artifacts (USER-PROFILE.md, /gsd-dev-preferences, CLAUDE.md section) that personalize Claude's responses.
+Generate a developer behavioral profile from session analysis (or questionnaire) and produce artifacts (USER-PROFILE.md, `gsd-dev-preferences` skill config, CLAUDE.md section) that personalize Claude's responses.
 
 Routes to the profile-user workflow which orchestrates the full flow: consent gate, session analysis or questionnaire fallback, profile generation, result display, and artifact selection.
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/profile-user.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/profile-user.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ui-brand.md
 </execution_context>
 
 <context>

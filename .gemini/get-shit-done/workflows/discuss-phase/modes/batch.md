@@ -16,13 +16,13 @@ Parse optional `--batch` from `$ARGUMENTS`:
 ## Effect on discuss_areas
 
 `--batch` mode: ask **2–5 numbered questions in one plain-text turn** per
-area, instead of the default 4 single-question AskUserQuestion turns.
+area, instead of the default 4 single-question conversational prompting turns.
 
 - Group closely related questions for the current area into a single
   message
 - Keep each question concrete and answerable in one reply
 - When options are helpful, include short inline choices per question
-  rather than a separate AskUserQuestion for every item
+  rather than a separate conversational prompting for every item
 - After the user replies, reflect back the captured decisions, note any
   unanswered items, and ask only the minimum follow-up needed before
   moving on

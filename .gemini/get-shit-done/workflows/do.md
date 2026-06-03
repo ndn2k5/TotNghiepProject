@@ -12,8 +12,8 @@ Read all files referenced by the invoking prompt's execution_context before star
 **Check for input.**
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-If `$ARGUMENTS` is empty, ask via AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+If `$ARGUMENTS` is empty, ask via conversational prompting:
 
 ```
 What would you like to do? Describe the task, bug, or idea and I'll route it to the right GSD command.
@@ -26,7 +26,8 @@ Wait for response before continuing.
 **Check if project exists.**
 
 ```bash
-INIT=$(gsd-sdk query state.load 2>/dev/null)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query state.load 2>/dev/null)
 ```
 
 Track whether `.planning/` exists — some routes require it, others don't.
@@ -62,7 +63,7 @@ Evaluate `$ARGUMENTS` against these routing rules. Apply the **first matching** 
 
 **Requires `.planning/` directory:** All routes except `/gsd:new-project`, `/gsd:map-codebase`, `/gsd:spike`, `/gsd:sketch`, and `/gsd:help`. If the project doesn't exist and the route requires it, suggest `/gsd:new-project` first.
 
-**Ambiguity handling:** If the text could reasonably match multiple routes, ask the user via AskUserQuestion with the top 2-3 options. For example:
+**Ambiguity handling:** If the text could reasonably match multiple routes, ask the user via conversational prompting with the top 2-3 options. For example:
 
 ```
 "Refactor the authentication system" could be:
@@ -92,7 +93,7 @@ Which approach fits better?
 
 Run the selected `/gsd-*` command, passing `$ARGUMENTS` as args.
 
-If the chosen command expects a phase number and one wasn't provided in the text, extract it from context or ask via AskUserQuestion.
+If the chosen command expects a phase number and one wasn't provided in the text, extract it from context or ask via conversational prompting.
 
 After invoking the command, stop. The dispatched command handles everything from here.
 </step>

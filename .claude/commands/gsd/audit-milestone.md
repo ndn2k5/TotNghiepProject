@@ -1,5 +1,5 @@
 ---
-name: gsd:audit-milestone
+name: gsd-audit-milestone
 description: Audit milestone completion against original intent before archiving
 argument-hint: "[version]"
 allowed-tools:
@@ -7,8 +7,9 @@ allowed-tools:
   - Glob
   - Grep
   - Bash
-  - Task
+  - Agent
   - Write
+requires: [execute-phase]
 ---
 <objective>
 Verify milestone achieved its definition of done. Check requirements coverage, cross-phase integration, and end-to-end flows.
@@ -17,7 +18,7 @@ Verify milestone achieved its definition of done. Check requirements coverage, c
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/audit-milestone.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/audit-milestone.md
 </execution_context>
 
 <context>
@@ -31,6 +32,6 @@ Glob: .planning/phases/*/*-VERIFICATION.md
 </context>
 
 <process>
-Execute the audit-milestone workflow from @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/audit-milestone.md end-to-end.
+Execute end-to-end.
 Preserve all workflow gates (scope determination, verification reading, integration check, requirements coverage, routing).
 </process>

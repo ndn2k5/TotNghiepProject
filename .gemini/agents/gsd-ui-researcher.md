@@ -1,6 +1,6 @@
 ---
 name: gsd-ui-researcher
-description: Produces UI-SPEC.md design contract for frontend phases. Reads upstream artifacts, detects design system state, asks only unanswered questions. Spawned by /gsd-ui-phase orchestrator.
+description: Produces UI-SPEC.md design contract for frontend phases. Reads upstream artifacts, detects design system state, asks only unanswered questions. Spawned by /gsd:ui-phase orchestrator.
 # hooks:
 #   PostToolUse:
 #     - matcher: "Write|Edit"
@@ -232,7 +232,7 @@ Scan the output for suspicious patterns:
 
 ## Output: UI-SPEC.md
 
-Use template from `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/UI-SPEC.md`.
+Use template from `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/UI-SPEC.md`.
 
 Write to: `$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md`
 
@@ -291,14 +291,14 @@ Batch questions into a single interaction where possible.
 
 ## Step 5: Compile UI-SPEC.md
 
-Read template: `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/templates/UI-SPEC.md`
+Read template: `D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/templates/UI-SPEC.md`
 
 Fill all sections. Write to `$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md`.
 
 ## Step 6: Commit (optional)
 
 ```bash
-gsd-sdk query commit "docs($PHASE): UI design contract" --files "$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md"
+gsd-tools query commit "docs($PHASE): UI design contract" --files "$PHASE_DIR/$PADDED_PHASE-UI-SPEC.md"
 ```
 
 ## Step 7: Return Structured Result

@@ -1,5 +1,5 @@
 ---
-name: gsd:secure-phase
+name: gsd-secure-phase
 description: Retroactively verify threat mitigations for a completed phase
 argument-hint: "[phase number]"
 allowed-tools:
@@ -9,8 +9,9 @@ allowed-tools:
   - Bash
   - Glob
   - Grep
-  - Task
+  - Agent
   - AskUserQuestion
+requires: [phase]
 ---
 <objective>
 Verify threat mitigations for a completed phase. Three states:
@@ -22,7 +23,7 @@ Output: updated SECURITY.md.
 </objective>
 
 <execution_context>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/secure-phase.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/workflows/secure-phase.md
 </execution_context>
 
 <context>
@@ -30,6 +31,6 @@ Phase: $ARGUMENTS — optional, defaults to last completed phase.
 </context>
 
 <process>
-Execute @C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/workflows/secure-phase.md.
+Execute end-to-end.
 Preserve all workflow gates.
 </process>

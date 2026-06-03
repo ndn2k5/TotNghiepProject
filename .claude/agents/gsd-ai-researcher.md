@@ -9,6 +9,7 @@ color: "#34D399"
 #       hooks:
 #         - type: command
 #           command: "echo 'AI-SPEC written' 2>/dev/null || true"
+effort: high
 ---
 
 <role>
@@ -40,7 +41,7 @@ works via Bash and produces equivalent output.
 </documentation_lookup>
 
 <required_reading>
-Read `C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/ai-frameworks.md` for framework profiles and known pitfalls before fetching docs.
+Read `D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/ai-frameworks.md` for framework profiles and known pitfalls before fetching docs.
 </required_reading>
 
 <input>

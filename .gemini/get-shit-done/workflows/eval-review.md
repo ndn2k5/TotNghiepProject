@@ -5,7 +5,7 @@ Use after /gsd:execute-phase to verify that the evaluation strategy from AI-SPEC
 </purpose>
 
 <required_reading>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/ai-evals.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/ai-evals.md
 </required_reading>
 
 <process>
@@ -13,14 +13,15 @@ Use after /gsd:execute-phase to verify that the evaluation strategy from AI-SPEC
 ## 0. Initialize
 
 ```bash
-INIT=$(gsd-sdk query init.phase-op "${PHASE_ARG}")
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.phase-op "${PHASE_ARG}")
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
 Parse: `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `commit_docs`.
 
 ```bash
-AUDITOR_MODEL=$(gsd-sdk query resolve-model gsd-eval-auditor 2>/dev/null | jq -r '.model' 2>/dev/null || true)
+AUDITOR_MODEL=$(gsd_run query resolve-model gsd-eval-auditor 2>/dev/null | jq -r '.model' 2>/dev/null || true)
 ```
 
 Display banner:
@@ -43,8 +44,8 @@ EVAL_REVIEW_FILE=$(ls "${PHASE_DIR}"/*-EVAL-REVIEW.md 2>/dev/null | head -1)
 **State C** — No SUMMARY.md: Exit — "Phase {N} not executed. Run /gsd:execute-phase {N} first."
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-**If `EVAL_REVIEW_FILE` non-empty:** Use AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+**If `EVAL_REVIEW_FILE` non-empty:** Use conversational prompting:
 - header: "Existing Eval Review"
 - question: "EVAL-REVIEW.md already exists for Phase {N}."
 - options:
@@ -78,7 +79,7 @@ Build file list for auditor:
 Build prompt:
 
 ```markdown
-Read C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/agents/gsd-eval-auditor.md for instructions.
+Read D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/agents/gsd-eval-auditor.md for instructions.
 
 <objective>
 Conduct evaluation coverage audit of Phase {phase_number}: {phase_name}

@@ -5,9 +5,9 @@ You are a thinking partner, not an interviewer. The user is the visionary — yo
 </purpose>
 
 <required_reading>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/domain-probes.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/universal-anti-patterns.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/domain-probes.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/gate-prompts.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/universal-anti-patterns.md
 </required_reading>
 
 <progressive_disclosure>
@@ -109,9 +109,9 @@ Phase: "API documentation"       → Structure/navigation, Code examples depth, 
 Phase number from argument (required).
 
 ```bash
-INIT=$(gsd-sdk query init.phase-op "${PHASE}")
-if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
-AGENT_SKILLS_ADVISOR=$(gsd-sdk query agent-skills gsd-advisor-researcher)
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.phase-op "${PHASE}"); [[ "$INIT" == @file:* ]] && INIT=$(cat "${INIT#@file:}")
+AGENT_SKILLS_ADVISOR=$(gsd_run query agent-skills gsd-advisor-researcher)
 ```
 
 Parse JSON for: `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `has_research`, `has_context`, `has_plans`, `has_verification`, `plan_count`, `roadmap_exists`, `planning_exists`, `response_language`.
@@ -129,7 +129,7 @@ Exit workflow.
 
 ```bash
 # Detect advisor mode (file-existence guard — no Read until needed)
-if [ -f "C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" ]; then
+if [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/USER-PROFILE.md" ]; then
   ADVISOR_MODE=true
 else
   ADVISOR_MODE=false
@@ -244,8 +244,8 @@ For each CONTEXT.md read: extract `<decisions>` (locked preferences), `<specific
 
 **Spike/sketch findings:** Check for project-local skills:
 ```bash
-SPIKE_FINDINGS=$(ls ./.claude/skills/spike-findings-*/SKILL.md 2>/dev/null | head -1)
-SKETCH_FINDINGS=$(ls ./.claude/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1)
+SPIKE_FINDINGS=$(ls ./.claude/skills/spike-findings-*/SKILL.md 2>/dev/null | head -1 || true)
+SKETCH_FINDINGS=$(ls ./.claude/skills/sketch-findings-*/SKILL.md 2>/dev/null | head -1 || true)
 RAW_SPIKES=$(ls .planning/spikes/MANIFEST.md 2>/dev/null)
 RAW_SKETCHES=$(ls .planning/sketches/MANIFEST.md 2>/dev/null)
 ```
@@ -265,7 +265,7 @@ Build internal `<prior_decisions>` with sections for Project-Level (from PROJECT
 Check pending todos for matches with this phase's scope.
 
 ```bash
-TODO_MATCHES=$(gsd-sdk query todo.match-phase "${PHASE_NUMBER}")
+TODO_MATCHES=$(gsd_run query todo.match-phase "${PHASE_NUMBER}")
 ```
 
 Parse JSON for: `todo_count`, `matches[]` (each with `file`, `title`, `area`, `score`, `reasons`).
@@ -280,7 +280,7 @@ Parse JSON for: `todo_count`, `matches[]` (each with `file`, `title`, `area`, `s
 <step name="scout_codebase">
 Lightweight scan of existing code to inform gray area identification (~10% context).
 
-Read `@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.claude/get-shit-done/references/scout-codebase.md` — it contains the phase-type→map selection table, single-read rule, no-maps fallback, and `<codebase_context>` output schema. Then execute:
+Read `@D:/PROJEct/AI MODELS/TotNghiepProject/.claude/get-shit-done/references/scout-codebase.md` — it contains the phase-type→map selection table, single-read rule, no-maps fallback, and `<codebase_context>` output schema. Then execute:
 1. `ls .planning/codebase/*.md` to find existing maps
 2. Select 2–3 maps via the reference's table; or grep fallback if none exist
 3. Build internal `<codebase_context>` per the reference's output schema
@@ -373,10 +373,12 @@ DISCUSSION-LOG.md is for human reference only (audits, retrospectives) and is NO
 
 **Find or create phase directory:**
 
-Use values from init: `phase_dir`, `phase_slug`, `padded_phase`. If `phase_dir` is null:
+Use values from init: `phase_dir`, `expected_phase_dir`, `phase_slug`, `padded_phase`. If `phase_dir` is null:
 ```bash
-mkdir -p ".planning/phases/${padded_phase}-${phase_slug}"
+mkdir -p "${expected_phase_dir}"
 ```
+
+Set `phase_dir="${expected_phase_dir}"` after creation.
 
 **File location:** `${phase_dir}/${padded_phase}-CONTEXT.md`
 
@@ -445,7 +447,7 @@ rm -f "${phase_dir}/${padded_phase}-DISCUSS-CHECKPOINT.json"
 
 Commit phase context and discussion log:
 ```bash
-gsd-sdk query commit "docs(${padded_phase}): capture phase context" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
+gsd_run query commit "docs(${padded_phase}): capture phase context" --files "${phase_dir}/${padded_phase}-CONTEXT.md" "${phase_dir}/${padded_phase}-DISCUSSION-LOG.md"
 ```
 
 Confirm: "Committed: docs(${padded_phase}): capture phase context"
@@ -455,11 +457,11 @@ Confirm: "Committed: docs(${padded_phase}): capture phase context"
 Update STATE.md with session info:
 
 ```bash
-gsd-sdk query state.record-session \
+gsd_run query state.record-session \
   --stopped-at "Phase ${PHASE} context gathered" \
   --resume-file "${phase_dir}/${padded_phase}-CONTEXT.md"
 
-gsd-sdk query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
+gsd_run query commit "docs(state): record phase ${PHASE} context session" --files .planning/STATE.md
 ```
 </step>
 

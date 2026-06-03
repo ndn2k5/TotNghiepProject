@@ -3,7 +3,7 @@ Retroactive 6-pillar visual audit of implemented frontend code. Standalone comma
 </purpose>
 
 <required_reading>
-@C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/get-shit-done/references/ui-brand.md
+@D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/references/ui-brand.md
 </required_reading>
 
 <available_agent_types>
@@ -16,15 +16,16 @@ Valid GSD subagent types (use exact names — do not fall back to 'general-purpo
 ## 0. Initialize
 
 ```bash
-INIT=$(gsd-sdk query init.phase-op "${PHASE_ARG}")
+_GSD_SHIM_NAME="gsd-tools.cjs"; _GSD_RUNTIME_ROOT="${RUNTIME_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"; GSD_TOOLS="${_GSD_RUNTIME_ROOT}/get-shit-done/bin/${_GSD_SHIM_NAME}"; if [ -f "$GSD_TOOLS" ]; then gsd_run() { node "$GSD_TOOLS" "$@"; }; elif [ -f "${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="${_GSD_RUNTIME_ROOT}/.claude/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; elif command -v gsd-tools >/dev/null 2>&1; then GSD_TOOLS="$(command -v gsd-tools)"; gsd_run() { "$GSD_TOOLS" "$@"; }; elif [ -f "D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}" ]; then GSD_TOOLS="D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/get-shit-done/bin/${_GSD_SHIM_NAME}"; gsd_run() { node "$GSD_TOOLS" "$@"; }; else echo "ERROR: gsd-tools.cjs not found at $GSD_TOOLS and gsd-tools is not on PATH. Run: npx -y @opengsd/gsd-core@latest --claude --local" >&2; exit 1; fi
+INIT=$(gsd_run query init.phase-op "${PHASE_ARG}")
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
-AGENT_SKILLS_UI_REVIEWER=$(gsd-sdk query agent-skills gsd-ui-auditor)
+AGENT_SKILLS_UI_REVIEWER=$(gsd_run query agent-skills gsd-ui-auditor)
 ```
 
 Parse: `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `commit_docs`.
 
 ```bash
-UI_AUDITOR_MODEL=$(gsd-sdk query resolve-model gsd-ui-auditor --raw)
+UI_AUDITOR_MODEL=$(gsd_run query resolve-model gsd-ui-auditor --raw)
 ```
 
 Display banner:
@@ -45,8 +46,8 @@ UI_REVIEW_FILE=$(ls "${PHASE_DIR}"/*-UI-REVIEW.md 2>/dev/null | head -1)
 **If `SUMMARY_FILES` empty:** Exit — "Phase {N} not executed. Run /gsd:execute-phase {N} first."
 
 
-**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `AskUserQuestion` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `AskUserQuestion` is not available.
-**If `UI_REVIEW_FILE` non-empty:** Use AskUserQuestion:
+**Text mode (`workflow.text_mode: true` in config or `--text` flag):** Set `TEXT_MODE=true` if `--text` is present in `$ARGUMENTS` OR `text_mode` from init JSON is `true`. When TEXT_MODE is active, replace every `conversational prompting` call with a plain-text numbered list and ask the user to type their choice number. This is required for non-Claude runtimes (OpenAI Codex, Gemini CLI, etc.) where `conversational prompting` is not available.
+**If `UI_REVIEW_FILE` non-empty:** Use conversational prompting:
 - header: "Existing UI Review"
 - question: "UI-REVIEW.md already exists for Phase {N}."
 - options:
@@ -73,7 +74,7 @@ Build file list for auditor:
 Build prompt:
 
 ```markdown
-Read C:/Users/wikiepeidia/OneDrive - caugiay.edu.vn/bài tập/usth/GEN14/INTERNSHIP/example internship/TotNghiepProject/.gemini/agents/gsd-ui-auditor.md for instructions.
+Read D:/PROJEct/AI MODELS/TotNghiepProject/.gemini/agents/gsd-ui-auditor.md for instructions.
 
 <objective>
 Conduct 6-pillar visual audit of Phase {phase_number}: {phase_name}
@@ -99,7 +100,7 @@ padded_phase: {padded_phase}
 Omit null file paths.
 
 ```
-Task(
+Agent(
   prompt=ui_audit_prompt,
   subagent_type="gsd-ui-auditor",
   model="{UI_AUDITOR_MODEL}",
@@ -107,7 +108,7 @@ Task(
 )
 ```
 
-> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Task() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
+> **ORCHESTRATOR RULE — CODEX RUNTIME**: After calling Agent() above, stop working on this task immediately. Do not read more files, edit code, or run tests related to this task while the subagent is active. Wait for the subagent to return its result. This prevents duplicate work, conflicting edits, and wasted context. Only resume when the subagent result is available.
 
 ## 4. Handle Return
 
@@ -176,7 +177,7 @@ tools is detected at runtime.
 ## 5. Commit (if configured)
 
 ```bash
-gsd-sdk query commit "docs(${padded_phase}): UI audit review" --files "${PHASE_DIR}/${PADDED_PHASE}-UI-REVIEW.md"
+gsd_run query commit "docs(${padded_phase}): UI audit review" --files "${PHASE_DIR}/${PADDED_PHASE}-UI-REVIEW.md"
 ```
 
 </process>
