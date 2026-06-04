@@ -98,8 +98,10 @@ def main():
                         help="API base URL — ngrok (https://xxxx.ngrok-free.app) or Groq (https://api.groq.com/openai)")
     parser.add_argument("--api-key", default="fake",
                         help="API key — 'fake' for local vLLM, real key for Groq/OpenRouter")
-    parser.add_argument("--model", default="Qwen/Qwen2.5-72B-Instruct",
-                        help="Model name — e.g. llama-3.1-70b-versatile for Groq")
+    parser.add_argument("--model", default="llama-3.1-8b-instant",
+                        help="Model name (default: llama-3.1-8b-instant — fastest on Groq free tier)")
+    parser.add_argument("--delay", type=float, default=2.0,
+                        help="Seconds to wait between requests (default: 2.0 — stays under 30 RPM)")
     parser.add_argument("--input", default=str(INPUT_FILE),
                         help="Input JSONL chunks file (default: data/raw_chunks.jsonl)")
     parser.add_argument("--test", action="store_true",
@@ -126,12 +128,12 @@ def main():
         print(f"Output:     {OUTPUT_FILE}")
         print(f"Checkpoint: {CHECKPOINT_FILE}")
 
-    # Extend timeout — 72B model can take 30-90s per request
     base_url = args.vllm_url if args.vllm_url.endswith("/v1") else f"{args.vllm_url}/v1"
     client = OpenAI(
         base_url=base_url,
         api_key=args.api_key,
-        http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=300, write=30, pool=10)),
+        max_retries=0,  # disable built-in retry — it blindly waits Retry-After (up to 800s)
+        http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=120, write=30, pool=10)),
     )
 
     chunks = [json.loads(l) for l in open(input_file, encoding="utf-8")]
@@ -171,6 +173,7 @@ def main():
                 total_qa += len(pairs)
                 processed.add(idx)
                 new_chunks_processed += 1
+                time.sleep(args.delay)  # stay under 30 RPM
 
                 if args.progress_every > 0 and new_chunks_processed % args.progress_every == 0:
                     elapsed = time.time() - start
@@ -190,13 +193,18 @@ def main():
             except json.JSONDecodeError as e:
                 errors += 1
                 log_f.write(f"JSON error chunk {idx}: {e}\n")
-                processed.add(idx)  # skip malformed
+                processed.add(idx)  # skip malformed, move on
 
             except Exception as e:
+                err_str = str(e)
                 errors += 1
-                log_f.write(f"Error chunk {idx}: {e}\n")
-                print(f"  Error chunk {idx}: {e} — retrying in 10s")
-                time.sleep(10)
+                log_f.write(f"Error chunk {idx}: {err_str}\n")
+                if "rate_limit" in err_str.lower() or "429" in err_str or "rate limit" in err_str.lower():
+                    print(f"  Rate limit hit at chunk {idx} — waiting 60s then continuing...")
+                    time.sleep(60)
+                else:
+                    print(f"  Error chunk {idx}: {err_str} — skipping")
+                    processed.add(idx)  # skip unrecoverable errors
 
     save_checkpoint(processed)
     print(f"\nDone. QA pairs: {total_qa} | Errors: {errors} | Time: {(time.time()-start)/60:.1f}min")
