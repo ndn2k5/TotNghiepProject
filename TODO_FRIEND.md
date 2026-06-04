@@ -107,18 +107,15 @@ Total: 1500 chunks -> data\raw_chunks_viet.jsonl
 
 Thay `gsk_KEY_CUA_BAN` bằng key đã copy ở Bước 2.
 
-```cmd
-python scripts/generate_qa.py ^
-  --vllm-url https://api.groq.com/openai ^
-  --api-key gsk_KEY_CUA_BAN ^
-  --model llama-3.3-70b-versatile ^
-  --input data/raw_chunks_viet.jsonl
+```powershell
+python scripts/generate_qa.py --vllm-url https://api.groq.com/openai --api-key gsk_KEY_CUA_BAN --model llama-3.1-8b-instant --input data/raw_chunks_viet.jsonl --delay 2
 ```
 
 **Bật lên rồi đi ngủ.** Kết quả lưu vào `data\qa_pairs_viet.jsonl`.
 
 Trong lúc chạy sẽ hiển thị:
-```
+
+```text
 [chunk 10/1500 | new 10] QA: 25 | ETA: 45.2min
 [chunk 20/1500 | new 20] QA: 51 | ETA: 40.1min
 ...
