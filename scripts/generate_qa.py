@@ -97,7 +97,7 @@ def main():
     parser.add_argument("--vllm-url", required=True,
                         help="API base URL — ngrok (https://xxxx.ngrok-free.app) or Groq (https://api.groq.com/openai)")
     parser.add_argument("--api-key", default="fake",
-                        help="API key — 'fake' for local vLLM, real key for Groq/OpenRouter")
+                        help="API key — single key or comma-separated list to rotate on rate limit")
     parser.add_argument("--model", default="llama-3.1-8b-instant",
                         help="Model name (default: llama-3.1-8b-instant — fastest on Groq free tier)")
     parser.add_argument("--delay", type=float, default=2.0,
@@ -128,13 +128,23 @@ def main():
         print(f"Output:     {OUTPUT_FILE}")
         print(f"Checkpoint: {CHECKPOINT_FILE}")
 
+    # Support multiple comma-separated keys — rotate on rate limit
+    api_keys = [k.strip() for k in args.api_key.split(",") if k.strip()]
+    key_index = [0]  # mutable for inner function
+
     base_url = args.vllm_url if args.vllm_url.endswith("/v1") else f"{args.vllm_url}/v1"
-    client = OpenAI(
-        base_url=base_url,
-        api_key=args.api_key,
-        max_retries=0,  # disable built-in retry — it blindly waits Retry-After (up to 800s)
-        http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=120, write=30, pool=10)),
-    )
+
+    def make_client(key):
+        return OpenAI(
+            base_url=base_url,
+            api_key=key,
+            max_retries=0,
+            http_client=httpx.Client(timeout=httpx.Timeout(connect=10, read=120, write=30, pool=10)),
+        )
+
+    client = make_client(api_keys[key_index[0]])
+    if len(api_keys) > 1:
+        print(f"Using {len(api_keys)} API keys — will rotate on rate limit")
 
     chunks = [json.loads(l) for l in open(input_file, encoding="utf-8")]
     if args.test:
@@ -200,8 +210,13 @@ def main():
                 errors += 1
                 log_f.write(f"Error chunk {idx}: {err_str}\n")
                 if "rate_limit" in err_str.lower() or "429" in err_str or "rate limit" in err_str.lower():
-                    print(f"  Rate limit hit at chunk {idx} — waiting 60s then continuing...")
-                    time.sleep(60)
+                    if len(api_keys) > 1:
+                        key_index[0] = (key_index[0] + 1) % len(api_keys)
+                        client = make_client(api_keys[key_index[0]])
+                        print(f"  Rate limit — switching to key {key_index[0]+1}/{len(api_keys)}")
+                    else:
+                        print(f"  Rate limit hit at chunk {idx} — waiting 60s then continuing...")
+                        time.sleep(60)
                 else:
                     print(f"  Error chunk {idx}: {err_str} — skipping")
                     processed.add(idx)  # skip unrecoverable errors
