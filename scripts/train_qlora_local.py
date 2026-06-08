@@ -3,7 +3,7 @@ QLoRA fine-tuning for Phi-3-Mini on Windows with 4GB VRAM.
 Uses HuggingFace transformers + PEFT (no Unsloth/TRL needed).
 
 Install once (exact versions required — newer transformers breaks 4-bit loading):
-    pip install "transformers==4.43.4" "accelerate==0.28.0" "peft==0.11.1" "trl==0.9.6" bitsandbytes torch pandas datasets
+    pip install "transformers==4.43.4" "accelerate==0.33.0" "peft==0.11.1" "trl==0.9.6" bitsandbytes torch pandas datasets
 
 After installing, delete stale Phi-3 cache ONCE:
     rmdir /s /q %USERPROFILE%\\.cache\\huggingface\\modules\\transformers_modules\\microsoft
