@@ -10,10 +10,16 @@ Usage:
     python scripts/train_qlora_local.py --csv data/qa_training_data_viet.csv --epochs 3
 """
 import argparse
+import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# Force UTF-8 globally — fixes TRL's deepseekv3.jinja read crash on Windows cp1252
+os.environ.setdefault("PYTHONUTF8", "1")
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 
 def main():
