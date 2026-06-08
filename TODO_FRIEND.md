@@ -39,7 +39,7 @@ Chờ cài xong (1–2 phút).
 > **Lưu ý:** transformers phiên bản 4.44 trở lên bị lỗi khi nạp mô hình 4-bit trên Windows. Phải dùng đúng phiên bản dưới đây.
 
 ```cmd
-pip install "transformers==4.43.4" "accelerate==0.28.0" "peft==0.11.1" bitsandbytes torch pandas
+pip install "transformers==4.43.4" "accelerate==0.28.0" "peft==0.11.1" "trl==0.9.6" bitsandbytes torch pandas datasets
 ```
 
 Sau khi cài xong, xóa cache cũ của Phi-3 (chạy **1 lần duy nhất**):
