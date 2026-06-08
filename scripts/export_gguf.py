@@ -47,9 +47,10 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(str(adapter_path), trust_remote_code=True)
     base_model = AutoModelForCausalLM.from_pretrained(
         base_model_name,
-        torch_dtype=torch.float16,
-        device_map="cpu",          # merge on CPU — avoids VRAM limit
+        dtype=torch.float16,
+        device_map="cpu",
         trust_remote_code=True,
+        attn_implementation="eager",
     )
     print("  Applying adapter...")
     model = PeftModel.from_pretrained(base_model, str(adapter_path))

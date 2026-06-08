@@ -89,7 +89,8 @@ def main():
         quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
-        torch_dtype=torch.float16,
+        dtype=torch.float16,
+        attn_implementation="eager",  # flash-attn not available on T1200
     )
     model.config.use_cache = False
 
