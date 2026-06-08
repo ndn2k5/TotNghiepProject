@@ -41,20 +41,19 @@ def main():
     print("Loading libraries...")
     import torch
     import pandas as pd
-    from datasets import Dataset
+    from torch.utils.data import DataLoader
     from transformers import (
         AutoModelForCausalLM,
         AutoTokenizer,
         BitsAndBytesConfig,
-        TrainingArguments,
+        get_linear_schedule_with_warmup,
     )
     from peft import LoraConfig, get_peft_model, TaskType
-    from trl import SFTTrainer
 
     # ── Check CUDA ────────────────────────────────────────────────────────────
     if not torch.cuda.is_available():
-        print("WARNING: No CUDA GPU found — training on CPU will be extremely slow.")
-        print("Press Ctrl+C to cancel, or wait to continue on CPU.")
+        print("WARNING: No CUDA GPU — training on CPU is extremely slow.")
+        print("Press Ctrl+C to cancel.")
     else:
         vram_gb = torch.cuda.get_device_properties(0).total_memory / 1e9
         print(f"GPU: {torch.cuda.get_device_name(0)} ({vram_gb:.1f} GB VRAM)")
@@ -67,9 +66,9 @@ def main():
         return (f"<|user|>\n{row['question']}<|end|>\n"
                 f"<|assistant|>\n{row['answer']}<|end|>")
 
-    dataset = Dataset.from_dict({"text": [format_prompt(r) for _, r in df.iterrows()]})
+    texts = [format_prompt(r) for _, r in df.iterrows()]
 
-    # ── 4-bit quantization config ─────────────────────────────────────────────
+    # ── 4-bit quantization ────────────────────────────────────────────────────
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -77,7 +76,7 @@ def main():
         bnb_4bit_use_double_quant=True,
     )
 
-    # ── Load base model ───────────────────────────────────────────────────────
+    # ── Load model ────────────────────────────────────────────────────────────
     model_name = "microsoft/Phi-3-mini-4k-instruct"
     print(f"Loading {model_name} in 4-bit...")
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
@@ -89,16 +88,17 @@ def main():
         quantization_config=bnb_config,
         device_map="auto",
         trust_remote_code=True,
-        dtype=torch.float16,
-        attn_implementation="eager",  # flash-attn not available on T1200
+        torch_dtype=torch.float16,
+        attn_implementation="eager",
     )
     model.config.use_cache = False
+    model.enable_input_require_grads()
 
-    # ── LoRA config — tuned for 4GB VRAM ─────────────────────────────────────
+    # ── LoRA ──────────────────────────────────────────────────────────────────
     lora_config = LoraConfig(
-        r=8,                      # rank — lower = less VRAM
+        r=8,
         lora_alpha=16,
-        lora_dropout=0.0,         # 0 = fastest
+        lora_dropout=0.0,
         bias="none",
         task_type=TaskType.CAUSAL_LM,
         target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
@@ -106,45 +106,66 @@ def main():
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
 
-    # ── Training args ─────────────────────────────────────────────────────────
+    # ── Tokenize ──────────────────────────────────────────────────────────────
+    print("Tokenizing dataset...")
+    encodings = tokenizer(
+        texts,
+        truncation=True,
+        max_length=args.max_seq_len,
+        padding="max_length",
+        return_tensors="pt",
+    )
+
+    class TextDataset(torch.utils.data.Dataset):
+        def __getitem__(self, i):
+            ids = encodings["input_ids"][i]
+            return {"input_ids": ids, "attention_mask": encodings["attention_mask"][i],
+                    "labels": ids.clone()}
+        def __len__(self): return len(encodings["input_ids"])
+
+    loader = DataLoader(TextDataset(), batch_size=1, shuffle=True)
+
+    # ── Optimizer ─────────────────────────────────────────────────────────────
+    from bitsandbytes.optim import PagedAdamW8bit
+    optimizer = PagedAdamW8bit(model.parameters(), lr=2e-4, weight_decay=0.01)
+    total_steps = len(loader) * args.epochs // 8  # gradient_accumulation=8
+    scheduler = get_linear_schedule_with_warmup(optimizer, 5, total_steps)
+
+    # ── Train loop ────────────────────────────────────────────────────────────
     output_dir = Path(args.output)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    training_args = TrainingArguments(
-        output_dir=str(output_dir),
-        num_train_epochs=args.epochs,
-        per_device_train_batch_size=1,       # 1 = safe for 4GB
-        gradient_accumulation_steps=8,       # effective batch = 8
-        learning_rate=2e-4,
-        fp16=True,
-        bf16=False,
-        logging_steps=10,
-        save_steps=50,
-        save_total_limit=1,
-        optim="paged_adamw_8bit",            # saves ~1GB vs standard adamw
-        warmup_steps=5,
-        weight_decay=0.01,
-        lr_scheduler_type="linear",
-        gradient_checkpointing=True,         # trades speed for ~1GB VRAM saving
-        dataloader_pin_memory=False,
-        report_to="none",
-    )
-
-    # ── Train ─────────────────────────────────────────────────────────────────
-    trainer = SFTTrainer(
-        model=model,
-        tokenizer=tokenizer,
-        train_dataset=dataset,
-        dataset_text_field="text",
-        max_seq_length=args.max_seq_len,
-        args=training_args,
-    )
-
-    print(f"\nStarting training: {len(dataset)} examples x {args.epochs} epochs")
+    print(f"\nStarting training: {len(texts)} examples x {args.epochs} epochs")
     print(f"Adapter will be saved to: {output_dir}\n")
-    trainer.train()
 
-    # ── Save adapter ──────────────────────────────────────────────────────────
+    model.train()
+    ACCUM = 8
+    global_step = 0
+    for epoch in range(args.epochs):
+        total_loss = 0.0
+        optimizer.zero_grad()
+        for step, batch in enumerate(loader):
+            batch = {k: v.to(model.device) for k, v in batch.items()}
+            out = model(**batch)
+            loss = out.loss / ACCUM
+            loss.backward()
+            total_loss += out.loss.item()
+
+            if (step + 1) % ACCUM == 0:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                optimizer.step()
+                scheduler.step()
+                optimizer.zero_grad()
+                global_step += 1
+
+            if (step + 1) % (ACCUM * 10) == 0:
+                avg = total_loss / (step + 1)
+                pct = (step + 1) / len(loader) * 100
+                print(f"  Epoch {epoch+1}/{args.epochs} | {pct:.0f}% | loss {avg:.4f}")
+
+        print(f"Epoch {epoch+1} done — avg loss {total_loss/len(loader):.4f}")
+
+    # ── Save ──────────────────────────────────────────────────────────────────
     model.save_pretrained(str(output_dir))
     tokenizer.save_pretrained(str(output_dir))
     print(f"\nDone! Adapter saved to {output_dir}")
