@@ -1,9 +1,12 @@
 """
 QLoRA fine-tuning for Phi-3-Mini on Windows with 4GB VRAM.
-Uses HuggingFace transformers + PEFT + TRL (no Unsloth needed).
+Uses HuggingFace transformers + PEFT (no Unsloth/TRL needed).
 
-Install once:
-    pip install transformers peft trl bitsandbytes accelerate datasets torch
+Install once (exact versions required — newer transformers breaks 4-bit loading):
+    pip install "transformers==4.43.4" "accelerate==0.28.0" "peft==0.11.1" bitsandbytes torch pandas
+
+After installing, delete stale Phi-3 cache ONCE:
+    rmdir /s /q %USERPROFILE%\\.cache\\huggingface\\modules\\transformers_modules\\microsoft
 
 Usage:
     python scripts/train_qlora_local.py --csv data/qa_training_data_viet.csv
@@ -18,6 +21,17 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Force UTF-8 globally — fixes TRL's deepseekv3.jinja read crash on Windows cp1252
 os.environ.setdefault("PYTHONUTF8", "1")
+
+# Guard: transformers 4.44+ auto-injects device_map for quantized models, which breaks
+# bitsandbytes 4-bit loading. Must stay on 4.43.x.
+import importlib.metadata as _meta
+_tv = _meta.version("transformers")
+_major, _minor, *_ = [int(x) for x in _tv.split(".")[:3]]
+if (_major, _minor) >= (4, 44):
+    print(f"ERROR: transformers {_tv} detected — versions 4.44+ break 4-bit loading on Windows.")
+    print("Fix: pip install \"transformers==4.43.4\" \"accelerate==0.28.0\"")
+    print("Then: rmdir /s /q %USERPROFILE%\\.cache\\huggingface\\modules\\transformers_modules\\microsoft")
+    sys.exit(1)
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 

@@ -34,6 +34,26 @@ Chờ cài xong (1–2 phút).
 
 ---
 
+## Bước 1b — Cài thư viện huấn luyện (phiên bản chính xác — QUAN TRỌNG)
+
+> **Lưu ý:** transformers phiên bản 4.44 trở lên bị lỗi khi nạp mô hình 4-bit trên Windows. Phải dùng đúng phiên bản dưới đây.
+
+```cmd
+pip install "transformers==4.43.4" "accelerate==0.28.0" "peft==0.11.1" bitsandbytes torch pandas
+```
+
+Sau khi cài xong, xóa cache cũ của Phi-3 (chạy **1 lần duy nhất**):
+
+```cmd
+rmdir /s /q %USERPROFILE%\.cache\huggingface\modules\transformers_modules\microsoft
+```
+
+Nếu thấy "The system cannot find the path specified" thì bỏ qua — không sao.
+
+---
+
+---
+
 ## Bước 2 — Lấy API key Groq miễn phí (5 phút)
 
 1. Vào **[https://console.groq.com](https://console.groq.com)**
@@ -62,6 +82,7 @@ dir data\raw\pdf\
 ```
 
 Nên thấy các file như:
+
 - `SO-TAY-NHAN-VIEN-THAI-SAN.pdf`
 - `HACOM_So-tay-Nhan-vien-2025-2.pdf`
 - v.v.
@@ -89,7 +110,8 @@ python scripts/ingest_pdf_handbooks.py
 Kết quả xuất ra file `data\raw_chunks_viet.jsonl`.
 
 Ví dụ output đúng:
-```
+
+```text
 Found 8 PDFs in data\raw\pdf
   Processing: SO-TAY-NHAN-VIEN-THAI-SAN.pdf
     -> 350 chunks
