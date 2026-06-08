@@ -86,9 +86,7 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         quantization_config=bnb_config,
-        device_map={"": 0},       # pin to GPU 0, avoids .to() call that 4-bit forbids
         trust_remote_code=True,
-        torch_dtype=torch.float16,
         attn_implementation="eager",
     )
     model.config.use_cache = False
