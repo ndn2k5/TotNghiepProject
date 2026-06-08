@@ -63,7 +63,7 @@ def main():
         TrainingArguments,
         AutoConfig,
     )
-    from peft import LoraConfig, get_peft_model, TaskType
+    from peft import LoraConfig, get_peft_model, TaskType, prepare_model_for_kbit_training
     from trl import SFTTrainer
 
     # ── Check CUDA ────────────────────────────────────────────────────────────
@@ -118,6 +118,7 @@ def main():
         attn_implementation="eager",
     )
     model.config.use_cache = False
+    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
 
     # ── LoRA config — tuned for 4GB VRAM ─────────────────────────────────────
     lora_config = LoraConfig(
@@ -150,7 +151,7 @@ def main():
         warmup_steps=5,
         weight_decay=0.01,
         lr_scheduler_type="linear",
-        gradient_checkpointing=True,         # trades speed for ~1GB VRAM saving
+        gradient_checkpointing=False,        # handled by prepare_model_for_kbit_training above
         dataloader_pin_memory=False,
         report_to="none",
     )
