@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 PDF Extraction Module using PyMuPDF (fitz)
 Extracts text, metadata, and page numbers from employee handbook PDFs.

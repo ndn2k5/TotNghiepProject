@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Response Quality Validator & Improver
 Ensures responses are accurate, complete, and grounded in source documents

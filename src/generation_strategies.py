@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Map-Reduce Generation Strategy
 Process multiple documents independently then reduce to final answer

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Local GGUF model loading and inference using llama-cpp-python.
 Runs entirely on CPU — no API calls needed.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Question Normalizer: Process Vietnamese HR questions using local Qwen model.
 

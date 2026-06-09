@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Retriever Agent – AI-powered intelligent document filtering and summarization.
 

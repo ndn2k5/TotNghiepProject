@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Smart Context Retrieval & Ranking
 Multi-stage ranking to select the BEST chunks for HR Q&A

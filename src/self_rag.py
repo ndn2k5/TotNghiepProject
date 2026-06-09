@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Self-RAG (Self-Reflective RAG)
 Model can self-evaluate when to retrieve and whether answer is grounded

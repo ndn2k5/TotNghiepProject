@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Enhanced Prompt Templates for Better Vietnamese HR Responses
 With specific instructions, examples, and quality guardrails

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 RAG Pipeline: Retrieval-Augmented Generation using local components.
 

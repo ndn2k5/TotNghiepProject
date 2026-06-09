@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Speed Optimization Module
 Multiple speed modes for dual-model pipeline

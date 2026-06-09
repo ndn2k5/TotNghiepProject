@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Responder: LLM-based answer generation using retrieved context.
 

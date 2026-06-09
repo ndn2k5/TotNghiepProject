@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Adaptive RAG with Question Router
 Classifies questions and routes to optimal retrieval strategy

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Retriever: Semantic search + optional re-ranking for HR policy questions.
 

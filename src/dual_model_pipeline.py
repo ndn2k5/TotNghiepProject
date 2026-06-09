@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Dual-Model RAG Pipeline
 Phi-3-Mini (Context Researcher) + Qwen (Response Generator)
