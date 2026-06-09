@@ -15,10 +15,10 @@ import logging
 import time
 from pathlib import Path
 
-from src.question_normalizer import QuestionNormalizer
+from src.embeddings import LocalEmbedder, VectorStoreManager   # torch/onnxruntime first
 from src.retriever import Retriever
-from src.responder import ResponseGenerator, format_response_for_display
-from src.embeddings import LocalEmbedder, VectorStoreManager
+from src.question_normalizer import QuestionNormalizer
+from src.responder import ResponseGenerator, format_response_for_display  # llama_cpp last
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger(__name__)

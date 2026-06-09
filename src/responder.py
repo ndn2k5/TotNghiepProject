@@ -12,8 +12,8 @@ import time
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 
+from src.retriever import RetrievalResult  # torch/onnxruntime must init CUDA before llama_cpp
 from src.gguf_models import LocalGGUFModel
-from src.retriever import RetrievalResult
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
