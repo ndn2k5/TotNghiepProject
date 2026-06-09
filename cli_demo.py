@@ -63,35 +63,35 @@ def main():
 
     # Ingest PDF if store is empty
     if pipeline.vector_store.count() == 0:
-        print(f"📄 Ingesting: {pdf_path}")
+        print(f"Ingesting: {pdf_path}")
         count = pipeline.ingest_pdf(pdf_path)
-        print(f"✅ Ingested {count} chunks")
+        print(f"Successfully ingested {count} chunks")
     else:
-        print(f"📦 Vector store already has {pipeline.vector_store.count()} documents")
+        print(f"Vector store already has {pipeline.vector_store.count()} documents")
 
     stats = pipeline.get_stats()
-    print(f"🤖 Model: {stats['model']}")
-    print(f"📚 Documents: {stats['documents_in_store']}")
+    print(f"Model: {stats['model']}")
+    print(f"Documents: {stats['documents_in_store']}")
     print()
 
     # ── Interactive chat loop ───────────────────────────────────────
     print("=" * 60)
-    print("  Chat với tài liệu nội bộ")
-    print("  Gõ 'exit' để thoát, 'stats' để xem thống kê")
+    print("  Chat with internal documents")
+    print("  Type 'exit' to quit, 'stats' to see statistics")
     print("=" * 60)
     print()
 
     while True:
         try:
-            question = input("🧑 Bạn: ").strip()
+            question = input("You: ").strip()
         except (KeyboardInterrupt, EOFError):
-            print("\n\n👋 Tạm biệt!")
+            print("\n\nGoodbye!")
             break
 
         if not question:
             continue
         if question.lower() in ("exit", "quit", "q"):
-            print("\n👋 Tạm biệt!")
+            print("\nGoodbye!")
             break
         if question.lower() == "stats":
             s = pipeline.get_stats()
@@ -104,18 +104,18 @@ def main():
         result = pipeline.answer(question)
 
         # Display answer
-        print(f"\n🤖 Bot: {result['answer']}")
+        print(f"\nBot: {result['answer']}")
 
         # Display sources
         if result["sources"]:
             sources_str = ", ".join(
-                f"trang {s['page']} ({s['source']})" for s in result["sources"]
+                f"page {s['page']} ({s['source']})" for s in result["sources"]
             )
-            print(f"📎 Nguồn: {sources_str}")
+            print(f"Source: {sources_str}")
 
         # Display timing
         t = result["timing"]
-        print(f"⏱  Retrieval: {t['retrieval_seconds']:.2f}s | "
+        print(f"Time - Retrieval: {t['retrieval_seconds']:.2f}s | "
               f"Generation: {t['generation_seconds']:.2f}s | "
               f"Total: {t['total_seconds']:.2f}s")
         print()
