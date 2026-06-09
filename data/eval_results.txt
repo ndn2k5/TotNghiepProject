@@ -1,0 +1,43 @@
+Eval run: 2026-06-09 20:32
+Model: models\phi3-mini-viet-merged
+============================================================
+
+Q1: Chính sách nghỉ phép năm của công ty là gì?
+A1: Các chính sách nghỉ phệp vào một thời gian đơn giản.
+----------------------------------------
+
+Q2: Nhân viên mới có thời gian thử việc bao lâu?
+A2: Đào tạo và học cấp nguyên, hoặc khác.
+----------------------------------------
+
+Q3: Quy trình xin nghỉ phép được thực hiện như thế nào?
+A3: Trong một khoảng thời gian cụ thể, bao gồm việc tạo ra văn bản chính sách hoặc dịch vụ.
+----------------------------------------
+
+Q4: Mức lương tối thiểu áp dụng trong công ty là bao nhiêu?
+A4: 10% của mức lương tối thiểu.
+----------------------------------------
+
+Q5: Công ty có những chính sách phúc lợi gì cho nhân viên?
+A5: Chính sách giảm thiểu chi trả và được bầu cử.
+----------------------------------------
+
+Q6: Quy định về trang phục làm việc của công ty như thế nào?
+A6: Công ty có quy định rằng một số người lao động khác hành vi chính xác, tạm thời hoặc lâu dài.
+----------------------------------------
+
+Q7: Nhân viên có được phép làm thêm giờ không? Chính sách ra sao?
+A7: Không, nhân viên cũng chỉ có quyền lao động và bảo hiểm.
+----------------------------------------
+
+Q8: Quy trình nghỉ ốm và nghỉ bệnh của công ty là gì?
+A8: Các quy trình này có thể sẽ khác giữ lại một phần của chương trình Medicare Advantage.
+----------------------------------------
+
+Q9: Chính sách khen thưởng và tăng lương của công ty như thế nào?
+A9: Công ty phải đồng dịch cho chính sách khen thưởng và tăng lương.
+----------------------------------------
+
+Q10: Quy định về bảo mật thông tin trong công ty là gì?
+A10: Các quy định cụ thể tại phần này.
+----------------------------------------
