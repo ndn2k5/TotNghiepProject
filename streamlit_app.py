@@ -58,12 +58,17 @@ def initialize_components():
                 embedder=embedder,
                 use_reranking=False,
             )
+            # Detect model size — BF16 GGUF (~7GB) must run on CPU, Q4 (~2.3GB) can use GPU
+            model_size_gb = model_path.stat().st_size / 1e9
+            gpu_layers = -1 if model_size_gb < 3.5 else 0
+            if gpu_layers == 0:
+                st.warning(f"⚠️ Model is {model_size_gb:.1f}GB (BF16). Running on CPU — expect ~60s/answer. Download Q4 GGUF for GPU speed.")
             responder = ResponseGenerator(
                 model_path=str(model_path),
                 language="vi",
                 max_tokens=256,
                 temperature=0.3,
-                n_gpu_layers=-1,  # Enable CUDA - offload all layers to GPU
+                n_gpu_layers=gpu_layers,
             )
 
             return {
