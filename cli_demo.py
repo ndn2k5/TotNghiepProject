@@ -9,8 +9,13 @@ Example:
 """
 
 import sys
+import os
 import time
 from pathlib import Path
+
+# Force CPU for embeddings — prevents CUDA context conflict between
+# sentence-transformers and llama_cpp on Windows
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 def main():
@@ -51,7 +56,7 @@ def main():
 
     from src.rag_pipeline import RAGPipeline
 
-    pipeline = RAGPipeline(model_path, n_gpu_layers=-1)  # Enable CUDA
+    pipeline = RAGPipeline(model_path, n_gpu_layers=0)  # CPU — avoids CUDA conflict with embeddings
 
     # Ingest PDF if store is empty
     if pipeline.vector_store.count() == 0:
