@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Force CPU for embeddings — prevents CUDA context conflict between
 # sentence-transformers and llama_cpp on Windows
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
 def main():
