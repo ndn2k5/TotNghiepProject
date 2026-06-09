@@ -60,6 +60,21 @@ def main():
     print(f"  Saving merged model to {merged_path}...")
     model.save_pretrained(str(merged_path), safe_serialization=True)
     tokenizer.save_pretrained(str(merged_path))
+
+    # llama.cpp phi.py requires tokenizer.model (SentencePiece binary).
+    # HF fast tokenizer only saves tokenizer.json — fetch the raw file from cache.
+    tm_dest = merged_path / "tokenizer.model"
+    if not tm_dest.exists():
+        try:
+            from huggingface_hub import hf_hub_download
+            import shutil
+            tm_src = hf_hub_download(repo_id=base_model_name, filename="tokenizer.model")
+            shutil.copy(tm_src, tm_dest)
+            print("  Copied tokenizer.model for llama.cpp.")
+        except Exception as e:
+            print(f"  WARNING: could not copy tokenizer.model: {e}")
+            print("  Conversion may fail — manually copy tokenizer.model into", merged_path)
+
     print("  Merge done.")
 
     del model, base_model
