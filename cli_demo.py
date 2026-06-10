@@ -56,7 +56,7 @@ def main():
 
     from src.rag_pipeline import RAGPipeline
 
-    pipeline = RAGPipeline(model_path, n_gpu_layers=0)  # CPU — avoids CUDA conflict with embeddings
+    pipeline = RAGPipeline(model_path, n_gpu_layers=-1)  # GPU via llama_cpp CUDA (no torch conflict)
     # Now that torch is CPU-only, you can safely try to offload LLM layers to GPU 
     # if your llama-cpp-python was compiled with CUDA support.
     pipeline = RAGPipeline(model_path, n_gpu_layers=-1) 
