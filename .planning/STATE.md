@@ -4,12 +4,12 @@
 
 | Item | Value |
 |------|-------|
-| **Milestone** | Milestone 2 — Fine-Tuning & Dataset Synthesis |
-| **Phase** | Phase 6 (QLoRA Fine-Tuning) — COMPLETE ✓ |
-| **Progress** | ~100% of Milestone 2 (Phases 4, 5, 6 complete) |
-| **Last update** | 2026-06-01 |
+| **Milestone** | Milestone 3 — Vietnamese Data Quality & Deployment |
+| **Phase** | Phase 7 — Vietnamese Knowledge Base (PLANNING) |
+| **Progress** | Milestone 2 complete; Milestone 3 starting |
+| **Last update** | 2026-06-10 |
 | **Owner** | 2 developers (solo + collaborator) |
-| **Blocker** | None — fine-tuned model integrated at models/phi-3-mini.gguf |
+| **Blocker** | Vietnamese HR training data is garbage — fine-tuned model catastrophically bad |
 
 ---
 
@@ -62,6 +62,38 @@
 - **Exit gate:** ≤5s latency, 80%+ validation pass, zero hallucination
 - **Estimated hours:** 6
 - **Last updated:** 2026-06-01
+
+---
+
+### Phase 6: QLoRA Fine-Tuning
+
+- **Status:** Complete ✓ — but model output CATASTROPHIC (eval shows hallucination, Medicare answers in Vietnamese HR context)
+- **Root cause:** Crawled PDFs were garbage — Japanese labor law translations, US Medicare docs, election law. Only 376/3343 rows were actual HR content.
+- **Decision:** Abandon fine-tuned model. Use base phi-3-mini.gguf + RAG. Document in thesis as negative result.
+- **Last updated:** 2026-06-10
+
+---
+
+### Phase 7: Vietnamese Knowledge Base (NEXT)
+
+- **Status:** Planning
+- **Goal:** Populate ChromaDB with quality Vietnamese HR content so RAG gives grounded answers
+- **Two options:**
+
+  **Option A — Improved crawler + verification**
+  - Rewrite `crawl_hr_pdfs.py` to verify PDF content before saving (check for Vietnamese diacritics, HR keywords, reject government/election/medical docs)
+  - Add post-crawl quality gate: chunk count > 50, >60% Vietnamese diacritics in text
+  - Risk: Vietnamese company handbooks still rare online
+
+  **Option B — Synthetic data via API (Groq)**
+  - Use Groq (llama-3.1-8b-instant, 6000 TPM free) to *generate* plausible Vietnamese HR policy text from English handbook
+  - Prompt: "Translate and adapt this HR policy to Vietnamese company context"
+  - Advantage: high quality, topically correct, no crawling
+  - Output goes into ChromaDB directly (not for fine-tuning)
+
+- **Recommended:** Option B for speed + quality. Option A if we want real company data.
+- **Exit gate:** ChromaDB has 500+ Vietnamese HR chunks; chatbot answers "nghỉ phép" questions correctly
+- **Last updated:** 2026-06-10
 
 ---
 
