@@ -56,18 +56,34 @@ def main():
 
     from src.rag_pipeline import RAGPipeline
 
-    pipeline = RAGPipeline(model_path, n_gpu_layers=-1)  # GPU via llama_cpp CUDA (no torch conflict)
-    # Now that torch is CPU-only, you can safely try to offload LLM layers to GPU 
-    # if your llama-cpp-python was compiled with CUDA support.
-    pipeline = RAGPipeline(model_path, n_gpu_layers=-1) 
+    pipeline = RAGPipeline(model_path, n_gpu_layers=-1)
 
     # Ingest PDF if store is empty
     if pipeline.vector_store.count() == 0:
+        if not Path(pdf_path).exists():
+            print()
+            print("⚠  Vector store is empty and no PDF found.")
+            print("   Run these scripts first to populate the knowledge base:")
+            print()
+            print("     python scripts/download_viet_labor_docs.py")
+            print("     python scripts/reindex_chromadb.py")
+            print()
+            print("   Then re-run: python cli_demo.py models/phi-3-mini.gguf")
+            sys.exit(1)
         print(f"Ingesting: {pdf_path}")
         count = pipeline.ingest_pdf(pdf_path)
+        if count == 0:
+            print()
+            print("⚠  PDF extracted 0 chunks (may be scan-only or corrupt).")
+            print("   Run these scripts to populate the knowledge base instead:")
+            print()
+            print("     python scripts/download_viet_labor_docs.py")
+            print("     python scripts/reindex_chromadb.py")
+            print()
+            sys.exit(1)
         print(f"Successfully ingested {count} chunks")
     else:
-        print(f"Vector store already has {pipeline.vector_store.count()} documents")
+        print(f"Vector store: {pipeline.vector_store.count()} documents loaded")
 
     stats = pipeline.get_stats()
     print(f"Model: {stats['model']}")

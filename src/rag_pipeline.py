@@ -125,6 +125,10 @@ class RAGPipeline:
 
         chunks = chunk_pages(pages, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
+        if not chunks:
+            logger.warning(f"No chunks extracted from {pdf_path} — PDF may be scan-only or empty")
+            return 0
+
         # Add source_file metadata
         for chunk in chunks:
             chunk["source_file"] = Path(pdf_path).name
