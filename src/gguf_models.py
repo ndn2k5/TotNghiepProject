@@ -82,7 +82,7 @@ class LocalGGUFModel:
             Generated text string
         """
         if stop is None:
-            stop = ["\n\n\n", "User:", "Human:", "Câu hỏi:"]
+            stop = ["<|end|>", "<|user|>", "<|system|>", "User:", "Human:"]
 
         output = self.llm(
             prompt,
@@ -113,7 +113,7 @@ class LocalGGUFModel:
             prompt,
             max_tokens=max_tokens,
             temperature=temperature,
-            stop=["\n\n\n", "User:", "Human:", "Câu hỏi:"],
+            stop=["<|end|>", "<|user|>", "<|system|>", "User:", "Human:"],
             echo=False,
         )
 

@@ -28,21 +28,23 @@ logger = logging.getLogger(__name__)
 
 # ── Prompt templates ────────────────────────────────────────────────
 
-PROMPT_TEMPLATE_VI = """Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn bằng tiếng Việt.
+PROMPT_TEMPLATE_VI = """<|user|>
+Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn bằng tiếng Việt.
 
 Quy tắc:
 - Chỉ trả lời dựa trên thông tin có trong ngữ cảnh.
 - Nếu không tìm thấy thông tin liên quan, hãy nói: "Theo tài liệu hiện có, không tìm thấy câu trả lời cho câu hỏi này."
-- Trích dẫn nguồn (trang) nếu có thể.
+- Trích dẫn nguồn nếu có thể.
 
 Ngữ cảnh:
 {context}
 
-Câu hỏi: {question}
+Câu hỏi: {question}<|end|>
+<|assistant|>
+"""
 
-Trả lời:"""
-
-PROMPT_TEMPLATE_EN = """You are an internal company assistant. Based on the document excerpts below, answer the question accurately and concisely.
+PROMPT_TEMPLATE_EN = """<|user|>
+You are an internal company assistant. Based on the document excerpts below, answer the question accurately and concisely.
 
 Rules:
 - Only answer based on the provided context.
@@ -52,9 +54,9 @@ Rules:
 Context:
 {context}
 
-Question: {question}
-
-Answer:"""
+Question: {question}<|end|>
+<|assistant|>
+"""
 
 
 class RAGPipeline:
