@@ -1,6 +1,7 @@
 """
-Local embedding using sentence-transformers (all-MiniLM-L6-v2).
-No API calls — runs entirely on CPU or GPU with CUDA support.
+Local embedding using sentence-transformers (paraphrase-multilingual-MiniLM-L12-v2).
+Multilingual model supporting 50+ languages including Vietnamese — no API calls,
+runs entirely on CPU or GPU with CUDA support.
 """
 
 from sentence_transformers import SentenceTransformer
@@ -15,16 +16,24 @@ logger = logging.getLogger(__name__)
 
 
 class LocalEmbedder:
-    """Wraps sentence-transformers for local text embedding (no API)."""
+    """
+    Wraps sentence-transformers for local multilingual text embedding (no API).
 
-    MODEL_DIMENSION = 384  # all-MiniLM-L6-v2 output dimension
+    Default model: paraphrase-multilingual-MiniLM-L12-v2
+    - 50+ language support including Vietnamese
+    - 384-dimensional output vectors
+    - Fast CPU inference, GPU-accelerated when available
+    """
 
-    def __init__(self, model_name: str = "all-MiniLM-L6-v2", device: Optional[str] = None):
+    MODEL_DIMENSION = 384  # paraphrase-multilingual-MiniLM-L12-v2 output dimension
+
+    def __init__(self, model_name: str = "paraphrase-multilingual-MiniLM-L12-v2", device: Optional[str] = None):
         """
         Load the embedding model (cached after first download).
 
         Args:
-            model_name: HuggingFace model name. Default is all-MiniLM-L6-v2.
+            model_name: HuggingFace model name. Default is paraphrase-multilingual-MiniLM-L12-v2
+                        for cross-lingual Vietnamese retrieval.
             device: Device to use ('cuda', 'cpu', or None for auto-detect).
         """
         # Auto-detect device if not specified
