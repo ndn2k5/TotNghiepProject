@@ -165,3 +165,11 @@
 
 **Project initialized:** 2026-05-04 by Copilot GSD workflow  
 **Next action:** Run `/gsd-plan-phase 1` to create detailed Phase 1 plan
+
+---
+
+## Quick Tasks Completed
+
+| Date       | Task                                | Status      |
+|------------|-------------------------------------|-------------|
+| 2026-06-10 | multilingual-embedding-swap-viet-kb | complete ✓  |
