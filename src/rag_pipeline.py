@@ -22,6 +22,7 @@ from src.chunking import chunk_pages
 from src.pdf_extraction import PDFExtractor
 from src.gguf_models import LocalGGUFModel
 from src.retriever_agent import RetrieverAgent
+from src.hybrid_retriever import HybridRetriever
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -98,6 +99,13 @@ class RAGPipeline:
         self.vector_store = VectorStoreManager(persist_dir=persist_dir)
         self.vector_store.create_collection(name=collection_name)
 
+        # Hybrid retriever: BM25 keyword + vector semantic search
+        self.hybrid_retriever = HybridRetriever(
+            vector_store=self.vector_store,
+            embedder=self.embedder,
+            alpha=0.5,   # equal weight BM25 / vector
+        )
+
         # LLM (GGUF via llama-cpp, local with CUDA support)
         self.llm = LocalGGUFModel(model_path, n_ctx=n_ctx, n_gpu_layers=n_gpu_layers)
 
@@ -152,6 +160,7 @@ class RAGPipeline:
             chunk["source_file"] = Path(pdf_path).name
 
         self.vector_store.add_chunks(chunks, self.embedder)
+        self.hybrid_retriever.invalidate()  # force BM25 rebuild on next query
         logger.info(f"Ingested {len(chunks)} chunks from {Path(pdf_path).name}")
         return len(chunks)
 
@@ -171,18 +180,18 @@ class RAGPipeline:
 
     # ── Question Answering ──────────────────────────────────────────
 
-    def retrieve(self, question: str, top_k: int = 3) -> List[Dict]:
+    def retrieve(self, question: str, top_k: int = 5) -> List[Dict]:
         """
-        Retrieve the most relevant chunks for a question.
+        Retrieve the most relevant chunks using hybrid BM25 + vector search.
 
         Args:
             question: User's question
             top_k: Number of chunks to retrieve
 
         Returns:
-            List of chunk dicts with text, metadata, distance
+            List of chunk dicts with text, metadata, distance, rrf_score
         """
-        return self.vector_store.query(question, self.embedder, top_k=top_k)
+        return self.hybrid_retriever.retrieve(question, top_k=top_k)
 
     def build_prompt(self, question: str, chunks: List[Dict]) -> str:
         """
