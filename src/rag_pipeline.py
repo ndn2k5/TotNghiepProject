@@ -21,6 +21,7 @@ from src.embeddings import LocalEmbedder, VectorStoreManager
 from src.chunking import chunk_pages
 from src.pdf_extraction import PDFExtractor
 from src.gguf_models import LocalGGUFModel
+from src.retriever_agent import RetrieverAgent
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -70,6 +71,9 @@ class RAGPipeline:
         n_ctx: int = 2048,
         language: str = "vi",
         n_gpu_layers: int = -1,
+        use_reranker: bool = False,
+        reranker_model: Optional[str] = None,
+        retriever_agent_model_path: Optional[str] = None,
     ):
         """
         Initialize the RAG pipeline with all local components.
@@ -81,6 +85,9 @@ class RAGPipeline:
             n_ctx: Context window for the LLM
             language: Prompt language ('vi' for Vietnamese, 'en' for English)
             n_gpu_layers: Number of layers to offload to GPU. -1 = all layers (CUDA). 0 = CPU only.
+            use_reranker: If True, use RetrieverAgent to filter chunks.
+            reranker_model: Path to the model used for reranking (aliases retriever_agent_model_path).
+            retriever_agent_model_path: Explicit path to RetrieverAgent model.
         """
         logger.info("Initializing RAG pipeline ...")
 
@@ -93,6 +100,15 @@ class RAGPipeline:
 
         # LLM (GGUF via llama-cpp, local with CUDA support)
         self.llm = LocalGGUFModel(model_path, n_ctx=n_ctx, n_gpu_layers=n_gpu_layers)
+
+        # AI Retriever Agent (Optional)
+        # Use retriever_agent_model_path if provided, otherwise reranker_model if use_reranker is True
+        agent_path = retriever_agent_model_path or (reranker_model if use_reranker else None)
+        self.retriever_agent = RetrieverAgent(
+            model_path=agent_path,
+            language=language,
+            enabled=use_reranker or retriever_agent_model_path is not None
+        )
 
         # Prompt template
         self.prompt_template = (
@@ -211,7 +227,7 @@ class RAGPipeline:
         """
         start = time.time()
 
-        # Step 1: Retrieve
+        # Step 1: Retrieve (Vector Search)
         chunks = self.retrieve(question, top_k=top_k)
 
         if not chunks:
@@ -225,6 +241,17 @@ class RAGPipeline:
             }
 
         retrieval_time = time.time() - start
+
+        # Step 1.5: AI Filtering (Optional Agent)
+        agent_start = time.time()
+        agent_result = self.retriever_agent.process(question, chunks)
+        
+        # If agent is enabled and found relevant chunks, update context
+        if agent_result.get("used_agent") and agent_result.get("is_relevant"):
+            chunks = agent_result["selected_chunks"]
+            logger.info(f"🤖 AI Agent filtered to {len(chunks)} relevant chunks")
+        
+        agent_time = time.time() - agent_start
 
         # Step 2: Build prompt
         prompt = self.build_prompt(question, chunks)
@@ -253,8 +280,11 @@ class RAGPipeline:
             "answer": result["text"],
             "sources": sources,
             "chunks": chunks,
+            "agent_summary": agent_result.get("summary"),
+            "used_agent": agent_result.get("used_agent", False),
             "timing": {
                 "retrieval_seconds": round(retrieval_time, 3),
+                "agent_seconds": round(agent_time, 3),
                 "generation_seconds": round(generation_time, 3),
                 "total_seconds": round(total_time, 3),
             },

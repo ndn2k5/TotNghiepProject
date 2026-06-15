@@ -4,6 +4,7 @@ Local GGUF model loading and inference using llama-cpp-python.
 Runs entirely on CPU — no API calls needed.
 """
 
+import torch  # Required to initialize CUDA environment for llama_cpp on Windows
 from llama_cpp import Llama
 from typing import Optional, Dict, Any
 import logging
