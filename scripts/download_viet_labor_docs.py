@@ -25,13 +25,14 @@ DOCUMENTS = {
 CHÍNH SÁCH NGHỈ PHÉP NĂM
 Công ty TNHH ABC Việt Nam — Phòng Nhân sự
 
-1. SỐ NGÀY NGHỈ PHÉP NĂM
+1. SỐ NGÀY NGHỈ PHÉP NĂM VÀ THÁNG
 Theo Bộ Luật Lao Động Việt Nam 2019 (Điều 113), người lao động làm đủ 12 tháng được nghỉ phép năm có lương như sau:
-- Dưới 5 năm thâm niên: 12 ngày làm việc/năm
-- Từ 5 đến dưới 10 năm thâm niên: 13 ngày làm việc/năm
+- Dưới 5 năm thâm niên: 12 ngày làm việc/năm (tương đương 1 ngày nghỉ phép mỗi tháng)
+- Từ 5 đến dưới 10 năm thâm niên: 13 ngày làm việc/năm (hơn 1 ngày mỗi tháng)
 - Từ 10 đến dưới 15 năm thâm niên: 14 ngày làm việc/năm
 - Từ 15 năm thâm niên trở lên: 16 ngày làm việc/năm
-Nhân viên làm việc chưa đủ 12 tháng được tính phép theo tỷ lệ số tháng đã làm việc.
+Nếu tính theo tháng: nhân viên mới (dưới 5 năm) được nghỉ phép 1 ngày mỗi tháng, cộng dồn trong năm.
+Nhân viên làm việc chưa đủ 12 tháng được tính phép theo tỷ lệ số tháng đã làm việc (ví dụ: làm 3 tháng = 3 ngày phép).
 
 2. QUY TRÌNH XIN NGHỈ PHÉP
 - Nhân viên nộp đơn xin nghỉ phép qua hệ thống HRM ít nhất 3 ngày làm việc trước ngày nghỉ (trừ trường hợp khẩn cấp).

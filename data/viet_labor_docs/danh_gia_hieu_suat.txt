@@ -1,0 +1,48 @@
+# QUY TRÌNH ĐÁNH GIÁ HIỆU SUẤT CÔNG VIỆC
+
+**Ban hành:** Phòng Nhân sự
+**Hiệu lực:** Từ ngày 01/01/2025
+**Đối tượng áp dụng:** Toàn bộ nhân viên chính thức
+
+---
+
+## 1. MỤC ĐÍCH
+
+Hệ thống đánh giá hiệu suất nhằm đảm bảo sự công bằng, minh bạch trong việc đo lường đóng góp của nhân viên, đồng thời tạo cơ sở cho các quyết định về thưởng, tăng lương và phát triển nghề nghiệp.
+
+## 2. CHU KỲ ĐÁNH GIÁ
+
+| Thời điểm | Nội dung | Thời hạn |
+|-----------|----------|----------|
+| **Giữa năm** (tháng 6) | Đánh giá tiến độ 6 tháng đầu, điều chỉnh KPI nửa sau | 01–15/6 |
+| **Cuối năm** (tháng 12) | Đánh giá tổng thể cả năm, xếp loại chính thức | 01–20/12 |
+
+## 3. THANG ĐIỂM ĐÁNH GIÁ
+
+Công ty áp dụng thang điểm **5 mức** như sau:
+
+| Điểm | Xếp loại | Mô tả |
+|------|----------|-------|
+| **5** | Xuất sắc (A) | Vượt kỳ vọng, kết quả vượt mục tiêu ≥20% |
+| **4** | Tốt (B) | Vượt kỳ vọng, kết quả vượt mục tiêu dưới 20% |
+| **3** | Đạt yêu cầu (C) | Hoàn thành đúng mục tiêu đề ra |
+| **2** | Cần cải thiện (D) | Đạt 70–99% mục tiêu, còn thiếu sót |
+| **1** | Không đạt (E) | Đạt dưới 70% mục tiêu |
+
+## 4. TIÊU CHÍ KPI THEO CẤP BẬC
+
+| Cấp bậc | Trọng số KPI | Tiêu chí chính |
+|---------|--------------|----------------|
+| **Nhân viên** | 70% KPI cá nhân, 20% teamwork, 10% self-development | Khối lượng, chất lượng, tiến độ công việc được giao |
+| **Trưởng nhóm** | 50% KPI nhóm, 30% KPI cá nhân, 20% phát triển nhân viên | Kết quả nhóm, huấn luyện, báo cáo |
+| **Trưởng phòng** | 40% KPI phòng ban, 30% KPI cá nhân, 30% chiến lược | Hiệu quả phòng ban, sáng kiến cải tiến |
+
+KPI được thiết lập đầu năm, thống nhất giữa nhân viên và quản lý trực tiếp.
+
+## 5. QUY TRÌNH ĐÁNH GIÁ
+
+**Bước 1 – Self-assessment (tự đánh giá):** Nhân viên tự chấm điểm và viết nhận xét theo từng KPI trên hệ thống HRM trong vòng 5 ngày làm việc.
+
+**Bước 2 – Manager review (quản lý đánh giá):** Quản lý trực tiếp đánh giá, đối thoại 1-1 với nhân viên trong vòng 10 ngày làm việc.
+
+**Bước 3 – Calibration session:** Các quản lý cùng cấp họp để

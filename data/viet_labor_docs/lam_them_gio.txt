@@ -1,0 +1,84 @@
+# CHÍNH SÁCH LÀM THÊM GIỜ
+
+**Mã tài liệu:** HR-POL-007
+**Ngày ban hành:** [Ngày/Tháng/Năm]
+**Phiên bản:** 1.0
+**Đối tượng áp dụng:** Toàn bộ nhân viên công ty
+**Người phê duyệt:** [Họ tên - Chức danh]
+
+---
+
+## 1. MỤC ĐÍCH
+
+Tài liệu này quy định về việc làm thêm giờ tại công ty, nhằm đảm bảo tuân thủ Bộ Luật Lao Động 2019, bảo vệ quyền lợi hợp pháp của người lao động và quản lý hiệu quả năng suất lao động.
+
+## 2. GIỚI HẠN LÀM THÊM GIỜ
+
+Theo Điều 108 Bộ Luật Lao Động 2019, thời gian làm thêm giờ được giới hạn như sau:
+
+| Tiêu chí | Giới hạn tối đa |
+|----------|-----------------|
+| Theo ngày | 04 giờ/ngày |
+| Theo tháng | 40 giờ/tháng |
+| Theo năm | 200 giờ/năm |
+
+**Lưu ý:** Đối với một số ngành nghề đặc thù được pháp luật cho phép, thời gian làm thêm giờ có thể tăng lên tối đa 300 giờ/năm theo quy định tại Phụ lục của Bộ Luật Lao Động 2019.
+
+## 3. CÁCH TÍNH LƯƠNG LÀM THÊM GIỜ
+
+Mức lương làm thêm giờ được tính dựa trên đơn giá tiền lương hoặc tiền lương thực trả theo công việc làm vào thời điểm làm thêm giờ, cụ thể:
+
+| Loại ngày làm việc | Hệ số | Cách tính |
+|-------------------|-------|-----------|
+| **Ngày thường** (Thứ 2 – Thứ 6) | **x1,5** | Lương giờ thực trả x 1,5 |
+| **Ngày nghỉ hàng tuần** (Thứ 7, Chủ nhật) | **x2,0** | Lương giờ thực trả x 2,0 |
+| **Ngày lễ, Tết, ngày nghỉ có hưởng lương** | **x3,0** | Lương giờ thực trả x 3,0 |
+
+**Công thức:** Tiền lương làm thêm giờ = Tiền lương giờ thực trả x Hệ số tương ứng x Số giờ làm thêm
+
+## 4. QUY TRÌNH ĐĂNG KÝ LÀM THÊM GIỜ
+
+### Bước 1: Lập đề nghị
+Nhân viên có nhu cầu làm thêm giờ gửi đề nghị cho Trưởng bộ phận ít nhất **01 ngày làm việc** trước khi thực hiện, trừ trường hợp khẩn cấp.
+
+### Bước 2: Xét duyệt
+Trưởng bộ phận xem xét và trình Phòng Nhân sự phê duyệt. Đơn đăng ký phải nêu rõ: lý do, thời gian, nội dung công việc và dự kiến số giờ làm thêm.
+
+### Bước 3: Phê duyệt
+Phòng Nhân sự kiểm tra điều kiện và xác nhận không vượt quá giới hạn cho phép, sau đó trình Ban Giám đốc hoặc người được ủy quyền ký duyệt.
+
+### Bước 4: Thông báo
+Sau khi được duyệt, nhân viên được thông báo và tiến hành làm thêm giờ theo đúng nội dung đăng ký.
+
+## 5. QUYỀN TỪ CHỐI LÀM THÊM GIỜ
+
+Nhân viên **có quyền từ chối** làm thêm giờ trong các trường hợp sau:
+
+- Thời gian làm thêm giờ vượt quá giới hạn quy định tại Mục 2
+- Không có sự đồng ý của người lao động (trừ trường hợp đặc biệt)
+- Công việc không đảm bảo an toàn lao động theo quy định
+- Nhân viên thuộc đối tượng được pháp luật bảo vệ đặc biệt (phụ nữ mang thai, người đang nuôi con dưới 12 tháng tuổi, người lao động chưa thành niên)
+
+## 6. TRƯỜNG HỢP NGOẠI LỆ
+
+Công ty có thể yêu cầu làm thêm giờ **không giới hạn** trong các trường hợp đặc biệt theo Điều 107 Bộ Luật Lao Động 2019:
+
+- Do nhu cầu cấp bách khắc phục hậu quả của thiên tai, hỏa hoạn, dịch bệnh
+- Do yêu cầu phòng chống thiên tai, thảm họa
+- Khi có sự đồng ý của người lao động và được cơ quan có thẩm quyền chấp thuận
+
+## 7. ĐIỀU KHOẢN THI HÀNH
+
+- Nhân viên vi phạm quy định về làm thêm giờ sẽ bị xử lý theo nội quy lao động
+- Mọi thắc mắc liên quan đến chính sách này, vui lòng liên hệ Phòng Nhân sự
+- Chính sách này có hiệu lực kể từ ngày ký và được rà soát định kỳ hàng năm
+
+---
+
+**Người soạn thảo:**
+[Người phụ trách HR]
+**Ngày soạn:** [Ngày/Tháng/Năm]
+
+**Người phê duyệt:**
+[Người có thẩm quyền]
+**Ngày phê duyệt:** [Ngày/Tháng/Năm]

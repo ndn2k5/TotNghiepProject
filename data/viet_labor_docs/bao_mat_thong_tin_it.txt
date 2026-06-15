@@ -1,0 +1,32 @@
+# CHÍNH SÁCH BẢO MẬT THÔNG TIN VÀ AN NINH CÔNG NGHỆ THÔNG TIN
+
+**Số hiệu:** IS-POL-001
+**Ngày ban hành:** 01/01/2025
+**Đơn vị ban hành:** Phòng Công nghệ Thông tin
+**Đối tượng áp dụng:** Toàn bộ nhân viên, cộng tác viên và bên thứ ba làm việc tại công ty
+
+---
+
+## 1. Mục đích
+
+Chính sách này nhằm thiết lập các nguyên tắc, quy định bắt buộc để bảo vệ thông tin và hệ thống công nghệ thông tin của công ty trước các rủi ro mất dữ liệu, tấn công mạng và vi phạm pháp luật sở hữu trí tuệ.
+
+## 2. Phân loại dữ liệu
+
+Công ty phân loại thông tin thành ba cấp độ:
+
+**a) Dữ liệu Mật (Confidential):** Bao gồm mã nguồn sản phẩm, chiến lược kinh doanh, thông tin tài chính nhạy cảm, dữ liệu khách hàng cá nhân và hồ sơ nhân sự. Chỉ những người được chỉ định mới được truy cập. Nghiêm cấm sao chép, in ấn hoặc gửi ra ngoài khi chưa có sự đồng ý của Ban Giám đốc.
+
+**b) Dữ liệu Nội bộ (Internal):** Bao gồm nội bộ công ty, quy trình vận hành, báo cáo nội bộ và tài liệu họp. Chỉ nhân viên công ty được phép truy cập. Không được chia sẻ trên các kênh công cộng.
+
+**c) Dữ liệu Công khai (Public):** Thông tin đã được phép công bố như tin tức thương hiệu, thông cáo báo chí. Nhân viên có thể chia sẻ theo hướng dẫn của bộ phận Truyền thông.
+
+## 3. Quy định mật khẩu và xác thực hai yếu tố
+
+Mật khẩu phải có tối thiểu 12 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt. Mật khẩu phải được thay đổi mỗi 90 ngày và không được sử dụng lại 5 mật khẩu gần nhất. Tuyệt đối không chia sẻ mật khẩu cho bất kỳ ai, kể cả quản trị viên IT.
+
+Tất cả nhân viên **bắt buộc** kích hoạt xác thực hai yếu tố (2FA) cho tài khoản email công ty, hệ thống VPN và các ứng dụng nội bộ. Không được vô hiệu hóa 2FA khi chưa có sự đồng ý bằng văn bản của Phòng IT.
+
+## 4. Nghiêm cấm sử dụng phần mềm lậu và truy cập trang web đen
+
+Nghiêm cấm tuyệt đối việc cài đặt, sử dụng hoặc phân phối phần mềm không có bản quyền trên mọi thiết bị của công ty. Vi phạm sẽ bị xử lý theo
