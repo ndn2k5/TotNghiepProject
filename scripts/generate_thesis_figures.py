@@ -503,7 +503,12 @@ def make_retrieval_comparison():
 if __name__ == "__main__":
     print("Generating thesis figures -> report/figures/\n")
 
-    make_usth_logo()
+    logo_path = OUT / "usth_logo.png"
+    if logo_path.exists():
+        print(f"  [SKIP] {logo_path}  (already exists — using your downloaded logo)")
+    else:
+        make_usth_logo()
+
     make_architecture()
     make_retrieval_flowchart()
     make_kb_topics()
