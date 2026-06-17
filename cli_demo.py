@@ -18,6 +18,40 @@ from pathlib import Path
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
+def _resolve_model(model_path: str) -> str:
+    """
+    If the given path doesn't exist, find any .gguf file in models/.
+    This lets the user pass any filename — actual filename on disk wins.
+    """
+    p = Path(model_path)
+    if p.exists():
+        return model_path
+
+    # Search models/ for any .gguf file
+    models_dir = Path("models")
+    if models_dir.is_dir():
+        candidates = sorted(models_dir.glob("*.gguf"))
+        if candidates:
+            found = candidates[0]
+            print(f"  Model not found at '{model_path}'")
+            print(f"  Auto-detected: {found}")
+            print()
+            return str(found)
+
+    # No model anywhere — print download instructions and exit
+    print()
+    print(f"  ERROR: No GGUF model found.")
+    print(f"  Tried: {model_path}")
+    print()
+    print("  Download Phi-3-Mini (~2.3 GB) with:")
+    print("    python scripts/download_model.py")
+    print()
+    print("  Or manually download from:")
+    print("  https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf")
+    print("  and place the .gguf file in the models/ directory.")
+    sys.exit(1)
+
+
 def main():
     # ── Parse arguments ─────────────────────────────────────────────
     if len(sys.argv) < 2:
@@ -47,6 +81,9 @@ def main():
 
     model_path = sys.argv[1]
     pdf_path = sys.argv[2] if len(sys.argv) > 2 else "data/sample_handbook.pdf"
+
+    # ── Resolve model path — accept any .gguf in models/ if exact path missing ──
+    model_path = _resolve_model(model_path)
 
     # ── Initialize pipeline ─────────────────────────────────────────
     print("=" * 60)
