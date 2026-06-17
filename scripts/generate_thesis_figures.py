@@ -48,59 +48,78 @@ C_DARK   = "#212121"
 # 1. USTH LOGO PLACEHOLDER
 # ════════════════════════════════════════════════════════════════════════
 def make_usth_logo():
-    fig, ax = plt.subplots(figsize=(5.5, 2.3), facecolor="white")
-    ax.set_xlim(0, 5.5)
-    ax.set_ylim(0, 2.3)
+    """
+    Approximate the actual USTH logo:
+      - Blue 'USTH' text (large, bold)
+      - Wing / leaf shape above-right of the 'Y' (red left wing, blue right wing)
+      - 'VIETNAM FRANCE UNIVERSITY' in small blue text below
+    This is a close approximation for thesis use; replace with official logo if available.
+    """
+    from matplotlib.patches import Wedge, Polygon
+    from matplotlib.path import Path as MPath
+    import matplotlib.patches as mpatch
+
+    fig, ax = plt.subplots(figsize=(3.5, 2.0), facecolor="white")
+    ax.set_xlim(0, 3.5)
+    ax.set_ylim(0, 2.0)
     ax.axis("off")
 
-    cx, cy, r = 1.10, 1.15, 1.00   # circle centre & radius
-
-    # Outer circle (navy)
-    outer = plt.Circle((cx, cy), r, color=C_BLUE, zorder=1)
-    ax.add_patch(outer)
-
-    # Inner white ring
-    inner_ring = plt.Circle((cx, cy), 0.83, color=C_WHITE, zorder=2)
-    ax.add_patch(inner_ring)
-
-    # Inner blue fill
-    inner = plt.Circle((cx, cy), 0.75, color=C_BLUE, zorder=3)
-    ax.add_patch(inner)
-
-    # Star decoration (5 small stars on the ring)
-    for angle_deg in range(0, 360, 72):
-        angle = np.radians(angle_deg - 90)
-        sx = cx + 0.88 * np.cos(angle)
-        sy = cy + 0.88 * np.sin(angle)
-        ax.text(sx, sy, "★", fontsize=5, color=C_WHITE,
-                ha="center", va="center", zorder=4)
-
-    # USTH text inside circle
-    ax.text(cx, cy + 0.14, "USTH", fontsize=16, fontweight="bold",
-            color=C_WHITE, ha="center", va="center", zorder=5,
+    # ── 'USTH' bold blue text ─────────────────────────────────────────
+    ax.text(1.30, 0.90, "USTH", fontsize=46, fontweight="bold",
+            color=C_BLUE, ha="center", va="center", zorder=3,
             fontfamily="DejaVu Sans")
-    ax.text(cx, cy - 0.18, "Est. 2009", fontsize=5.5,
-            color="#B3E5FC", ha="center", va="center", zorder=5)
 
-    # Right side: institution name  (start well clear of circle edge = cx+r+0.15)
-    tx = cx + r + 0.20            # left edge of text region
-    tc = tx + 1.55                # text centre x
+    # ── Wing design above the 'Y' (upper-right of USTH) ──────────────
+    # Red left wing — swept upward-left shape
+    red_wing = mpatch.FancyArrowPatch(
+        posA=(1.72, 1.22), posB=(1.35, 1.75),
+        arrowstyle=mpatch.ArrowStyle("simple", head_width=0, tail_width=18),
+        color="#CC0000", zorder=4,
+        connectionstyle="arc3,rad=-0.35",
+    )
+    # Use bezier polygons instead for more faithful wing shape
+    # Red wing (left, curves up-left)
+    red_pts = np.array([
+        [1.60, 1.18],
+        [1.38, 1.55],
+        [1.22, 1.82],
+        [1.42, 1.65],
+        [1.58, 1.38],
+        [1.75, 1.22],
+    ])
+    red_wing_poly = mpatch.Polygon(red_pts, closed=True,
+                                   facecolor="#CC0000", edgecolor="none", zorder=4)
+    ax.add_patch(red_wing_poly)
 
-    ax.text(tc, 1.58, "UNIVERSITY OF SCIENCE AND",
-            fontsize=8, fontweight="bold", color=C_BLUE,
-            ha="center", va="center")
-    ax.text(tc, 1.36, "TECHNOLOGY OF HANOI",
-            fontsize=8, fontweight="bold", color=C_BLUE,
-            ha="center", va="center")
+    # Blue wing (right, curves up-right)
+    blue_pts = np.array([
+        [1.72, 1.18],
+        [1.95, 1.50],
+        [2.10, 1.82],
+        [1.90, 1.65],
+        [1.80, 1.40],
+        [1.62, 1.20],
+    ])
+    blue_wing_poly = mpatch.Polygon(blue_pts, closed=True,
+                                    facecolor=C_BLUE, edgecolor="none", zorder=4)
+    ax.add_patch(blue_wing_poly)
 
-    # Divider
-    ax.plot([tx, tx + 3.10], [1.20, 1.20], color=C_BLUE,
-            linewidth=0.8, zorder=1)
+    # Small white gap between wings (centre spine)
+    spine_pts = np.array([
+        [1.65, 1.20],
+        [1.66, 1.55],
+        [1.68, 1.80],
+        [1.70, 1.55],
+        [1.72, 1.20],
+    ])
+    spine = mpatch.Polygon(spine_pts, closed=True,
+                           facecolor=C_WHITE, edgecolor="none", zorder=5)
+    ax.add_patch(spine)
 
-    ax.text(tc, 0.95, "DEPARTMENT OF INFORMATION",
-            fontsize=6.5, color=C_GREY, ha="center", va="center")
-    ax.text(tc, 0.74, "AND COMMUNICATION TECHNOLOGY",
-            fontsize=6.5, color=C_GREY, ha="center", va="center")
+    # ── 'VIETNAM FRANCE UNIVERSITY' subtitle ─────────────────────────
+    ax.text(1.30, 0.34, "VIETNAM FRANCE UNIVERSITY",
+            fontsize=7, color=C_BLUE, ha="center", va="center",
+            fontweight="normal")
 
     path = OUT / "usth_logo.png"
     fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor="white")
