@@ -4,12 +4,13 @@
 
 | Item | Value |
 |------|-------|
-| **Milestone** | Milestone 3 — Vietnamese Data Quality & Deployment |
-| **Phase** | Phase 7 — Vietnamese Knowledge Base (PLANNING) |
-| **Progress** | Milestone 2 complete; Milestone 3 starting |
-| **Last update** | 2026-06-10 |
-| **Owner** | 2 developers (solo + collaborator) |
-| **Blocker** | Vietnamese HR training data is garbage — fine-tuned model catastrophically bad |
+| **Milestone** | Milestone 4 — Thesis Report Writing |
+| **Phase** | Phase 8 — Report Writing (IN PROGRESS) |
+| **Progress** | Milestone 3 complete ✓; Milestone 4 started 2026-06-17 |
+| **Last update** | 2026-06-17 |
+| **Owner** | Student (solo writing) |
+| **Deadline** | 2026-06-24 (7 days) |
+| **Blocker** | None — all technical work complete; only writing remains |
 
 ---
 
@@ -74,26 +75,39 @@
 
 ---
 
-### Phase 7: Vietnamese Knowledge Base (NEXT)
+### Phase 7: Vietnamese Knowledge Base
 
-- **Status:** Planning
+- **Status:** Complete ✓
 - **Goal:** Populate ChromaDB with quality Vietnamese HR content so RAG gives grounded answers
-- **Two options:**
+- **What was done:**
+  - 8 hardcoded Vietnamese HR policy documents written directly (`scripts/download_viet_labor_docs.py`)
+  - 12 additional documents generated via Minimax-M2.7 API (`scripts/generate_docs_minimax.py`)
+  - 20 documents total, covering full Vietnamese HR policy range
+  - Multilingual embeddings: `paraphrase-multilingual-MiniLM-L12-v2`
+  - Hybrid BM25+vector retrieval with RRF implemented (`src/hybrid_retriever.py`)
+  - Phi-3-Mini chat format tokens fixed (`<|user|>...<|end|>\n<|assistant|>`)
+  - Merged collaborator's `RetrieverAgent` commit
+- **Exit gate met:** ChromaDB has 200+ Vietnamese HR chunks; hybrid retrieval finds correct doc for "1 tháng được nghỉ bao ngày"
+- **Last updated:** 2026-06-17
 
-  **Option A — Improved crawler + verification**
-  - Rewrite `crawl_hr_pdfs.py` to verify PDF content before saving (check for Vietnamese diacritics, HR keywords, reject government/election/medical docs)
-  - Add post-crawl quality gate: chunk count > 50, >60% Vietnamese diacritics in text
-  - Risk: Vietnamese company handbooks still rare online
+---
 
-  **Option B — Synthetic data via API (Groq)**
-  - Use Groq (llama-3.1-8b-instant, 6000 TPM free) to *generate* plausible Vietnamese HR policy text from English handbook
-  - Prompt: "Translate and adapt this HR policy to Vietnamese company context"
-  - Advantage: high quality, topically correct, no crawling
-  - Output goes into ChromaDB directly (not for fine-tuning)
+### Phase 8: Thesis Report Writing (CURRENT)
 
-- **Recommended:** Option B for speed + quality. Option A if we want real company data.
-- **Exit gate:** ChromaDB has 500+ Vietnamese HR chunks; chatbot answers "nghỉ phép" questions correctly
-- **Last updated:** 2026-06-10
+- **Status:** In progress — Day 1 of 7
+- **Goal:** Complete submission-ready bachelor thesis following USTH ICT template
+- **Deadline:** 2026-06-24
+- **Outline:** `.planning/docs/REPORT_OUTLINE.md`
+- **Requirements:** `.planning/REQUIREMENTS_M4.md`
+- **Day plan:**
+  - Day 1 (Jun 17): Abstract + Introduction
+  - Day 2 (Jun 18): Objectives + Methods Part 1 (architecture, KB, chunking, embedding)
+  - Day 3 (Jun 19): Methods Part 2 (hybrid retrieval, LLM, QLoRA negative result)
+  - Day 4 (Jun 20): Results Part 1 (retrieval comparison, demo)
+  - Day 5 (Jun 21): Results Part 2 (QLoRA analysis, discussion)
+  - Day 6 (Jun 22): Conclusion + References + Abbreviations + figures
+  - Day 7 (Jun 23): Full review, formatting, submit
+- **Exit gate:** All sections complete, ≥10 references, ≥4 figures, body ≤27 pages, submitted by 2026-06-24
 
 ---
 
@@ -173,3 +187,4 @@
 | Date       | Task                                | Status      |
 |------------|-------------------------------------|-------------|
 | 2026-06-10 | multilingual-embedding-swap-viet-kb | complete ✓  |
+| 2026-06-17 | gsd-new-milestone-report-plan       | complete ✓  |

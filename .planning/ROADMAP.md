@@ -383,4 +383,117 @@ Phase 5 and Phase 6 can run **in parallel** on H100 once Phase 4 datasets are re
 
 **Milestone 1 last updated:** 2026-05-04  
 **Milestone 2 created:** 2026-06-01  
-**Next step:** `/gsd-plan-phase 4` to start Phase 4 detailed planning
+**Milestone 3 created:** 2026-06-10 — Vietnamese KB + Hybrid Retrieval (complete ✓)  
+**Milestone 4 created:** 2026-06-17 — Thesis Report Writing
+
+---
+
+## Milestone 3 (complete ✓) — Vietnamese Knowledge Base & Hybrid Retrieval
+
+| Aspect | Value |
+|--------|-------|
+| **Duration** | ~1 week |
+| **Status** | Complete ✓ |
+| **Deliverables** | 20 Vietnamese HR docs, multilingual embeddings, hybrid BM25+vector retrieval |
+
+### Phase 7: Vietnamese Knowledge Base & Retrieval Improvements (Complete ✓)
+
+- Swapped embedding model to `paraphrase-multilingual-MiniLM-L12-v2`
+- Generated 8 hardcoded + 12 Minimax-M2.7 Vietnamese HR policy documents (20 total)
+- Implemented hybrid BM25 + vector retrieval with Reciprocal Rank Fusion (`src/hybrid_retriever.py`)
+- Fixed Phi-3-Mini prompt format (chat tokens `<|user|>...<|end|>\n<|assistant|>`)
+- Fixed ChromaDB empty-chunk crash in `cli_demo.py`
+- Added `RetrieverAgent` integration from collaborator (AI filtering step)
+- Merged branches cleanly
+
+**Exit gate met:** ChromaDB has 200+ Vietnamese HR chunks; hybrid retrieval finds correct docs for Vietnamese queries
+
+---
+
+## Milestone 4 — Thesis Report Writing
+
+| Aspect | Value |
+|--------|-------|
+| **Duration** | 7 days (2026-06-17 → 2026-06-24) |
+| **Team** | Solo (student) |
+| **Template** | `docs/2026_required_format_thesis.md` (USTH ICT Bachelor Thesis) |
+| **Language** | English |
+| **Max length** | ~27 pages body |
+| **Requirements** | `.planning/REQUIREMENTS_M4.md` |
+| **Outline** | `.planning/docs/REPORT_OUTLINE.md` |
+
+---
+
+## Phase 8: Thesis Report Writing
+
+**Goal:** Produce a complete, submission-ready bachelor thesis following USTH ICT template. All sections written, figures included, references formatted.
+
+**Deadline:** 2026-06-24  
+**Owner:** Student (solo)  
+**Hardware:** Word processor / LaTeX (no compute required)
+
+### Day-by-Day Plan
+
+| Day | Date | Target | Output |
+|-----|------|--------|--------|
+| **Day 1** | Jun 17 | Abstract + Introduction draft | 3–4 pages |
+| **Day 2** | Jun 18 | Objectives + Methods Part 1 (architecture, KB, chunking, embedding) | 4–5 pages |
+| **Day 3** | Jun 19 | Methods Part 2 (hybrid retrieval, LLM, QLoRA experiment) | 4–5 pages |
+| **Day 4** | Jun 20 | Results Part 1 (retrieval comparison, demo transcript, latency) | 3–4 pages |
+| **Day 5** | Jun 21 | Results Part 2 (QLoRA negative result, discussion, limitations) | 3–4 pages |
+| **Day 6** | Jun 22 | Conclusion + References + Abbreviations + figure captions | 3–4 pages |
+| **Day 7** | Jun 23 | Full review, formatting pass, supervisor check, submit | polish |
+
+### Phase 8 Deliverables
+
+1. **Abstract** (≤250 words, 6 keywords)
+2. **Section I — Introduction** (2–3 pages)
+   - Vietnamese HR problem context
+   - Literature review: RAG, BM25, sentence-transformers, Vietnamese NLP
+   - This work's contribution
+3. **Section II — Objectives** (~0.5 page)
+4. **Section III — Materials and Methods** (8–10 pages)
+   - System architecture figure
+   - Knowledge base: 20 Vietnamese HR docs (how generated, topics covered)
+   - Chunking: RecursiveCharacterTextSplitter, 600 chars, 100 overlap
+   - Embedding: `paraphrase-multilingual-MiniLM-L12-v2`, 384-dim
+   - Hybrid retrieval: BM25Okapi + ChromaDB cosine, merged via RRF (α=0.5, k=60)
+   - LLM: Phi-3-Mini GGUF Q4, llama-cpp-python, Phi-3 chat format
+   - QLoRA fine-tuning experiment (3343 pairs, T1200, 22h)
+5. **Section IV — Results and Discussion** (6–8 pages)
+   - Retrieval comparison: pure vector vs hybrid (table + query examples)
+   - End-to-end demo: 5 example Q&A pairs with latency
+   - QLoRA negative result: eval table, root cause analysis
+   - Discussion: limitations, comparison to related work
+6. **Section V — Conclusion & Perspective** (1–2 pages)
+7. **References** (10–15 citations, numbered, DOI where available)
+8. **Appendices**
+   - Appendix A: Key code snippets (hybrid_retriever.py, rag_pipeline.py)
+   - Appendix B: Full evaluation results table
+   - Appendix C: System screenshots (CLI + Streamlit)
+9. **Front matter:** Abbreviations, Tables list, Figures list, Acknowledgements
+
+### Required Figures
+
+| Figure | Content | Where |
+|--------|---------|-------|
+| Fig 1 | System architecture diagram (end-to-end pipeline) | Methods |
+| Fig 2 | Hybrid retrieval flowchart (BM25 + Vector → RRF → top-k) | Methods |
+| Fig 3 | Knowledge base document topic distribution | Methods |
+| Fig 4 | Retrieval comparison: pure vector vs hybrid (bar chart or table) | Results |
+| Fig 5 | Example chatbot session screenshot | Results |
+| Fig 6 | QLoRA training loss curve (if available) | Results |
+
+### Phase 8 Exit Gate
+
+- [ ] All USTH template sections complete (Abstract through Appendices)
+- [ ] ≥10 numbered references with DOI/URL
+- [ ] ≥4 figures with captions
+- [ ] ≥2 tables with captions
+- [ ] Abstract ≤250 words
+- [ ] Body ≤27 pages
+- [ ] Sent to supervisor for review by 2026-06-24
+
+---
+
+**Next step:** Start writing — Day 1 target: Abstract + Introduction
