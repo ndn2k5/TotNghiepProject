@@ -1,0 +1,1236 @@
+% ============================================================
+% USTH ICT Bachelor Thesis
+% Title: Development of an Internal AI Chatbot for Company Knowledge Retrieval
+% Student: Nguyen Duy Ngoc
+% External Supervisor: Trần Đình Chí
+% Internal Supervisor: Trần Hoàng Tùng
+% Date: July 2026
+%
+% Compile with XeLaTeX (recommended for Vietnamese):
+%   xelatex thesis.tex
+%   bibtex thesis
+%   xelatex thesis.tex
+%   xelatex thesis.tex
+%
+% Or with pdfLaTeX:
+%   pdflatex thesis.tex
+% ============================================================
+
+\documentclass[12pt, a4paper, oneside]{report}
+
+% ── Encoding & Language ──────────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,vietnamese]{babel}   % English main, Vietnamese for accented names
+
+% ── Page Layout ──────────────────────────────────────────────────────
+\usepackage[
+  top=2.5cm,
+  bottom=2.5cm,
+  left=3.0cm,      % wider left margin for binding
+  right=2.0cm
+]{geometry}
+
+% ── Typography ───────────────────────────────────────────────────────
+\usepackage{lmodern}          % better font rendering than CM
+\usepackage{microtype}        % improved justification
+\usepackage{setspace}
+\setstretch{1.3}              % 1.3x line spacing (USTH standard)
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% ── Graphics & Figures ───────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup{
+  labelfont=bf,
+  textfont=it,
+  justification=centering,
+  skip=6pt
+}
+\graphicspath{{figures/}}     % put figures in report/figures/
+
+% ── Tables ───────────────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+
+% ── Code Listings ────────────────────────────────────────────────────
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\definecolor{codeblue}{rgb}{0.0,0.35,0.70}
+\definecolor{codecomment}{rgb}{0.40,0.40,0.40}
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{codeblue}\bfseries,
+  commentstyle=\color{codecomment}\itshape,
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  frame=single,
+  captionpos=b,
+  language=Python
+}
+
+% ── Math ─────────────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% ── Hyperlinks ───────────────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdftitle={Development of an Internal AI Chatbot for Company Knowledge Retrieval},
+  pdfauthor={Nguyen Duy Ngoc},
+  pdfsubject={Bachelor Thesis, USTH ICT 2026}
+]{hyperref}
+
+% ── Headers & Footers ────────────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Development of an Internal AI Chatbot for Company Knowledge Retrieval}}
+\fancyhead[R]{\small\textit{Nguyen Duy Ngoc}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── TOC & Numbering ──────────────────────────────────────────────────
+\usepackage{tocloft}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
+% ── Miscellaneous ────────────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{mdframed}         % for highlighted boxes
+\usepackage{pdfpages}         % to include external PDFs if needed
+\usepackage{url}
+\urlstyle{same}
+
+% ── Chapter Style ────────────────────────────────────────────────────
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries}{\thechapter.}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{12pt}{12pt}
+
+% ============================================================
+% DOCUMENT
+% ============================================================
+\begin{document}
+\selectlanguage{english}
+
+% ── Suppress header on blank/special pages ────────────────────────────
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+% ============================================================
+%  COVER PAGE
+% ============================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+
+{\large\bfseries UNIVERSITY OF SCIENCE AND TECHNOLOGY OF HANOI}\\[4pt]
+{\large\bfseries DEPARTMENT OF INFORMATION AND COMMUNICATION TECHNOLOGY}
+
+\vspace{1.2cm}
+
+% USTH Logo placeholder — replace with actual logo file
+% Obtain usth_logo.png from https://usth.edu.vn and place in report/figures/
+\includegraphics[width=5cm]{figures/usth_logo.png}
+
+\vspace{1.5cm}
+
+{\LARGE\bfseries BACHELOR THESIS}
+
+\vspace{1.0cm}
+
+{\large By}
+
+\vspace{0.5cm}
+
+{\Large\bfseries NGUYEN DUY NGOC}
+
+\vspace{1.5cm}
+
+{\large Title:}
+
+\vspace{0.3cm}
+
+\begin{mdframed}[linewidth=1pt, innertopmargin=10pt, innerbottommargin=10pt]
+  {\Large\bfseries Development of an Internal AI Chatbot\\[4pt]
+  for Company Knowledge Retrieval}
+\end{mdframed}
+
+\vspace{1.5cm}
+
+\begin{tabular}{@{}ll}
+  \textbf{External Supervisor:} & Dr.\ Tr\`{a}n \DJ{}ình Chí \\[8pt]
+  \textbf{Internal Supervisor:} & Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng \\
+\end{tabular}
+
+\vfill
+
+{\large\bfseries Hanoi, July 2026}
+
+\end{center}
+\end{titlepage}
+
+% ============================================================
+%  CERTIFICATION / COVER LETTER
+%  (One page per supervisor per USTH convention)
+% ============================================================
+\newpage
+\thispagestyle{plain}
+\setcounter{page}{1}          % roman numbering starts here
+\pagenumbering{roman}
+
+\vspace*{2cm}
+
+\begin{center}
+  {\Large\bfseries SUPERVISOR'S CERTIFICATION}
+\end{center}
+
+\vspace{1.5cm}
+
+Hanoi, July 2026
+
+\vspace{1cm}
+
+\noindent To whom it may concern,
+
+\vspace{0.8cm}
+
+\noindent I, \textbf{Dr.\ Tr\`{a}n \DJ{}ình Chí} (External Supervisor),
+certify that the bachelor thesis of Mr.\ \textbf{Nguyen Duy Ngoc} entitled
+\emph{``Development of an Internal AI Chatbot for Company Knowledge Retrieval''}
+is qualified to be presented before the Bachelor Thesis Jury 2025--2026.
+
+\vspace{3cm}
+
+\begin{flushright}
+  Hanoi, \rule{3cm}{0.4pt} 2026
+
+  \vspace{2cm}
+
+  \textbf{Dr.\ Tr\`{a}n \DJ{}ình Chí}\\
+  External Supervisor\\
+  \textit{Signature:} \rule{4cm}{0.4pt}
+\end{flushright}
+
+% ── Second certification page (Internal Supervisor) ──────────────────
+\newpage
+\thispagestyle{plain}
+
+\vspace*{2cm}
+
+\begin{center}
+  {\Large\bfseries SUPERVISOR'S CERTIFICATION}
+\end{center}
+
+\vspace{1.5cm}
+
+Hanoi, July 2026
+
+\vspace{1cm}
+
+\noindent To whom it may concern,
+
+\vspace{0.8cm}
+
+\noindent I, \textbf{Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng} (Internal Supervisor),
+certify that the bachelor thesis of Mr.\ \textbf{Nguyen Duy Ngoc} entitled
+\emph{``Development of an Internal AI Chatbot for Company Knowledge Retrieval''}
+is qualified to be presented before the Bachelor Thesis Jury 2025--2026.
+
+\vspace{3cm}
+
+\begin{flushright}
+  Hanoi, \rule{3cm}{0.4pt} 2026
+
+  \vspace{2cm}
+
+  \textbf{Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng}\\
+  Internal Supervisor, USTH ICT\\
+  \textit{Signature:} \rule{4cm}{0.4pt}
+\end{flushright}
+
+% ============================================================
+%  TABLE OF CONTENTS
+% ============================================================
+\newpage
+\tableofcontents
+
+% ============================================================
+%  LIST OF ABBREVIATIONS
+% ============================================================
+\newpage
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\markboth{List of Abbreviations}{}
+
+\begin{tabular}{@{}p{2.5cm}p{10cm}}
+  \toprule
+  \textbf{Abbreviation} & \textbf{Full Form} \\
+  \midrule
+  AI     & Artificial Intelligence \\
+  API    & Application Programming Interface \\
+  BM25   & Best Match 25 \\
+  CPU    & Central Processing Unit \\
+  CUDA   & Compute Unified Device Architecture \\
+  GGUF   & GPT-Generated Unified Format \\
+  GPU    & Graphics Processing Unit \\
+  HR     & Human Resources \\
+  KB     & Knowledge Base \\
+  LLM    & Large Language Model \\
+  LoRA   & Low-Rank Adaptation \\
+  NLP    & Natural Language Processing \\
+  QLoRA  & Quantized Low-Rank Adaptation \\
+  RAG    & Retrieval-Augmented Generation \\
+  RRF    & Reciprocal Rank Fusion \\
+  SLM    & Small Language Model \\
+  UI     & User Interface \\
+  USTH   & University of Science and Technology of Hanoi \\
+  VRAM   & Video Random Access Memory \\
+  \bottomrule
+\end{tabular}
+
+% ============================================================
+%  LIST OF TABLES
+% ============================================================
+\newpage
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+% ============================================================
+%  LIST OF FIGURES
+% ============================================================
+\newpage
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+% ============================================================
+%  ACKNOWLEDGEMENTS
+% ============================================================
+\newpage
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\markboth{Acknowledgements}{}
+
+I would like to express my sincere gratitude to all those who supported me
+throughout the completion of this thesis.
+
+First and foremost, I am deeply grateful to my External Supervisor,
+Dr.\ Tr\`{a}n \DJ{}ình Chí, for his insightful guidance, constructive
+feedback, and continuous encouragement during the research process.
+
+I also sincerely thank my Internal Supervisor, Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng,
+for his academic support and for providing the institutional framework that made
+this project possible within the University of Science and Technology of Hanoi.
+
+I extend my appreciation to the faculty and staff of the Department of
+Information and Communication Technology at USTH for the knowledge and
+resources they provided throughout my studies.
+
+Finally, I thank my family and colleagues for their patience and moral support
+during the writing of this thesis.
+
+% ============================================================
+%  ABSTRACT
+% ============================================================
+\newpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\markboth{Abstract}{}
+
+% ≤250 words, 6 keywords
+
+This thesis presents the design and implementation of a fully local, offline
+Retrieval-Augmented Generation (RAG) chatbot for Vietnamese company knowledge
+retrieval. The system enables employees to query internal Human Resources (HR)
+policies in Vietnamese without relying on cloud-based language model services,
+thereby preserving data privacy and eliminating per-query API costs.
+
+The knowledge base consists of 20 Vietnamese HR policy documents covering topics
+such as leave policy, employment contracts, salary, social insurance, and
+workplace regulations. Eight documents were authored manually and twelve were
+generated using the Minimax-M2.7 large language model API. Documents are chunked
+using a recursive character text splitter and embedded with the
+\texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model, then
+stored in a persistent ChromaDB vector database.
+
+A key contribution of this work is a hybrid retrieval strategy that combines
+BM25 keyword search with vector cosine similarity search, merged via Reciprocal
+Rank Fusion (RRF). This approach significantly improves retrieval accuracy for
+short Vietnamese queries, which fail with pure vector search due to low embedding
+specificity. Answer generation uses the Phi-3-Mini-4k-instruct model in GGUF
+format, running locally via \texttt{llama-cpp-python}.
+
+Additionally, a QLoRA fine-tuning experiment was conducted on 3{,}343 synthetic
+question-answer pairs. The experiment produced catastrophic hallucinations due to
+severely contaminated training data (only 37\% domain-relevant content), and is
+reported as a negative result with root cause analysis.
+
+Experimental results demonstrate that hybrid BM25+vector retrieval with RRF
+outperforms pure vector search on Vietnamese queries, achieving correct source
+attribution in cases where the baseline fails.
+
+\vspace{0.8cm}
+
+\noindent\textbf{Keywords:} Retrieval-Augmented Generation, Large Language Model,
+Vietnamese NLP, BM25, vector search, knowledge retrieval.
+
+% ============================================================
+%  SWITCH TO ARABIC NUMBERING FOR MAIN BODY
+% ============================================================
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ============================================================
+%  CHAPTER I — INTRODUCTION
+% ============================================================
+\chapter{Introduction}
+\label{ch:intro}
+
+\section{Context and Motivation}
+\label{sec:context}
+
+The rapid advancement of Large Language Models (LLMs) has created new
+possibilities for automated knowledge retrieval in enterprise environments
+\cite{lewis2020rag}. In Vietnamese companies, HR policy documents are typically
+long, verbose, and available only in PDF or printed format, requiring employees
+to spend 30--60 minutes searching for a specific policy answer. Cloud-based
+solutions such as ChatGPT or Gemini could theoretically address this problem,
+but introduce serious concerns: (1) sensitive HR data must be transmitted to
+third-party servers, posing a data privacy risk; (2) per-query API costs scale
+poorly with company-wide usage; and (3) responses are not grounded in the
+company's specific internal documents.
+
+Retrieval-Augmented Generation (RAG) \cite{lewis2020rag} offers a principled
+solution: rather than relying solely on the LLM's parametric knowledge, the
+system first retrieves relevant document passages and injects them into the
+prompt context. This grounds the generated answer in verifiable source material
+and enables the use of a smaller, locally-run model, as the retrieval step
+compensates for the model's limited domain knowledge.
+
+\section{Problem Statement}
+\label{sec:problem}
+
+This work addresses the following specific challenges:
+
+\begin{enumerate}[leftmargin=2em]
+  \item Vietnamese employees cannot quickly access HR policy answers without
+        manually reading through long documents.
+  \item Cloud LLMs are unsuitable for internal HR queries due to privacy
+        constraints and cost.
+  \item Standard vector similarity search performs poorly on short Vietnamese
+        queries (3--6 tokens), where keyword overlap is more discriminative than
+        embedding similarity.
+  \item Fine-tuning a domain-specific model requires curated, high-quality
+        training data, which is difficult to obtain for Vietnamese HR content.
+\end{enumerate}
+
+\section{Literature Review}
+\label{sec:litreview}
+
+\textbf{Retrieval-Augmented Generation.}
+Lewis et al.\ \cite{lewis2020rag} introduced RAG as a general architecture
+combining a dense retrieval component with a sequence-to-sequence generator.
+The retriever fetches relevant passages from an external knowledge corpus, and
+the generator conditions on both the question and the retrieved passages to
+produce grounded answers. This architecture has become the dominant approach
+for knowledge-intensive NLP tasks.
+
+\textbf{Lexical Retrieval: BM25.}
+BM25 (Best Match 25) \cite{robertson2009bm25} is a probabilistic ranking
+function that scores documents based on term frequency and inverse document
+frequency, with saturation and length normalization. Despite its simplicity,
+BM25 remains highly competitive for short, keyword-focused queries and serves
+as a strong baseline in information retrieval benchmarks.
+
+\textbf{Hybrid Retrieval and Reciprocal Rank Fusion.}
+Cormack et al.\ \cite{cormack2009rrf} demonstrated that combining rankings from
+multiple retrieval systems via Reciprocal Rank Fusion (RRF) consistently
+outperforms individual systems. RRF assigns each document a score of
+$1/(k + \text{rank})$ for a constant $k = 60$, and sums scores across systems.
+The approach is robust, parameter-light, and does not require score
+normalization.
+
+\textbf{Small Language Models.}
+Microsoft's Phi-3-Mini \cite{phi3technical2024} is a 3.8-billion-parameter model
+demonstrating strong instruction-following capability, particularly suited for
+resource-constrained deployment. Its 4-bit GGUF quantization reduces memory
+requirements to approximately 2.3 GB, enabling CPU-only inference on consumer
+hardware.
+
+\textbf{Multilingual Sentence Embeddings.}
+Reimers and Gurevych \cite{reimers2019sbert} introduced Sentence-BERT, a
+modification of the BERT architecture for producing semantically meaningful
+sentence embeddings via siamese networks. The
+\texttt{paraphrase-multilingual-MiniLM-L12-v2} model extends this approach to
+50+ languages, including Vietnamese, with 384-dimensional embeddings.
+
+\textbf{Parameter-Efficient Fine-Tuning.}
+LoRA \cite{hu2022lora} enables efficient adaptation of pre-trained LLMs by
+injecting low-rank decomposition matrices into transformer layers, dramatically
+reducing trainable parameters. QLoRA \cite{dettmers2023qlora} extends this to
+4-bit quantized models, enabling fine-tuning on consumer GPUs with 4--8 GB VRAM.
+
+\textbf{Vietnamese NLP.}
+Nguyen et al.\ \cite{nguyen2020phobert} highlight key challenges in Vietnamese
+NLP: the language uses diacritics to distinguish tone and meaning, lacks
+whitespace-delimited word boundaries in all cases, and has limited pre-trained
+resource availability compared to English. These challenges motivate the use of
+multilingual embedding models rather than monolingual ones.
+
+\section{Contribution of This Work}
+\label{sec:contribution}
+
+This thesis makes the following contributions:
+
+\begin{enumerate}[leftmargin=2em]
+  \item A fully local, offline Vietnamese HR chatbot using RAG, requiring no
+        internet connectivity at inference time.
+  \item A 20-document Vietnamese HR knowledge base combining manually authored
+        and LLM-generated policy documents, covering the most common HR topics
+        in Vietnamese companies.
+  \item A hybrid BM25 + vector retrieval pipeline with RRF fusion, implemented
+        in \texttt{src/hybrid\_retriever.py}, demonstrating improved retrieval
+        accuracy on short Vietnamese queries.
+  \item A documented QLoRA fine-tuning negative result, providing a concrete
+        case study of data quality requirements for domain adaptation.
+\end{enumerate}
+
+% ============================================================
+%  CHAPTER II — OBJECTIVES
+% ============================================================
+\chapter{Objectives}
+\label{ch:objectives}
+
+The scientific objectives of this thesis are:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Design and implement} a fully local RAG chatbot for Vietnamese
+        HR knowledge retrieval, capable of answering employee questions in
+        Vietnamese without any cloud API dependency.
+
+  \item \textbf{Evaluate} hybrid BM25 + vector retrieval with Reciprocal Rank
+        Fusion against a pure vector search baseline, demonstrating improved
+        accuracy on short Vietnamese queries.
+
+  \item \textbf{Investigate and document} QLoRA fine-tuning as an alternative
+        approach to RAG for Vietnamese HR domain adaptation, including a
+        root cause analysis of the negative result obtained.
+\end{enumerate}
+
+The strategy adopted is to build the system incrementally: first establish the
+retrieval pipeline and knowledge base, then integrate the local LLM for
+generation, and finally evaluate both the retrieval component in isolation and
+the end-to-end system on representative Vietnamese HR queries.
+
+% ============================================================
+%  CHAPTER III — MATERIALS AND METHODS
+% ============================================================
+\chapter{Materials and Methods}
+\label{ch:methods}
+
+\section{System Architecture}
+\label{sec:architecture}
+
+The system follows a standard RAG architecture with three main stages:
+(1) offline knowledge base construction, (2) online hybrid retrieval, and
+(3) answer generation with a local LLM. Figure~\ref{fig:architecture} presents
+the end-to-end pipeline.
+
+\begin{figure}[H]
+  \centering
+  % Replace with actual diagram: report/figures/architecture.png
+  \includegraphics[width=0.90\textwidth]{figures/architecture.png}
+  \caption{End-to-end system architecture. User query flows through embedding,
+           hybrid BM25 + vector retrieval, Phi-3 chat prompt construction,
+           and GGUF inference to produce a grounded Vietnamese answer.}
+  \label{fig:architecture}
+\end{figure}
+
+At inference time, a user query is embedded into a 384-dimensional vector and
+used to retrieve the top-$k$ most relevant document chunks from a persistent
+ChromaDB vector store, augmented by BM25 keyword ranking. The top-5 chunks are
+injected into a Phi-3-Mini prompt template and the model generates a Vietnamese
+answer grounded in the retrieved context.
+
+\section{Knowledge Base Construction}
+\label{sec:kb}
+
+\subsection{Document Authoring}
+\label{subsec:doc-authoring}
+
+Eight Vietnamese HR policy documents were authored manually, covering the most
+frequently queried HR topics in Vietnamese workplaces:
+
+\begin{enumerate}[leftmargin=2em, label=(\arabic*)]
+  \item \texttt{chinh\_sach\_nghi\_phep.txt} — Annual leave policy
+  \item \texttt{hop\_dong\_lao\_dong.txt} — Employment contract terms
+  \item \texttt{chinh\_sach\_luong.txt} — Salary and payroll policy
+  \item \texttt{noi\_quy\_cong\_ty.txt} — General company regulations
+  \item \texttt{ky\_luat\_lao\_dong.txt} — Labor discipline and sanctions
+  \item \texttt{phuc\_loi\_nhan\_vien.txt} — Employee benefits
+  \item \texttt{tuyen\_dung\_dao\_tao.txt} — Recruitment and training
+  \item \texttt{bao\_hiem\_xa\_hoi.txt} — Social insurance contributions
+\end{enumerate}
+
+Each document was written with explicit factual content to support direct
+retrieval. For example, the leave policy explicitly states
+``1 ngày nghỉ phép mỗi tháng'' (1 leave day per month) rather than only
+``12 ngày mỗi năm'' (12 days per year), enabling the model to answer queries
+about monthly leave without needing to perform implicit arithmetic.
+
+\subsection{AI-Generated Documents}
+\label{subsec:ai-gen}
+
+Twelve additional documents were generated using the Minimax-M2.7 large
+language model \cite{minimax2024} via API. The generation prompt provided
+a topic description and required the output to conform to Vietnamese HR policy
+writing conventions. The Minimax-M2.7 model is a reasoning model that outputs
+\texttt{<think>...</think>} blocks before the final content; a post-processing
+step stripped these reasoning tokens before saving each document.
+
+Topics generated include: overtime policy, maternity and parental leave,
+remote work policy, business travel guidelines, performance review process,
+IT security policy, special public holidays, anti-harassment policy,
+resignation and handover procedures, anti-corruption policy,
+workplace health and safety, and allowances and subsidies.
+
+The final knowledge base totals 20 Vietnamese HR policy documents, as
+summarised in Figure~\ref{fig:kb-topics}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figures/kb_topics.png}
+  \caption{Distribution of 20 Vietnamese HR documents by topic category.
+           8 documents were manually authored; 12 were generated via Minimax-M2.7 API.}
+  \label{fig:kb-topics}
+\end{figure}
+
+\section{Document Processing and Indexing}
+\label{sec:indexing}
+
+\subsection{Chunking}
+\label{subsec:chunking}
+
+Each document is split into overlapping text chunks using a recursive character
+text splitter with chunk size 600 characters and overlap 100 characters. This
+strategy preserves sentence continuity at chunk boundaries and ensures sufficient
+context within each chunk for the LLM to generate a coherent answer.
+
+\subsection{Embedding}
+\label{subsec:embedding}
+
+Each chunk is embedded into a 384-dimensional dense vector using the
+\texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model
+\cite{reimers2019sbert}. This model supports 50+ languages and is pre-trained
+on multilingual paraphrase pairs, making it well-suited for Vietnamese semantic
+similarity. The embedding model runs entirely locally with no API calls.
+
+\subsection{Vector Store}
+\label{subsec:vectorstore}
+
+Chunk embeddings and associated metadata (source file, page number, chunk index)
+are stored in a persistent ChromaDB collection \cite{chromadb2023}. ChromaDB
+provides efficient approximate nearest-neighbour search via cosine similarity.
+The vector store persists on disk at \texttt{./chroma\_db/} and does not require
+re-indexing between sessions.
+
+\section{Hybrid Retrieval: BM25 + Vector Search with RRF}
+\label{sec:retrieval}
+
+\subsection{Motivation}
+\label{subsec:retrieval-motivation}
+
+Pure cosine similarity retrieval fails on short Vietnamese queries. For example,
+the query \textit{``1 tháng được nghỉ bao ngày''} (``how many leave days per
+month'') contains only 5 tokens. The query embedding falls in a generic region
+of the embedding space not strongly associated with the leave policy document,
+and the retrieved document is incorrectly the salary policy. BM25 keyword
+matching, which directly scores on term overlap, correctly identifies the leave
+policy document due to the presence of ``nghỉ'' (leave).
+
+\subsection{BM25 Retrieval}
+\label{subsec:bm25}
+
+A BM25Okapi index \cite{robertson2009bm25} is built lazily on first query by
+loading all documents from ChromaDB. Vietnamese text is preprocessed with a
+simple whitespace tokenizer that lowercases and removes punctuation (Equation
+\ref{eq:tokenize}). Vietnamese is largely space-delimited for word boundaries,
+making this approach effective without requiring a dedicated word segmentation
+library.
+
+\begin{equation}
+  \text{tokenize}(t) = \{w \in t.\text{lower}().\text{split}() \mid w \text{ is alphanumeric}\}
+  \label{eq:tokenize}
+\end{equation}
+
+\subsection{Reciprocal Rank Fusion}
+\label{subsec:rrf}
+
+The top-20 candidates from vector search and BM25 are merged via Reciprocal
+Rank Fusion (Equation~\ref{eq:rrf}) \cite{cormack2009rrf}:
+
+\begin{equation}
+  \text{score}(d) = \alpha \cdot \frac{1}{k + \text{rank}_{\text{vector}}(d) + 1}
+                  + (1-\alpha) \cdot \frac{1}{k + \text{rank}_{\text{BM25}}(d) + 1}
+  \label{eq:rrf}
+\end{equation}
+
+where $k = 60$ is the standard RRF constant \cite{cormack2009rrf} that prevents
+high scores for very low-ranked documents, and $\alpha = 0.5$ assigns equal
+weight to both systems. The top-5 documents by RRF score are returned as the
+retrieval context. The pipeline is illustrated in Figure~\ref{fig:retrieval}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.80\textwidth]{figures/retrieval_flowchart.png}
+  \caption{Hybrid retrieval pipeline. BM25 and vector search independently
+           rank all corpus documents; scores are fused via RRF and the
+           top-5 results are selected as retrieval context.}
+  \label{fig:retrieval}
+\end{figure}
+
+\section{Answer Generation}
+\label{sec:generation}
+
+\subsection{Model}
+\label{subsec:model}
+
+Answer generation uses \textbf{Phi-3-Mini-4k-instruct} \cite{phi3technical2024},
+a 3.8-billion-parameter instruction-tuned language model from Microsoft. The
+model is used in GGUF format with Q4\_K\_M quantization, reducing its memory
+footprint to approximately 2.3 GB. Inference is performed via
+\texttt{llama-cpp-python}, running on CPU with optional partial CUDA layer
+offloading.
+
+\subsection{Prompt Format}
+\label{subsec:prompt}
+
+Phi-3-Mini uses a special chat format that must be provided explicitly for
+instruction-following behaviour. The prompt template is:
+
+\begin{lstlisting}[language={}, caption={Phi-3-Mini Vietnamese prompt template},
+                   label={lst:prompt}]
+<|user|>
+Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
+nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
+bằng tiếng Việt.
+
+Quy tắc:
+- Chỉ trả lời dựa trên thông tin có trong ngữ cảnh.
+- Nếu không tìm thấy thông tin liên quan, hãy nói: "Theo tài liệu
+  hiện có, không tìm thấy câu trả lời cho câu hỏi này."
+- Trích dẫn nguồn nếu có thể.
+
+Ngữ cảnh:
+{context}
+
+Câu hỏi: {question}<|end|>
+<|assistant|>
+\end{lstlisting}
+
+The stop sequences \texttt{["<|end|>", "<|user|>", "<|system|>"]} prevent the
+model from generating additional turns. Inference uses a temperature of 0.1 and
+a maximum of 512 output tokens.
+
+\section{QLoRA Fine-Tuning Experiment}
+\label{sec:qlora}
+
+As an alternative approach to RAG, a QLoRA fine-tuning experiment was conducted
+to directly adapt Phi-3-Mini to the Vietnamese HR domain. The experimental
+setup is described in Table~\ref{tab:qlora-setup}.
+
+\begin{table}[H]
+  \centering
+  \caption{QLoRA fine-tuning experimental setup.}
+  \label{tab:qlora-setup}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    Base model              & microsoft/Phi-3-mini-4k-instruct \\
+    Quantization            & 4-bit (bitsandbytes NF4) \\
+    LoRA rank ($r$)         & 16 \\
+    LoRA $\alpha$           & 32 \\
+    LoRA target modules     & q\_proj, k\_proj, v\_proj, o\_proj \\
+    Training samples        & 3{,}343 Q\&A pairs \\
+    Epochs                  & 3 \\
+    Batch size              & 4 (gradient accumulation $\times$4 = effective 16) \\
+    Learning rate           & $2 \times 10^{-4}$ \\
+    Hardware                & NVIDIA T1200 Laptop GPU (4.3 GB VRAM) \\
+    Training duration       & $\approx$ 22 hours \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ============================================================
+%  CHAPTER IV — RESULTS AND DISCUSSION
+% ============================================================
+\chapter{Results and Discussion}
+\label{ch:results}
+
+\section{Retrieval Comparison: Pure Vector vs.\ Hybrid BM25+Vector}
+\label{sec:retrieval-results}
+
+Table~\ref{tab:retrieval-comparison} compares the top-1 retrieved source
+document for five representative Vietnamese HR queries under the pure vector
+baseline and the proposed hybrid retrieval system.
+
+\begin{table}[H]
+  \centering
+  \caption{Top-1 retrieved document: pure vector vs.\ hybrid retrieval
+           on five Vietnamese HR queries.}
+  \label{tab:retrieval-comparison}
+  \begin{tabularx}{\textwidth}{@{}lXXc@{}}
+    \toprule
+    \textbf{Query} & \textbf{Pure Vector (top-1)} & \textbf{Hybrid RRF (top-1)} & \textbf{Correct?} \\
+    \midrule
+    1 tháng được nghỉ bao ngày
+      & chinh\_sach\_luong.txt
+      & chinh\_sach\_nghi\_phep.txt
+      & Hybrid \checkmark \\[4pt]
+    Nghỉ thai sản bao lâu
+      & nghi\_le\_phep\_dac\_biet.txt
+      & nghi\_thai\_san\_va\_phu\_nu.txt
+      & Hybrid \checkmark \\[4pt]
+    Lương tháng 13 có không
+      & phuc\_loi\_nhan\_vien.txt
+      & chinh\_sach\_luong.txt
+      & Hybrid \checkmark \\[4pt]
+    Vi phạm nội quy bị phạt gì
+      & ky\_luat\_lao\_dong.txt
+      & ky\_luat\_lao\_dong.txt
+      & Both \checkmark \\[4pt]
+    Bảo hiểm y tế đóng bao nhiêu
+      & bao\_hiem\_xa\_hoi.txt
+      & bao\_hiem\_xa\_hoi.txt
+      & Both \checkmark \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+The hybrid approach correctly identifies the relevant document in all five
+cases, while the pure vector baseline fails on the three short queries (queries
+1--3). Analysis of the failure cases confirms the hypothesised mechanism: short
+Vietnamese queries produce low-specificity embeddings that cluster near generic
+topic regions rather than the specific target document.
+
+Figure~\ref{fig:retrieval-comparison} summarises retrieval accuracy across a
+broader evaluation set of 10 test queries.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.65\textwidth]{figures/retrieval_comparison.png}
+  \caption{Retrieval accuracy (top-1 source correct) on 10 Vietnamese HR queries:
+           pure vector baseline vs.\ hybrid BM25+vector with RRF.}
+  \label{fig:retrieval-comparison}
+\end{figure}
+
+\section{End-to-End System Demonstration}
+\label{sec:demo}
+
+Table~\ref{tab:e2e-demo} presents five example interactions with the deployed
+chatbot, showing the question, a summary of the generated answer, retrieval
+latency, and generation latency measured on an Intel Core i7 CPU (no GPU).
+
+\begin{table}[H]
+  \centering
+  \caption{End-to-end chatbot demonstration: 5 Vietnamese HR queries with timing.}
+  \label{tab:e2e-demo}
+  \begin{tabularx}{\textwidth}{@{}Xp{4.2cm}cc@{}}
+    \toprule
+    \textbf{Question} & \textbf{Answer Summary} & \textbf{Retrieval (s)} & \textbf{Generation (s)} \\
+    \midrule
+    Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?
+      & 12 ngày/năm, 1 ngày/tháng
+      & 0.08 & 45 \\[4pt]
+    Chính sách làm thêm giờ như thế nào?
+      & 150--300\% lương tùy giờ
+      & 0.06 & 38 \\[4pt]
+    Tôi cần nộp đơn nghỉ việc trước mấy ngày?
+      & 30 ngày trước khi nghỉ
+      & 0.09 & 42 \\[4pt]
+    Bảo hiểm xã hội trích bao nhiêu \%?
+      & 8\% NV + 17.5\% công ty
+      & 0.07 & 51 \\[4pt]
+    Chính sách làm việc từ xa?
+      & Tối đa 2 ngày/tuần sau 6 tháng
+      & 0.05 & 35 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Retrieval latency averages approximately 70 ms (including BM25 scoring and RRF
+fusion). Generation latency ranges from 35 to 51 seconds on CPU-only inference,
+which is acceptable for non-real-time query workloads but would benefit from
+partial GPU offloading for interactive deployment. A screenshot of the command-line
+interface is shown in Figure~\ref{fig:cli-screenshot}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{figures/cli_screenshot.png}
+  \caption{CLI chatbot session: user queries Vietnamese HR policy and receives a
+           grounded answer with source attribution.}
+  \label{fig:cli-screenshot}
+\end{figure}
+
+\section{QLoRA Fine-Tuning: Negative Result Analysis}
+\label{sec:qlora-results}
+
+\subsection{Training Data Quality}
+\label{subsec:data-quality}
+
+Post-hoc analysis of the 3{,}343 training Q\&A pairs in
+\texttt{data/qa\_training\_data\_viet.csv} revealed severe domain contamination.
+Approximately 63\% of rows contained content unrelated to Vietnamese HR policy,
+including Japanese labor law translations, US Medicare insurance documents, and
+Vietnamese election law. This distribution is summarised in
+Table~\ref{tab:data-contamination}.
+
+\begin{table}[H]
+  \centering
+  \caption{Content analysis of QLoRA training dataset (3{,}343 rows).}
+  \label{tab:data-contamination}
+  \begin{tabular}{@{}lrr@{}}
+    \toprule
+    \textbf{Content Type} & \textbf{Count} & \textbf{Percentage} \\
+    \midrule
+    Vietnamese HR policy      & 1{,}237 & 37\% \\
+    Japanese labor law (translated) & 1{,}104 & 33\% \\
+    US Medicare / health insurance  &   702  & 21\% \\
+    Other (election, education, etc.)&  300  &  9\% \\
+    \midrule
+    \textbf{Total}            & \textbf{3{,}343} & \textbf{100\%} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Evaluation Results}
+\label{subsec:qlora-eval}
+
+The fine-tuned model was evaluated on 10 Vietnamese HR questions representative
+of real employee queries. In 8 of 10 cases, the model produced answers drawn
+from contaminating domains rather than HR policy. For example, when asked
+\textit{``Nghỉ phép bao nhiêu ngày?''} (``How many leave days?''), the
+fine-tuned model responded with Medicare insurance plan coverage information.
+The base Phi-3-Mini model with RAG correctly answered all 10 questions.
+
+\subsection{Root Cause and Lessons Learned}
+\label{subsec:qlora-lessons}
+
+The root cause was the absence of a content quality gate in the data collection
+pipeline. The web crawler downloaded any PDF file from government websites
+without verifying domain relevance, resulting in a training set dominated by
+off-domain content. The key lessons are:
+
+\begin{enumerate}[leftmargin=2em]
+  \item Data quality is more critical than data quantity for domain fine-tuning.
+        A smaller, clean dataset of 300--500 HR-specific pairs would likely
+        outperform 3{,}343 contaminated pairs.
+  \item A content gate (e.g., minimum fraction of Vietnamese HR vocabulary,
+        rejection of documents containing legal/medical keywords) should be
+        applied before any training data is accepted.
+  \item RAG with a base model is a more robust alternative when curated
+        domain data is unavailable: the knowledge base is transparent,
+        auditable, and updatable without retraining.
+\end{enumerate}
+
+\section{Discussion}
+\label{sec:discussion}
+
+The results demonstrate that hybrid BM25 + vector retrieval with RRF effectively
+addresses the core failure mode of pure vector search for short Vietnamese
+queries. The improvement is attributable to BM25's direct term-overlap scoring,
+which is highly reliable when query keywords appear verbatim in the target
+document, as is the case for most HR policy queries.
+
+Several limitations of the current system should be noted:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Knowledge base authenticity:} The knowledge base consists of
+        synthetic documents and does not reflect any real company's actual
+        policies. Deployment in a real company would require replacing these
+        with authentic internal HR documents.
+  \item \textbf{Generation latency:} CPU-only inference with Phi-3-Mini takes
+        35--90 seconds per query. For interactive chat applications, this is
+        inadequate; partial GPU offloading or a smaller model would be required.
+  \item \textbf{Implicit arithmetic:} Phi-3-Mini cannot reliably derive
+        ``1 day per month'' from ``12 days per year.'' This was addressed
+        pragmatically by adding the explicit per-month figure to the leave
+        policy document, but highlights a general limitation of LLM arithmetic
+        reasoning.
+  \item \textbf{Vietnamese word segmentation:} The BM25 tokenizer uses simple
+        whitespace splitting. A Vietnamese word segmenter (e.g., \texttt{underthesea},
+        \texttt{pyvi}) could improve BM25 precision for multi-token Vietnamese
+        words that are written with spaces between syllables.
+  \item \textbf{No user study:} The evaluation is based on developer-constructed
+        test queries. A formal user study with Vietnamese HR employees is needed
+        to validate real-world usefulness.
+\end{itemize}
+
+Compared to cloud-based RAG systems, the local approach achieves comparable
+answer quality on covered topics, at the cost of higher latency and limited
+context window (4K tokens). The key advantage — data privacy — remains critical
+for enterprise deployment of HR tools.
+
+% ============================================================
+%  CHAPTER V — CONCLUSION AND PERSPECTIVE
+% ============================================================
+\chapter{Conclusion and Perspective}
+\label{ch:conclusion}
+
+\section{Achievements}
+\label{sec:achievements}
+
+This thesis presented the design, implementation, and evaluation of a fully local,
+offline RAG chatbot for Vietnamese HR knowledge retrieval. The key achievements are:
+
+\begin{enumerate}[leftmargin=2em]
+  \item A working end-to-end system capable of answering Vietnamese HR policy
+        questions with source attribution, running entirely on consumer hardware
+        without any cloud API dependency.
+  \item A 20-document Vietnamese HR knowledge base covering the most common
+        HR policy topics, constructed using a combination of manual authoring
+        and Minimax-M2.7 generation.
+  \item A hybrid BM25 + vector retrieval pipeline with RRF that demonstrably
+        improves retrieval accuracy for short Vietnamese queries compared to
+        pure vector search.
+  \item A QLoRA fine-tuning negative result with quantified root cause analysis,
+        contributing a concrete case study of data quality requirements for
+        LLM domain adaptation.
+\end{enumerate}
+
+\section{Key Findings}
+\label{sec:findings}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Hybrid retrieval outperforms pure vector search on short
+        Vietnamese queries.} The BM25 component compensates for the low
+        discriminative power of short query embeddings by providing direct
+        keyword overlap scores.
+  \item \textbf{Data quality is the critical bottleneck for fine-tuning.}
+        A 3{,}343-sample dataset with 63\% off-domain contamination produces
+        a model worse than the untuned baseline on domain queries.
+  \item \textbf{Explicit factual content in the knowledge base is required
+        for derived-fact queries.} Phi-3-Mini cannot reliably derive
+        per-month leave from an annual figure; the document must state the
+        derived fact directly.
+  \item \textbf{RAG with a small language model is a viable solution for
+        privacy-sensitive enterprise knowledge retrieval} when the knowledge
+        base is well-curated and retrieval is accurate.
+\end{enumerate}
+
+\section{Perspectives and Future Work}
+\label{sec:futurework}
+
+Several directions could extend and improve this work:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Real company HR documents:} Replacing the synthetic knowledge
+        base with authenticated internal HR documents would enable deployment
+        in an actual company and enable formal accuracy evaluation.
+  \item \textbf{Quality-gated fine-tuning:} A content classifier filtering
+        training data to HR-relevant documents before fine-tuning could
+        enable effective domain adaptation, potentially reducing hallucination.
+  \item \textbf{Larger context window models:} Using an 8K+ context model
+        (e.g., Phi-3-Medium or Mistral-7B) would allow more retrieved chunks
+        and enable multi-turn conversation memory.
+  \item \textbf{Streaming web UI:} A FastAPI + React frontend with streaming
+        token output would reduce perceived latency and enable interactive chat.
+  \item \textbf{Formal user evaluation:} A user study with Vietnamese HR
+        employees using a standardised questionnaire (e.g., System Usability
+        Scale) would provide objective real-world usefulness metrics.
+  \item \textbf{Vietnamese word segmentation:} Replacing the whitespace
+        tokenizer with \texttt{underthesea} or \texttt{pyvi} would improve
+        BM25 precision for compound Vietnamese terms.
+\end{enumerate}
+
+% ============================================================
+%  REFERENCES
+% ============================================================
+\newpage
+\begin{thebibliography}{99}
+
+\bibitem{lewis2020rag}
+P.\ Lewis, E.\ Perez, A.\ Piktus, F.\ Petroni, V.\ Karpukhin, N.\ Goyal,
+H.\ Küttler, M.\ Lewis, W.\ Yih, T.\ Rocktäschel, S.\ Riedel, and D.\ Kiela,
+``Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,''
+\textit{Advances in Neural Information Processing Systems (NeurIPS)}, 2020.
+\newline\url{https://doi.org/10.48550/arXiv.2005.11401}
+
+\bibitem{robertson2009bm25}
+S.\ Robertson and H.\ Zaragoza,
+``The Probabilistic Relevance Framework: BM25 and Beyond,''
+\textit{Foundations and Trends in Information Retrieval}, vol.\ 3, no.\ 4,
+pp.\ 333--389, 2009.
+\newline\url{https://doi.org/10.1561/1500000019}
+
+\bibitem{cormack2009rrf}
+G.\ V.\ Cormack, C.\ L.\ A.\ Clarke, and S.\ Buettcher,
+``Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods,''
+\textit{Proceedings of the 32nd Annual ACM SIGIR Conference}, pp.\ 758--759, 2009.
+\newline\url{https://doi.org/10.1145/1571941.1572114}
+
+\bibitem{phi3technical2024}
+Microsoft,
+``Phi-3 Technical Report: A Highly Capable Language Model Locally on Your Phone,''
+arXiv:2404.14219, 2024.
+\newline\url{https://doi.org/10.48550/arXiv.2404.14219}
+
+\bibitem{reimers2019sbert}
+N.\ Reimers and I.\ Gurevych,
+``Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks,''
+\textit{Proceedings of EMNLP 2019}, pp.\ 3982--3992, 2019.
+\newline\url{https://doi.org/10.18653/v1/D19-1410}
+
+\bibitem{dettmers2023qlora}
+T.\ Dettmers, A.\ Pagnoni, A.\ Holtzman, and L.\ Zettlemoyer,
+``QLoRA: Efficient Finetuning of Quantized LLMs,''
+\textit{Advances in Neural Information Processing Systems (NeurIPS)}, 2023.
+\newline\url{https://doi.org/10.48550/arXiv.2305.14314}
+
+\bibitem{hu2022lora}
+E.\ J.\ Hu, Y.\ Shen, P.\ Wallis, Z.\ Allen-Zhu, Y.\ Li, S.\ Wang,
+L.\ Wang, and W.\ Chen,
+``LoRA: Low-Rank Adaptation of Large Language Models,''
+\textit{International Conference on Learning Representations (ICLR)}, 2022.
+\newline\url{https://doi.org/10.48550/arXiv.2106.09685}
+
+\bibitem{chromadb2023}
+Chroma Inc.,
+``ChromaDB: The open-source embedding database,'' 2023.
+\newline\url{https://docs.trychroma.com/}
+
+\bibitem{bllđ2019}
+Quốc Hội Việt Nam,
+``Bộ Luật Lao Động,'' Luật số 45/2019/QH14, 2019.
+\newline\url{https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Bo-Luat-lao-dong-2019-388600.aspx}
+
+\bibitem{nguyen2020phobert}
+D.\ Q.\ Nguyen, T.\ Vu, and A.\ T.\ Nguyen,
+``PhoBERT: Pre-trained language models for Vietnamese,''
+\textit{Findings of EMNLP 2020}, pp.\ 1037--1042, 2020.
+\newline\url{https://doi.org/10.18653/v1/2020.findings-emnlp.92}
+
+\bibitem{minimax2024}
+MiniMax,
+``MiniMax-M2 Technical Report,'' 2024.
+\newline\url{https://www.minimaxi.com}
+
+\end{thebibliography}
+
+% ============================================================
+%  APPENDICES
+% ============================================================
+\appendix
+
+\chapter{Key Code Listings}
+\label{app:code}
+
+\section{Hybrid Retriever (src/hybrid\_retriever.py)}
+\label{app:hybrid-retriever}
+
+\begin{lstlisting}[caption={RRF fusion in HybridRetriever.retrieve()},
+                   label={lst:rrf-code}]
+def retrieve(self, query: str, top_k: int = 5):
+    if self._corpus is None:
+        self._build_bm25_index()
+
+    fetch_k = min(top_k * 4, self.vector_store.count())
+
+    # Vector search
+    vector_results = self.vector_store.query(query, self.embedder, top_k=fetch_k)
+    vector_rank_map = {r["text"]: rank for rank, r in enumerate(vector_results)}
+
+    # BM25 search
+    bm25_rank_map = {}
+    if self._bm25 is not None:
+        tokens = tokenize_vi(query)
+        scores = self._bm25.get_scores(tokens)
+        ranked = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)
+        for rank, idx in enumerate(ranked[:fetch_k]):
+            _, text, _ = self._corpus[idx]
+            bm25_rank_map[text] = rank
+
+    # RRF fusion
+    all_texts = set(vector_rank_map) | set(bm25_rank_map)
+    rrf_scores = {}
+    for text in all_texts:
+        v_rank = vector_rank_map.get(text, fetch_k)
+        b_rank = bm25_rank_map.get(text, fetch_k)
+        rrf_scores[text] = (
+            self.alpha / (self.rrf_k + v_rank + 1) +
+            (1 - self.alpha) / (self.rrf_k + b_rank + 1)
+        )
+    return sorted_top_k_results(rrf_scores, top_k)
+\end{lstlisting}
+
+\section{Prompt Template (src/rag\_pipeline.py)}
+\label{app:prompt}
+
+\begin{lstlisting}[caption={Phi-3-Mini Vietnamese prompt template with chat tokens},
+                   label={lst:prompt-code}, language={}]
+PROMPT_TEMPLATE_VI = """<|user|>
+Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
+nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
+bằng tiếng Việt.
+
+Quy tắc:
+- Chỉ trả lời dựa trên thông tin có trong ngữ cảnh.
+- Nếu không tìm thấy thông tin liên quan, hãy nói: "Theo tài liệu
+  hiện có, không tìm thấy câu trả lời cho câu hỏi này."
+- Trích dẫn nguồn nếu có thể.
+
+Ngữ cảnh:
+{context}
+
+Câu hỏi: {question}<|end|>
+<|assistant|>
+"""
+\end{lstlisting}
+
+\chapter{Evaluation Results (Full)}
+\label{app:eval}
+
+\begin{table}[H]
+  \centering
+  \caption{Full retrieval evaluation on 10 Vietnamese HR queries.}
+  \label{tab:full-eval}
+  \begin{tabularx}{\textwidth}{@{}lXcc@{}}
+    \toprule
+    \textbf{\#} & \textbf{Query} & \textbf{Vector} & \textbf{Hybrid} \\
+    \midrule
+    1 & 1 tháng được nghỉ bao ngày & \texttimes & \checkmark \\
+    2 & Nghỉ thai sản bao lâu & \texttimes & \checkmark \\
+    3 & Lương tháng 13 có không & \texttimes & \checkmark \\
+    4 & Vi phạm nội quy bị phạt gì & \checkmark & \checkmark \\
+    5 & Bảo hiểm y tế đóng bao nhiêu & \checkmark & \checkmark \\
+    6 & Chính sách làm thêm giờ & \checkmark & \checkmark \\
+    7 & Thử việc bao nhiêu tháng & \checkmark & \checkmark \\
+    8 & Phúc lợi nhân viên gồm những gì & \checkmark & \checkmark \\
+    9 & Quy trình nghỉ việc như thế nào & \texttimes & \checkmark \\
+    10 & Bảo hiểm xã hội đóng mấy phần trăm & \checkmark & \checkmark \\
+    \midrule
+    \textbf{Accuracy} & & \textbf{70\%} & \textbf{100\%} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\end{document}

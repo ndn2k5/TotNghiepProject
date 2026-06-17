@@ -1,0 +1,45 @@
+Required figures for thesis.tex
+================================
+
+Place all PNG/PDF files in this directory: report/figures/
+
+REQUIRED FILES:
+---------------
+1. usth_logo.png
+   - USTH official logo
+   - Download from: https://usth.edu.vn
+   - Size: recommend ~300x170 px PNG
+
+2. architecture.png
+   - End-to-end system architecture diagram
+   - Shows: User Query → Embed → ChromaDB → BM25 → RRF → Phi3 → Answer
+   - Suggested tool: draw.io (free, export as PNG 300dpi)
+   - Width in paper: 90% textwidth (~15cm)
+
+3. kb_topics.png
+   - Bar chart or pie chart: 20 documents by topic category
+   - 8 manual + 12 Minimax-generated
+   - Generate with: python scripts/plot_kb_topics.py
+   - Or: matplotlib bar chart
+
+4. retrieval_flowchart.png
+   - Flowchart of hybrid retrieval: BM25 branch + Vector branch → RRF merge → top-5
+   - Suggested: draw.io or Mermaid diagram
+   - Width in paper: 80% textwidth
+
+5. retrieval_comparison.png
+   - Bar chart: accuracy pure vector (70%) vs hybrid (100%) on 10 queries
+   - Generate with matplotlib
+   - Simple 2-bar grouped chart
+
+6. cli_screenshot.png
+   - Screenshot of the CLI chatbot in action
+   - Run: python cli_demo.py
+   - Ask "1 tháng được nghỉ bao ngày?" and capture screenshot
+   - Width in paper: 90% textwidth
+
+OPTIONAL (if training loss data available):
+7. qlora_loss.png
+   - Training loss curve from QLoRA experiment
+   - x-axis: steps, y-axis: loss
+   - If no saved log, can omit this figure
