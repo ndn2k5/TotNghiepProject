@@ -2,6 +2,10 @@
 venv/
 .venv/
 env/
+*.aux
+*.lof 
+*.lot
+*.out
 
 # Python
 __pycache__/
