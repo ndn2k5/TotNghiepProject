@@ -6,22 +6,36 @@
 % Internal Supervisor: Trần Hoàng Tùng
 % Date: July 2026
 %
-% Compile with XeLaTeX (recommended for Vietnamese):
-%   xelatex thesis.tex
-%   bibtex thesis
-%   xelatex thesis.tex
-%   xelatex thesis.tex
+% FONT: Times New Roman (via XeLaTeX fontspec — RECOMMENDED)
 %
-% Or with pdfLaTeX:
+% Compile with XeLaTeX:
+%   xelatex thesis.tex
+%   xelatex thesis.tex   (run twice for TOC/refs)
+%
+% Fallback with pdfLaTeX (uses mathptmx Times clone):
 %   pdflatex thesis.tex
 % ============================================================
 
 \documentclass[12pt, a4paper, oneside]{report}
 
 % ── Encoding & Language ──────────────────────────────────────────────
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[english,vietnamese]{babel}   % English main, Vietnamese for accented names
+\usepackage{ifxetex}
+
+\ifxetex
+  % XeLaTeX: real Times New Roman from system fonts
+  \usepackage{fontspec}
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont[Scale=0.88]{Courier New}
+  \usepackage{polyglossia}
+  \setmainlanguage{english}
+\else
+  % pdfLaTeX fallback: mathptmx = Times New Roman clone (text + math)
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{mathptmx}          % Times New Roman text + math
+  \usepackage[english]{babel}
+\fi
 
 % ── Page Layout ──────────────────────────────────────────────────────
 \usepackage[
@@ -32,7 +46,6 @@
 ]{geometry}
 
 % ── Typography ───────────────────────────────────────────────────────
-\usepackage{lmodern}          % better font rendering than CM
 \usepackage{microtype}        % improved justification
 \usepackage{setspace}
 \setstretch{1.3}              % 1.3x line spacing (USTH standard)
