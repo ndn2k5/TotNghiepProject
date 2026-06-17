@@ -102,10 +102,19 @@ class LocalGGUFModel:
         self,
         prompt: str,
         max_tokens: int = 512,
-        temperature: float = 0.1,
+        temperature: float = 0.3,
+        top_p: float = 0.9,
+        top_k: int = 40,
     ) -> Dict[str, Any]:
         """
-        Generate text and return with usage metadata.
+        Generate text with advanced sampling parameters and return with usage metadata.
+
+        Args:
+            prompt: Input prompt
+            max_tokens: Maximum tokens to generate
+            temperature: Sampling temperature (0=greedy, higher=more creative)
+            top_p: Nucleus sampling threshold (0.9 = use top 90% probability mass)
+            top_k: Keep only top k tokens by probability
 
         Returns:
             Dict with keys: text, prompt_tokens, completion_tokens, total_tokens
@@ -114,6 +123,8 @@ class LocalGGUFModel:
             prompt,
             max_tokens=max_tokens,
             temperature=temperature,
+            top_p=top_p,
+            top_k=top_k,
             stop=["<|end|>", "<|user|>", "<|system|>", "User:", "Human:"],
             echo=False,
         )

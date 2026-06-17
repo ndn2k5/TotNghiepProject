@@ -31,17 +31,22 @@ logger = logging.getLogger(__name__)
 # ── Prompt templates ────────────────────────────────────────────────
 
 PROMPT_TEMPLATE_VI = """<|user|>
-Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn bằng tiếng Việt.
+Bạn là trợ lý chuyên gia của công ty. Dựa vào các đoạn trích từ tài liệu nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác, chi tiết và đầy đủ bằng tiếng Việt.
 
 Quy tắc:
 - Chỉ trả lời dựa trên thông tin có trong ngữ cảnh.
+- Trả lời chi tiết, liệt kê các bước hoặc điều khoản nếu có liên quan.
+- Nếu câu hỏi liên quan đến quy trình, hãy mô tả từng bước cụ thể.
+- Nếu câu hỏi về chế độ/chính sách, hãy liệt kê các thông tin quan trọng.
 - Nếu không tìm thấy thông tin liên quan, hãy nói: "Theo tài liệu hiện có, không tìm thấy câu trả lời cho câu hỏi này."
-- Trích dẫn nguồn nếu có thể.
+- Trích dẫn nguồn tài liệu nếu có thể.
 
 Ngữ cảnh:
 {context}
 
-Câu hỏi: {question}<|end|>
+Câu hỏi: {question}
+
+Trả lời chi tiết:<|end|>
 <|assistant|>
 """
 
@@ -100,10 +105,13 @@ class RAGPipeline:
         self.vector_store.create_collection(name=collection_name)
 
         # Hybrid retriever: BM25 keyword + vector semantic search
+        # alpha=0.7: favor vector (semantic) over BM25 (keyword) because Vietnamese
+        # queries often use synonyms that differ from document vocabulary
+        # e.g. "thủ tục" (query) ≠ "quy trình" (document) — vector bridges this gap
         self.hybrid_retriever = HybridRetriever(
             vector_store=self.vector_store,
             embedder=self.embedder,
-            alpha=0.5,   # equal weight BM25 / vector
+            alpha=0.7,
         )
 
         # LLM (GGUF via llama-cpp, local with CUDA support)
@@ -220,7 +228,9 @@ class RAGPipeline:
         question: str,
         top_k: int = 3,
         max_tokens: int = 512,
-        temperature: float = 0.1,
+        temperature: float = 0.3,
+        top_p: float = 0.9,
+        top_k_sampling: int = 40,
     ) -> Dict[str, Any]:
         """
         Full RAG pipeline: retrieve context → generate answer.
@@ -229,7 +239,9 @@ class RAGPipeline:
             question: User's question
             top_k: Number of context chunks to retrieve
             max_tokens: Max tokens for the answer
-            temperature: Sampling temperature
+            temperature: Sampling temperature (0=greedy, higher=creative)
+            top_p: Nucleus sampling (0.9 = use top 90% probability)
+            top_k_sampling: Keep only top k tokens by probability
 
         Returns:
             Dict with: question, answer, sources, chunks, timing
@@ -268,7 +280,11 @@ class RAGPipeline:
         # Step 3: Generate answer
         gen_start = time.time()
         result = self.llm.generate_with_metadata(
-            prompt, max_tokens=max_tokens, temperature=temperature
+            prompt, 
+            max_tokens=max_tokens, 
+            temperature=temperature,
+            top_p=top_p,
+            top_k=top_k_sampling,
         )
         generation_time = time.time() - gen_start
 
