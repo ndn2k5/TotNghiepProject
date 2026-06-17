@@ -1,33 +1,45 @@
 CHÍNH SÁCH LƯƠNG, THƯỞNG VÀ PHỤ CẤP
 Công ty TNHH ABC Việt Nam — Phòng Nhân sự
 
-1. CƠ CẤU THU NHẬP
+1. MỨC LƯƠNG CƠ BẢN THEO CHỨC DANH
+Mức lương cơ bản được quy định theo chức danh và kinh nghiệm như sau:
+- Nhân viên mới / Thực tập sinh chính thức: 8.000.000 – 12.000.000 VNĐ/tháng
+- Nhân viên cơ bản (dưới 2 năm kinh nghiệm): 12.000.000 – 18.000.000 VNĐ/tháng
+- Nhân viên có kinh nghiệm (2–5 năm): 18.000.000 – 30.000.000 VNĐ/tháng
+- Chuyên viên cấp cao (trên 5 năm): 30.000.000 – 50.000.000 VNĐ/tháng
+- Trưởng nhóm / Team Lead: 35.000.000 – 60.000.000 VNĐ/tháng
+- Quản lý (Manager): 50.000.000 – 80.000.000 VNĐ/tháng
+- Giám đốc bộ phận (Director): từ 80.000.000 VNĐ/tháng trở lên
+
+Mức lương cơ bản tối thiểu của công ty là 8.000.000 VNĐ/tháng, cao hơn mức lương tối thiểu vùng theo quy định pháp luật. Mức lương cụ thể được ghi rõ trong hợp đồng lao động của từng nhân viên và có thể điều chỉnh hàng năm dựa trên đánh giá hiệu suất.
+
+2. CƠ CẤU THU NHẬP HÀNG THÁNG
 Thu nhập hàng tháng của nhân viên bao gồm:
-- Lương cơ bản: theo thỏa thuận trong hợp đồng lao động
+- Lương cơ bản: theo mức lương ghi trong hợp đồng lao động
 - Phụ cấp ăn trưa: 730.000 VNĐ/tháng (tương đương 35.000 VNĐ/ngày làm việc)
 - Phụ cấp đi lại: 500.000 VNĐ/tháng
 - Phụ cấp điện thoại (áp dụng cho vị trí kinh doanh, quản lý): 300.000 VNĐ/tháng
 - Thưởng hiệu suất (KPI): chi trả hàng quý dựa trên kết quả đánh giá
 
-2. CHU KỲ TRẢ LƯƠNG
+3. CHU KỲ TRẢ LƯƠNG
 - Kỳ 1: Ngày 15 hàng tháng — tạm ứng 40% lương cơ bản
 - Kỳ 2: Ngày cuối tháng — chi trả phần còn lại sau khi khấu trừ thuế TNCN, BHXH/BHYT/BHTN
 Nếu ngày trả lương trùng vào ngày nghỉ lễ hoặc cuối tuần, lương được chi trả vào ngày làm việc liền trước.
 
-3. THƯỞNG THEO HIỆU SUẤT (KPI)
+4. THƯỞNG THEO HIỆU SUẤT (KPI)
 - Đánh giá KPI theo quý (Q1, Q2, Q3, Q4)
 - Mức thưởng: Xuất sắc (≥110% KPI): 2 tháng lương/năm; Tốt (90–109%): 1 tháng lương/năm; Đạt (70–89%): 0,5 tháng lương/năm; Không đạt (<70%): không thưởng
 - KPI được thống nhất giữa nhân viên và quản lý vào đầu mỗi năm tài chính.
 
-4. THƯỞNG THÁNG 13 VÀ THƯỞNG TẾT
+5. THƯỞNG THÁNG 13 VÀ THƯỞNG TẾT
 - Thưởng tháng 13: tương đương 1 tháng lương cơ bản, chi trả trước ngày 20 tháng 12 Dương lịch.
 - Thưởng Tết Nguyên Đán: từ 0,5 đến 2 tháng lương tùy theo kết quả kinh doanh của công ty và đánh giá cá nhân. Chi trả trước nghỉ Tết 5 ngày làm việc.
 - Điều kiện: nhân viên phải làm việc đủ 6 tháng trở lên trong năm mới được hưởng thưởng tháng 13 và thưởng Tết.
 
-5. ĐIỀU CHỈNH LƯƠNG HÀNG NĂM
+6. ĐIỀU CHỈNH LƯƠNG HÀNG NĂM
 - Xét tăng lương định kỳ vào tháng 4 hàng năm (sau khi có kết quả kinh doanh quý I).
 - Mức tăng bình quân: 7–12% tùy theo hiệu suất cá nhân và tình hình công ty.
 - Nhân viên có thể đề xuất điều chỉnh lương bất thường khi được thăng chức hoặc khi thị trường thay đổi đáng kể.
 
-6. THUẾ THU NHẬP CÁ NHÂN
+7. THUẾ THU NHẬP CÁ NHÂN
 Công ty thực hiện khấu trừ thuế TNCN tại nguồn theo biểu thuế lũy tiến. Nhân viên cần đăng ký người phụ thuộc tại Phòng Kế toán để được giảm trừ gia cảnh theo quy định.

@@ -56,7 +56,13 @@ VIET_CHUNK_OVERLAP = 50
 # ---------------------------------------------------------------------------
 
 def collect_pdfs() -> list:
-    """Return list of PDF paths from data/raw/ and data/sample_handbook.pdf."""
+    """
+    Return PDF paths from data/raw/ only.
+
+    data/sample_handbook.pdf (FPD Education English handbook) is intentionally
+    excluded — it contaminates Vietnamese HR queries with English content.
+    Only Vietnamese-language PDFs placed in data/raw/ are indexed.
+    """
     pdf_paths = []
 
     if PDF_RAW_DIR.is_dir():
@@ -64,13 +70,7 @@ def collect_pdfs() -> list:
         pdf_paths.extend(pdfs)
         logger.info(f"Found {len(pdfs)} PDF(s) in {PDF_RAW_DIR}")
     else:
-        logger.warning(f"data/raw/ directory not found: {PDF_RAW_DIR}")
-
-    if SAMPLE_PDF.exists():
-        pdf_paths.append(SAMPLE_PDF)
-        logger.info(f"Found sample PDF: {SAMPLE_PDF.name}")
-    else:
-        logger.warning(f"Sample PDF not found: {SAMPLE_PDF}")
+        logger.info(f"data/raw/ not found — skipping PDF ingestion.")
 
     return pdf_paths
 
