@@ -290,70 +290,99 @@ def make_architecture():
 # 3. HYBRID RETRIEVAL FLOWCHART
 # ════════════════════════════════════════════════════════════════════════
 def make_retrieval_flowchart():
-    fig, ax = plt.subplots(figsize=(10, 5.5), facecolor="white")
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 5.5)
+    """Clean vertical flowchart — same style as architecture diagram."""
+    W = 12
+    H = 10
+    CX = W / 2
+    bw = 3.2
+    bh = 0.70
+
+    fig, ax = plt.subplots(figsize=(W, H), facecolor="white")
+    ax.set_xlim(0, W)
+    ax.set_ylim(0, H)
     ax.axis("off")
 
-    ax.text(5.0, 5.25, "Hybrid BM25 + Vector Retrieval with Reciprocal Rank Fusion",
-            fontsize=12, fontweight="bold", color=C_DARK,
-            ha="center", va="center")
+    ax.text(CX, H - 0.3, "Hybrid BM25 + Vector Retrieval with Reciprocal Rank Fusion",
+            fontsize=15, fontweight="bold", color=C_DARK, ha="center")
 
-    # Query box (top centre)
-    _box(ax, 5.0, 4.65, 3.0, 0.55, "User Query (Vietnamese text)",
-         color=C_ORANGE, fontsize=9)
+    # ── Row 1: User Query ─────────────────────────────────────────
+    r1 = H - 1.2
+    _box(ax, CX, r1, 3.6, bh, "User Query",
+         "Vietnamese natural language", color=C_ORANGE)
 
-    # Split arrows
-    _arrow(ax, 3.7, 4.37, 2.5, 3.87)
-    _arrow(ax, 6.3, 4.37, 7.5, 3.87)
-
-    # BM25 branch (left)
-    _box(ax, 2.5, 3.60, 2.8, 0.55, "tokenize_vi(query)",
-         "lowercase + remove punct + split", color=C_GREY, fontsize=8)
-    _arrow(ax, 2.5, 3.33, 2.5, 2.83)
-    _box(ax, 2.5, 2.55, 2.8, 0.55, "BM25Okapi.get_scores()",
-         "score each of N corpus chunks", color=C_GREY, fontsize=8)
-    _arrow(ax, 2.5, 2.27, 2.5, 1.77)
-    _box(ax, 2.5, 1.50, 2.8, 0.55, "BM25 Rank List",
-         "top-20 by keyword score", color=C_GREY, fontsize=8)
-
-    # Vector branch (right)
-    _box(ax, 7.5, 3.60, 2.8, 0.55, "Embed query",
-         "paraphrase-multilingual-MiniLM", color=C_TEAL, fontsize=8)
-    _arrow(ax, 7.5, 3.33, 7.5, 2.83)
-    _box(ax, 7.5, 2.55, 2.8, 0.55, "ChromaDB cosine similarity",
-         "approximate nearest neighbours", color=C_TEAL, fontsize=8)
-    _arrow(ax, 7.5, 2.27, 7.5, 1.77)
-    _box(ax, 7.5, 1.50, 2.8, 0.55, "Vector Rank List",
-         "top-20 by cosine distance", color=C_TEAL, fontsize=8)
-
-    # Converge to RRF
-    _arrow(ax, 3.85, 1.50, 4.45, 0.97)
-    _arrow(ax, 6.15, 1.50, 5.55, 0.97)
-
-    _box(ax, 5.0, 0.72, 4.0, 0.62,
-         "Reciprocal Rank Fusion (RRF)",
-         "score(d) = α·rrf_vec(d) + (1-α)·rrf_bm25(d)   |   k=60, α=0.5",
-         color=C_BLUE, fontsize=9)
-
-    # Result
-    ax.annotate("", xy=(5.0, 0.28), xytext=(5.0, 0.44),
-                arrowprops=dict(arrowstyle="-|>", color=C_DARK, lw=1.2,
-                                mutation_scale=12), zorder=5)
-    res_box = FancyBboxPatch((3.3, 0.05), 3.4, 0.38,
-                             boxstyle="round,pad=0.04",
-                             facecolor="#E8F5E9", edgecolor=C_TEAL,
-                             linewidth=1.3, zorder=3)
-    ax.add_patch(res_box)
-    ax.text(5.0, 0.24, "Top-5 Chunks  (by RRF score)",
-            fontsize=9, fontweight="bold", color=C_TEAL,
-            ha="center", va="center", zorder=4)
+    # ── Row 2: Two branches side by side ──────────────────────────
+    bm_x = CX - 2.5
+    vs_x = CX + 2.5
+    r2 = r1 - 1.2
 
     # Branch labels
-    ax.text(2.5, 4.10, "BM25 branch", fontsize=8, color=C_GREY,
-            ha="center", style="italic")
-    ax.text(7.5, 4.10, "Vector branch", fontsize=8, color=C_TEAL,
-            ha="center", style="italic")
+    ax.text(bm_x, r2 + bh/2 + 0.30, "BM25 Branch (Lexical)",
+            fontsize=10, color=C_GREY, ha="center", fontweight="bold")
+    ax.text(vs_x, r2 + bh/2 + 0.30, "Vector Branch (Semantic)",
+            fontsize=10, color=C_TEAL, ha="center", fontweight="bold")
+
+    # Split arrows from query
+    _arrow(ax, CX - 1.0, r1 - bh/2, bm_x + 0.5, r2 + bh/2)
+    _arrow(ax, CX + 1.0, r1 - bh/2, vs_x - 0.5, r2 + bh/2)
+
+    # BM25 step 1
+    _box(ax, bm_x, r2, bw, bh, "tokenize_vi(query)",
+         "lowercase + remove punct + split", color=C_GREY)
+
+    # Vector step 1
+    _box(ax, vs_x, r2, bw, bh, "Embed Query",
+         "paraphrase-multilingual-MiniLM-L12-v2", color=C_TEAL)
+
+    # ── Row 3: scoring ────────────────────────────────────────────
+    r3 = r2 - 1.2
+    _arrow(ax, bm_x, r2 - bh/2, bm_x, r3 + bh/2)
+    _arrow(ax, vs_x, r2 - bh/2, vs_x, r3 + bh/2)
+
+    _box(ax, bm_x, r3, bw, bh, "BM25Okapi.get_scores()",
+         "score each of N corpus chunks", color=C_GREY)
+    _box(ax, vs_x, r3, bw, bh, "ChromaDB Cosine Search",
+         "approximate nearest neighbours", color=C_TEAL)
+
+    # ── Row 4: rank lists ─────────────────────────────────────────
+    r4 = r3 - 1.2
+    _arrow(ax, bm_x, r3 - bh/2, bm_x, r4 + bh/2)
+    _arrow(ax, vs_x, r3 - bh/2, vs_x, r4 + bh/2)
+
+    _box(ax, bm_x, r4, bw, bh, "BM25 Rank List",
+         "top-20 by keyword score", color=C_GREY)
+    _box(ax, vs_x, r4, bw, bh, "Vector Rank List",
+         "top-20 by cosine distance", color=C_TEAL)
+
+    # ── Row 5: RRF fusion ─────────────────────────────────────────
+    r5 = r4 - 1.3
+    _arrow(ax, bm_x + 0.6, r4 - bh/2, CX - 0.8, r5 + bh/2)
+    _arrow(ax, vs_x - 0.6, r4 - bh/2, CX + 0.8, r5 + bh/2)
+
+    _box(ax, CX, r5, 5.0, 0.80,
+         "Reciprocal Rank Fusion (RRF)",
+         "", color=C_BLUE, fontsize=13)
+    # Formula as separate text (smaller, below title)
+    ax.text(CX, r5 - 0.18,
+            r"score(d) = $\alpha \cdot \frac{1}{k+r_v+1}$"
+            r"  +  $(1-\alpha) \cdot \frac{1}{k+r_b+1}$"
+            r"     k=60, $\alpha$=0.5",
+            fontsize=9, color="#B3E5FC", ha="center", va="center", zorder=4)
+
+    # ── Row 6: Result ─────────────────────────────────────────────
+    r6 = r5 - 1.1
+    ans = FancyBboxPatch((CX - 2.5, r6 - 0.30), 5.0, 0.60,
+                         boxstyle="round,pad=0.04",
+                         facecolor="#E8F5E9", edgecolor=C_TEAL,
+                         linewidth=1.3, zorder=3)
+    ax.add_patch(ans)
+    ax.text(CX, r6, "Top-5 Chunks (by RRF score)",
+            fontsize=12, fontweight="bold", color=C_TEAL,
+            ha="center", va="center", zorder=4)
+    _arrow(ax, CX, r5 - 0.80/2, CX, r6 + 0.30)
+
+    # ── Vertical divider between branches ─────────────────────────
+    ax.plot([CX, CX], [r2 + bh/2 + 0.05, r4 - bh/2 - 0.05],
+            color="#E0E0E0", linewidth=1.0, linestyle=":", zorder=0)
 
     path = OUT / "retrieval_flowchart.png"
     fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor="white")
