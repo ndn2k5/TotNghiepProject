@@ -73,6 +73,7 @@
 
 % ── Code Listings ────────────────────────────────────────────────────
 \usepackage{listings}
+\usepackage{fvextra}            % Unicode-safe verbatim (for Vietnamese text blocks)
 \usepackage{xcolor}
 \definecolor{codegray}{rgb}{0.95,0.95,0.95}
 \definecolor{codeblue}{rgb}{0.0,0.35,0.70}
@@ -689,8 +690,10 @@ offloading.
 Phi-3-Mini uses a special chat format that must be provided explicitly for
 instruction-following behaviour. The prompt template is:
 
-\begin{lstlisting}[language={}, caption={Phi-3-Mini Vietnamese prompt template},
-                   label={lst:prompt}]
+\begin{figure}[H]
+\begin{mdframed}[linewidth=0.5pt, innertopmargin=6pt, innerbottommargin=6pt,
+                 backgroundcolor=codegray]
+\begin{Verbatim}[fontsize=\footnotesize]
 <|user|>
 Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
 nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
@@ -707,7 +710,12 @@ Ngữ cảnh:
 
 Câu hỏi: {question}<|end|>
 <|assistant|>
-\end{lstlisting}
+\end{Verbatim}
+\end{mdframed}
+\vspace{-4pt}
+\noindent\textit{\small Listing: Phi-3-Mini Vietnamese prompt template}
+\label{lst:prompt}
+\end{figure}
 
 The stop sequences \texttt{["<|end|>", "<|user|>", "<|system|>"]} prevent the
 model from generating additional turns. Inference uses a temperature of 0.1 and
@@ -1148,8 +1156,10 @@ def retrieve(self, query: str, top_k: int = 5):
 \section{Prompt Template (src/rag\_pipeline.py)}
 \label{app:prompt}
 
-\begin{lstlisting}[caption={Phi-3-Mini Vietnamese prompt template with chat tokens},
-                   label={lst:prompt-code}, language={}]
+\begin{figure}[H]
+\begin{mdframed}[linewidth=0.5pt, innertopmargin=6pt, innerbottommargin=6pt,
+                 backgroundcolor=codegray]
+\begin{Verbatim}[fontsize=\footnotesize]
 PROMPT_TEMPLATE_VI = """<|user|>
 Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
 nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
@@ -1167,7 +1177,12 @@ Ngữ cảnh:
 Câu hỏi: {question}<|end|>
 <|assistant|>
 """
-\end{lstlisting}
+\end{Verbatim}
+\end{mdframed}
+\vspace{-4pt}
+\noindent\textit{\small Listing: Phi-3-Mini Vietnamese prompt template with chat tokens}
+\label{lst:prompt-code}
+\end{figure}
 
 \chapter{Evaluation Results (Full)}
 \label{app:eval}
