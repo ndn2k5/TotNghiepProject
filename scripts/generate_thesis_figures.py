@@ -130,19 +130,19 @@ def make_usth_logo():
 # ════════════════════════════════════════════════════════════════════════
 # 2. SYSTEM ARCHITECTURE DIAGRAM
 # ════════════════════════════════════════════════════════════════════════
-def _box(ax, x, y, w, h, label, sublabel="", color=C_BLUE, fontsize=9):
+def _box(ax, x, y, w, h, label, sublabel="", color=C_BLUE, fontsize=11):
     """Draw a rounded rectangle with label."""
     box = FancyBboxPatch((x - w/2, y - h/2), w, h,
                          boxstyle="round,pad=0.04",
                          facecolor=color, edgecolor=C_DARK,
-                         linewidth=0.8, zorder=3)
+                         linewidth=1.0, zorder=3)
     ax.add_patch(box)
-    ax.text(x, y + (0.08 if sublabel else 0), label,
+    ax.text(x, y + (0.10 if sublabel else 0), label,
             fontsize=fontsize, fontweight="bold", color=C_WHITE,
             ha="center", va="center", zorder=4)
     if sublabel:
-        ax.text(x, y - 0.14, sublabel,
-                fontsize=6.5, color="#CFD8DC",
+        ax.text(x, y - 0.16, sublabel,
+                fontsize=8, color="#CFD8DC",
                 ha="center", va="center", zorder=4, style="italic")
 
 
@@ -154,102 +154,102 @@ def _arrow(ax, x1, y1, x2, y2, color=C_DARK):
 
 
 def make_architecture():
-    fig, ax = plt.subplots(figsize=(11, 6.5), facecolor=C_LGREY)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(0, 6.5)
+    fig, ax = plt.subplots(figsize=(14, 8), facecolor=C_LGREY)
+    ax.set_xlim(0, 14)
+    ax.set_ylim(0, 8)
     ax.axis("off")
 
     # Title
-    ax.text(5.5, 6.15, "End-to-End RAG Pipeline Architecture",
-            fontsize=13, fontweight="bold", color=C_DARK,
+    ax.text(7, 7.65, "End-to-End RAG Pipeline Architecture",
+            fontsize=16, fontweight="bold", color=C_DARK,
             ha="center", va="center")
 
     # ── OFFLINE phase (left side) ─────────────────────────────────
-    offline_bg = FancyBboxPatch((0.15, 2.2), 3.0, 3.9,
+    offline_bg = FancyBboxPatch((0.2, 2.6), 4.0, 5.0,
                                 boxstyle="round,pad=0.1",
                                 facecolor="#E3F2FD", edgecolor=C_BLUE,
-                                linewidth=1.2, linestyle="--", zorder=1)
+                                linewidth=1.4, linestyle="--", zorder=1)
     ax.add_patch(offline_bg)
-    ax.text(1.65, 5.85, "OFFLINE  (Indexing)", fontsize=8,
+    ax.text(2.2, 7.30, "OFFLINE  (Indexing)", fontsize=10,
             color=C_BLUE, ha="center", fontweight="bold")
 
-    _box(ax, 1.65, 5.30, 2.6, 0.52, "HR Documents (×20)",
-         "20 Vietnamese policy texts", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 5.04, 1.65, 4.56)
+    _box(ax, 2.2, 6.70, 3.2, 0.65, "HR Documents (x20)",
+         "20 Vietnamese policy texts", color=C_TEAL)
+    _arrow(ax, 2.2, 6.38, 2.2, 5.82)
 
-    _box(ax, 1.65, 4.30, 2.6, 0.52, "Text Chunker",
-         "600 chars / 100 overlap", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 4.04, 1.65, 3.56)
+    _box(ax, 2.2, 5.50, 3.2, 0.65, "Text Chunker",
+         "600 chars / 100 overlap", color=C_TEAL)
+    _arrow(ax, 2.2, 5.18, 2.2, 4.62)
 
-    _box(ax, 1.65, 3.30, 2.6, 0.52, "Multilingual Embedder",
-         "paraphrase-multilingual-MiniLM-L12-v2", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 3.04, 1.65, 2.56)
+    _box(ax, 2.2, 4.30, 3.2, 0.65, "Multilingual Embedder",
+         "paraphrase-multilingual-MiniLM-L12-v2", color=C_TEAL)
+    _arrow(ax, 2.2, 3.98, 2.2, 3.42)
 
-    _box(ax, 1.65, 2.30, 2.6, 0.52, "ChromaDB  (Vector Store)",
-         "./chroma_db  |  384-dim  |  cosine", color="#1B5E20", fontsize=8)
+    _box(ax, 2.2, 3.10, 3.2, 0.65, "ChromaDB (Vector Store)",
+         "384-dim  |  cosine similarity", color="#1B5E20")
 
     # ── ONLINE phase (right side) ─────────────────────────────────
-    online_bg = FancyBboxPatch((3.5, 0.3), 7.3, 5.8,
+    online_bg = FancyBboxPatch((4.6, 0.3), 9.2, 7.3,
                                boxstyle="round,pad=0.1",
                                facecolor="#FFF8E1", edgecolor=C_ORANGE,
-                               linewidth=1.2, linestyle="--", zorder=1)
+                               linewidth=1.4, linestyle="--", zorder=1)
     ax.add_patch(online_bg)
-    ax.text(7.15, 5.85, "ONLINE  (Inference)", fontsize=8,
+    ax.text(9.2, 7.30, "ONLINE  (Inference)", fontsize=10,
             color=C_ORANGE, ha="center", fontweight="bold")
 
     # User query
-    _box(ax, 5.5, 5.30, 2.6, 0.52, "User Question",
-         "Vietnamese natural language query", color=C_ORANGE, fontsize=8)
+    _box(ax, 7.2, 6.70, 3.2, 0.65, "User Question",
+         "Vietnamese natural language", color=C_ORANGE)
 
-    _arrow(ax, 5.5, 5.04, 5.5, 4.56)
+    _arrow(ax, 7.2, 6.38, 7.2, 5.82)
 
-    _box(ax, 5.5, 4.30, 2.6, 0.52, "Query Embedder",
-         "same model as indexing", color=C_ORANGE, fontsize=8)
+    _box(ax, 7.2, 5.50, 3.2, 0.65, "Query Embedder",
+         "same model as indexing", color=C_ORANGE)
 
     # Split to BM25 and Vector
-    _arrow(ax, 4.3, 4.04, 3.9, 3.56)   # left branch → BM25
-    _arrow(ax, 6.7, 4.04, 7.1, 3.56)   # right branch → Vector
+    _arrow(ax, 5.8, 5.18, 5.2, 4.62)
+    _arrow(ax, 8.6, 5.18, 9.2, 4.62)
 
-    _box(ax, 3.6, 3.30, 2.2, 0.52, "BM25 Search",
-         "BM25Okapi + tokenize_vi()", color=C_GREY, fontsize=8)
-    _box(ax, 7.4, 3.30, 2.2, 0.52, "Vector Search",
-         "ChromaDB cosine similarity", color=C_GREY, fontsize=8)
+    _box(ax, 5.0, 4.30, 2.8, 0.65, "BM25 Search",
+         "BM25Okapi + tokenize_vi()", color=C_GREY)
+    _box(ax, 9.4, 4.30, 2.8, 0.65, "Vector Search",
+         "ChromaDB cosine similarity", color=C_GREY)
 
     # Merge to RRF
-    _arrow(ax, 3.6, 3.04, 4.8, 2.56)
-    _arrow(ax, 7.4, 3.04, 6.2, 2.56)
+    _arrow(ax, 5.0, 3.98, 6.3, 3.42)
+    _arrow(ax, 9.4, 3.98, 8.1, 3.42)
 
-    _box(ax, 5.5, 2.30, 3.2, 0.52,
+    _box(ax, 7.2, 3.10, 4.0, 0.65,
          "Reciprocal Rank Fusion (RRF)",
-         r"score = α·rrf_vector + (1−α)·rrf_bm25   k=60, α=0.5",
-         color=C_BLUE, fontsize=8)
+         "score = a*rrf_vec + (1-a)*rrf_bm25  |  k=60, a=0.5",
+         color=C_BLUE)
 
-    _arrow(ax, 5.5, 2.04, 5.5, 1.56)
+    _arrow(ax, 7.2, 2.78, 7.2, 2.22)
 
-    _box(ax, 5.5, 1.30, 3.2, 0.52, "Phi-3-Mini  (GGUF Q4)",
-         "llama-cpp-python  |  <|user|>...<|end|>  |  top-5 chunks",
-         color=C_BLUE, fontsize=8)
+    _box(ax, 7.2, 1.90, 4.0, 0.65, "Phi-3-Mini  (GGUF Q4)",
+         "llama-cpp-python  |  top-5 chunks",
+         color=C_BLUE)
 
-    _arrow(ax, 5.5, 1.04, 5.5, 0.60)
+    _arrow(ax, 7.2, 1.58, 7.2, 1.02)
 
     # Answer
-    ans_box = FancyBboxPatch((3.9, 0.35), 3.2, 0.46,
+    ans_box = FancyBboxPatch((5.0, 0.52), 4.4, 0.55,
                              boxstyle="round,pad=0.04",
                              facecolor="#E8F5E9", edgecolor=C_TEAL,
-                             linewidth=1.2, zorder=3)
+                             linewidth=1.3, zorder=3)
     ax.add_patch(ans_box)
-    ax.text(5.5, 0.58, "Vietnamese Answer  +  Source Attribution",
-            fontsize=8.5, fontweight="bold", color=C_TEAL,
+    ax.text(7.2, 0.80, "Vietnamese Answer + Source Attribution",
+            fontsize=11, fontweight="bold", color=C_TEAL,
             ha="center", va="center", zorder=4)
 
-    # Cross-link: ChromaDB → Vector Search
-    ax.annotate("", xy=(7.1, 3.56), xytext=(2.95, 2.30),
+    # Cross-link: ChromaDB -> Vector Search
+    ax.annotate("", xy=(9.0, 4.62), xytext=(3.8, 3.10),
                 arrowprops=dict(arrowstyle="-|>", color=C_TEAL,
                                 lw=1.0, linestyle="dashed",
-                                mutation_scale=10,
+                                mutation_scale=12,
                                 connectionstyle="arc3,rad=-0.3"),
                 zorder=5)
-    ax.text(5.1, 2.85, "query", fontsize=6.5, color=C_TEAL, style="italic")
+    ax.text(6.5, 3.70, "query", fontsize=8, color=C_TEAL, style="italic")
 
     path = OUT / "architecture.png"
     fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor=C_LGREY)
