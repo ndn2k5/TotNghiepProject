@@ -130,19 +130,19 @@ def make_usth_logo():
 # ════════════════════════════════════════════════════════════════════════
 # 2. SYSTEM ARCHITECTURE DIAGRAM
 # ════════════════════════════════════════════════════════════════════════
-def _box(ax, x, y, w, h, label, sublabel="", color=C_BLUE, fontsize=9):
+def _box(ax, x, y, w, h, label, sublabel="", color=C_BLUE, fontsize=11):
     """Draw a rounded rectangle with label."""
     box = FancyBboxPatch((x - w/2, y - h/2), w, h,
                          boxstyle="round,pad=0.04",
                          facecolor=color, edgecolor=C_DARK,
-                         linewidth=0.8, zorder=3)
+                         linewidth=1.0, zorder=3)
     ax.add_patch(box)
-    ax.text(x, y + (0.08 if sublabel else 0), label,
+    ax.text(x, y + (0.10 if sublabel else 0), label,
             fontsize=fontsize, fontweight="bold", color=C_WHITE,
             ha="center", va="center", zorder=4)
     if sublabel:
-        ax.text(x, y - 0.14, sublabel,
-                fontsize=6.5, color="#CFD8DC",
+        ax.text(x, y - 0.16, sublabel,
+                fontsize=8, color="#CFD8DC",
                 ha="center", va="center", zorder=4, style="italic")
 
 
@@ -154,105 +154,134 @@ def _arrow(ax, x1, y1, x2, y2, color=C_DARK):
 
 
 def make_architecture():
-    fig, ax = plt.subplots(figsize=(11, 6.5), facecolor=C_LGREY)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(0, 6.5)
+    """
+    Clean vertical-flow architecture diagram.
+    OFFLINE across top row, ONLINE flows down below.
+    No overlapping boxes.
+    """
+    W = 12       # canvas width
+    H = 11       # canvas height
+    CX = W / 2   # centre x
+
+    fig, ax = plt.subplots(figsize=(W, H), facecolor="white")
+    ax.set_xlim(0, W)
+    ax.set_ylim(0, H)
     ax.axis("off")
 
-    # Title
-    ax.text(5.5, 6.15, "End-to-End RAG Pipeline Architecture",
-            fontsize=13, fontweight="bold", color=C_DARK,
-            ha="center", va="center")
+    bw = 3.0   # default box width
+    bh = 0.70  # default box height
 
-    # ── OFFLINE phase (left side) ─────────────────────────────────
-    offline_bg = FancyBboxPatch((0.15, 2.2), 3.0, 3.9,
-                                boxstyle="round,pad=0.1",
-                                facecolor="#E3F2FD", edgecolor=C_BLUE,
-                                linewidth=1.2, linestyle="--", zorder=1)
+    # ── Title ─────────────────────────────────────────────────────
+    ax.text(CX, H - 0.3, "End-to-End RAG Pipeline Architecture",
+            fontsize=16, fontweight="bold", color=C_DARK, ha="center")
+
+    # ══════════════════════════════════════════════════════════════
+    # OFFLINE PHASE  (top band, horizontal flow →)
+    # ══════════════════════════════════════════════════════════════
+    off_y = H - 1.0                    # top of offline band
+    off_h = 1.8                        # band height
+    offline_bg = FancyBboxPatch(
+        (0.3, off_y - off_h), W - 0.6, off_h,
+        boxstyle="round,pad=0.08", facecolor="#E3F2FD",
+        edgecolor=C_BLUE, linewidth=1.2, linestyle="--", zorder=1)
     ax.add_patch(offline_bg)
-    ax.text(1.65, 5.85, "OFFLINE  (Indexing)", fontsize=8,
-            color=C_BLUE, ha="center", fontweight="bold")
+    ax.text(0.65, off_y - 0.20, "OFFLINE (Indexing)",
+            fontsize=9, color=C_BLUE, fontweight="bold", va="top")
 
-    _box(ax, 1.65, 5.30, 2.6, 0.52, "HR Documents (×20)",
-         "20 Vietnamese policy texts", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 5.04, 1.65, 4.56)
+    # 4 boxes in a horizontal row
+    ox = [1.5, 4.0, 7.0, 10.2]         # x centres for 4 boxes
+    oy = off_y - off_h / 2 - 0.1       # y centre
 
-    _box(ax, 1.65, 4.30, 2.6, 0.52, "Text Chunker",
-         "600 chars / 100 overlap", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 4.04, 1.65, 3.56)
+    _box(ax, ox[0], oy, 2.4, bh, "HR Documents",
+         "20 Vietnamese texts", color=C_TEAL)
+    _arrow(ax, ox[0] + 1.2, oy, ox[1] - 1.2, oy)
 
-    _box(ax, 1.65, 3.30, 2.6, 0.52, "Multilingual Embedder",
-         "paraphrase-multilingual-MiniLM-L12-v2", color=C_TEAL, fontsize=8)
-    _arrow(ax, 1.65, 3.04, 1.65, 2.56)
+    _box(ax, ox[1], oy, 2.0, bh, "Text Chunker",
+         "600 chars / 100 overlap", color=C_TEAL)
+    _arrow(ax, ox[1] + 1.0, oy, ox[2] - 1.4, oy)
 
-    _box(ax, 1.65, 2.30, 2.6, 0.52, "ChromaDB  (Vector Store)",
-         "./chroma_db  |  384-dim  |  cosine", color="#1B5E20", fontsize=8)
+    _box(ax, ox[2], oy, 2.8, bh, "Multilingual Embedder",
+         "paraphrase-MiniLM-L12-v2", color=C_TEAL)
+    _arrow(ax, ox[2] + 1.4, oy, ox[3] - 1.1, oy)
 
-    # ── ONLINE phase (right side) ─────────────────────────────────
-    online_bg = FancyBboxPatch((3.5, 0.3), 7.3, 5.8,
-                               boxstyle="round,pad=0.1",
-                               facecolor="#FFF8E1", edgecolor=C_ORANGE,
-                               linewidth=1.2, linestyle="--", zorder=1)
+    _box(ax, ox[3], oy, 2.2, bh, "ChromaDB",
+         "384-dim | cosine", color="#1B5E20")
+
+    # ══════════════════════════════════════════════════════════════
+    # ONLINE PHASE  (below, vertical flow ↓)
+    # ══════════════════════════════════════════════════════════════
+    on_top = off_y - off_h - 0.35
+    on_bot = 0.3
+    online_bg = FancyBboxPatch(
+        (0.3, on_bot), W - 0.6, on_top - on_bot,
+        boxstyle="round,pad=0.08", facecolor="#FFF8E1",
+        edgecolor=C_ORANGE, linewidth=1.2, linestyle="--", zorder=1)
     ax.add_patch(online_bg)
-    ax.text(7.15, 5.85, "ONLINE  (Inference)", fontsize=8,
-            color=C_ORANGE, ha="center", fontweight="bold")
+    ax.text(0.65, on_top - 0.15, "ONLINE (Inference)",
+            fontsize=9, color=C_ORANGE, fontweight="bold", va="top")
 
-    # User query
-    _box(ax, 5.5, 5.30, 2.6, 0.52, "User Question",
-         "Vietnamese natural language query", color=C_ORANGE, fontsize=8)
+    # Row 1: User Question
+    r1 = on_top - 0.7
+    _box(ax, CX, r1, bw, bh, "User Question",
+         "Vietnamese natural language query", color=C_ORANGE)
 
-    _arrow(ax, 5.5, 5.04, 5.5, 4.56)
+    # Row 2: Query Embedder
+    r2 = r1 - 1.1
+    _box(ax, CX, r2, bw, bh, "Query Embedder",
+         "same multilingual model as indexing", color=C_ORANGE)
+    _arrow(ax, CX, r1 - bh/2, CX, r2 + bh/2)
 
-    _box(ax, 5.5, 4.30, 2.6, 0.52, "Query Embedder",
-         "same model as indexing", color=C_ORANGE, fontsize=8)
+    # Row 3: BM25 + Vector (side by side)
+    r3 = r2 - 1.1
+    bm_x = CX - 2.2
+    vs_x = CX + 2.2
+    _box(ax, bm_x, r3, 2.8, bh, "BM25 Search",
+         "BM25Okapi + tokenize_vi()", color=C_GREY)
+    _box(ax, vs_x, r3, 2.8, bh, "Vector Search",
+         "ChromaDB cosine similarity", color=C_GREY)
+    # split arrows from embedder
+    _arrow(ax, CX - 0.8, r2 - bh/2, bm_x + 0.4, r3 + bh/2)
+    _arrow(ax, CX + 0.8, r2 - bh/2, vs_x - 0.4, r3 + bh/2)
 
-    # Split to BM25 and Vector
-    _arrow(ax, 4.3, 4.04, 3.9, 3.56)   # left branch → BM25
-    _arrow(ax, 6.7, 4.04, 7.1, 3.56)   # right branch → Vector
-
-    _box(ax, 3.6, 3.30, 2.2, 0.52, "BM25 Search",
-         "BM25Okapi + tokenize_vi()", color=C_GREY, fontsize=8)
-    _box(ax, 7.4, 3.30, 2.2, 0.52, "Vector Search",
-         "ChromaDB cosine similarity", color=C_GREY, fontsize=8)
-
-    # Merge to RRF
-    _arrow(ax, 3.6, 3.04, 4.8, 2.56)
-    _arrow(ax, 7.4, 3.04, 6.2, 2.56)
-
-    _box(ax, 5.5, 2.30, 3.2, 0.52,
-         "Reciprocal Rank Fusion (RRF)",
-         r"score = α·rrf_vector + (1−α)·rrf_bm25   k=60, α=0.5",
-         color=C_BLUE, fontsize=8)
-
-    _arrow(ax, 5.5, 2.04, 5.5, 1.56)
-
-    _box(ax, 5.5, 1.30, 3.2, 0.52, "Phi-3-Mini  (GGUF Q4)",
-         "llama-cpp-python  |  <|user|>...<|end|>  |  top-5 chunks",
-         color=C_BLUE, fontsize=8)
-
-    _arrow(ax, 5.5, 1.04, 5.5, 0.60)
-
-    # Answer
-    ans_box = FancyBboxPatch((3.9, 0.35), 3.2, 0.46,
-                             boxstyle="round,pad=0.04",
-                             facecolor="#E8F5E9", edgecolor=C_TEAL,
-                             linewidth=1.2, zorder=3)
-    ax.add_patch(ans_box)
-    ax.text(5.5, 0.58, "Vietnamese Answer  +  Source Attribution",
-            fontsize=8.5, fontweight="bold", color=C_TEAL,
-            ha="center", va="center", zorder=4)
-
-    # Cross-link: ChromaDB → Vector Search
-    ax.annotate("", xy=(7.1, 3.56), xytext=(2.95, 2.30),
+    # Dashed arrow: ChromaDB → Vector Search
+    ax.annotate("", xy=(vs_x, r3 + bh/2 + 0.05),
+                xytext=(ox[3], oy - bh/2),
                 arrowprops=dict(arrowstyle="-|>", color=C_TEAL,
                                 lw=1.0, linestyle="dashed",
-                                mutation_scale=10,
-                                connectionstyle="arc3,rad=-0.3"),
+                                mutation_scale=12,
+                                connectionstyle="arc3,rad=0.2"),
                 zorder=5)
-    ax.text(5.1, 2.85, "query", fontsize=6.5, color=C_TEAL, style="italic")
+
+    # Row 4: RRF
+    r4 = r3 - 1.1
+    _box(ax, CX, r4, 4.2, bh,
+         "Reciprocal Rank Fusion (RRF)",
+         "score = a * rrf_vec + (1-a) * rrf_bm25  |  k=60",
+         color=C_BLUE)
+    _arrow(ax, bm_x + 0.4, r3 - bh/2, CX - 0.8, r4 + bh/2)
+    _arrow(ax, vs_x - 0.4, r3 - bh/2, CX + 0.8, r4 + bh/2)
+
+    # Row 5: Phi-3-Mini
+    r5 = r4 - 1.1
+    _box(ax, CX, r5, 4.2, bh, "Phi-3-Mini (GGUF Q4)",
+         "llama-cpp-python | top-5 chunks | <|user|>...<|end|>",
+         color=C_BLUE)
+    _arrow(ax, CX, r4 - bh/2, CX, r5 + bh/2)
+
+    # Row 6: Answer (green)
+    r6 = r5 - 1.0
+    ans = FancyBboxPatch((CX - 2.4, r6 - 0.30), 4.8, 0.60,
+                         boxstyle="round,pad=0.04",
+                         facecolor="#E8F5E9", edgecolor=C_TEAL,
+                         linewidth=1.3, zorder=3)
+    ax.add_patch(ans)
+    ax.text(CX, r6, "Vietnamese Answer + Source Attribution",
+            fontsize=12, fontweight="bold", color=C_TEAL,
+            ha="center", va="center", zorder=4)
+    _arrow(ax, CX, r5 - bh/2, CX, r6 + 0.30)
 
     path = OUT / "architecture.png"
-    fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor=C_LGREY)
+    fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor="white")
     plt.close(fig)
     print(f"  [OK] {path}")
 
@@ -261,70 +290,99 @@ def make_architecture():
 # 3. HYBRID RETRIEVAL FLOWCHART
 # ════════════════════════════════════════════════════════════════════════
 def make_retrieval_flowchart():
-    fig, ax = plt.subplots(figsize=(10, 5.5), facecolor="white")
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 5.5)
+    """Clean vertical flowchart — same style as architecture diagram."""
+    W = 12
+    H = 10
+    CX = W / 2
+    bw = 3.2
+    bh = 0.70
+
+    fig, ax = plt.subplots(figsize=(W, H), facecolor="white")
+    ax.set_xlim(0, W)
+    ax.set_ylim(0, H)
     ax.axis("off")
 
-    ax.text(5.0, 5.25, "Hybrid BM25 + Vector Retrieval with Reciprocal Rank Fusion",
-            fontsize=12, fontweight="bold", color=C_DARK,
-            ha="center", va="center")
+    ax.text(CX, H - 0.3, "Hybrid BM25 + Vector Retrieval with Reciprocal Rank Fusion",
+            fontsize=15, fontweight="bold", color=C_DARK, ha="center")
 
-    # Query box (top centre)
-    _box(ax, 5.0, 4.65, 3.0, 0.55, "User Query (Vietnamese text)",
-         color=C_ORANGE, fontsize=9)
+    # ── Row 1: User Query ─────────────────────────────────────────
+    r1 = H - 1.2
+    _box(ax, CX, r1, 3.6, bh, "User Query",
+         "Vietnamese natural language", color=C_ORANGE)
 
-    # Split arrows
-    _arrow(ax, 3.7, 4.37, 2.5, 3.87)
-    _arrow(ax, 6.3, 4.37, 7.5, 3.87)
-
-    # BM25 branch (left)
-    _box(ax, 2.5, 3.60, 2.8, 0.55, "tokenize_vi(query)",
-         "lowercase + remove punct + split", color=C_GREY, fontsize=8)
-    _arrow(ax, 2.5, 3.33, 2.5, 2.83)
-    _box(ax, 2.5, 2.55, 2.8, 0.55, "BM25Okapi.get_scores()",
-         "score each of N corpus chunks", color=C_GREY, fontsize=8)
-    _arrow(ax, 2.5, 2.27, 2.5, 1.77)
-    _box(ax, 2.5, 1.50, 2.8, 0.55, "BM25 Rank List",
-         "top-20 by keyword score", color=C_GREY, fontsize=8)
-
-    # Vector branch (right)
-    _box(ax, 7.5, 3.60, 2.8, 0.55, "Embed query",
-         "paraphrase-multilingual-MiniLM", color=C_TEAL, fontsize=8)
-    _arrow(ax, 7.5, 3.33, 7.5, 2.83)
-    _box(ax, 7.5, 2.55, 2.8, 0.55, "ChromaDB cosine similarity",
-         "approximate nearest neighbours", color=C_TEAL, fontsize=8)
-    _arrow(ax, 7.5, 2.27, 7.5, 1.77)
-    _box(ax, 7.5, 1.50, 2.8, 0.55, "Vector Rank List",
-         "top-20 by cosine distance", color=C_TEAL, fontsize=8)
-
-    # Converge to RRF
-    _arrow(ax, 3.85, 1.50, 4.45, 0.97)
-    _arrow(ax, 6.15, 1.50, 5.55, 0.97)
-
-    _box(ax, 5.0, 0.72, 4.0, 0.62,
-         "Reciprocal Rank Fusion (RRF)",
-         "score(d) = α·rrf_vec(d) + (1-α)·rrf_bm25(d)   |   k=60, α=0.5",
-         color=C_BLUE, fontsize=9)
-
-    # Result
-    ax.annotate("", xy=(5.0, 0.28), xytext=(5.0, 0.44),
-                arrowprops=dict(arrowstyle="-|>", color=C_DARK, lw=1.2,
-                                mutation_scale=12), zorder=5)
-    res_box = FancyBboxPatch((3.3, 0.05), 3.4, 0.38,
-                             boxstyle="round,pad=0.04",
-                             facecolor="#E8F5E9", edgecolor=C_TEAL,
-                             linewidth=1.3, zorder=3)
-    ax.add_patch(res_box)
-    ax.text(5.0, 0.24, "Top-5 Chunks  (by RRF score)",
-            fontsize=9, fontweight="bold", color=C_TEAL,
-            ha="center", va="center", zorder=4)
+    # ── Row 2: Two branches side by side ──────────────────────────
+    bm_x = CX - 2.5
+    vs_x = CX + 2.5
+    r2 = r1 - 1.2
 
     # Branch labels
-    ax.text(2.5, 4.10, "BM25 branch", fontsize=8, color=C_GREY,
-            ha="center", style="italic")
-    ax.text(7.5, 4.10, "Vector branch", fontsize=8, color=C_TEAL,
-            ha="center", style="italic")
+    ax.text(bm_x, r2 + bh/2 + 0.30, "BM25 Branch (Lexical)",
+            fontsize=10, color=C_GREY, ha="center", fontweight="bold")
+    ax.text(vs_x, r2 + bh/2 + 0.30, "Vector Branch (Semantic)",
+            fontsize=10, color=C_TEAL, ha="center", fontweight="bold")
+
+    # Split arrows from query
+    _arrow(ax, CX - 1.0, r1 - bh/2, bm_x + 0.5, r2 + bh/2)
+    _arrow(ax, CX + 1.0, r1 - bh/2, vs_x - 0.5, r2 + bh/2)
+
+    # BM25 step 1
+    _box(ax, bm_x, r2, bw, bh, "tokenize_vi(query)",
+         "lowercase + remove punct + split", color=C_GREY)
+
+    # Vector step 1
+    _box(ax, vs_x, r2, bw, bh, "Embed Query",
+         "paraphrase-multilingual-MiniLM-L12-v2", color=C_TEAL)
+
+    # ── Row 3: scoring ────────────────────────────────────────────
+    r3 = r2 - 1.2
+    _arrow(ax, bm_x, r2 - bh/2, bm_x, r3 + bh/2)
+    _arrow(ax, vs_x, r2 - bh/2, vs_x, r3 + bh/2)
+
+    _box(ax, bm_x, r3, bw, bh, "BM25Okapi.get_scores()",
+         "score each of N corpus chunks", color=C_GREY)
+    _box(ax, vs_x, r3, bw, bh, "ChromaDB Cosine Search",
+         "approximate nearest neighbours", color=C_TEAL)
+
+    # ── Row 4: rank lists ─────────────────────────────────────────
+    r4 = r3 - 1.2
+    _arrow(ax, bm_x, r3 - bh/2, bm_x, r4 + bh/2)
+    _arrow(ax, vs_x, r3 - bh/2, vs_x, r4 + bh/2)
+
+    _box(ax, bm_x, r4, bw, bh, "BM25 Rank List",
+         "top-20 by keyword score", color=C_GREY)
+    _box(ax, vs_x, r4, bw, bh, "Vector Rank List",
+         "top-20 by cosine distance", color=C_TEAL)
+
+    # ── Row 5: RRF fusion ─────────────────────────────────────────
+    r5 = r4 - 1.3
+    _arrow(ax, bm_x + 0.6, r4 - bh/2, CX - 0.8, r5 + bh/2)
+    _arrow(ax, vs_x - 0.6, r4 - bh/2, CX + 0.8, r5 + bh/2)
+
+    _box(ax, CX, r5, 5.0, 0.80,
+         "Reciprocal Rank Fusion (RRF)",
+         "", color=C_BLUE, fontsize=13)
+    # Formula as separate text (smaller, below title)
+    ax.text(CX, r5 - 0.18,
+            r"score(d) = $\alpha \cdot \frac{1}{k+r_v+1}$"
+            r"  +  $(1-\alpha) \cdot \frac{1}{k+r_b+1}$"
+            r"     k=60, $\alpha$=0.5",
+            fontsize=9, color="#B3E5FC", ha="center", va="center", zorder=4)
+
+    # ── Row 6: Result ─────────────────────────────────────────────
+    r6 = r5 - 1.1
+    ans = FancyBboxPatch((CX - 2.5, r6 - 0.30), 5.0, 0.60,
+                         boxstyle="round,pad=0.04",
+                         facecolor="#E8F5E9", edgecolor=C_TEAL,
+                         linewidth=1.3, zorder=3)
+    ax.add_patch(ans)
+    ax.text(CX, r6, "Top-5 Chunks (by RRF score)",
+            fontsize=12, fontweight="bold", color=C_TEAL,
+            ha="center", va="center", zorder=4)
+    _arrow(ax, CX, r5 - 0.80/2, CX, r6 + 0.30)
+
+    # ── Vertical divider between branches ─────────────────────────
+    ax.plot([CX, CX], [r2 + bh/2 + 0.05, r4 - bh/2 - 0.05],
+            color="#E0E0E0", linewidth=1.0, linestyle=":", zorder=0)
 
     path = OUT / "retrieval_flowchart.png"
     fig.savefig(path, dpi=DPI, bbox_inches="tight", facecolor="white")

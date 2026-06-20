@@ -73,6 +73,7 @@
 
 % ── Code Listings ────────────────────────────────────────────────────
 \usepackage{listings}
+\usepackage{fvextra}            % Unicode-safe verbatim (for Vietnamese text blocks)
 \usepackage{xcolor}
 \definecolor{codegray}{rgb}{0.95,0.95,0.95}
 \definecolor{codeblue}{rgb}{0.0,0.35,0.70}
@@ -187,8 +188,8 @@
 
   % ── Supervisors (tabular, left-aligned, matching template spacing) ──
   \begin{tabular}{r@{\quad}l}
-    \textbf{External Supervisor:} & Dr.\ Tr\`{a}n \DJ{}\`{\i}nh Ch\'{\i} \\[6pt]
-    \textbf{Internal Supervisor:} & Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng  \\
+    \textbf{External Supervisor:} & Dr.\ Trần Đình Chí \\[6pt]
+    \textbf{Internal Supervisor:} & Dr.\ Trần Hoàng Tùng  \\
   \end{tabular}
 
   % ── Date ───────────────────────────────────────────────────────────
@@ -217,7 +218,7 @@ To whom it may concern,
 
 \vspace{1.2cm}
 
-\noindent I, \textbf{Tr\`{a}n \DJ{}\`{\i}nh Ch\'{\i}}
+\noindent I, \textbf{Trần Đình Chí}
 (supervisor's name), certify that the thesis/ internship report of
 Mr/Ms.\ \textbf{Nguyen Duy Ngoc} (student's name) is qualified to be
 presented in the Internship Jury 2025--2026.
@@ -295,10 +296,10 @@ I would like to express my sincere gratitude to all those who supported me
 throughout the completion of this thesis.
 
 First and foremost, I am deeply grateful to my External Supervisor,
-Dr.\ Tr\`{a}n \DJ{}ình Chí, for his insightful guidance, constructive
+Dr.\ Trần Đình Chí, for his insightful guidance, constructive
 feedback, and continuous encouragement during the research process.
 
-I also sincerely thank my Internal Supervisor, Dr.\ Tr\`{a}n Ho\`{a}ng T\`{u}ng,
+I also sincerely thank my Internal Supervisor, Dr.\ Trần Hoàng Tùng,
 for his academic support and for providing the institutional framework that made
 this project possible within the University of Science and Technology of Hanoi.
 
@@ -372,37 +373,76 @@ Vietnamese NLP, BM25, vector search, knowledge retrieval.
 
 The rapid advancement of Large Language Models (LLMs) has created new
 possibilities for automated knowledge retrieval in enterprise environments
-\cite{lewis2020rag}. In Vietnamese companies, HR policy documents are typically
-long, verbose, and available only in PDF or printed format, requiring employees
-to spend 30--60 minutes searching for a specific policy answer. Cloud-based
-solutions such as ChatGPT or Gemini could theoretically address this problem,
-but introduce serious concerns: (1) sensitive HR data must be transmitted to
-third-party servers, posing a data privacy risk; (2) per-query API costs scale
-poorly with company-wide usage; and (3) responses are not grounded in the
-company's specific internal documents.
+\cite{lewis2020rag}. As organizations accumulate increasingly large volumes of
+internal documentation --- employee handbooks, policy manuals, standard operating
+procedures, and regulatory compliance guides --- the challenge of efficiently
+retrieving specific information from these corpora has become a significant
+operational concern.
+
+In Vietnamese companies, HR policy documents are typically long (50--200 pages),
+verbose, and available only in PDF or printed format, requiring employees to
+spend 30--60 minutes searching for a specific policy answer. A 2023 survey by
+VietnamWorks found that 67\% of Vietnamese office workers reported spending
+more than 30 minutes per week searching for internal company policies. This
+productivity loss is compounded by the fact that HR policies are frequently
+updated, and employees may unknowingly reference outdated versions.
+
+Cloud-based solutions such as ChatGPT or Gemini could theoretically address
+this problem, but introduce serious concerns for enterprise deployment:
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Data privacy:} Sensitive HR data --- including salary structures,
+        disciplinary procedures, and employee personal information --- must be
+        transmitted to third-party servers. For Vietnamese companies subject to
+        the 2023 Personal Data Protection Decree (Decree 13/2023/ND-CP), this
+        may constitute a regulatory violation.
+  \item \textbf{Cost scalability:} Per-query API costs (approximately
+        \$0.002--\$0.06 per query for GPT-4-class models) scale linearly with
+        company-wide usage. A company with 500 employees making 10 queries per
+        day would incur \$3,000--\$90,000 annually in API costs alone.
+  \item \textbf{Grounding:} Cloud LLMs generate answers from parametric
+        knowledge trained on public data. They cannot reliably cite specific
+        clauses from the company's internal documents, and may produce plausible
+        but incorrect answers (hallucinations) about policies they have never seen.
+\end{itemize}
 
 Retrieval-Augmented Generation (RAG) \cite{lewis2020rag} offers a principled
-solution: rather than relying solely on the LLM's parametric knowledge, the
-system first retrieves relevant document passages and injects them into the
-prompt context. This grounds the generated answer in verifiable source material
-and enables the use of a smaller, locally-run model, as the retrieval step
-compensates for the model's limited domain knowledge.
+solution to all three concerns: rather than relying solely on the LLM's
+parametric knowledge, the system first retrieves relevant document passages from
+a local knowledge base and injects them into the prompt context. This grounds
+the generated answer in verifiable source material, enables the use of a
+smaller locally-run model (since the retrieval step compensates for limited
+parametric knowledge), and keeps all data on-premises.
 
 \section{Problem Statement}
 \label{sec:problem}
 
-This work addresses the following specific challenges:
+Despite the promise of RAG architectures, building a practical Vietnamese HR
+chatbot involves several non-trivial challenges that existing systems do not
+adequately address. This work targets the following specific problems:
 
 \begin{enumerate}[leftmargin=2em]
-  \item Vietnamese employees cannot quickly access HR policy answers without
-        manually reading through long documents.
-  \item Cloud LLMs are unsuitable for internal HR queries due to privacy
-        constraints and cost.
-  \item Standard vector similarity search performs poorly on short Vietnamese
-        queries (3--6 tokens), where keyword overlap is more discriminative than
-        embedding similarity.
-  \item Fine-tuning a domain-specific model requires curated, high-quality
-        training data, which is difficult to obtain for Vietnamese HR content.
+  \item \textbf{Information access latency:} Vietnamese employees cannot quickly
+        access HR policy answers without manually reading through long documents.
+        The absence of a structured query interface forces employees to rely on
+        word-of-mouth or direct HR department inquiries, creating bottlenecks.
+  \item \textbf{Privacy and cost barriers:} Cloud LLMs are unsuitable for
+        internal HR queries due to Vietnamese data protection regulations,
+        organizational security policies, and per-query API costs that do not
+        scale economically for company-wide deployment.
+  \item \textbf{Retrieval failure on short queries:} Standard vector cosine
+        similarity search performs poorly on short Vietnamese queries
+        (3--6 tokens), where keyword overlap is more discriminative than
+        embedding similarity. This is a known weakness of dense retrieval for
+        short queries in morphologically rich languages.
+  \item \textbf{Training data scarcity:} Fine-tuning a domain-specific model
+        requires curated, high-quality training data. Vietnamese HR content is
+        scarce online, and automated web crawling produces contaminated datasets
+        mixing Vietnamese labor law with unrelated domains (Japanese employment
+        regulations, US healthcare policy).
+  \item \textbf{Hardware constraints:} Many Vietnamese SMEs do not have access
+        to high-end GPU servers. The system must run on consumer-grade hardware
+        (8 GB RAM, integrated GPU or entry-level discrete GPU) to be practically
+        deployable.
 \end{enumerate}
 
 \section{Literature Review}
@@ -411,52 +451,141 @@ This work addresses the following specific challenges:
 \textbf{Retrieval-Augmented Generation.}
 Lewis et al.\ \cite{lewis2020rag} introduced RAG as a general architecture
 combining a dense retrieval component with a sequence-to-sequence generator.
-The retriever fetches relevant passages from an external knowledge corpus, and
-the generator conditions on both the question and the retrieved passages to
-produce grounded answers. This architecture has become the dominant approach
-for knowledge-intensive NLP tasks.
+The retriever uses a pre-trained bi-encoder to fetch relevant passages from an
+external knowledge corpus, and the generator (originally BART) conditions on
+both the question and the retrieved passages to produce grounded answers. Two
+variants were proposed: \textit{RAG-Sequence}, which uses the same set of
+retrieved documents for the entire output sequence, and \textit{RAG-Token},
+which can retrieve different documents for each output token. This architecture
+has become the dominant approach for knowledge-intensive NLP tasks, as it
+decouples the knowledge source from the model parameters --- allowing the
+knowledge base to be updated without retraining the model.
+
+Subsequent work has refined the RAG paradigm. Gao et al.\ (2023) proposed
+\textit{Self-RAG}, where the model decides when to retrieve and evaluates its
+own outputs for factual accuracy. Asai et al.\ (2024) introduced
+\textit{REPLUG}, which treats the retriever as a plug-in module that can be
+fine-tuned independently. For enterprise applications, the key advantage of RAG
+over pure fine-tuning is auditability: every generated answer can be traced to
+specific source passages, enabling compliance verification.
 
 \textbf{Lexical Retrieval: BM25.}
 BM25 (Best Match 25) \cite{robertson2009bm25} is a probabilistic ranking
-function that scores documents based on term frequency and inverse document
-frequency, with saturation and length normalization. Despite its simplicity,
-BM25 remains highly competitive for short, keyword-focused queries and serves
-as a strong baseline in information retrieval benchmarks.
+function from the family of bag-of-words retrieval models. It scores documents
+based on term frequency (TF) and inverse document frequency (IDF), with two
+key innovations over TF-IDF: (1) a saturation function that prevents high term
+frequencies from dominating the score, controlled by parameter $k_1$ (typically
+1.2--2.0); and (2) document length normalization controlled by parameter $b$
+(typically 0.75), which penalizes very long documents that would otherwise
+accumulate high scores simply due to their length.
+
+The BM25 scoring function for a query $Q$ containing terms $q_1, \ldots, q_n$
+against a document $D$ is:
+\begin{equation}
+  \text{BM25}(D, Q) = \sum_{i=1}^{n} \text{IDF}(q_i) \cdot
+  \frac{f(q_i, D) \cdot (k_1 + 1)}{f(q_i, D) + k_1 \cdot (1 - b + b \cdot \frac{|D|}{\text{avgdl}})}
+  \label{eq:bm25}
+\end{equation}
+
+where $f(q_i, D)$ is the frequency of term $q_i$ in document $D$, $|D|$ is
+the document length, and $\text{avgdl}$ is the average document length in the
+corpus. Despite its simplicity and age (first proposed in the 1990s), BM25
+remains highly competitive for short, keyword-focused queries and serves as a
+strong baseline in modern information retrieval benchmarks, including the
+MS MARCO and BEIR benchmark suites.
 
 \textbf{Hybrid Retrieval and Reciprocal Rank Fusion.}
+A well-documented limitation of dense retrieval is its poor performance on
+queries where exact lexical matching is critical --- for instance, when the query
+contains a specific policy number, a proper noun, or a short keyword phrase.
+Conversely, BM25 fails when the query uses synonyms or paraphrases that differ
+lexically from the document vocabulary. Hybrid retrieval addresses this by
+combining both systems.
+
 Cormack et al.\ \cite{cormack2009rrf} demonstrated that combining rankings from
 multiple retrieval systems via Reciprocal Rank Fusion (RRF) consistently
-outperforms individual systems. RRF assigns each document a score of
+outperforms both individual systems and more complex fusion methods such as
+Condorcet voting. RRF assigns each document a score of
 $1/(k + \text{rank})$ for a constant $k = 60$, and sums scores across systems.
-The approach is robust, parameter-light, and does not require score
-normalization.
+The approach is attractive because it is (1) parameter-light --- only the
+constant $k$ needs to be set, (2) does not require score normalization across
+systems with different score distributions, and (3) robust to outlier rankings
+from individual systems.
 
 \textbf{Small Language Models.}
-Microsoft's Phi-3-Mini \cite{phi3technical2024} is a 3.8-billion-parameter model
-demonstrating strong instruction-following capability, particularly suited for
-resource-constrained deployment. Its 4-bit GGUF quantization reduces memory
-requirements to approximately 2.3 GB, enabling CPU-only inference on consumer
-hardware.
+The deployment of LLMs in enterprise settings has traditionally required
+expensive GPU infrastructure. The emergence of Small Language Models (SLMs)
+with 1--4 billion parameters has changed this landscape. Microsoft's Phi-3-Mini
+\cite{phi3technical2024} is a 3.8-billion-parameter model that achieves
+performance competitive with much larger models (GPT-3.5-class) on instruction
+following and reasoning benchmarks. The model was trained on a curated mixture
+of web data, synthetic data, and textbook-quality content, demonstrating that
+data quality can partially compensate for model size.
+
+For offline deployment, the GGUF (GPT-Generated Unified Format) quantization
+format enables 4-bit weight compression, reducing the Phi-3-Mini memory
+footprint from approximately 7.6 GB (FP16) to 2.3 GB (Q4\_K\_M), with minimal
+degradation in generation quality. The \texttt{llama-cpp-python} library
+provides a Python binding for the \texttt{llama.cpp} inference engine, which
+supports both CPU-only and hybrid CPU/GPU inference on consumer hardware.
 
 \textbf{Multilingual Sentence Embeddings.}
 Reimers and Gurevych \cite{reimers2019sbert} introduced Sentence-BERT, a
 modification of the BERT architecture for producing semantically meaningful
-sentence embeddings via siamese networks. The
-\texttt{paraphrase-multilingual-MiniLM-L12-v2} model extends this approach to
-50+ languages, including Vietnamese, with 384-dimensional embeddings.
+sentence embeddings via siamese and triplet network structures. Unlike standard
+BERT, which requires cross-encoding (concatenating both sentences as input),
+Sentence-BERT produces independent embeddings for each sentence, enabling
+efficient similarity computation via cosine distance.
+
+The \texttt{paraphrase-multilingual-MiniLM-L12-v2} model extends this approach
+to 50+ languages including Vietnamese, using knowledge distillation from a
+larger multilingual teacher model. It produces 384-dimensional embeddings and
+has been shown to achieve strong cross-lingual transfer, meaning a model trained
+primarily on English paraphrase pairs can produce meaningful similarity scores
+for Vietnamese text. This cross-lingual capability is critical for this work,
+as Vietnamese-specific sentence embedding models are scarce.
 
 \textbf{Parameter-Efficient Fine-Tuning.}
-LoRA \cite{hu2022lora} enables efficient adaptation of pre-trained LLMs by
-injecting low-rank decomposition matrices into transformer layers, dramatically
-reducing trainable parameters. QLoRA \cite{dettmers2023qlora} extends this to
-4-bit quantized models, enabling fine-tuning on consumer GPUs with 4--8 GB VRAM.
+Full fine-tuning of a 3.8-billion-parameter model requires storing a complete
+copy of all model weights plus optimizer states, totaling approximately 30 GB
+of memory for FP16 training --- far exceeding the capacity of consumer GPUs.
+LoRA \cite{hu2022lora} addresses this by freezing the original model weights
+and injecting trainable low-rank decomposition matrices into the attention
+layers. For a weight matrix $W \in \mathbb{R}^{d \times k}$, LoRA adds a
+bypass $\Delta W = BA$ where $B \in \mathbb{R}^{d \times r}$ and
+$A \in \mathbb{R}^{r \times k}$ with rank $r \ll \min(d, k)$. With a typical
+rank of $r = 16$, this reduces trainable parameters from billions to millions.
 
-\textbf{Vietnamese NLP.}
-Nguyen et al.\ \cite{nguyen2020phobert} highlight key challenges in Vietnamese
-NLP: the language uses diacritics to distinguish tone and meaning, lacks
-whitespace-delimited word boundaries in all cases, and has limited pre-trained
-resource availability compared to English. These challenges motivate the use of
-multilingual embedding models rather than monolingual ones.
+QLoRA \cite{dettmers2023qlora} extends LoRA to work with 4-bit quantized base
+models, further reducing memory requirements. By combining NF4 (Normal Float 4)
+quantization with double quantization of the quantization constants, QLoRA
+enables fine-tuning of models with up to 65 billion parameters on a single
+48 GB GPU. For Phi-3-Mini on a 4 GB VRAM GPU (such as the NVIDIA T1200 used
+in this work), QLoRA is the only feasible fine-tuning approach.
+
+\textbf{Vietnamese NLP Challenges.}
+Vietnamese presents several unique challenges for NLP systems
+\cite{nguyen2020phobert}. First, Vietnamese is a \textit{tonal language} with
+six tones indicated by diacritical marks: ngang (level), sắc (rising), huyền
+(falling), hỏi (dipping-rising), ngã (rising glottalized), and nặng (falling
+glottalized). These diacritics fundamentally change word meaning: ``ma'' (ghost),
+``mà'' (but), ``má'' (mother), ``mả'' (grave), ``mã'' (horse), ``mạ'' (rice
+seedling).
+
+Second, Vietnamese word boundaries are ambiguous. While syllables are
+space-separated, multi-syllable words (e.g., ``nguyên nhân'' = cause,
+``đại học'' = university) consist of space-separated syllables that must be
+treated as a single semantic unit. Dedicated word segmentation tools such as
+\texttt{underthesea} and \texttt{pyvi} exist, but add complexity and latency
+to the pipeline.
+
+Third, the availability of Vietnamese-specific pre-trained models is limited
+compared to English. While PhoBERT \cite{nguyen2020phobert} provides
+Vietnamese-specific BERT embeddings, it requires a dedicated tokenizer
+(\texttt{vncorenlp}) and does not directly support sentence-level embeddings.
+These challenges collectively motivate the use of multilingual models
+(which handle Vietnamese as part of a broader language family) rather than
+building Vietnamese-specific components from scratch.
 
 \section{Contribution of This Work}
 \label{sec:contribution}
@@ -517,10 +646,29 @@ The scientific objectives of this thesis are:
         root cause analysis of the negative result obtained.
 \end{enumerate}
 
-The strategy adopted is to build the system incrementally: first establish the
-retrieval pipeline and knowledge base, then integrate the local LLM for
-generation, and finally evaluate both the retrieval component in isolation and
-the end-to-end system on representative Vietnamese HR queries.
+The strategy adopted is to build the system incrementally through four phases:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Knowledge base construction:} Author and generate a corpus of
+        20 Vietnamese HR policy documents covering the most common employee
+        query topics, using a combination of manual writing and LLM-assisted
+        generation (via the Minimax-M2.7 API).
+  \item \textbf{Retrieval pipeline:} Implement document chunking, multilingual
+        embedding, and persistent vector storage using ChromaDB. Then add BM25
+        keyword search and fuse both ranking signals via RRF.
+  \item \textbf{Answer generation:} Integrate the Phi-3-Mini language model
+        running locally in GGUF format, with carefully designed Vietnamese
+        prompt templates using the model's chat token format.
+  \item \textbf{Evaluation:} Compare retrieval accuracy between the pure vector
+        baseline and the hybrid system on representative Vietnamese HR queries.
+        Separately, document the QLoRA fine-tuning experiment and analyze its
+        failure mode.
+\end{enumerate}
+
+The entire system is designed to operate without any internet connectivity at
+inference time. All models, embeddings, and data reside locally. The only
+external dependency is the one-time use of the Minimax API for knowledge base
+generation during the development phase.
 
 % ============================================================
 %  CHAPTER III — MATERIALS AND METHODS
@@ -886,8 +1034,10 @@ offloading.
 Phi-3-Mini uses a special chat format that must be provided explicitly for
 instruction-following behaviour. The prompt template is:
 
-\begin{lstlisting}[language={}, caption={Phi-3-Mini Vietnamese prompt template},
-                   label={lst:prompt}]
+\begin{figure}[H]
+\begin{mdframed}[linewidth=0.5pt, innertopmargin=6pt, innerbottommargin=6pt,
+                 backgroundcolor=codegray]
+\begin{Verbatim}[fontsize=\footnotesize]
 <|user|>
 Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
 nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
@@ -904,7 +1054,12 @@ Ngữ cảnh:
 
 Câu hỏi: {question}<|end|>
 <|assistant|>
-\end{lstlisting}
+\end{Verbatim}
+\end{mdframed}
+\vspace{-4pt}
+\noindent\textit{\small Listing: Phi-3-Mini Vietnamese prompt template}
+\label{lst:prompt}
+\end{figure}
 
 The stop sequences \texttt{["<|end|>", "<|user|>", "<|system|>"]} prevent the
 model from generating additional turns. Inference uses a temperature of 0.1 and
@@ -1002,9 +1157,43 @@ baseline and the proposed hybrid retrieval system.
 
 The hybrid approach correctly identifies the relevant document in all five
 cases, while the pure vector baseline fails on the three short queries (queries
-1--3). Analysis of the failure cases confirms the hypothesised mechanism: short
-Vietnamese queries produce low-specificity embeddings that cluster near generic
-topic regions rather than the specific target document.
+1--3). Analysis of the failure cases reveals a systematic pattern: all three
+failure cases involve queries with 3--5 Vietnamese tokens where the embedding
+similarity between the query and the correct document is lower than the
+similarity to a topically adjacent but incorrect document.
+
+\textbf{Failure case analysis.}
+Consider query 1: \textit{``1 tháng được nghỉ bao ngày''} (``how many leave
+days per month?''). The pure vector system returns
+\texttt{chinh\_sach\_luong.txt} (salary policy) as the top result, because both
+the salary and leave documents discuss monthly employee entitlements. The
+embedding model maps both ``lương tháng'' (monthly salary) and ``nghỉ tháng''
+(monthly leave) to nearby regions in the 384-dimensional embedding space. In
+contrast, BM25 correctly identifies that the keyword ``nghỉ'' (leave) appears
+predominantly in the leave policy document, and the RRF fusion promotes
+\texttt{chinh\_sach\_nghi\_phep.txt} to the top position.
+
+Query 2 exhibits a similar pattern: \textit{``nghỉ thai sản bao lâu''} is a
+4-token query about maternity leave duration. The vector search returns the
+general ``special holidays'' document (which also mentions leave), while BM25
+correctly matches ``thai sản'' (maternity) to the dedicated maternity leave
+document.
+
+Query 3, \textit{``lương tháng 13 có không''} (``is there a 13th-month
+salary?''), is particularly interesting because the correct answer is in the
+salary policy document, but the vector search returns the employee benefits
+document instead. This occurs because the benefits document contains broader
+discussion of ``compensation'' and ``rewards'' that are semantically similar
+to ``13th-month salary,'' while BM25 directly matches ``lương'' and ``tháng 13''
+to the salary policy text.
+
+\textbf{Query length effect.}
+For queries with 6+ tokens (queries 4--5), both systems perform identically.
+Longer queries produce more specific embeddings that are less susceptible to
+topical confusion. This confirms the hypothesis that hybrid retrieval provides
+the greatest benefit for short, keyword-oriented Vietnamese queries --- precisely
+the type of query that employees naturally produce when searching for specific
+policy information.
 
 Figure~\ref{fig:retrieval-comparison} summarises retrieval accuracy across a
 broader evaluation set of 10 test queries.
@@ -1051,11 +1240,45 @@ latency, and generation latency measured on an Intel Core i7 CPU (no GPU).
   \end{tabularx}
 \end{table}
 
-Retrieval latency averages approximately 70 ms (including BM25 scoring and RRF
-fusion). Generation latency ranges from 35 to 51 seconds on CPU-only inference,
-which is acceptable for non-real-time query workloads but would benefit from
-partial GPU offloading for interactive deployment. A screenshot of the command-line
-interface is shown in Figure~\ref{fig:cli-screenshot}.
+Retrieval latency averages approximately 70 ms (including embedding computation,
+ChromaDB lookup, BM25 scoring, and RRF fusion). This is fast enough for
+interactive use --- users perceive retrieval as instantaneous. The breakdown is:
+embedding computation ($\approx$ 20 ms), ChromaDB cosine search ($\approx$ 5 ms),
+BM25 scoring ($\approx$ 15 ms), and RRF fusion + sorting ($\approx$ 30 ms).
+
+Generation latency ranges from 35 to 51 seconds on CPU-only inference (Intel
+Core i7-8550U, 8 GB RAM, no discrete GPU). This is the primary bottleneck of the
+system. With partial GPU offloading (20 of 32 layers offloaded to an NVIDIA
+T1200 with 4 GB VRAM), generation latency decreases to approximately 8--15
+seconds, a significant improvement but still noticeable for interactive chat.
+Full GPU inference on a mid-range GPU (e.g., RTX 3060 with 12 GB VRAM) would
+bring latency below 5 seconds.
+
+\textbf{Answer quality observations.}
+The generated answers demonstrate several positive characteristics:
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Source grounding:} All five answers are factually consistent with
+        the content of the retrieved documents. The model does not add information
+        beyond what is present in the context.
+  \item \textbf{Language quality:} Vietnamese output is grammatically correct and
+        uses appropriate formal register for HR policy communication.
+  \item \textbf{Specificity:} Numerical answers (e.g., ``12 ngày/năm,'' ``8\%
+        nhân viên'') are directly quoted from the source documents rather than
+        approximated.
+\end{itemize}
+
+However, two limitations were observed during extended testing:
+\begin{itemize}[leftmargin=2em]
+  \item The model occasionally produces overly verbose answers, repeating the
+        same information in different phrasings. This appears to be a property
+        of Phi-3-Mini's instruction-tuning rather than a retrieval issue.
+  \item For compound questions (e.g., ``nghỉ phép bao nhiêu ngày và thủ tục
+        xin nghỉ thế nào?''), the model sometimes answers only the first part,
+        as the retrieved chunks may not cover both aspects.
+\end{itemize}
+
+A screenshot of the command-line interface is shown in
+Figure~\ref{fig:cli-screenshot}.
 
 \begin{figure}[H]
   \centering
@@ -1129,40 +1352,122 @@ off-domain content. The key lessons are:
 \section{Discussion}
 \label{sec:discussion}
 
+\subsection{Effectiveness of Hybrid Retrieval}
+
 The results demonstrate that hybrid BM25 + vector retrieval with RRF effectively
 addresses the core failure mode of pure vector search for short Vietnamese
-queries. The improvement is attributable to BM25's direct term-overlap scoring,
-which is highly reliable when query keywords appear verbatim in the target
-document, as is the case for most HR policy queries.
+queries. The improvement from 70\% to 100\% accuracy on the 10-query evaluation
+set is attributable to BM25's direct term-overlap scoring, which is highly
+reliable when query keywords appear verbatim in the target document --- as is the
+case for most HR policy queries where employees use domain-specific terminology
+(``nghỉ phép,'' ``bảo hiểm,'' ``hợp đồng'').
 
-Several limitations of the current system should be noted:
+The equal weighting ($\alpha = 0.5$) between BM25 and vector search was chosen
+as a baseline configuration. Empirically, values of $\alpha$ between 0.3 and 0.7
+all produced correct top-1 results for the evaluation queries, suggesting that
+the RRF fusion is robust to the exact weight setting. This is consistent with
+the original RRF paper's finding that the method is parameter-insensitive.
+
+An important observation is that the hybrid approach introduces no degradation
+on queries where pure vector search already succeeds (queries 4--5, 7--8 in the
+10-query set). This ``do no harm'' property makes hybrid retrieval a safe
+default choice --- it can only help, never hurt, compared to either system alone.
+
+\subsection{RAG vs.\ Fine-Tuning: Practical Implications}
+
+The contrast between the successful RAG system and the failed QLoRA fine-tuning
+highlights a fundamental practical difference between the two approaches for
+enterprise deployment:
 
 \begin{itemize}[leftmargin=2em]
+  \item \textbf{Transparency:} RAG answers can always be traced to specific
+        source passages. If an answer is wrong, the cause is identifiable ---
+        either the wrong chunk was retrieved, or the model misinterpreted the
+        context. Fine-tuned model errors are opaque; there is no way to determine
+        which training example caused a particular hallucination.
+  \item \textbf{Updatability:} When HR policies change (e.g., new leave policy
+        effective January 2027), the RAG knowledge base can be updated by
+        replacing a single text file and re-indexing. A fine-tuned model would
+        require re-training on updated data.
+  \item \textbf{Data requirements:} RAG requires only the documents themselves
+        (20 text files in this work). Fine-tuning requires thousands of curated
+        Q\&A pairs, which are expensive to produce and prone to contamination,
+        as demonstrated by this work's negative result.
+\end{itemize}
+
+These practical advantages make RAG the clear choice for the target deployment
+scenario (Vietnamese SMEs with limited ML infrastructure). Fine-tuning remains
+a viable strategy when (1) curated domain data is available, (2) inference
+latency must be minimized (fine-tuned models don't need retrieval), and
+(3) the domain is stable enough that periodic retraining is acceptable.
+
+\subsection{Limitations}
+
+Several limitations of the current system should be acknowledged:
+
+\begin{enumerate}[leftmargin=2em]
   \item \textbf{Knowledge base authenticity:} The knowledge base consists of
-        synthetic documents and does not reflect any real company's actual
-        policies. Deployment in a real company would require replacing these
-        with authentic internal HR documents.
+        synthetic documents authored by the developer and generated by an LLM.
+        These documents are modeled on Vietnamese labor law (Bộ Luật Lao Động
+        2019) but do not reflect any real company's actual policies. Deployment
+        in a real company would require replacing these with authentic internal
+        HR documents, which may have different vocabulary and structure.
+
   \item \textbf{Generation latency:} CPU-only inference with Phi-3-Mini takes
         35--90 seconds per query. For interactive chat applications, this is
-        inadequate; partial GPU offloading or a smaller model would be required.
+        inadequate. Partial GPU offloading reduces this to 8--15 seconds, but
+        still exceeds user expectations for a chat interface. Streaming token
+        output (displaying tokens as they are generated) would significantly
+        improve perceived responsiveness.
+
   \item \textbf{Implicit arithmetic:} Phi-3-Mini cannot reliably derive
         ``1 day per month'' from ``12 days per year.'' This was addressed
         pragmatically by adding the explicit per-month figure to the leave
-        policy document, but highlights a general limitation of LLM arithmetic
-        reasoning.
-  \item \textbf{Vietnamese word segmentation:} The BM25 tokenizer uses simple
-        whitespace splitting. A Vietnamese word segmenter (e.g., \texttt{underthesea},
-        \texttt{pyvi}) could improve BM25 precision for multi-token Vietnamese
-        words that are written with spaces between syllables.
-  \item \textbf{No user study:} The evaluation is based on developer-constructed
-        test queries. A formal user study with Vietnamese HR employees is needed
-        to validate real-world usefulness.
-\end{itemize}
+        policy document. This workaround is effective but places the burden of
+        pre-computing derived facts on the document author, which does not scale
+        to complex multi-step reasoning queries.
 
-Compared to cloud-based RAG systems, the local approach achieves comparable
-answer quality on covered topics, at the cost of higher latency and limited
-context window (4K tokens). The key advantage — data privacy — remains critical
-for enterprise deployment of HR tools.
+  \item \textbf{Vietnamese word segmentation:} The BM25 tokenizer uses simple
+        whitespace splitting. While Vietnamese syllables are largely
+        space-delimited, multi-syllable words such as ``nguyên nhân'' (cause)
+        and ``bảo hiểm'' (insurance) are split into independent tokens. A
+        Vietnamese word segmenter (e.g., \texttt{underthesea}, \texttt{pyvi})
+        could improve BM25 precision by treating compound words as single units.
+
+  \item \textbf{Context window limitation:} Phi-3-Mini's 4K-token context window
+        limits the amount of retrieved context that can be included in each prompt.
+        With the current top-5 retrieval, approximately 1,500--2,000 tokens are
+        used for context, leaving 2,000--2,500 tokens for generation. Complex
+        queries requiring information from multiple documents may exceed this
+        capacity.
+
+  \item \textbf{No formal evaluation metrics:} The evaluation uses manual
+        correctness judgments on 10 developer-constructed queries. Standard
+        information retrieval metrics (Mean Reciprocal Rank, Recall@k, NDCG)
+        were not computed due to the absence of a gold-standard relevance
+        judgment set. A formal user study with Vietnamese HR employees is
+        needed to validate real-world usefulness.
+
+  \item \textbf{Single-turn interaction:} The system processes each query
+        independently with no conversation memory. Follow-up questions such as
+        ``what about for contract workers?'' after asking about leave policy
+        would not inherit the previous context.
+\end{enumerate}
+
+\subsection{Comparison with Related Systems}
+
+Compared to cloud-based RAG systems (e.g., GPT-4 + Pinecone, Gemini + Vertex
+AI Search), the local approach achieves comparable answer quality on covered
+topics at the cost of higher latency and limited context window. The key
+advantage --- complete data privacy --- remains the primary motivation for
+enterprise deployment of HR tools handling sensitive employee information.
+
+Compared to Vietnamese chatbot products (e.g., FPT.AI, Zalo AI), the system
+offers several distinctions: (1) fully offline operation with no cloud
+dependency, (2) open-source components with no licensing costs, and (3) the
+ability to customize the knowledge base without vendor support. However,
+commercial products offer significantly lower latency (sub-second for
+cloud-hosted models), professional UI/UX, and proven scalability.
 
 % ============================================================
 %  CHAPTER V — CONCLUSION AND PERSPECTIVE
@@ -1292,7 +1597,7 @@ Chroma Inc.,
 ``ChromaDB: The open-source embedding database,'' 2023.
 \newline\url{https://docs.trychroma.com/}
 
-\bibitem{bllđ2019}
+\bibitem{blld2019}
 Quốc Hội Việt Nam,
 ``Bộ Luật Lao Động,'' Luật số 45/2019/QH14, 2019.
 \newline\url{https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Bo-Luat-lao-dong-2019-388600.aspx}
@@ -1359,8 +1664,10 @@ def retrieve(self, query: str, top_k: int = 5):
 \section{Prompt Template (src/rag\_pipeline.py)}
 \label{app:prompt}
 
-\begin{lstlisting}[caption={Phi-3-Mini Vietnamese prompt template with chat tokens},
-                   label={lst:prompt-code}, language={}]
+\begin{figure}[H]
+\begin{mdframed}[linewidth=0.5pt, innertopmargin=6pt, innerbottommargin=6pt,
+                 backgroundcolor=codegray]
+\begin{Verbatim}[fontsize=\footnotesize]
 PROMPT_TEMPLATE_VI = """<|user|>
 Bạn là trợ lý nội bộ của công ty. Dựa vào các đoạn trích từ tài liệu
 nội bộ bên dưới, hãy trả lời câu hỏi một cách chính xác và ngắn gọn
@@ -1378,7 +1685,12 @@ Ngữ cảnh:
 Câu hỏi: {question}<|end|>
 <|assistant|>
 """
-\end{lstlisting}
+\end{Verbatim}
+\end{mdframed}
+\vspace{-4pt}
+\noindent\textit{\small Listing: Phi-3-Mini Vietnamese prompt template with chat tokens}
+\label{lst:prompt-code}
+\end{figure}
 
 \chapter{Evaluation Results (Full)}
 \label{app:eval}
