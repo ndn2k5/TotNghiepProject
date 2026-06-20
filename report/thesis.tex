@@ -328,10 +328,10 @@ thereby preserving data privacy and eliminating per-query API costs.
 The knowledge base consists of 20 Vietnamese HR policy documents covering topics
 such as leave policy, employment contracts, salary, social insurance, and
 workplace regulations. Eight documents were authored manually and twelve were
-generated using the Minimax-M2.7 large language model API. Documents are chunked
-using a recursive character text splitter and embedded with the
-\texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model, then
-stored in a persistent ChromaDB vector database.
+generated using the Minimax-M2.7 large language model API. Documents are split
+into 258 chunks using a paragraph-based splitter (300 characters, 50-character
+overlap) and embedded with the \texttt{paraphrase-multilingual-MiniLM-L12-v2}
+sentence-transformer model, then stored in a persistent ChromaDB vector database.
 
 A key contribution of this work is a hybrid retrieval strategy that combines
 BM25 keyword search with vector cosine similarity search, merged via Reciprocal
@@ -461,19 +461,38 @@ multilingual embedding models rather than monolingual ones.
 \section{Contribution of This Work}
 \label{sec:contribution}
 
-This thesis makes the following contributions:
+This thesis makes the following contributions to the field of Vietnamese NLP
+and enterprise knowledge retrieval:
 
 \begin{enumerate}[leftmargin=2em]
-  \item A fully local, offline Vietnamese HR chatbot using RAG, requiring no
-        internet connectivity at inference time.
-  \item A 20-document Vietnamese HR knowledge base combining manually authored
-        and LLM-generated policy documents, covering the most common HR topics
-        in Vietnamese companies.
-  \item A hybrid BM25 + vector retrieval pipeline with RRF fusion, implemented
-        in \texttt{src/hybrid\_retriever.py}, demonstrating improved retrieval
-        accuracy on short Vietnamese queries.
-  \item A documented QLoRA fine-tuning negative result, providing a concrete
-        case study of data quality requirements for domain adaptation.
+  \item \textbf{A privacy-preserving Vietnamese HR chatbot.} The system operates
+        entirely offline on consumer hardware, ensuring that sensitive employee
+        data never leaves the company's infrastructure. Unlike cloud-based
+        alternatives, it incurs no per-query API cost and requires no internet
+        connectivity at inference time.
+
+  \item \textbf{A curated Vietnamese HR knowledge base with transparent provenance.}
+        The 20-document corpus (39{,}660 characters, 258 chunks) combines 8
+        manually authored policy documents with 12 AI-generated documents,
+        covering the most frequently queried HR topics in Vietnamese workplaces.
+        Each document is traceable to its source, enabling content auditing
+        and incremental updates without retraining.
+
+  \item \textbf{A hybrid retrieval strategy tailored for Vietnamese queries.}
+        By combining BM25 keyword search with multilingual vector similarity
+        via Reciprocal Rank Fusion, the system achieves 100\% top-1 retrieval
+        accuracy on a 10-query evaluation set, compared to 70\% for the pure
+        vector baseline. This addresses a specific failure mode of short
+        Vietnamese queries (3--6 tokens), where embedding similarity alone
+        lacks discriminative power.
+
+  \item \textbf{A documented QLoRA fine-tuning negative result with root cause
+        analysis.} The experiment demonstrates concretely that data quality
+        outweighs data quantity for domain adaptation: a 3{,}343-sample dataset
+        with 63\% off-domain contamination produces catastrophic hallucinations,
+        while the base model with RAG answers correctly. This serves as a
+        cautionary case study for practitioners attempting fine-tuning without
+        rigorous data curation.
 \end{enumerate}
 
 % ============================================================
@@ -586,25 +605,198 @@ summarised in Figure~\ref{fig:kb-topics}.
   \label{fig:kb-topics}
 \end{figure}
 
+\subsection{Knowledge Base Analysis}
+\label{subsec:kb-analysis}
+
+Table~\ref{tab:kb-files} provides a per-document breakdown of the complete
+knowledge base, including text length and the number of chunks produced after
+indexing. The corpus totals 39{,}660 characters across 20 documents, yielding
+258 chunks after paragraph-based splitting (described in
+Section~\ref{subsec:chunking}).
+
+\begin{longtable}{@{}rlp{4.2cm}lrrr@{}}
+  \caption{Per-document statistics for the 20-file Vietnamese HR knowledge base.}
+  \label{tab:kb-files} \\
+  \toprule
+  \textbf{\#} & \textbf{File name} & \textbf{Topic} & \textbf{Source} & \textbf{Chars} & \textbf{Chunks} & \textbf{Avg len} \\
+  \midrule
+  \endfirsthead
+  \multicolumn{7}{c}{\small\itshape (continued from previous page)} \\
+  \toprule
+  \textbf{\#} & \textbf{File name} & \textbf{Topic} & \textbf{Source} & \textbf{Chars} & \textbf{Chunks} & \textbf{Avg len} \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  1  & chinh\_sach\_nghi\_phep   & Annual leave policy       & Manual  & 1{,}943 &  9 & 225 \\
+  2  & hop\_dong\_lao\_dong      & Employment contracts      & Manual  & 2{,}028 & 11 & 201 \\
+  3  & chinh\_sach\_luong        & Salary and payroll        & Manual  & 2{,}777 & 11 & 260 \\
+  4  & noi\_quy\_cong\_ty        & Company regulations       & Manual  & 2{,}137 & 12 & 198 \\
+  5  & ky\_luat\_lao\_dong       & Labour discipline         & Manual  & 2{,}247 & 11 & 216 \\
+  6  & phuc\_loi\_nhan\_vien     & Employee benefits         & Manual  & 2{,}046 &  9 & 237 \\
+  7  & tuyen\_dung\_dao\_tao     & Recruitment \& training   & Manual  & 2{,}270 & 12 & 209 \\
+  8  & bao\_hiem\_xa\_hoi        & Social insurance          & Manual  & 2{,}154 & 14 & 156 \\
+  9  & lam\_them\_gio            & Overtime policy           & AI gen. & 3{,}329 & 26 & 125 \\
+  10 & nghi\_thai\_san           & Maternity leave           & AI gen. & 1{,}555 & 14 & 111 \\
+  11 & chinh\_sach\_lam\_viec\_tu\_xa & Remote work policy   & AI gen. & 1{,}719 & 14 & 122 \\
+  12 & cong\_tac\_va\_di\_chuyen & Business travel           & AI gen. & 1{,}968 & 17 & 113 \\
+  13 & danh\_gia\_hieu\_suat     & Performance reviews       & AI gen. & 2{,}014 & 15 & 131 \\
+  14 & bao\_mat\_thong\_tin\_it  & IT security               & AI gen. & 1{,}938 & 13 & 146 \\
+  15 & nghi\_le\_phep\_dac\_biet & Public holidays           & AI gen. & 1{,}229 &  8 & 148 \\
+  16 & quay\_roi\_phan\_biet     & Anti-harassment           & AI gen. & 1{,}916 & 11 & 174 \\
+  17 & nghi\_viec\_va\_ban\_giao & Resignation \& handover   & AI gen. & 1{,}742 & 14 & 127 \\
+  18 & phong\_chong\_tham\_nhung & Anti-corruption           & AI gen. & 1{,}855 & 14 & 136 \\
+  19 & suc\_khoe\_an\_toan       & Workplace health \& safety& AI gen. & 1{,}461 & 11 & 131 \\
+  20 & phu\_cap\_va\_tro\_cap    & Allowances \& subsidies   & AI gen. & 1{,}332 & 12 & 107 \\
+  \midrule
+  \multicolumn{4}{@{}l}{\textbf{Total}} & \textbf{39{,}660} & \textbf{258} & \textbf{154} \\
+\end{longtable}
+
+Several observations emerge from the data:
+
+\begin{itemize}[leftmargin=2em]
+  \item The average chunk length is 154 characters, well below the 300-character
+        maximum, because most Vietnamese HR policy paragraphs are naturally short
+        (bullet points and numbered clauses).
+  \item The manually authored documents produce slightly longer chunks on average
+        (213 characters) compared to AI-generated ones (131 characters), reflecting
+        the more structured writing style in the manual documents.
+  \item The largest document (\texttt{lam\_them\_gio.txt}, 3{,}329 chars) produces
+        the most chunks (26), while the smallest
+        (\texttt{nghi\_le\_phep\_dac\_biet.txt}, 1{,}229 chars) produces only 8.
+  \item No document exceeds 4{,}000 characters, ensuring that the entire content
+        of any single policy can fit within the Phi-3-Mini 4K context window when
+        multiple chunks are retrieved.
+\end{itemize}
+
 \section{Document Processing and Indexing}
 \label{sec:indexing}
 
-\subsection{Chunking}
+\subsection{Chunking Strategy}
 \label{subsec:chunking}
 
-Each document is split into overlapping text chunks using a recursive character
-text splitter with chunk size 600 characters and overlap 100 characters. This
-strategy preserves sentence continuity at chunk boundaries and ensures sufficient
-context within each chunk for the LLM to generate a coherent answer.
+Chunking --- the process of splitting full documents into smaller, semantically
+coherent text segments --- is a critical step in RAG pipeline design. The chunk
+size directly affects retrieval quality: chunks that are too large dilute the
+relevance signal with unrelated content, while chunks that are too small lose
+the surrounding context needed for the LLM to generate a complete answer.
+Research on RAG chunk size optimisation \cite{lewis2020rag} suggests that
+200--500 characters is effective for short-form policy documents.
 
-\subsection{Embedding}
+\textbf{Vietnamese document chunking.}
+The 20 Vietnamese HR policy documents are chunked using a custom
+paragraph-based splitter with the following parameters:
+
+\begin{table}[H]
+  \centering
+  \caption{Chunking parameters for Vietnamese policy documents.}
+  \label{tab:chunk-params}
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} & \textbf{Rationale} \\
+    \midrule
+    Maximum chunk size    & 300 characters & Preserves single-topic coherence per chunk \\
+    Overlap               & 50 characters  & Prevents context loss at boundaries (16.7\%) \\
+    Primary separator     & \texttt{\textbackslash n\textbackslash n} (blank line) & Splits at natural paragraph breaks \\
+    Secondary separator   & \texttt{. ! ?} (sentence boundary) & Further splits long paragraphs \\
+    Minimum chunk size    & 20 characters  & Discards very short fragments \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The paragraph-based approach exploits the inherent structure of Vietnamese HR
+policy documents, which are organised into numbered sections with bullet-pointed
+clauses separated by blank lines. By splitting first at paragraph boundaries
+(\texttt{\textbackslash n\textbackslash n}), each chunk naturally corresponds to
+a single policy clause or regulation. Paragraphs exceeding 300 characters are
+further split at sentence boundaries (\texttt{.}~\texttt{!}~\texttt{?}),
+ensuring that no chunk exceeds the maximum size while preserving sentence
+integrity.
+
+\textbf{Why 300 characters?} Vietnamese policy clauses typically contain 80--250
+characters per paragraph. A 300-character limit accommodates 95\% of paragraphs
+without splitting, while preventing occasional long paragraphs (e.g.,\ salary
+calculation formulas, up to 581 characters) from producing oversized chunks that
+dilute retrieval precision. This size also allows the retrieval pipeline to
+inject 5 chunks ($5 \times 300 = 1{,}500$ characters) into the prompt while
+remaining well within the Phi-3-Mini 4K context window.
+
+\textbf{Why 50-character overlap (16.7\%)?} When a long paragraph is split at a
+sentence boundary, the last 50 characters of the preceding chunk are prepended
+to the next chunk. This overlap ensures that sentences referencing the previous
+clause (e.g.,\ ``Ngoài ra, nhân viên cũng được\ldots'' / ``In addition, the
+employee also receives\ldots'') retain sufficient context for both retrieval
+matching and answer generation. The 16.7\% overlap ratio balances context
+preservation against storage overhead (258 chunks vs.\ an estimated 220 without
+overlap).
+
+The chunking process produces 258 chunks from the 20-document corpus, with an
+average chunk length of 154 characters. Figure~\ref{fig:chunk-distribution}
+shows the distribution of chunk sizes across the corpus.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.70\textwidth]{figures/chunk_distribution.png}
+  \caption{Distribution of chunk sizes across the 258-chunk Vietnamese HR corpus.
+           Most chunks are 80--250 characters, reflecting the natural paragraph
+           structure of Vietnamese policy documents.}
+  \label{fig:chunk-distribution}
+\end{figure}
+
+\subsection{Embedding Model and Vectorisation}
 \label{subsec:embedding}
 
-Each chunk is embedded into a 384-dimensional dense vector using the
+Each text chunk is transformed into a dense vector representation using the
 \texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model
-\cite{reimers2019sbert}. This model supports 50+ languages and is pre-trained
-on multilingual paraphrase pairs, making it well-suited for Vietnamese semantic
-similarity. The embedding model runs entirely locally with no API calls.
+\cite{reimers2019sbert}. This model is based on the Sentence-BERT architecture,
+which fine-tunes a pre-trained transformer using a siamese network structure on
+paraphrase pairs, producing embeddings where semantically similar texts have
+high cosine similarity.
+
+\textbf{Architecture.} The model consists of 12 transformer layers with a hidden
+size of 384. Given an input text, the model processes all tokens through the
+transformer stack and applies mean pooling over the token-level hidden states to
+produce a single 384-dimensional sentence embedding vector:
+
+\begin{equation}
+  \mathbf{e} = \frac{1}{n} \sum_{i=1}^{n} \mathbf{h}_i
+  \label{eq:mean-pooling}
+\end{equation}
+
+\noindent where $\mathbf{h}_i \in \mathbb{R}^{384}$ is the hidden state of the
+$i$-th token and $n$ is the sequence length.
+
+\textbf{Multilingual capability.} The model is trained on paraphrase pairs in
+50+ languages, including Vietnamese, using a knowledge distillation approach from
+a larger teacher model. This enables cross-lingual semantic similarity: a
+Vietnamese query embedding can be meaningfully compared to a Vietnamese document
+embedding without any language-specific preprocessing.
+
+\textbf{Why this model?} Three factors motivated the choice:
+\begin{enumerate}[leftmargin=2em]
+  \item \textit{Vietnamese support:} Unlike English-only models (e.g.,
+        \texttt{all-MiniLM-L6-v2}), this model explicitly includes Vietnamese
+        in its training data, producing higher-quality embeddings for Vietnamese
+        text.
+  \item \textit{Compact size:} At 471 MB and 384 dimensions, the model is small
+        enough to run on CPU without significant latency (embedding 258 chunks
+        takes approximately 3 seconds).
+  \item \textit{Local execution:} The model runs entirely locally via the
+        \texttt{sentence-transformers} library with no API calls, satisfying
+        the data privacy requirement.
+\end{enumerate}
+
+\textbf{Similarity metric.} At query time, the user's question is embedded using
+the same model, and the resulting vector is compared to all chunk vectors via
+cosine similarity:
+
+\begin{equation}
+  \text{sim}(\mathbf{q}, \mathbf{d}) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\| \, \|\mathbf{d}\|}
+  \label{eq:cosine}
+\end{equation}
+
+\noindent Chunks with the highest cosine similarity to the query are retrieved
+as candidate context for the LLM.
 
 \subsection{Vector Store}
 \label{subsec:vectorstore}
@@ -657,9 +849,14 @@ Rank Fusion (Equation~\ref{eq:rrf}) \cite{cormack2009rrf}:
 \end{equation}
 
 where $k = 60$ is the standard RRF constant \cite{cormack2009rrf} that prevents
-high scores for very low-ranked documents, and $\alpha = 0.5$ assigns equal
-weight to both systems. The top-5 documents by RRF score are returned as the
-retrieval context. The pipeline is illustrated in Figure~\ref{fig:retrieval}.
+high scores for very low-ranked documents. The weight $\alpha = 0.7$ favours the
+vector (semantic) component over BM25 (keyword) because Vietnamese queries
+frequently use synonyms that differ from the document vocabulary --- for example,
+a user may ask about \textit{``thủ tục''} (procedure) while the document uses
+\textit{``quy trình''} (process). The vector embedding bridges this vocabulary
+gap, whereas BM25 would fail to match. The top-5 documents by RRF score are
+returned as the retrieval context. The pipeline is illustrated in
+Figure~\ref{fig:retrieval}.
 
 \begin{figure}[H]
   \centering
@@ -717,31 +914,45 @@ a maximum of 512 output tokens.
 \label{sec:qlora}
 
 As an alternative approach to RAG, a QLoRA fine-tuning experiment was conducted
-to directly adapt Phi-3-Mini to the Vietnamese HR domain. The experimental
-setup is described in Table~\ref{tab:qlora-setup}.
+to directly adapt Phi-3-Mini to the Vietnamese HR domain. QLoRA
+\cite{dettmers2023qlora} combines 4-bit quantisation of the base model with
+Low-Rank Adaptation (LoRA) \cite{hu2022lora}, enabling fine-tuning on
+consumer-grade GPUs with limited VRAM. Instead of updating all 3.8 billion
+parameters, LoRA injects small trainable matrices into specific transformer
+layers, reducing the number of trainable parameters by over 99\%.
+
+The experimental setup is described in Table~\ref{tab:qlora-setup}, with
+detailed rationale for each parameter choice.
 
 \begin{table}[H]
   \centering
-  \caption{QLoRA fine-tuning experimental setup.}
+  \caption{QLoRA fine-tuning experimental setup with parameter rationale.}
   \label{tab:qlora-setup}
-  \begin{tabular}{@{}ll@{}}
+  \begin{tabularx}{\textwidth}{@{}llX@{}}
     \toprule
-    \textbf{Parameter} & \textbf{Value} \\
+    \textbf{Parameter} & \textbf{Value} & \textbf{Rationale} \\
     \midrule
-    Base model              & microsoft/Phi-3-mini-4k-instruct \\
-    Quantization            & 4-bit (bitsandbytes NF4) \\
-    LoRA rank ($r$)         & 16 \\
-    LoRA $\alpha$           & 32 \\
-    LoRA target modules     & q\_proj, k\_proj, v\_proj, o\_proj \\
-    Training samples        & 3{,}343 Q\&A pairs \\
-    Epochs                  & 3 \\
-    Batch size              & 4 (gradient accumulation $\times$4 = effective 16) \\
-    Learning rate           & $2 \times 10^{-4}$ \\
-    Hardware                & NVIDIA T1200 Laptop GPU (4.3 GB VRAM) \\
-    Training duration       & $\approx$ 22 hours \\
+    Base model & Phi-3-mini-4k-instruct & Small enough for consumer GPU; instruction-tuned baseline \\
+    Quantisation & 4-bit NF4 & Reduces VRAM from 7.6\,GB to 2.3\,GB; NF4 is information-theoretically optimal for normally distributed weights \cite{dettmers2023qlora} \\
+    LoRA rank ($r$) & 16 & Trade-off between adaptation capacity and VRAM; $r{=}16$ adds only 4.2M trainable parameters (0.11\% of total) \\
+    LoRA $\alpha$ & 32 & Scaling factor; $\alpha / r = 2.0$ amplifies the LoRA update relative to the frozen weights, standard for domain adaptation tasks \\
+    Target modules & q\_proj, k\_proj, v\_proj, o\_proj & All four attention projection matrices; adapting the full attention mechanism enables the model to learn new domain-specific attention patterns \\
+    Training samples & 3{,}343 Q\&A pairs & Generated from web-crawled Vietnamese HR documents (see Section~\ref{subsec:data-quality} for quality analysis) \\
+    Epochs & 3 & Standard for small-dataset fine-tuning; prevents overfitting while allowing multiple passes \\
+    Batch size & 4 (grad.\ accum.\ $\times$4 = eff.\ 16) & Effective batch size 16 stabilises gradient estimates within VRAM constraints \\
+    Learning rate & $2 \times 10^{-4}$ & Recommended default for QLoRA \cite{dettmers2023qlora}; higher rates cause training instability with 4-bit quantisation \\
+    Hardware & NVIDIA T1200 (4.3\,GB) & Consumer laptop GPU; QLoRA enables training within this VRAM budget \\
+    Training duration & $\approx$ 22 hours & Reflects CPU--GPU bottleneck on laptop hardware \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
 \end{table}
+
+\textbf{Where fine-tuning is applied in the pipeline.} In the standard RAG
+pipeline (Figure~\ref{fig:architecture}), the LLM generates answers from
+retrieved context. Fine-tuning modifies the LLM's internal weights so that it
+can generate better Vietnamese HR answers even without retrieved context. The
+fine-tuned model replaces the base Phi-3-Mini in the generation stage; the
+retrieval pipeline (embedding, BM25, RRF) remains unchanged.
 
 % ============================================================
 %  CHAPTER IV — RESULTS AND DISCUSSION

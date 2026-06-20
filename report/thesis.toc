@@ -16,31 +16,32 @@
 \contentsline {section}{\numberline {3.2}Knowledge Base Construction}{6}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}Document Authoring}{6}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}AI-Generated Documents}{6}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Document Processing and Indexing}{7}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Chunking}{7}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Embedding}{7}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}Vector Store}{8}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Hybrid Retrieval: BM25 + Vector Search with RRF}{8}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Motivation}{8}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}BM25 Retrieval}{8}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Reciprocal Rank Fusion}{8}{subsection.3.4.3}%
-\contentsline {section}{\numberline {3.5}Answer Generation}{9}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Model}{9}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Prompt Format}{9}{subsection.3.5.2}%
-\contentsline {section}{\numberline {3.6}QLoRA Fine-Tuning Experiment}{10}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{11}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Retrieval Comparison: Pure Vector vs.\ Hybrid BM25+Vector}{11}{section.4.1}%
-\contentsline {section}{\numberline {4.2}End-to-End System Demonstration}{12}{section.4.2}%
-\contentsline {section}{\numberline {4.3}QLoRA Fine-Tuning: Negative Result Analysis}{13}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Training Data Quality}{13}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Evaluation Results}{13}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Root Cause and Lessons Learned}{13}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Discussion}{14}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Conclusion and Perspective}{15}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Achievements}{15}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Key Findings}{15}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Perspectives and Future Work}{16}{section.5.3}%
-\contentsline {chapter}{\numberline {A}Key Code Listings}{19}{chapter.A}%
-\contentsline {section}{\numberline {A.1}Hybrid Retriever (src/hybrid\_retriever.py)}{19}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Prompt Template (src/rag\_pipeline.py)}{20}{section.A.2}%
-\contentsline {chapter}{\numberline {B}Evaluation Results (Full)}{21}{chapter.B}%
+\contentsline {subsection}{\numberline {3.2.3}Knowledge Base Analysis}{7}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Document Processing and Indexing}{9}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Chunking Strategy}{9}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Embedding Model and Vectorisation}{10}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Vector Store}{11}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Hybrid Retrieval: BM25 + Vector Search with RRF}{11}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Motivation}{11}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}BM25 Retrieval}{12}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Reciprocal Rank Fusion}{12}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Answer Generation}{13}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Model}{13}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Prompt Format}{13}{subsection.3.5.2}%
+\contentsline {section}{\numberline {3.6}QLoRA Fine-Tuning Experiment}{14}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Retrieval Comparison: Pure Vector vs.\ Hybrid BM25+Vector}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}End-to-End System Demonstration}{18}{section.4.2}%
+\contentsline {section}{\numberline {4.3}QLoRA Fine-Tuning: Negative Result Analysis}{19}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Training Data Quality}{19}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Evaluation Results}{19}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Root Cause and Lessons Learned}{19}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Discussion}{20}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Conclusion and Perspective}{21}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Achievements}{21}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Key Findings}{21}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Perspectives and Future Work}{22}{section.5.3}%
+\contentsline {chapter}{\numberline {A}Key Code Listings}{25}{chapter.A}%
+\contentsline {section}{\numberline {A.1}Hybrid Retriever (src/hybrid\_retriever.py)}{25}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Prompt Template (src/rag\_pipeline.py)}{26}{section.A.2}%
+\contentsline {chapter}{\numberline {B}Evaluation Results (Full)}{27}{chapter.B}%
