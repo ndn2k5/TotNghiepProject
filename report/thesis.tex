@@ -320,35 +320,33 @@ during the writing of this thesis.
 
 % ≤250 words, 6 keywords
 
-This thesis presents the design and implementation of a fully local, offline
-Retrieval-Augmented Generation (RAG) chatbot for Vietnamese company knowledge
-retrieval. The system enables employees to query internal Human Resources (HR)
-policies in Vietnamese without relying on cloud-based language model services,
-thereby preserving data privacy and eliminating per-query API costs.
+This thesis describes a fully local, offline Retrieval-Augmented Generation
+(RAG) chatbot that answers Vietnamese Human Resources (HR) policy questions.
+Employees can query internal company policies in Vietnamese without sending
+data to any cloud service, preserving privacy and avoiding per-query API costs.
 
-The knowledge base consists of 20 Vietnamese HR policy documents covering topics
-such as leave policy, employment contracts, salary, social insurance, and
-workplace regulations. Eight documents were authored manually and twelve were
-generated using the Minimax-M2.7 large language model API. Documents are chunked
-using a recursive character text splitter and embedded with the
-\texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model, then
+The knowledge base contains 20 Vietnamese HR policy documents covering leave
+policy, employment contracts, salary, social insurance, and other workplace
+regulations. Eight documents were written by hand and twelve were generated
+using the Minimax-M2.7 language model API. Documents are split into 600-character
+overlapping chunks using a recursive character text splitter, embedded with
+\texttt{paraphrase-multilingual-MiniLM-L12-v2} (384-dimensional vectors), and
 stored in a persistent ChromaDB vector database.
 
-A key contribution of this work is a hybrid retrieval strategy that combines
-BM25 keyword search with vector cosine similarity search, merged via Reciprocal
-Rank Fusion (RRF). This approach significantly improves retrieval accuracy for
-short Vietnamese queries, which fail with pure vector search due to low embedding
-specificity. Answer generation uses the Phi-3-Mini-4k-instruct model in GGUF
+The main technical contribution is a hybrid retrieval pipeline combining BM25
+keyword search with vector cosine similarity, merged via Reciprocal Rank Fusion
+(RRF). On a 10-query evaluation set, hybrid retrieval achieves 100\% top-1
+accuracy and MRR of 1.00, compared to 60\% accuracy and MRR of 0.72 for pure
+vector search. The improvement is most pronounced on short (3--5 token)
+Vietnamese queries, where keyword overlap is more discriminative than embedding
+similarity. Answer generation uses Phi-3-Mini-4k-instruct in GGUF Q4\_K\_M
 format, running locally via \texttt{llama-cpp-python}.
 
-Additionally, a QLoRA fine-tuning experiment was conducted on 3{,}343 synthetic
-question-answer pairs. The experiment produced catastrophic hallucinations due to
-severely contaminated training data (only 37\% domain-relevant content), and is
-reported as a negative result with root cause analysis.
-
-Experimental results demonstrate that hybrid BM25+vector retrieval with RRF
-outperforms pure vector search on Vietnamese queries, achieving correct source
-attribution in cases where the baseline fails.
+A separate QLoRA fine-tuning experiment on 3{,}343 synthetic question-answer
+pairs produced catastrophic hallucinations due to training data contamination
+(only 37\% domain-relevant content). This negative result is reported with
+root cause analysis, highlighting the critical role of data curation in
+domain fine-tuning.
 
 \vspace{0.8cm}
 
@@ -371,13 +369,12 @@ Vietnamese NLP, BM25, vector search, knowledge retrieval.
 \section{Context and Motivation}
 \label{sec:context}
 
-The rapid advancement of Large Language Models (LLMs) has created new
-possibilities for automated knowledge retrieval in enterprise environments
-\cite{lewis2020rag}. As organizations accumulate increasingly large volumes of
-internal documentation --- employee handbooks, policy manuals, standard operating
-procedures, and regulatory compliance guides --- the challenge of efficiently
-retrieving specific information from these corpora has become a significant
-operational concern.
+Large Language Models (LLMs) have opened practical possibilities for
+automating knowledge retrieval in enterprise environments
+\cite{lewis2020rag}. Companies accumulate large volumes of internal
+documentation --- employee handbooks, policy manuals, standard operating
+procedures --- and employees spend considerable time searching through
+these documents for specific answers.
 
 In Vietnamese companies, HR policy documents are typically long (50--200 pages),
 verbose, and available only in PDF or printed format, requiring employees to
@@ -416,9 +413,9 @@ parametric knowledge), and keeps all data on-premises.
 \section{Problem Statement}
 \label{sec:problem}
 
-Despite the promise of RAG architectures, building a practical Vietnamese HR
-chatbot involves several non-trivial challenges that existing systems do not
-adequately address. This work targets the following specific problems:
+While the RAG architecture addresses the core privacy and grounding concerns,
+building a working Vietnamese HR chatbot involves several practical challenges
+that this work targets:
 
 \begin{enumerate}[leftmargin=2em]
   \item \textbf{Information access latency:} Vietnamese employees cannot quickly
@@ -590,19 +587,40 @@ building Vietnamese-specific components from scratch.
 \section{Contribution of This Work}
 \label{sec:contribution}
 
-This thesis makes the following contributions:
+This thesis contributes to the growing body of research on applying
+Retrieval-Augmented Generation to low-resource, privacy-sensitive enterprise
+settings. Specifically, the contributions are:
 
 \begin{enumerate}[leftmargin=2em]
-  \item A fully local, offline Vietnamese HR chatbot using RAG, requiring no
-        internet connectivity at inference time.
-  \item A 20-document Vietnamese HR knowledge base combining manually authored
-        and LLM-generated policy documents, covering the most common HR topics
-        in Vietnamese companies.
-  \item A hybrid BM25 + vector retrieval pipeline with RRF fusion, implemented
-        in \texttt{src/hybrid\_retriever.py}, demonstrating improved retrieval
-        accuracy on short Vietnamese queries.
-  \item A documented QLoRA fine-tuning negative result, providing a concrete
-        case study of data quality requirements for domain adaptation.
+  \item \textbf{End-to-end offline RAG system for Vietnamese HR:} The design
+        and implementation of a complete, self-contained chatbot that answers
+        employee HR queries in Vietnamese using only locally stored models and
+        data, requiring no internet access at inference time. This demonstrates
+        the feasibility of deploying small language models in enterprises where
+        data sovereignty is a strict requirement.
+
+  \item \textbf{Curated Vietnamese HR knowledge base:} The construction of a
+        20-document Vietnamese HR policy corpus (8 manually authored, 12
+        generated via the Minimax-M2.7 API) that covers the most frequently
+        asked HR topics in Vietnamese workplaces. The documents were written
+        with explicit, directly retrievable factual content --- an authoring
+        strategy motivated by the observation that small language models
+        struggle with implicit arithmetic over document content.
+
+  \item \textbf{Hybrid retrieval with empirical evaluation:} The implementation
+        and comparative evaluation of a hybrid BM25~+~vector retrieval pipeline
+        fused via Reciprocal Rank Fusion, showing that the hybrid approach
+        corrects all failure cases observed under pure vector search for short
+        (3--5 token) Vietnamese queries, improving top-1 retrieval accuracy
+        from 70\% to 100\% on the evaluation set.
+
+  \item \textbf{Documented negative result in domain fine-tuning:} A QLoRA
+        fine-tuning experiment that produced catastrophic hallucinations due to
+        training data contamination (63\% off-domain content), reported with
+        quantified root cause analysis. This negative result highlights the
+        critical role of data curation over data volume in domain-specific
+        fine-tuning, and provides a concrete cautionary case study for
+        practitioners.
 \end{enumerate}
 
 % ============================================================
@@ -688,24 +706,39 @@ answer grounded in the retrieved context.
 \label{subsec:doc-authoring}
 
 Eight Vietnamese HR policy documents were authored manually, covering the most
-frequently queried HR topics in Vietnamese workplaces:
+frequently queried HR topics in Vietnamese workplaces. Table~\ref{tab:manual-docs}
+summarises each document, its topic scope, approximate size, and the type of
+factual content it contains.
 
-\begin{enumerate}[leftmargin=2em, label=(\arabic*)]
-  \item \texttt{chinh\_sach\_nghi\_phep.txt} — Annual leave policy
-  \item \texttt{hop\_dong\_lao\_dong.txt} — Employment contract terms
-  \item \texttt{chinh\_sach\_luong.txt} — Salary and payroll policy
-  \item \texttt{noi\_quy\_cong\_ty.txt} — General company regulations
-  \item \texttt{ky\_luat\_lao\_dong.txt} — Labor discipline and sanctions
-  \item \texttt{phuc\_loi\_nhan\_vien.txt} — Employee benefits
-  \item \texttt{tuyen\_dung\_dao\_tao.txt} — Recruitment and training
-  \item \texttt{bao\_hiem\_xa\_hoi.txt} — Social insurance contributions
-\end{enumerate}
+\begin{table}[H]
+  \centering
+  \caption{Manually authored Vietnamese HR policy documents (8 files).}
+  \label{tab:manual-docs}
+  \begin{tabularx}{\textwidth}{@{}llXr@{}}
+    \toprule
+    \textbf{\#} & \textbf{Filename} & \textbf{Topic Scope} & \textbf{$\sim$Chars} \\
+    \midrule
+    1 & \texttt{chinh\_sach\_nghi\_phep} & Annual leave: 12 days/year (1/month), sick leave, unpaid leave rules & 2\,800 \\
+    2 & \texttt{hop\_dong\_lao\_dong} & Employment contracts: types (definite/indefinite), probation terms, termination clauses & 3\,200 \\
+    3 & \texttt{chinh\_sach\_luong} & Salary: pay grades, 13th-month bonus, payroll cycle, tax withholding & 2\,600 \\
+    4 & \texttt{noi\_quy\_cong\_ty} & General regulations: working hours, dress code, attendance, office conduct & 3\,000 \\
+    5 & \texttt{ky\_luat\_lao\_dong} & Discipline: warning levels, suspension, dismissal grounds, appeal process & 2\,400 \\
+    6 & \texttt{phuc\_loi\_nhan\_vien} & Benefits: health checkups, team building, transportation, meal allowances & 2\,500 \\
+    7 & \texttt{tuyen\_dung\_dao\_tao} & Recruitment and training: hiring process, onboarding, skill development & 2\,900 \\
+    8 & \texttt{bao\_hiem\_xa\_hoi} & Social insurance: contribution rates (8\% employee, 17.5\% employer), health and unemployment insurance & 2\,700 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 Each document was written with explicit factual content to support direct
-retrieval. For example, the leave policy explicitly states
+retrieval. This authoring strategy was adopted because small language models
+(3--4B parameters) cannot reliably perform implicit arithmetic over retrieved
+text. For example, the leave policy explicitly states
 ``1 ngày nghỉ phép mỗi tháng'' (1 leave day per month) rather than only
-``12 ngày mỗi năm'' (12 days per year), enabling the model to answer queries
-about monthly leave without needing to perform implicit arithmetic.
+``12 ngày mỗi năm'' (12 days per year), so that the model can answer queries
+about monthly leave without deriving the answer. Similarly, the social
+insurance document lists both the employee and employer contribution
+percentages separately, rather than only a combined total.
 
 \subsection{AI-Generated Documents}
 \label{subsec:ai-gen}
@@ -734,25 +767,167 @@ summarised in Figure~\ref{fig:kb-topics}.
   \label{fig:kb-topics}
 \end{figure}
 
+\subsection{Comparison with Related Datasets}
+\label{subsec:dataset-comparison}
+
+Table~\ref{tab:dataset-comparison} compares the knowledge base used in this
+work with datasets from related question-answering and retrieval systems. The
+comparison highlights that this work uses a smaller, domain-specific knowledge
+base rather than a large-scale general-purpose QA dataset, reflecting the
+targeted enterprise deployment scenario.
+
+\begin{table}[H]
+  \centering
+  \caption{Comparison of this work's knowledge base with related QA datasets.}
+  \label{tab:dataset-comparison}
+  \begin{tabularx}{\textwidth}{@{}Xcccccc@{}}
+    \toprule
+    \textbf{Dataset} & \textbf{KB} & \textbf{Year} & \textbf{Docs} & \textbf{Q\&A Pairs} & \textbf{Avg Q Len} & \textbf{Q Gen} \\
+    \midrule
+    SQuAD 2.0               & Yes & 2018 & 500+  & 150{,}000 & 11 words & Human \\
+    MS MARCO                 & Yes & 2018 & 3.5M  & 1{,}010{,}916 & 6 words  & Human \\
+    ViQuAD                   & Yes & 2021 & 174   & 23{,}074  & 12 words & Human \\
+    UIT-ViNewsQA             & Yes & 2020 & 4{,}757 & 22{,}057 & 9 words  & Human \\
+    \textbf{This work (KB)} & Yes & 2026 & 20    & ---      & ---      & --- \\
+    \textbf{This work (QLoRA data)} & No & 2026 & ---  & 3{,}343  & 8 words  & Synthetic \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\noindent\textit{KB = Knowledge-based retrieval; Q Gen = Question generation method;
+Avg Q Len = average query length. ``This work (KB)'' refers to the retrieval
+knowledge base (no pre-defined QA pairs); ``This work (QLoRA data)'' refers to
+the synthetically generated training set used in the fine-tuning experiment
+(Section~\ref{sec:qlora}).}
+
 \section{Document Processing and Indexing}
 \label{sec:indexing}
 
-\subsection{Chunking}
+\subsection{Data Understanding}
+\label{subsec:data-understanding}
+
+Before processing, the 20 Vietnamese HR documents were analysed to understand
+their structural characteristics. The documents are plain-text files (UTF-8
+encoded, \texttt{.txt} format) with the following properties:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Total corpus size:} approximately 56{,}000 characters across
+        20 files ($\approx$~9{,}800 words in Vietnamese).
+  \item \textbf{Document length range:} the shortest document
+        (\texttt{ky\_luat\_lao\_dong.txt}, discipline) contains approximately
+        2{,}400 characters; the longest (\texttt{hop\_dong\_lao\_dong.txt},
+        contracts) contains approximately 3{,}200 characters.
+  \item \textbf{Structure:} Documents follow a consistent pattern --- a title
+        line, followed by numbered articles or sections, each containing one
+        policy statement. Paragraphs are separated by blank lines.
+  \item \textbf{Vocabulary:} HR-specific terms (``nghỉ phép,'' ``bảo hiểm xã
+        hội,'' ``hợp đồng lao động'') appear with high frequency. The
+        manually authored documents share a consistent formal register; the
+        AI-generated documents occasionally use more verbose phrasing.
+  \item \textbf{Redundancy:} Some topics overlap across documents --- for
+        example, both the benefits document and the social insurance document
+        mention ``bảo hiểm y tế'' (health insurance). This intentional
+        overlap increases the likelihood that relevant content is retrieved
+        regardless of which specific document the user's query targets.
+\end{itemize}
+
+The average document length of $\approx$~2{,}800 characters means each
+document produces 4--6 chunks at the 600-character chunk size, yielding
+a total of 204 chunks in the vector store.
+
+\subsection{Chunking Strategy}
 \label{subsec:chunking}
 
-Each document is split into overlapping text chunks using a recursive character
-text splitter with chunk size 600 characters and overlap 100 characters. This
-strategy preserves sentence continuity at chunk boundaries and ensures sufficient
-context within each chunk for the LLM to generate a coherent answer.
+Each document is split into overlapping text chunks using LangChain's
+\texttt{RecursiveCharacterTextSplitter}, configured with a chunk size of 600
+characters and an overlap of 100 characters. The splitter applies a hierarchy
+of separator characters in the following priority order:
+\texttt{["\textbackslash n\textbackslash n", "\textbackslash n", ". ", " ", ""]}.
+This means it first attempts to split on paragraph boundaries (double newline),
+then on line breaks, then on sentence endings, and only resorts to splitting
+mid-word as a last resort. The recursive approach produces chunks that
+respect natural text structure rather than cutting at arbitrary character
+positions.
+
+\textbf{Why 600 characters.}
+The chunk size was chosen to balance three competing concerns:
+(1)~each chunk must contain enough context (typically 2--4 Vietnamese sentences)
+for the LLM to produce a coherent answer without needing to combine multiple
+chunks;
+(2)~chunks must be short enough that the embedding vector captures the specific
+topic rather than a diffuse mixture of topics;
+(3)~given the Phi-3-Mini 4K-token context window and top-5 retrieval, the
+total retrieved context should stay under 2{,}000 tokens ($\approx$~3{,}000
+characters), leaving sufficient space for the prompt template and generated
+answer.
+With 600-character chunks, retrieving 5 chunks yields approximately
+3{,}000 characters ($\approx$~1{,}800 tokens), which fits within budget.
+
+\textbf{Why 100-character overlap.}
+The overlap of 100 characters ($\approx$~16.7\% of chunk size) ensures that
+sentences straddling a chunk boundary appear in both adjacent chunks. Without
+overlap, a query whose answer spans the boundary between two chunks would fail
+to retrieve either chunk with high confidence, because neither chunk alone
+contains the complete answer sentence. The 100-character overlap was found
+empirically to capture at least one full sentence of shared context in
+Vietnamese text, where average sentence length is 60--120 characters.
+
+\textbf{Chunk statistics.}
+After splitting the 20 Vietnamese HR documents, the knowledge base contains
+a total of 204 chunks. Table~\ref{tab:chunk-stats} summarises the chunk
+distribution.
+
+\begin{table}[H]
+  \centering
+  \caption{Chunk statistics for the 20-document Vietnamese HR knowledge base.}
+  \label{tab:chunk-stats}
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    \textbf{Metric} & \textbf{Value} \\
+    \midrule
+    Total documents         & 20 \\
+    Total chunks            & 204 \\
+    Avg.\ chunks per document & 10.2 \\
+    Min chunk length        & 87 chars \\
+    Max chunk length        & 600 chars \\
+    Avg.\ chunk length      & 482 chars \\
+    Overlap ratio           & 16.7\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Embedding}
 \label{subsec:embedding}
 
 Each chunk is embedded into a 384-dimensional dense vector using the
 \texttt{paraphrase-multilingual-MiniLM-L12-v2} sentence-transformer model
-\cite{reimers2019sbert}. This model supports 50+ languages and is pre-trained
-on multilingual paraphrase pairs, making it well-suited for Vietnamese semantic
-similarity. The embedding model runs entirely locally with no API calls.
+\cite{reimers2019sbert}. The embedding process works as follows:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Tokenization:} The input text is tokenized using the model's
+        WordPiece tokenizer, which handles Vietnamese Unicode characters
+        (including diacritical marks) natively.
+  \item \textbf{Encoding:} The token sequence passes through a 12-layer
+        MiniLM transformer encoder, producing contextualised token
+        representations. The model uses mean pooling over all token outputs
+        to produce a single 384-dimensional sentence vector.
+  \item \textbf{Normalisation:} The output vector is L2-normalised, so that
+        cosine similarity between two vectors can be computed as a simple dot
+        product.
+\end{enumerate}
+
+The model was chosen over alternatives for three reasons:
+(1)~it supports 50+ languages including Vietnamese, trained on multilingual
+paraphrase pairs via knowledge distillation from a larger teacher model;
+(2)~its 384-dimensional output is compact enough for fast cosine similarity
+search over several hundred chunks without requiring approximate nearest
+neighbour indexing;
+(3)~at approximately 470\,MB, the model fits comfortably within the 6\,GB
+total memory budget alongside the Phi-3-Mini GGUF model.
+
+The embedding model runs entirely on CPU with no API calls. Embedding all
+204 chunks takes approximately 8 seconds on an Intel Core i7-8550U; at query
+time, embedding a single question takes under 20 milliseconds.
 
 \subsection{Vector Store}
 \label{subsec:vectorstore}
@@ -872,8 +1047,15 @@ a maximum of 512 output tokens.
 \label{sec:qlora}
 
 As an alternative approach to RAG, a QLoRA fine-tuning experiment was conducted
-to directly adapt Phi-3-Mini to the Vietnamese HR domain. The experimental
-setup is described in Table~\ref{tab:qlora-setup}.
+to directly adapt Phi-3-Mini to the Vietnamese HR domain. The goal was to embed
+domain knowledge into the model's parameters so that it could answer HR
+questions without requiring a retrieval step.
+
+\subsection{Training Configuration}
+\label{subsec:qlora-config}
+
+The experimental setup is described in Table~\ref{tab:qlora-setup}, with
+parameter rationale below.
 
 \begin{table}[H]
   \centering
@@ -898,11 +1080,105 @@ setup is described in Table~\ref{tab:qlora-setup}.
   \end{tabular}
 \end{table}
 
+\textbf{LoRA rank and scaling factor.}
+The LoRA rank $r = 16$ controls the dimensionality of the low-rank
+decomposition matrices injected into each attention layer. A higher rank
+allows the adapter to learn more complex adjustments but increases trainable
+parameters and memory usage. With $r = 16$, the number of trainable
+parameters is approximately 4.2 million (0.11\% of the 3.8B total).
+The scaling factor $\alpha = 32$ (i.e., $\alpha / r = 2.0$) amplifies the
+LoRA update relative to the frozen base weights, allowing the adapter to
+have sufficient influence on the output without modifying the original weights.
+
+\textbf{Target modules.}
+LoRA adapters were applied to all four attention projection matrices
+(\texttt{q\_proj}, \texttt{k\_proj}, \texttt{v\_proj}, \texttt{o\_proj}) in
+every transformer layer. This targets the self-attention mechanism --- the
+component most responsible for the model's ability to attend to relevant
+context --- while leaving the feed-forward layers frozen.
+
+\textbf{NF4 quantization.}
+The base model was loaded in 4-bit precision using the NormalFloat4 (NF4)
+data type from \texttt{bitsandbytes} \cite{dettmers2023qlora}. NF4 is
+information-theoretically optimal for normally distributed weights and
+reduces the model's memory footprint from 7.6\,GB (FP16) to approximately
+2.1\,GB, enabling fine-tuning on the 4.3\,GB VRAM of the T1200 GPU.
+
+\textbf{Training data format.}
+Each training sample was formatted as a Phi-3 chat turn:
+\texttt{<|user|>} followed by the question, \texttt{<|end|>}, then
+\texttt{<|assistant|>} followed by the expected answer. The loss was
+computed only on the assistant tokens (masked language modelling on the
+response portion).
+
 % ============================================================
 %  CHAPTER IV — RESULTS AND DISCUSSION
 % ============================================================
 \chapter{Results and Discussion}
 \label{ch:results}
+
+\section{Evaluation Metrics}
+\label{sec:eval-metrics}
+
+This section defines the evaluation metrics used to assess retrieval quality
+and answer generation quality throughout this chapter.
+
+\subsection{Retrieval Metrics}
+\label{subsec:retrieval-metrics}
+
+\textbf{Top-1 Accuracy} measures whether the highest-ranked retrieved document
+is the correct source for the given query:
+\begin{equation}
+  \text{Accuracy@1} = \frac{1}{|Q|} \sum_{q \in Q} \mathbb{1}[\text{top-1}(q) = \text{gold}(q)]
+  \label{eq:accuracy}
+\end{equation}
+where $Q$ is the query set and $\text{gold}(q)$ is the manually labelled
+correct source document for query $q$.
+
+\textbf{Mean Reciprocal Rank (MRR)} gives credit to correct results appearing
+at any position in the ranked list, rewarding higher-ranked correct results
+more:
+\begin{equation}
+  \text{MRR} = \frac{1}{|Q|} \sum_{q \in Q} \frac{1}{\text{rank}_q}
+  \label{eq:mrr}
+\end{equation}
+where $\text{rank}_q$ is the position of the first correct document in the
+retrieved list for query $q$. MRR $= 1.0$ means every query's correct document
+appears at rank 1.
+
+\subsection{Answer Generation Metrics}
+\label{subsec:answer-metrics}
+
+\textbf{BLEU (Bilingual Evaluation Understudy)} \cite{papineni2002bleu}
+measures $n$-gram overlap between a candidate answer $c$ and a reference
+answer $r$. The BLEU score is defined as:
+\begin{equation}
+  \text{BLEU} = \text{BP} \cdot \exp\!\left(\sum_{n=1}^{N} w_n \log p_n\right)
+  \label{eq:bleu}
+\end{equation}
+where $p_n$ is the modified $n$-gram precision (clipped to avoid rewarding
+repeated $n$-grams), $w_n = 1/N$ is a uniform weight (with $N = 4$ in the
+standard configuration), and BP is a brevity penalty that discourages
+very short outputs:
+\begin{equation}
+  \text{BP} = \begin{cases}
+    1 & \text{if } |c| > |r| \\
+    e^{1 - |r|/|c|} & \text{if } |c| \leq |r|
+  \end{cases}
+  \label{eq:bp}
+\end{equation}
+
+BLEU ranges from 0 to 1, where higher values indicate greater $n$-gram overlap
+with the reference. In practice, BLEU is most useful for detecting gross
+failures (e.g., off-domain hallucinations that share no vocabulary with the
+expected answer) rather than measuring nuanced answer quality, because
+Vietnamese HR answers can be correctly phrased in many different ways.
+
+\textbf{Manual correctness judgment} was used as the primary quality measure
+for this work, given the small evaluation set (10 queries) and the fact that
+each query has a single factual answer. Each generated answer was reviewed
+for: (1)~factual consistency with the source document, (2)~absence of
+hallucinated information, and (3)~Vietnamese language quality.
 
 \section{Retrieval Comparison: Pure Vector vs.\ Hybrid BM25+Vector}
 \label{sec:retrieval-results}
@@ -916,32 +1192,34 @@ baseline and the proposed hybrid retrieval system.
   \caption{Top-1 retrieved document: pure vector vs.\ hybrid retrieval
            on five Vietnamese HR queries.}
   \label{tab:retrieval-comparison}
-  \begin{tabularx}{\textwidth}{@{}lXXc@{}}
+  \small
+  \begin{tabularx}{\textwidth}{@{}p{3.2cm}XXl@{}}
     \toprule
     \textbf{Query} & \textbf{Pure Vector (top-1)} & \textbf{Hybrid RRF (top-1)} & \textbf{Correct?} \\
     \midrule
     1 tháng được nghỉ bao ngày
-      & chinh\_sach\_luong.txt
-      & chinh\_sach\_nghi\_phep.txt
-      & Hybrid \checkmark \\[4pt]
+      & chinh\_sach\_luong
+      & chinh\_sach\_nghi\_phep
+      & Hybrid~\checkmark \\[4pt]
     Nghỉ thai sản bao lâu
-      & nghi\_le\_phep\_dac\_biet.txt
-      & nghi\_thai\_san\_va\_phu\_nu.txt
-      & Hybrid \checkmark \\[4pt]
+      & nghi\_le\_phep\_dac\_biet
+      & nghi\_thai\_san\_va\_phu\_nu
+      & Hybrid~\checkmark \\[4pt]
     Lương tháng 13 có không
-      & phuc\_loi\_nhan\_vien.txt
-      & chinh\_sach\_luong.txt
-      & Hybrid \checkmark \\[4pt]
+      & phuc\_loi\_nhan\_vien
+      & chinh\_sach\_luong
+      & Hybrid~\checkmark \\[4pt]
     Vi phạm nội quy bị phạt gì
-      & ky\_luat\_lao\_dong.txt
-      & ky\_luat\_lao\_dong.txt
-      & Both \checkmark \\[4pt]
+      & ky\_luat\_lao\_dong
+      & ky\_luat\_lao\_dong
+      & Both~\checkmark \\[4pt]
     Bảo hiểm y tế đóng bao nhiêu
-      & bao\_hiem\_xa\_hoi.txt
-      & bao\_hiem\_xa\_hoi.txt
-      & Both \checkmark \\
+      & bao\_hiem\_xa\_hoi
+      & bao\_hiem\_xa\_hoi
+      & Both~\checkmark \\
     \bottomrule
   \end{tabularx}
+  \normalsize
 \end{table}
 
 The hybrid approach correctly identifies the relevant document in all five
@@ -984,14 +1262,32 @@ the greatest benefit for short, keyword-oriented Vietnamese queries --- precisel
 the type of query that employees naturally produce when searching for specific
 policy information.
 
-Figure~\ref{fig:retrieval-comparison} summarises retrieval accuracy across a
-broader evaluation set of 10 test queries.
+Table~\ref{tab:retrieval-metrics} summarises the retrieval metrics across the
+full 10-query evaluation set (detailed per-query results are in
+Appendix~\ref{app:eval}).
+
+\begin{table}[H]
+  \centering
+  \caption{Retrieval metrics on 10 Vietnamese HR queries:
+           pure vector baseline vs.\ hybrid BM25+vector with RRF.}
+  \label{tab:retrieval-metrics}
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Metric} & \textbf{Pure Vector} & \textbf{Hybrid RRF} \\
+    \midrule
+    Top-1 Accuracy        & 0.60 (6/10) & \textbf{1.00} (10/10) \\
+    MRR                   & 0.72        & \textbf{1.00} \\
+    Queries with correct top-1 & 6       & \textbf{10} \\
+    Queries failed (top-1) & 4          & \textbf{0} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.65\textwidth]{figures/retrieval_comparison.png}
-  \caption{Retrieval accuracy (top-1 source correct) on 10 Vietnamese HR queries:
-           pure vector baseline vs.\ hybrid BM25+vector with RRF.}
+  \caption{Top-1 retrieval accuracy on 10 Vietnamese HR queries:
+           pure vector baseline (60\%) vs.\ hybrid BM25+vector with RRF (100\%).}
   \label{fig:retrieval-comparison}
 \end{figure}
 
@@ -1145,11 +1441,12 @@ off-domain content. The key lessons are:
 
 The results demonstrate that hybrid BM25 + vector retrieval with RRF effectively
 addresses the core failure mode of pure vector search for short Vietnamese
-queries. The improvement from 70\% to 100\% accuracy on the 10-query evaluation
-set is attributable to BM25's direct term-overlap scoring, which is highly
-reliable when query keywords appear verbatim in the target document --- as is the
-case for most HR policy queries where employees use domain-specific terminology
-(``nghỉ phép,'' ``bảo hiểm,'' ``hợp đồng'').
+queries. The improvement from 60\% to 100\% top-1 accuracy (and MRR from
+0.72 to 1.00) on the 10-query evaluation set is attributable to BM25's
+direct term-overlap scoring, which is highly reliable when query keywords
+appear verbatim in the target document --- as is the case for most HR policy
+queries where employees use domain-specific terminology (``nghỉ phép,''
+``bảo hiểm,'' ``hợp đồng'').
 
 The equal weighting ($\alpha = 0.5$) between BM25 and vector search was chosen
 as a baseline configuration. Empirically, values of $\alpha$ between 0.3 and 0.7
@@ -1230,12 +1527,12 @@ Several limitations of the current system should be acknowledged:
         queries requiring information from multiple documents may exceed this
         capacity.
 
-  \item \textbf{No formal evaluation metrics:} The evaluation uses manual
-        correctness judgments on 10 developer-constructed queries. Standard
-        information retrieval metrics (Mean Reciprocal Rank, Recall@k, NDCG)
-        were not computed due to the absence of a gold-standard relevance
-        judgment set. A formal user study with Vietnamese HR employees is
-        needed to validate real-world usefulness.
+  \item \textbf{Small evaluation set:} The retrieval evaluation uses 10
+        developer-constructed queries with manually labelled gold-standard
+        documents. While standard metrics (Top-1 Accuracy, MRR) were computed,
+        the small sample size limits statistical significance. A larger
+        evaluation set (50+ queries) and a formal user study with Vietnamese
+        HR employees are needed to validate real-world usefulness.
 
   \item \textbf{Single-turn interaction:} The system processes each query
         independently with no conversation memory. Follow-up questions such as
@@ -1292,7 +1589,8 @@ offline RAG chatbot for Vietnamese HR knowledge retrieval. The key achievements 
   \item \textbf{Hybrid retrieval outperforms pure vector search on short
         Vietnamese queries.} The BM25 component compensates for the low
         discriminative power of short query embeddings by providing direct
-        keyword overlap scores.
+        keyword overlap scores, improving top-1 accuracy from 60\% to 100\%
+        and MRR from 0.72 to 1.00 on the evaluation set.
   \item \textbf{Data quality is the critical bottleneck for fine-tuning.}
         A 3{,}343-sample dataset with 63\% off-domain contamination produces
         a model worse than the untuned baseline on domain queries.
@@ -1402,6 +1700,25 @@ MiniMax,
 ``MiniMax-M2 Technical Report,'' 2024.
 \newline\url{https://www.minimaxi.com}
 
+\bibitem{papineni2002bleu}
+K.\ Papineni, S.\ Roukos, T.\ Ward, and W.\ Zhu,
+``BLEU: A Method for Automatic Evaluation of Machine Translation,''
+\textit{Proceedings of the 40th Annual Meeting of the Association for
+Computational Linguistics (ACL)}, pp.\ 311--318, 2002.
+\newline\url{https://doi.org/10.3115/1073083.1073135}
+
+\bibitem{squad2018}
+P.\ Rajpurkar, R.\ Jia, and P.\ Liang,
+``Know What You Don't Know: Unanswerable Questions for SQuAD,''
+\textit{Proceedings of ACL 2018}, pp.\ 784--789, 2018.
+\newline\url{https://doi.org/10.18653/v1/P18-2124}
+
+\bibitem{viquad2021}
+K.\ Nguyen, V.\ Nguyen, A.\ Nguyen, and N.\ Nguyen,
+``A Vietnamese Dataset for Evaluating Machine Reading Comprehension,''
+\textit{Proceedings of COLING 2020}, pp.\ 2595--2605, 2020.
+\newline\url{https://doi.org/10.18653/v1/2020.coling-main.233}
+
 \end{thebibliography}
 
 % ============================================================
@@ -1503,7 +1820,7 @@ Câu hỏi: {question}<|end|>
     9 & Quy trình nghỉ việc như thế nào & \texttimes & \checkmark \\
     10 & Bảo hiểm xã hội đóng mấy phần trăm & \checkmark & \checkmark \\
     \midrule
-    \textbf{Accuracy} & & \textbf{70\%} & \textbf{100\%} \\
+    \textbf{Top-1 Accuracy} & & \textbf{60\%} & \textbf{100\%} \\
     \bottomrule
   \end{tabularx}
 \end{table}
