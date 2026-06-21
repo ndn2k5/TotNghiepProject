@@ -384,7 +384,8 @@ Phase 5 and Phase 6 can run **in parallel** on H100 once Phase 4 datasets are re
 **Milestone 1 last updated:** 2026-05-04  
 **Milestone 2 created:** 2026-06-01  
 **Milestone 3 created:** 2026-06-10 — Vietnamese KB + Hybrid Retrieval (complete ✓)  
-**Milestone 4 created:** 2026-06-17 — Thesis Report Writing
+**Milestone 4 created:** 2026-06-17 — Thesis Report Writing  
+**Milestone 5 created:** 2026-06-21 — Bulk Dataset Generation (Vast.ai H200)
 
 ---
 
@@ -496,4 +497,84 @@ Phase 5 and Phase 6 can run **in parallel** on H100 once Phase 4 datasets are re
 
 ---
 
-**Next step:** Start writing — Day 1 target: Abstract + Introduction
+## Milestone 5 — Bulk Dataset Generation (Vast.ai H200)
+
+| Aspect | Value |
+| ------ | ----- |
+| **Budget** | $1.50 (~20 min H200 141GB VRAM) |
+| **Team** | Solo + friend |
+| **Model** | Qwen2.5-72B-Instruct (AWQ quantized) |
+| **Goal** | Generate 1000+ clean Vietnamese HR Q&A pairs from 20 KB docs |
+| **Success gate** | ≥1000 Q&A pairs, ≥90% domain-relevant on spot check |
+
+---
+
+## Phase 9: Local Prep — Generation Scripts (NO GPU)
+
+**Goal:** Write and test all scripts locally so H200 time is 100% generation.
+
+**Duration:** ~1 hour (local, free)
+**Owner:** Solo dev
+
+### Phase 9 Deliverables
+
+1. **Generation script** (`scripts/vast_generate_qa.py`)
+   - Load Qwen2.5-72B-Instruct via vLLM (batched inference)
+   - Read all 20 docs from `data/viet_labor_docs/`
+   - For each doc: generate 50-100 Vietnamese Q&A pairs
+   - Output: `data/generated_qa_h200.jsonl`
+   - Format: `{"question": "...", "answer": "...", "source_doc": "...", "doc_topic": "..."}`
+
+2. **Vast.ai setup script** (`scripts/vast_setup.sh`)
+   - Install vLLM, download model, run generation
+   - One-command execution to minimize idle GPU time
+
+3. **Quality validation script** (`scripts/validate_qa.py`)
+   - Spot-check generated pairs for Vietnamese HR relevance
+   - Flag off-domain content (the problem that killed QLoRA)
+   - Compute basic stats: count, avg length, topic distribution
+
+### Phase 9 Exit Gate
+
+- [ ] Generation script runs locally in dry-run mode (no GPU, mock outputs)
+- [ ] Setup script ready for copy-paste into Vast.ai terminal
+- [ ] Validation script ready
+
+---
+
+## Phase 10: H200 Execution — Bulk Generation (20 min)
+
+**Goal:** Rent H200, run generation, download results.
+
+**Duration:** ~20 min (GPU time) + 10 min setup
+**Owner:** Solo dev
+**Cost:** ≤$1.50
+
+### Phase 10 Steps
+
+1. Rent H200 on Vast.ai
+2. Upload scripts + 20 HR docs
+3. Run `vast_setup.sh` → downloads model + runs generation
+4. Download `generated_qa_h200.jsonl`
+5. Terminate instance immediately
+
+### Phase 10 Exit Gate
+
+- [ ] ≥1000 Q&A pairs generated
+- [ ] JSONL file downloaded locally
+- [ ] Vast.ai instance terminated (no surprise charges)
+- [ ] Validation script confirms ≥90% domain relevance
+
+---
+
+## Milestone 5 Dependency Graph
+
+```text
+Phase 9 (Local Prep — free)
+    ↓
+Phase 10 (H200 Execution — $1.50)
+```
+
+---
+
+**Next step:** `/gsd-plan-phase 9` to create detailed Phase 9 plan
