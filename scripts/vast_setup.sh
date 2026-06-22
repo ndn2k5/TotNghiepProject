@@ -27,19 +27,34 @@ echo "  VAST.AI H200 PIPELINE — mode: ${MODE}"
 echo "  $(date)"
 echo "=========================================="
 
-# ── Step 1: Disk check ─────────────────────────────────────
+# ── Step 1: Pre-flight checks ──────────────────────────────
 echo ""
-echo "[1/6] Checking disk space..."
-DISK_FREE_GB=$(df -BG / | tail -1 | awk '{print $4}' | tr -d 'G')
-echo "  Free disk: ${DISK_FREE_GB}GB"
+echo "[1/6] Pre-flight checks..."
 
-if [ "$MODE" = "all" ] && [ "$DISK_FREE_GB" -lt 70 ]; then
-    echo "  [!!!] NEED 70GB+ for 'all' mode. You have ${DISK_FREE_GB}GB."
-elif [ "$MODE" = "generate" ] && [ "$DISK_FREE_GB" -lt 50 ]; then
-    echo "  [!!!] NEED 50GB+ for 'generate'. You have ${DISK_FREE_GB}GB."
-else
-    echo "  Disk OK ✓"
+# Disk
+DISK_FREE_GB=$(df -BG / | tail -1 | awk '{print $4}' | tr -d 'G')
+echo "  Disk free: ${DISK_FREE_GB}GB"
+if [ "$DISK_FREE_GB" -lt 50 ]; then
+    echo "  [!!!] NEED 50GB+ disk. You have ${DISK_FREE_GB}GB. Resize on Vast.ai!"
 fi
+
+# CUDA driver version — vLLM 0.23+ needs CUDA >= 12.4
+CUDA_VER=$(nvidia-smi 2>/dev/null | grep -oP "CUDA Version: \K[0-9.]+" || echo "unknown")
+echo "  CUDA driver: ${CUDA_VER}"
+if [ "$CUDA_VER" != "unknown" ]; then
+    CUDA_MAJOR=$(echo "$CUDA_VER" | cut -d. -f1)
+    CUDA_MINOR=$(echo "$CUDA_VER" | cut -d. -f2)
+    if [ "$CUDA_MAJOR" -lt 12 ] || ([ "$CUDA_MAJOR" -eq 12 ] && [ "$CUDA_MINOR" -lt 4 ]); then
+        echo ""
+        echo "  [!!!] CUDA ${CUDA_VER} TOO OLD — vLLM needs CUDA >= 12.4"
+        echo "  [!!!] KILL THIS INSTANCE. Rent one with CUDA >= 12.4."
+        echo "  [!!!] On Vast.ai, filter by 'CUDA Version >= 12.4'"
+        echo ""
+        echo "  (If you want to try anyway: pip install vllm==0.4.2)"
+        exit 1
+    fi
+fi
+echo "  Pre-flight OK ✓"
 
 # ── Step 2: Install deps ───────────────────────────────────
 # Vast.ai images have torch/transformers pre-installed.
