@@ -3,14 +3,16 @@
 Bulk Vietnamese HR Q&A generation using Qwen2.5-72B-Instruct on Vast.ai H200.
 
 Reads all 20 Vietnamese HR docs, generates diverse Q&A pairs via vLLM batched inference.
-Designed for ~20 min on H200 141GB VRAM (or any large-VRAM GPU).
+Designed for high-throughput generation on an H200 141GB VRAM (or any
+large-VRAM GPU).
 
 Usage:
     # On Vast.ai H200:
     python scripts/vast_generate_qa.py
 
-    # High-volume run (10 batches × 15 pairs = 150 per doc → 3000 total):
-    python scripts/vast_generate_qa.py --batches 10 --per-batch 15
+    # Resume, remove exact duplicate questions, and stop at 5000 unique pairs:
+    python scripts/vast_generate_qa.py --resume --dedupe-existing \
+        --target-total 5000 --batches 30 --per-batch 15
 
     # Resume interrupted run:
     python scripts/vast_generate_qa.py --resume
@@ -25,6 +27,8 @@ import json
 import time
 import argparse
 import logging
+import math
+import re
 from pathlib import Path
 from typing import List, Dict
 
@@ -108,6 +112,33 @@ def load_existing_pairs(output_path: Path) -> List[Dict]:
     return pairs
 
 
+def normalize_question(question: str) -> str:
+    """Normalize a question for exact duplicate detection."""
+    return re.sub(r"\s+", " ", question.lower().strip())
+
+
+def deduplicate_pairs(pairs: List[Dict]) -> tuple[List[Dict], int]:
+    """Keep the first pair for each normalized, non-empty question."""
+    unique = []
+    seen = set()
+    for pair in pairs:
+        key = normalize_question(str(pair.get("question", "")))
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        unique.append(pair)
+    return unique, len(pairs) - len(unique)
+
+
+def write_pairs(pairs: List[Dict], output_path: Path) -> None:
+    """Atomically replace a JSONL file with the supplied pairs."""
+    temp_path = output_path.with_suffix(output_path.suffix + ".tmp")
+    with open(temp_path, "w", encoding="utf-8") as f:
+        for pair in pairs:
+            f.write(json.dumps(pair, ensure_ascii=False) + "\n")
+    temp_path.replace(output_path)
+
+
 # ─────────────────────────── parsing ───────────────────────────────────────
 
 def parse_qa_output(text: str) -> List[Dict]:
@@ -147,6 +178,8 @@ def generate_with_vllm(
     per_batch: int = DEFAULT_PER_BATCH,
     output_path: Path = OUTPUT_FILE,
     resume: bool = False,
+    target_total: int | None = None,
+    dedupe_existing: bool = False,
 ) -> List[Dict]:
     """Generate Q&A pairs using vLLM batched inference.
 
@@ -156,7 +189,28 @@ def generate_with_vllm(
         per_batch:   Q&A pairs requested per document per batch.
         output_path: Streaming output path (results written as they finish).
         resume:      If True, load existing output and skip completed (doc, batch) pairs.
+        target_total: Stop after this many accepted pairs, including resumed data.
+        dedupe_existing: Remove exact duplicate questions before resuming.
     """
+    if target_total is not None and target_total < 1:
+        raise ValueError("target_total must be at least 1")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    existing: List[Dict] = load_existing_pairs(output_path) if resume else []
+    if dedupe_existing and existing:
+        existing, removed = deduplicate_pairs(existing)
+        if removed:
+            write_pairs(existing, output_path)
+            logger.info(f"Removed {removed} duplicate questions before resuming")
+
+    all_pairs: List[Dict] = list(existing)
+    if target_total is not None and len(all_pairs) >= target_total:
+        logger.info(
+            f"Target already reached: {len(all_pairs)} >= {target_total}; "
+            "skipping model load"
+        )
+        return all_pairs
+
     from vllm import LLM, SamplingParams
     import torch
 
@@ -190,10 +244,6 @@ def generate_with_vllm(
         repetition_penalty=1.1,
     )
 
-    # Load existing pairs for resume logic
-    existing: List[Dict] = load_existing_pairs(output_path) if resume else []
-    all_pairs: List[Dict] = list(existing)
-
     # Track which (doc, batch) combos already have data
     done_keys = set()
     if resume:
@@ -202,25 +252,40 @@ def generate_with_vllm(
 
     # Open output file: append if resuming, overwrite otherwise
     file_mode = "a" if resume else "w"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    seen_questions = {
+        normalize_question(str(pair.get("question", ""))) for pair in all_pairs
+    }
 
     with open(output_path, file_mode, encoding="utf-8") as out_file:
         for batch_idx in range(batches):
+            if target_total is not None and len(all_pairs) >= target_total:
+                logger.info(f"Reached target of {target_total} pairs")
+                break
+
             logger.info(f"=== Batch {batch_idx + 1}/{batches} ===")
 
-            # Build prompts only for docs not already done in this batch
-            active_docs = []
-            active_prompts = []
+            active_docs = [
+                doc for doc in docs
+                if (doc["filename"], batch_idx) not in done_keys
+            ]
+            if not active_docs:
+                logger.info(f"  Batch {batch_idx + 1}: nothing to generate, skipping")
+                continue
 
-            for doc in docs:
-                key = (doc["filename"], batch_idx)
-                if key in done_keys:
-                    logger.info(f"  Skip {doc['filename']} batch {batch_idx} (already done)")
-                    continue
+            request_count = per_batch
+            if target_total is not None:
+                remaining = target_total - len(all_pairs)
+                request_count = min(
+                    per_batch,
+                    max(1, math.ceil(remaining / len(active_docs))),
+                )
+
+            active_prompts = []
+            for doc in active_docs:
 
                 if batch_idx == 0:
                     prompt = GENERATION_PROMPT.format(
-                        n=per_batch,
+                        n=request_count,
                         document=doc["content"][:3000],
                     )
                 else:
@@ -230,40 +295,47 @@ def generate_with_vllm(
                     ]
                     existing_str = "\n".join(f"- {q}" for q in existing_qs[-20:])
                     prompt = DIVERSE_PROMPT.format(
-                        n=per_batch,
+                        n=request_count,
                         existing=existing_str or "(không có)",
                         document=doc["content"][:3000],
                     )
 
-                active_docs.append(doc)
                 active_prompts.append(prompt)
 
-            if not active_prompts:
-                logger.info(f"  Batch {batch_idx + 1}: nothing to generate, skipping")
-                continue
-
-            logger.info(f"  Generating for {len(active_docs)} docs...")
+            logger.info(
+                f"  Generating up to {request_count} pairs for "
+                f"{len(active_docs)} docs..."
+            )
             t1 = time.time()
             outputs = llm.generate(active_prompts, sampling)
             logger.info(f"  Batch {batch_idx + 1} inference done in {time.time() - t1:.1f}s")
 
             batch_count = 0
+            batch_duplicates = 0
             for output, doc in zip(outputs, active_docs):
                 text = output.outputs[0].text
                 pairs = parse_qa_output(text)
                 for pair in pairs:
+                    question_key = normalize_question(pair["question"])
+                    if not question_key or question_key in seen_questions:
+                        batch_duplicates += 1
+                        continue
+                    if target_total is not None and len(all_pairs) >= target_total:
+                        break
                     pair["source_doc"] = doc["filename"]
                     pair["doc_topic"] = doc.get("doc_topic", "")
                     pair["batch"] = batch_idx
                     out_file.write(json.dumps(pair, ensure_ascii=False) + "\n")
-                all_pairs.extend(pairs)
-                batch_count += len(pairs)
+                    all_pairs.append(pair)
+                    seen_questions.add(question_key)
+                    batch_count += 1
                 done_keys.add((doc["filename"], batch_idx))
 
             out_file.flush()
             logger.info(
                 f"  Batch {batch_idx + 1}: {batch_count} new pairs "
-                f"(running total: {len(all_pairs)})"
+                f"({batch_duplicates} duplicates skipped, "
+                f"running total: {len(all_pairs)})"
             )
 
     return all_pairs
@@ -334,6 +406,10 @@ def main():
                         help=f"Q&A pairs per doc per batch (default: {DEFAULT_PER_BATCH})")
     parser.add_argument("--resume", action="store_true",
                         help="Resume from existing output file (skip completed batches)")
+    parser.add_argument("--target-total", type=int,
+                        help="Stop at this total pair count, including resumed data")
+    parser.add_argument("--dedupe-existing", action="store_true",
+                        help="Remove exact duplicate questions before resuming")
     args = parser.parse_args()
 
     docs = load_documents()
@@ -342,11 +418,17 @@ def main():
         logger.error("Make sure the viet_labor_docs folder is populated.")
         return
 
-    target = len(docs) * args.batches * args.per_batch
-    logger.info(
-        f"Plan: {len(docs)} docs × {args.batches} batches × {args.per_batch} pairs "
-        f"= ~{target} target pairs"
-    )
+    if args.target_total:
+        logger.info(
+            f"Plan: resume and generate until {args.target_total} total unique pairs "
+            f"({args.batches} maximum batches)"
+        )
+    else:
+        target = len(docs) * args.batches * args.per_batch
+        logger.info(
+            f"Plan: {len(docs)} docs × {args.batches} batches × "
+            f"{args.per_batch} pairs = ~{target} target pairs"
+        )
 
     output_path = Path(args.output)
     t_start = time.time()
@@ -362,6 +444,8 @@ def main():
             per_batch=args.per_batch,
             output_path=output_path,
             resume=args.resume,
+            target_total=args.target_total,
+            dedupe_existing=args.dedupe_existing,
         )
 
     elapsed = time.time() - t_start

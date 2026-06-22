@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============================================================
 # Vast.ai H200 — Full Pipeline Setup Script
-# Budget: ~$1.50 (20-30 min on H200 141GB VRAM)
+# Budget: ~$4.70 (~75 min on H200 141GB VRAM)
 #
 # USAGE: In Vast.ai web terminal:
 #   git clone --depth 1 https://github.com/ndn2k5/TotNghiepProject.git
@@ -9,9 +9,9 @@
 #   bash scripts/vast_setup.sh [mode]
 #
 # MODES:
-#   generate         — only generate Q&A data (default, ~10 min)
+#   generate         — resume generation to 5,000 unique Q&A pairs
 #   finetune         — only fine-tune (use existing data)
-#   all              — generate then fine-tune (~25 min)
+#   all              — generate to 5,000 then fine-tune (~45-60 min)
 #
 # EXIT IMMEDIATELY after done — every minute costs money!
 # ============================================================
@@ -106,13 +106,15 @@ fi
 if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
     echo ""
     echo "[4/6] Generating Q&A (Qwen2.5-72B-Instruct-AWQ)..."
-    echo "  Target: ~3000 pairs from 20 docs"
+    echo "  Target: 5,000 unique pairs from 20 docs"
     echo ""
 
     python3 scripts/vast_generate_qa.py \
-        --batches 10 \
+        --batches 30 \
         --per-batch 15 \
+        --target-total 5000 \
         --output data/generated_qa_h200.jsonl \
+        --dedupe-existing \
         --resume
 
     echo "  Generation done ✓"
