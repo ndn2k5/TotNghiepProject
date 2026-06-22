@@ -51,9 +51,8 @@ echo "[2/6] Installing dependencies..."
 apt-get update -qq && apt-get install -y -qq zip > /dev/null 2>&1 || true
 
 if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
-    echo "  Installing vLLM..."
-    pip install vllm --no-deps 2>&1 | tail -3 || true
-    pip install vllm 2>&1 | tail -3
+    echo "  Installing vLLM (may take 1-2 min)..."
+    pip install vllm --no-build-isolation 2>&1 | tail -5
     echo "  vLLM done ✓"
 fi
 
