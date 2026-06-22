@@ -4,13 +4,13 @@
 
 | Item | Value |
 |------|-------|
-| **Milestone** | Milestone 5 — Bulk Dataset Generation (Vast.ai H200) |
-| **Phase** | Phase 9 — Local Prep (NOT STARTED) |
-| **Progress** | M4 thesis revisions applied; M5 created 2026-06-21 |
-| **Last update** | 2026-06-21 |
+| **Milestone** | Milestone 5 — Bulk Dataset Gen + Retrain (Vast.ai H200) |
+| **Phase** | Phase 9 — Local Prep (COMPLETE) |
+| **Progress** | All 3 scripts ready, dry-runs pass, target 3000 pairs |
+| **Last update** | 2026-06-22 |
 | **Owner** | Solo dev + friend |
 | **Budget** | $1.50 Vast.ai (~20 min H200 141GB VRAM) |
-| **Blocker** | None — scripts need writing before renting GPU |
+| **Blocker** | None — ready to rent GPU and run `bash scripts/vast_setup.sh all` |
 
 ---
 

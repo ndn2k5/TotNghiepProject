@@ -139,7 +139,7 @@ def validate(pairs):
         print(f"  {doc}: {count} pairs")
 
     if flagged:
-        print(f"\n⚠️  RED-FLAGGED PAIRS ({len(flagged)}):")
+        print(f"\n[!] RED-FLAGGED PAIRS ({len(flagged)}):")
         for line_num, q_preview, flag in flagged[:10]:
             print(f"  Line {line_num}: [{flag}] {q_preview}...")
 
@@ -147,11 +147,11 @@ def validate(pairs):
     relevance_pct = 100 * stats["relevant"] / max(stats["total"], 1)
     print(f"\n{'='*60}")
     if relevance_pct >= 90 and stats["red_flag"] == 0:
-        print(f"  ✅ PASS — {relevance_pct:.0f}% domain-relevant, 0 red flags")
+        print(f"  [PASS] {relevance_pct:.0f}% domain-relevant, 0 red flags")
     elif relevance_pct >= 80:
-        print(f"  ⚠️  WARN — {relevance_pct:.0f}% relevant, review unclear pairs")
+        print(f"  [WARN] {relevance_pct:.0f}% relevant, review unclear pairs")
     else:
-        print(f"  ❌ FAIL — only {relevance_pct:.0f}% relevant, data needs cleaning")
+        print(f"  [FAIL] only {relevance_pct:.0f}% relevant, data needs cleaning")
     print(f"{'='*60}\n")
 
     return stats

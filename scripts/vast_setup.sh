@@ -64,13 +64,14 @@ python3 -c "import torch; print(f'  CUDA: {torch.cuda.is_available()}, GPUs: {to
 if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
     echo ""
     echo "[4/5] Running Q&A generation (Qwen2.5-72B-Instruct-AWQ)..."
-    echo "  Target: ~1000 Vietnamese HR Q&A pairs from 20 docs"
+    echo "  Target: ~3000 Vietnamese HR Q&A pairs from 20 docs"
+    echo "  (10 batches × 15 pairs × 20 docs)"
     echo "  This takes ~10-15 min on H200..."
     echo ""
 
     python3 scripts/vast_generate_qa.py \
-        --batches 5 \
-        --per-batch 10 \
+        --batches 10 \
+        --per-batch 15 \
         --output data/generated_qa_h200.jsonl \
         --resume
 
@@ -104,6 +105,19 @@ if [ "$MODE" = "finetune" ] || [ "$MODE" = "all" ]; then
     echo "  Fine-tuning done ✓"
 fi
 
+# ── Step 6: Eval (if fine-tuned) ──────────────────────────
+if [ "$MODE" = "finetune" ] || [ "$MODE" = "all" ]; then
+    echo ""
+    echo "[6/7] Running evaluation (base vs fine-tuned)..."
+    python3 scripts/vast_eval.py --adapter models/phi3-mini-hr-finetuned || true
+    echo "  Eval done"
+fi
+
+# ── Step 7: Package everything into one zip ───────────────
+echo ""
+echo "[7/7] Packaging outputs into single zip..."
+bash scripts/vast_package.sh
+
 # ── Done ────────────────────────────────────────────────────
 END_TIME=$(date +%s)
 ELAPSED=$((END_TIME - START_TIME))
@@ -113,15 +127,11 @@ echo "=========================================="
 echo "  COMPLETE in ${ELAPSED}s ($(( ELAPSED / 60 ))m $(( ELAPSED % 60 ))s)"
 echo "=========================================="
 echo ""
-echo "FILES TO DOWNLOAD:"
-if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
-    echo "  data/generated_qa_h200.jsonl    — raw Q&A pairs"
-fi
-if [ "$MODE" = "finetune" ] || [ "$MODE" = "all" ]; then
-    echo "  models/phi3-mini-hr-q4.gguf     — fine-tuned GGUF (~2GB)"
-    echo "  models/phi3-mini-hr-finetuned/  — LoRA adapter weights"
-fi
+echo "DOWNLOAD ONE FILE:"
+echo "  vast_results.zip"
 echo ""
-echo "⚠️  TERMINATE THIS INSTANCE NOW to avoid extra charges!"
+echo "  (contains: data, model GGUF, adapter, eval report, scores CSV)"
+echo ""
+echo "!!!  TERMINATE THIS INSTANCE NOW  !!!"
 echo "   vast destroy \$(cat /vast_instance_id 2>/dev/null || echo '<instance-id>')"
 echo ""
