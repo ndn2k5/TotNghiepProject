@@ -36,23 +36,67 @@ fi
 cd TotNghiepProject
 echo "  Repo ready ✓"
 
-# ── Step 2: Install dependencies ────────────────────────────
+# ── Step 2: Install ALL dependencies upfront ────────────────
+# Install everything FIRST so no script crashes mid-run from missing libs.
 echo ""
-echo "[2/5] Installing dependencies..."
+echo "[2/7] Installing dependencies (all modes)..."
 
+# --- System packages ---
+echo "  [2a] System packages..."
+apt-get update -qq && apt-get install -y -qq zip > /dev/null 2>&1 || true
+
+# --- Common Python deps (needed by ALL modes) ---
+echo "  [2b] Core Python libs..."
+pip install --upgrade pip --quiet 2>&1 | tail -1
+pip install \
+    "torch>=2.1.0" \
+    "transformers>=4.40.0" \
+    "accelerate>=0.26.0" \
+    "datasets>=2.16.0" \
+    "sentencepiece>=0.1.99" \
+    "protobuf>=4.0" \
+    --quiet 2>&1 | tail -3
+
+# --- Generation mode: vLLM ---
 if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
-    echo "  Installing vLLM (for Q&A generation)..."
+    echo "  [2c] vLLM (batched inference for generation)..."
     pip install vllm --quiet 2>&1 | tail -3
 fi
 
+# --- Fine-tune + eval mode: Unsloth + TRL + bitsandbytes ---
 if [ "$MODE" = "finetune" ] || [ "$MODE" = "all" ]; then
-    echo "  Installing Unsloth + TRL (for fine-tuning)..."
-    # Unsloth nightly for H200 Blackwell (sm90+) support
-    pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git" --quiet 2>&1 | tail -3
-    pip install "trl>=0.8.0" "peft>=0.9.0" "transformers>=4.40.0" --quiet 2>&1 | tail -3
+    echo "  [2d] Unsloth + TRL + bitsandbytes (fine-tuning)..."
+    pip install \
+        "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git" \
+        "trl>=0.8.0" \
+        "peft>=0.9.0" \
+        "bitsandbytes>=0.41.0" \
+        --quiet 2>&1 | tail -3
 fi
 
-echo "  Dependencies installed ✓"
+# --- Verify critical imports ---
+echo "  [2e] Verifying imports..."
+IMPORT_FAIL=0
+python3 -c "import torch; print(f'    torch {torch.__version__} OK')" || IMPORT_FAIL=1
+python3 -c "import transformers; print(f'    transformers {transformers.__version__} OK')" || IMPORT_FAIL=1
+python3 -c "import datasets; print(f'    datasets OK')" || IMPORT_FAIL=1
+
+if [ "$MODE" = "generate" ] || [ "$MODE" = "all" ]; then
+    python3 -c "import vllm; print(f'    vllm {vllm.__version__} OK')" || IMPORT_FAIL=1
+fi
+if [ "$MODE" = "finetune" ] || [ "$MODE" = "all" ]; then
+    python3 -c "import unsloth; print('    unsloth OK')" || IMPORT_FAIL=1
+    python3 -c "import trl; print(f'    trl {trl.__version__} OK')" || IMPORT_FAIL=1
+    python3 -c "import peft; print(f'    peft {peft.__version__} OK')" || IMPORT_FAIL=1
+    python3 -c "import bitsandbytes; print('    bitsandbytes OK')" || IMPORT_FAIL=1
+fi
+
+if [ "$IMPORT_FAIL" -eq 1 ]; then
+    echo ""
+    echo "  [!] SOME IMPORTS FAILED — check above. Continuing anyway..."
+else
+    echo "  All imports verified ✓"
+fi
 
 # ── Step 3: Verify GPU ───────────────────────────────────────
 echo ""
