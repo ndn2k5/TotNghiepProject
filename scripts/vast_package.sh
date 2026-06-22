@@ -31,9 +31,15 @@ for f in \
 done
 
 # --- Fine-tuned model (GGUF — the main deliverable) ---
-for f in models/phi3-mini-hr-q4.gguf; do
-    [ -f "$f" ] && FILES_TO_ZIP="$FILES_TO_ZIP $f"
-done
+# Unsloth may place it at models/phi3-mini-hr-q4/unsloth.Q4_K_M.gguf.
+GGUF_FILE="models/phi3-mini-hr-q4.gguf"
+if [ ! -f "$GGUF_FILE" ]; then
+    FOUND_GGUF=$(find models -type f -iname '*.gguf' -print -quit 2>/dev/null || true)
+    if [ -n "$FOUND_GGUF" ]; then
+        cp "$FOUND_GGUF" "$GGUF_FILE"
+    fi
+fi
+[ -f "$GGUF_FILE" ] && FILES_TO_ZIP="$FILES_TO_ZIP $GGUF_FILE"
 
 # --- LoRA adapter weights (smaller, for HF loading) ---
 if [ -d "models/phi3-mini-hr-finetuned" ]; then

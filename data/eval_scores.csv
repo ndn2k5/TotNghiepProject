@@ -1,0 +1,105 @@
+model,question,topic,score,hr_relevant,hallucinated,vietnamese,empty,refusal,latency_s,answer
+base,Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?,chinh_sach_nghi_phep,0,False,False,False,False,False,3.81,"To answer this question, you would need to know the specific retirement age in Vietnam for each year. As of my last update in early 2023:
+
+- In Vietnam, as per Law No.100/2019/QHDD dated June 5th, 2019 on Labor Code (which replaced previous labor laws), employees are generally allowed to retire at the age of 60 with full pension benefits if they have worked continuously and contributed sufficiently throughout their employment period according to regulations set by social insurance policies. Howe"
+base,Quy trình xin nghỉ phép như thế nào?,chinh_sach_nghi_phep,1,True,False,True,False,False,3.87,"Xin nghỉ phép là một hành động cần có sự tích luận về việc chịu đối phó, khi bạn muốn giảm chi phí hoặc tiết kiệt quá trình. Một ví dụ về xin nghỉ phép cho việc giao hàng online:
+
+1. Chọn một công ty sau hay trên Google Play Store hoặng lòng cao tuỳ thủ (trong khi có) với rằng an toàn và hiệu suất cao.
+2. Nhắc biết các loại hàng liên quan cần phép giao hàng theo yêu thích của bạn.
+3. Thực hành các hàng đã chọn vào máy bay hoặng lòng hoặng lòng"
+base,Lương thử việc là bao nhiêu phần trăm?,hop_dong_lao_dong,1,True,False,True,False,False,3.89,"Việt ngữ, ""Lương thử"" có nghĩa là ""sự kiên tuẫn"", tức là sự khuyu hóa hoặng. Đối với câu hòa bình dùng trong một chuyến số tiền hay quản lý công ty, sự kiên tuẫn quan sát rằng:
+
+Sự kiên tuẩn giúp xác định các yếu tố liên quan doan cho sự diễn ra hiện tại, giao tiếp và tinh tháp kinh nghiệm, và biểu thị chiến lượi sau đây:
+
+1. **Giảm Chiến Thắng**: Sự kiên tuẩn giúp các che uy ban luôn giảm chiến thắng, vì vậy an toàn v"
+base,Nghỉ thai sản được bao lâu?,nghi_thai_san_va_phu_nu,0.5,True,False,False,False,False,3.91,"The Vietnamese term ""Nghỉ thai sản"" translates to the duration of a business cycle in English. A typical business cycle lasts about seven years, which includes four stages: expansion (growth), peak (maximum output reached before contraction begins), contraction (economic activity slows down and unemployment rises) and trough (the lowest point or bottoming out phase). After this period, an economic recovery starts leading back towards growth until another peak is achieved, thus completing one ful"
+base,Bảo hiểm xã hội trích bao nhiêu phần trăm?,bao_hiem_xa_hoi,0,False,False,True,False,False,3.9,"Đây là một câu hỏng và không liên quan đến việc chia sẵn tài liệu. Nếu bạn muốn biết chiến lược cho thực hành, có thể dùng công nghệ hoá học (AI) để giải quyết vấn đề:
+
+1. Xác định yêu cầu: Hãy rõ ràng với ai cần giao tiếp và kiến thức cần phụ thuật.
+2. Chọn phương pháp diễn đạo: Khi có hai phương pháp sau đây, ta sẽ chọn phương pháp sao cho em tin tưởng cao hay coi nó theo ý chung của ai cần giao tiếp:"
+base,Chính sách làm thêm giờ như thế nào?,lam_them_gio,0,False,False,True,False,False,3.92,"Để bảo quản và cảnh báo cho việc chính sách, hãy phải tìm ra một chiến lăng có dạng ngược sau:
+
+1. Xác định rằng việc chính sách không liên quan đến tiêu chí hoạt độp trong cuộc đối thủ và kiểm soát xã hội. Nếu biếu tất cả các giao chứng và công nghệ được coi là ""chính sách"", ta có thể áp dụng các loại chính sách sau:
+   a. Cơ quan Bảo Quản Và Cảnh Báo (BQVN): Tùy tham gia và hiển thị tin canh của việc chính sách.
+   b. Phòng Thảo"
+base,Kỷ luật lao động gồm những hình thức gì?,ky_luat_lao_dong,1,True,False,True,False,False,3.89,"Khí tuyết là một phần của khí quản lý và chính sách lao độn, trong suốt việc xác định tình huống giữa công nghiệp và dân số. Những hình thức quan trọn của khí tuyết lao độn bao gồm:
+
+1. Phòng làng (Phòng Lao Động): Một loại công du lieu diễn tiềm năng cho dùng để kiểm soát hoạt động của công nghiệp. Các phòng láng có thể biết được chiến lược sau đây:
+   - Chuyên Giá Trung Bộ (Maintenance Shop)
+   - Chuyên Giá Tây Ban Ninh (Western Maintenance Shop)"
+base,Công ty có chính sách làm việc từ xa không?,chinh_sach_lam_viec_tu_xa,1,True,False,True,False,False,3.87,"Chính sách để thực hành một công nghiệp vào nguồn gốc của bạn phải tuân thủ quyền lợi, luật sư và dân sát. Bạn cần phải liên lạc với các giám sức quan hệ và tiến trình đào phán-chuyên cho việc đó. Ngoài ra, bạn cần phải hiểu rõ về quyền lợi hoặc biên phòng của công nghiệp, những yếu tố kinh doanh cần phụ thuộc vào chi tiêm của bạn.
+
+Ví dụ: Một công ty phải tuân thủ quyền lợi và luật sư của Pháp sau khi thực hành một"
+base,Lương tháng 13 có không?,chinh_sach_luong,1,True,False,True,False,False,3.88,"Chứng minh rằng lưu tháp tháng 13 không.
+
+Trong các nghiên cứu về phép chính quyền, sự kiện này hết bị trách nhiệm cho một tình huống quan trọng vào cuộc chiến tranh Mỹ-Nga (Vietnam - United States) trong năm 1968. Tháng 13 là ngày giao tiếp giữa Nguyễn Văn Thiệu, Phạm Ngọc Thảo và Trần Cao Kiên, triết học an toàn và công dân Việt Nam, với việc biểu diễn tinh thập ""Mãng mái"" (""Open Door"") theo định luật Quốc tế. Sự kiện này đã mang lại sự hiện suấ"
+base,Quy trình nghỉ việc như thế nào?,nghi_viec_va_ban_giao,0,False,False,False,False,False,3.89,"To perform a self-checkup, follow these steps:
+
+1. Start with your mental health by assessing how you're feeling emotionally and mentally today. Are there any stressors or concerns that are affecting your mood? If so, consider strategies to manage them such as meditation, talking it out with someone close, or engaging in activities you enjoy.
+2. Check on physical wellness - take note of the following aspects: 
+   * Hydration status (are you drinking enough water?)
+   * Nutrition intake (have you"
+base,Nhân viên mới có thời gian thử việc bao lâu?,hop_dong_lao_dong,0,False,False,True,False,False,3.92,"Thời gian để trả lời các câu hỏng này phải không chính xác, vì người ta sẽ không biết liệu bạn muốn dùng tiêu chuẩn hoặc công cụ giúp tính toán. Có hai cách làm:
+
+1. Sử dụng Google Translate (Google Phim) - Bạn có thể nhập các câu hỏi vào danh sách ""Search"" của Google Translate, sau đó click on ""Translate"". Chứng minh các câu hỏi cho Google Translate đã hiểu rõ hơn về yêu cầu của bạn.
+2. Học các cách diễn đàn Việt Nam - Một cách tuyệt đối, bạn có"
+base,Chế độ ốm đau được hưởng bao nhiêu phần trăm lương?,chinh_sach_nghi_phep,1,True,False,True,False,False,3.88,"Chế độ ốm là một khía cạo quan trọng cho việc chứa và tự quản lý sức khí thể, tuyên bố rằng:
+
+- Không có giá trị tiền.
+- Thời gian người lao độn (lưu) hoàn toàn bị xúc xắc.
+- Lưu thời gian dùng để kiếp được công nghiệp.
+- Sự biếu diễn doanh nghiệp.
+
+Chế độ ốm được hưởng bao nhiêu phần trăm lương luôn bị xúc xắc và không mang liên quan đến chi phí sau khi lao đóng. Vì vậy, chế độ ốm không phải là một"
+base,Chính sách phúc lợi nhân viên gồm những gì?,phuc_loi_nhan_vien,1,True,False,True,False,False,3.91,"Phúc lợi nhân viên chính sách cung bộ vào ngày 20 tháp hai mươn trong kỳ là:
+
+1. Cải thiện hành chính quốc tế (Đạo luật, Hành chánh): Tăng cường quan hệ với các quốc gia có nhiệt độ cao, giải pháp đặt các chiến tranh hoặc kiểm soát dịch vụ cho công chứng kinh doanh.
+
+2. Sự tiến bộ xã hội (Phát triển Xã hội): Thực hành các yêu cầu về hiện tương quan, an ninh, và rằng lao động; tăng cường các liên lạc và cộng đồng.
+ explanation of the"
+base,Tuyển dụng nhân viên mới qua mấy vòng?,tuyen_dung_dao_tao,1,True,False,True,False,False,3.86,"Trong ngày đó, trẻ con sach có thể phải làm các công việc sau khi họo chứng kiến tại bữa giao hàng. Các lập luận giống như:
+
+1. Tham gia cuộc toán hành quản lý (Accounting) - Ngoài tiền xuất, anh ta sẽ biết hiển thị chi tiêu cho ai yêu cầu theo phù hợp và áp suất tuyên bố cho anh ta.
+2. Phát triển hoạt động kinh doanh (Business Development) - Anh ta sẽ liên lạc với các nhà kinh doanh đã đăng khoảng cách hay không, để coi rằng các sản phẩm hoặc dịch v"
+base,Quy định về bảo mật thông tin IT là gì?,bao_mat_thong_tin_it,1,True,False,True,False,False,3.85,"Quy định về bảo mật thông tin IT (Information Technology Security Evaluation Criteria) là quyết định của hệ thống chứng khoán Viett Nam, nơi sở lượng công nghiệp phát triển trong máy tác. Bảo mật thông tin IT giúp xã hội có tiếp thị dữ liệu hiện đang và việc hoạt động của các doanh nghiệp theo kiên quá an toàn với rủa rủa các chiến lăng của mình.
+
+Quy định này được biết đến với tên ""Vietnam Information Systems Security Evaluation Methodology"" (VISSME), và được áp dụng cho các công ty và dân số t"
+base,Công tác phí được tính như thế nào?,cong_tac_va_di_chuyen,0,False,False,True,False,False,3.84,"Phiên bản tiếng Anh của món học về công tác là:
+
+Có sự khác biệt trong việc tính toán công tác giữa hai người. Trong quá trình, chúng ta có thể xem công tác theo dõi bằng cách áp dụng công thức sau:
+
+1. Số lượng công tác (Quantity of Work): Chúng ta sử dụng số lượng công tác cho một ngày hoặng ra sao với một chiếc máy hay một loại công tác. Ví dụ, nếu một chiếc máy có số lượng công tác $W$ per hour và chúng ta muốn làm giao hàng $Q$ doanh số, và chúng ta lái rơi"
+base,Quy trình đánh giá hiệu suất nhân viên?,danh_gia_hieu_suat,1,True,False,True,False,False,3.87,"Hiệu suất của nhân viên có thể được đánh giá bằng cách sử dụng một phương pháp sau:
+
+1. Thực hành và Phép chia (Test): Nhân viên hoạt động từ ngày lễ quản lý, khiến giao tiếp cho che bị kiểm tra về chiến lăng công nghiệp. Sau khi kiểm tra, loại tinh thái của nhân viên sẽ được biểu diễn theo dạng phân chía. Các giá trị trung bình của phép chia là rằng nhân viên luôn tuân thủ các yêu cầu và đánh giá cao.
+2. Số lượng xem xét (Observation Counts"
+base,Chính sách chống quấy rối tại nơi làm việc?,quay_roi_phan_biet_doi_xu,0,False,False,False,False,False,3.84,"To address the question ""Chính sách chống quấy rối tai trong thành phố,"" which translates to ""What is the policy on handling littering in the city?"" one would need to look into local government regulations and initiatives. Here's a general approach:
+
+1. **Research Local Ordinances**: Check for any municipal codes or ordinances that specifically mention penalties, fines, or other legal consequences related to improper disposal of waste (littering). This information can typically be found through "
+base,Phụ cấp ăn trưa là bao nhiêu?,phu_cap_va_tro_cap,1,True,False,True,False,False,3.84,"Áo quả hạt chay, một phần thức ăn tối giá trị của cuộc sống và người ta có thể không thỏa đơn thức. Nếu muốn áo quả hạt chay, bạn có thể xem ví dụ sau:
+
+1. Các loại quả hạt chay rộng hơn (phoenix) hoạt động cho việc giao tiếp và lợi ích kinh doanh. Ví dụ: Quả hạt chay ""Phoenix"" luôn được coi là một công ty tuyên bố với sự kiên cứ trong việc chiến lược marketing.
+2. Một cong tinh cao và hiệu quả, mang tên ""Apple"". Apple là một công ty du lieu truyền thú v"
+base,An toàn lao động quy định những gì?,suc_khoe_an_toan_lao_dong,1,True,False,True,False,False,3.83,"Toàn cầu phải là một vùng lãnh đạo quan trọng, từ bên số 1 cho chính phủ tiếp thị sang xã hội. Những gì có thể được quy định là:
+
+1. **Các Chức Phục**: Các chức phục khác biệt (chức phục) hoặng hành luật doanh nghiệp theo dõi việc an toàn lao động, giảm chi phí và duy trì hiệu suất cao. Một ví dụ về chức phục là ""Chức phục Quản Lý Xây Dựng"", tuyên bố rằng công ty phải liên lạc với các loại kiểm soát và kiểm tra sau khi xây dựng m"
+finetuned,Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?,chinh_sach_nghi_phep,1,True,False,True,False,False,0.93,Nhân viên được nghỉ phép tối đa 5 ngày làm việc/năm.
+finetuned,Quy trình xin nghỉ phép như thế nào?,chinh_sach_nghi_phep,1,True,False,True,False,False,1.1,"Nộp đơn tại email hồ sơ.vn.gov.vn, có chữ ký của chức vụ/bộ phận quản lý."
+finetuned,Lương thử việc là bao nhiêu phần trăm?,hop_dong_lao_dong,1,True,False,True,False,False,0.85,Lương thử việc tối đa là 85% mức lương chính thức.
+finetuned,Nghỉ thai sản được bao lâu?,nghi_thai_san_va_phu_nu,0,False,False,True,False,False,0.44,Tối đa 60 ngày/năm.
+finetuned,Bảo hiểm xã hội trích bao nhiêu phần trăm?,bao_hiem_xa_hoi,1,True,False,True,False,False,0.3,"0,05% lương."
+finetuned,Chính sách làm thêm giờ như thế nào?,lam_them_gio,1,True,False,True,False,False,1.13,Nhân viên có thể yêu cầu với Trưởng bộ phận đề xuất yêu cầu theo chính sách.
+finetuned,Kỷ luật lao động gồm những hình thức gì?,ky_luat_lao_dong,0,False,False,True,False,False,1.16,"Khiển trách bằng văn bản, sa thải bằng văn bản hoặc xung đột lợi ích."
+finetuned,Công ty có chính sách làm việc từ xa không?,chinh_sach_lam_viec_tu_xa,1,True,False,True,False,False,0.83,"Không, công ty không quản lý được phép làm việc từ xa."
+finetuned,Lương tháng 13 có không?,chinh_sach_luong,1,True,False,True,False,False,1.12,"Có, lương tháng 13 được tính bằng toàn bộ lương hàng năm x 13/12."
+finetuned,Quy trình nghỉ việc như thế nào?,nghi_viec_va_ban_giao,0,False,False,True,False,False,1.51,"Nộp đơn kháng cáo lên Giám đốc Nhân sự, tờ giấy xác nhận, có chữ ký (BHYH), và hợp pháp giao dịch."
+finetuned,Nhân viên mới có thời gian thử việc bao lâu?,hop_dong_lao_dong,0,False,False,True,True,False,0.21,60 ngày.
+finetuned,Chế độ ốm đau được hưởng bao nhiêu phần trăm lương?,chinh_sach_nghi_phep,1,True,False,True,False,False,1.7,"Nhân viên được hưởng 75% mức lương đóng BHXH, tối đa 30 ngày/năm nếu đóng BHXH dưới 15 năm."
+finetuned,Chính sách phúc lợi nhân viên gồm những gì?,phuc_loi_nhan_vien,1,True,False,True,False,False,0.98,"Đảm bảo an toàn, bình luận và xác nhận tất cả khoản thu nhập."
+finetuned,Tuyển dụng nhân viên mới qua mấy vòng?,tuyen_dung_dao_tao,0,False,False,True,False,False,0.39,2–3 triệu VNĐ/năm.
+finetuned,Quy định về bảo mật thông tin IT là gì?,bao_mat_thong_tin_it,1,True,False,True,False,False,1.03,"Bảo mật thông tin của công ty, dữ liệu khách hàng, danh người thấyết tốt."
+finetuned,Công tác phí được tính như thế nào?,cong_tac_va_di_chuyen,1,True,False,True,False,False,1.7,"Tổng cộng trong thời gian nghỉ không hưởng lương, vị trí tiền đề, và thời gian làm việc theo hợp đồng lao động."
+finetuned,Quy trình đánh giá hiệu suất nhân viên?,danh_gia_hieu_suat,0,False,False,False,False,False,0.34,"Self-assessment, manager review, calibration session."
+finetuned,Chính sách chống quấy rối tại nơi làm việc?,quay_roi_phan_biet_doi_xu,1,True,False,True,False,False,0.9,"Ngoài bảo mật, không được quấy rối tại nơi làm việc."
+finetuned,Phụ cấp ăn trưa là bao nhiêu?,phu_cap_va_tro_cap,1,True,False,True,False,False,0.7,Phụ cấp ăn trưa là 500 VNĐ/ngày làm việc.
+finetuned,An toàn lao động quy định những gì?,suc_khoe_an_toan_lao_dong,1,True,False,True,False,False,1.35,"Khuyến nghị tuyệt đối, sử dụng PPE đúng chu kỳ; bảo mật thông tin cá nhân và dữ liệu."

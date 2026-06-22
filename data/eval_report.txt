@@ -1,0 +1,185 @@
+======================================================================
+  VIETNAMESE HR CHATBOT — EVALUATION REPORT
+  2026-06-22 14:51
+======================================================================
+
+======================================================================
+  MODEL: BASE (Phi-3-Mini)
+======================================================================
+  Overall score:    0.62 / 1.00
+  HR-relevant:      13/20
+  Hallucinations:   0/20
+  Avg latency:      3.9s
+
+Q1: Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?
+  [FAIL] (3.8s) To answer this question, you would need to know the specific retirement age in Vietnam for each year. As of my last update in early 2023:
+
+- In Vietnam, as per Law No.100/2019/QHDD dated June 5th, 201
+
+Q2: Quy trình xin nghỉ phép như thế nào?
+  [OK] (3.9s) Xin nghỉ phép là một hành động cần có sự tích luận về việc chịu đối phó, khi bạn muốn giảm chi phí hoặc tiết kiệt quá trình. Một ví dụ về xin nghỉ phép cho việc giao hàng online:
+
+1. Chọn một công ty 
+
+Q3: Lương thử việc là bao nhiêu phần trăm?
+  [OK] (3.9s) Việt ngữ, "Lương thử" có nghĩa là "sự kiên tuẫn", tức là sự khuyu hóa hoặng. Đối với câu hòa bình dùng trong một chuyến số tiền hay quản lý công ty, sự kiên tuẫn quan sát rằng:
+
+Sự kiên tuẩn giúp xác 
+
+Q4: Nghỉ thai sản được bao lâu?
+  [OK] (3.9s) The Vietnamese term "Nghỉ thai sản" translates to the duration of a business cycle in English. A typical business cycle lasts about seven years, which includes four stages: expansion (growth), peak (m
+
+Q5: Bảo hiểm xã hội trích bao nhiêu phần trăm?
+  [FAIL] (3.9s) Đây là một câu hỏng và không liên quan đến việc chia sẵn tài liệu. Nếu bạn muốn biết chiến lược cho thực hành, có thể dùng công nghệ hoá học (AI) để giải quyết vấn đề:
+
+1. Xác định yêu cầu: Hãy rõ ràn
+
+Q6: Chính sách làm thêm giờ như thế nào?
+  [FAIL] (3.9s) Để bảo quản và cảnh báo cho việc chính sách, hãy phải tìm ra một chiến lăng có dạng ngược sau:
+
+1. Xác định rằng việc chính sách không liên quan đến tiêu chí hoạt độp trong cuộc đối thủ và kiểm soát x
+
+Q7: Kỷ luật lao động gồm những hình thức gì?
+  [OK] (3.9s) Khí tuyết là một phần của khí quản lý và chính sách lao độn, trong suốt việc xác định tình huống giữa công nghiệp và dân số. Những hình thức quan trọn của khí tuyết lao độn bao gồm:
+
+1. Phòng làng (Ph
+
+Q8: Công ty có chính sách làm việc từ xa không?
+  [OK] (3.9s) Chính sách để thực hành một công nghiệp vào nguồn gốc của bạn phải tuân thủ quyền lợi, luật sư và dân sát. Bạn cần phải liên lạc với các giám sức quan hệ và tiến trình đào phán-chuyên cho việc đó. Ngo
+
+Q9: Lương tháng 13 có không?
+  [OK] (3.9s) Chứng minh rằng lưu tháp tháng 13 không.
+
+Trong các nghiên cứu về phép chính quyền, sự kiện này hết bị trách nhiệm cho một tình huống quan trọng vào cuộc chiến tranh Mỹ-Nga (Vietnam - United States) t
+
+Q10: Quy trình nghỉ việc như thế nào?
+  [FAIL] (3.9s) To perform a self-checkup, follow these steps:
+
+1. Start with your mental health by assessing how you're feeling emotionally and mentally today. Are there any stressors or concerns that are affecting 
+
+Q11: Nhân viên mới có thời gian thử việc bao lâu?
+  [FAIL] (3.9s) Thời gian để trả lời các câu hỏng này phải không chính xác, vì người ta sẽ không biết liệu bạn muốn dùng tiêu chuẩn hoặc công cụ giúp tính toán. Có hai cách làm:
+
+1. Sử dụng Google Translate (Google P
+
+Q12: Chế độ ốm đau được hưởng bao nhiêu phần trăm lương?
+  [OK] (3.9s) Chế độ ốm là một khía cạo quan trọng cho việc chứa và tự quản lý sức khí thể, tuyên bố rằng:
+
+- Không có giá trị tiền.
+- Thời gian người lao độn (lưu) hoàn toàn bị xúc xắc.
+- Lưu thời gian dùng để kiế
+
+Q13: Chính sách phúc lợi nhân viên gồm những gì?
+  [OK] (3.9s) Phúc lợi nhân viên chính sách cung bộ vào ngày 20 tháp hai mươn trong kỳ là:
+
+1. Cải thiện hành chính quốc tế (Đạo luật, Hành chánh): Tăng cường quan hệ với các quốc gia có nhiệt độ cao, giải pháp đặt
+
+Q14: Tuyển dụng nhân viên mới qua mấy vòng?
+  [OK] (3.9s) Trong ngày đó, trẻ con sach có thể phải làm các công việc sau khi họo chứng kiến tại bữa giao hàng. Các lập luận giống như:
+
+1. Tham gia cuộc toán hành quản lý (Accounting) - Ngoài tiền xuất, anh ta s
+
+Q15: Quy định về bảo mật thông tin IT là gì?
+  [OK] (3.9s) Quy định về bảo mật thông tin IT (Information Technology Security Evaluation Criteria) là quyết định của hệ thống chứng khoán Viett Nam, nơi sở lượng công nghiệp phát triển trong máy tác. Bảo mật thôn
+
+Q16: Công tác phí được tính như thế nào?
+  [FAIL] (3.8s) Phiên bản tiếng Anh của món học về công tác là:
+
+Có sự khác biệt trong việc tính toán công tác giữa hai người. Trong quá trình, chúng ta có thể xem công tác theo dõi bằng cách áp dụng công thức sau:
+
+
+
+Q17: Quy trình đánh giá hiệu suất nhân viên?
+  [OK] (3.9s) Hiệu suất của nhân viên có thể được đánh giá bằng cách sử dụng một phương pháp sau:
+
+1. Thực hành và Phép chia (Test): Nhân viên hoạt động từ ngày lễ quản lý, khiến giao tiếp cho che bị kiểm tra về ch
+
+Q18: Chính sách chống quấy rối tại nơi làm việc?
+  [FAIL] (3.8s) To address the question "Chính sách chống quấy rối tai trong thành phố," which translates to "What is the policy on handling littering in the city?" one would need to look into local government regula
+
+Q19: Phụ cấp ăn trưa là bao nhiêu?
+  [OK] (3.8s) Áo quả hạt chay, một phần thức ăn tối giá trị của cuộc sống và người ta có thể không thỏa đơn thức. Nếu muốn áo quả hạt chay, bạn có thể xem ví dụ sau:
+
+1. Các loại quả hạt chay rộng hơn (phoenix) hoạ
+
+Q20: An toàn lao động quy định những gì?
+  [OK] (3.8s) Toàn cầu phải là một vùng lãnh đạo quan trọng, từ bên số 1 cho chính phủ tiếp thị sang xã hội. Những gì có thể được quy định là:
+
+1. **Các Chức Phục**: Các chức phục khác biệt (chức phục) hoặng hành l
+
+
+======================================================================
+  MODEL: FINE-TUNED
+======================================================================
+  Overall score:    0.70 / 1.00
+  HR-relevant:      14/20
+  Hallucinations:   0/20
+  Avg latency:      0.9s
+
+Q1: Nhân viên được nghỉ phép bao nhiêu ngày mỗi năm?
+  [OK] (0.9s) Nhân viên được nghỉ phép tối đa 5 ngày làm việc/năm.
+
+Q2: Quy trình xin nghỉ phép như thế nào?
+  [OK] (1.1s) Nộp đơn tại email hồ sơ.vn.gov.vn, có chữ ký của chức vụ/bộ phận quản lý.
+
+Q3: Lương thử việc là bao nhiêu phần trăm?
+  [OK] (0.8s) Lương thử việc tối đa là 85% mức lương chính thức.
+
+Q4: Nghỉ thai sản được bao lâu?
+  [FAIL] (0.4s) Tối đa 60 ngày/năm.
+
+Q5: Bảo hiểm xã hội trích bao nhiêu phần trăm?
+  [OK] (0.3s) 0,05% lương.
+
+Q6: Chính sách làm thêm giờ như thế nào?
+  [OK] (1.1s) Nhân viên có thể yêu cầu với Trưởng bộ phận đề xuất yêu cầu theo chính sách.
+
+Q7: Kỷ luật lao động gồm những hình thức gì?
+  [FAIL] (1.2s) Khiển trách bằng văn bản, sa thải bằng văn bản hoặc xung đột lợi ích.
+
+Q8: Công ty có chính sách làm việc từ xa không?
+  [OK] (0.8s) Không, công ty không quản lý được phép làm việc từ xa.
+
+Q9: Lương tháng 13 có không?
+  [OK] (1.1s) Có, lương tháng 13 được tính bằng toàn bộ lương hàng năm x 13/12.
+
+Q10: Quy trình nghỉ việc như thế nào?
+  [FAIL] (1.5s) Nộp đơn kháng cáo lên Giám đốc Nhân sự, tờ giấy xác nhận, có chữ ký (BHYH), và hợp pháp giao dịch.
+
+Q11: Nhân viên mới có thời gian thử việc bao lâu?
+  [FAIL] (0.2s) 60 ngày.
+
+Q12: Chế độ ốm đau được hưởng bao nhiêu phần trăm lương?
+  [OK] (1.7s) Nhân viên được hưởng 75% mức lương đóng BHXH, tối đa 30 ngày/năm nếu đóng BHXH dưới 15 năm.
+
+Q13: Chính sách phúc lợi nhân viên gồm những gì?
+  [OK] (1.0s) Đảm bảo an toàn, bình luận và xác nhận tất cả khoản thu nhập.
+
+Q14: Tuyển dụng nhân viên mới qua mấy vòng?
+  [FAIL] (0.4s) 2–3 triệu VNĐ/năm.
+
+Q15: Quy định về bảo mật thông tin IT là gì?
+  [OK] (1.0s) Bảo mật thông tin của công ty, dữ liệu khách hàng, danh người thấyết tốt.
+
+Q16: Công tác phí được tính như thế nào?
+  [OK] (1.7s) Tổng cộng trong thời gian nghỉ không hưởng lương, vị trí tiền đề, và thời gian làm việc theo hợp đồng lao động.
+
+Q17: Quy trình đánh giá hiệu suất nhân viên?
+  [FAIL] (0.3s) Self-assessment, manager review, calibration session.
+
+Q18: Chính sách chống quấy rối tại nơi làm việc?
+  [OK] (0.9s) Ngoài bảo mật, không được quấy rối tại nơi làm việc.
+
+Q19: Phụ cấp ăn trưa là bao nhiêu?
+  [OK] (0.7s) Phụ cấp ăn trưa là 500 VNĐ/ngày làm việc.
+
+Q20: An toàn lao động quy định những gì?
+  [OK] (1.4s) Khuyến nghị tuyệt đối, sử dụng PPE đúng chu kỳ; bảo mật thông tin cá nhân và dữ liệu.
+
+======================================================================
+  COMPARISON: BASE vs FINE-TUNED
+======================================================================
+  Metric                          Base   Fine-tuned      Delta
+  ------------------------- ---------- ------------ ----------
+  Score....................       0.62         0.70      +0.07
+  Hallucinations...........          0            0         +0

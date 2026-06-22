@@ -28,6 +28,7 @@ import time
 import argparse
 import logging
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -256,6 +257,16 @@ def export_gguf(model, tokenizer) -> Optional[Path]:
             tokenizer,
             quantization_method="q4_k_m",
         )
+        # Unsloth writes <save_dir>/unsloth.Q4_K_M.gguf rather than the flat
+        # filename supplied by this project. Normalize it for packaging/runtime.
+        export_dir = GGUF_PATH.parent / GGUF_PATH.stem
+        generated = sorted(
+            export_dir.rglob("*.gguf") if export_dir.exists() else [],
+            key=lambda path: path.stat().st_size,
+            reverse=True,
+        )
+        if not GGUF_PATH.exists() and generated:
+            shutil.copy2(generated[0], GGUF_PATH)
         if GGUF_PATH.exists():
             size_mb = GGUF_PATH.stat().st_size / 1024 / 1024
             logger.info(f"GGUF exported: {GGUF_PATH} ({size_mb:.0f} MB) ✓")
