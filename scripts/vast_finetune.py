@@ -198,6 +198,10 @@ def run_training(
         lr_scheduler_type="cosine",
         seed=42,
         output_dir=str(TRAIN_OUTPUT_DIR),
+        # Some Unsloth/TRL combinations cannot pickle the generated SFTConfig
+        # during Trainer checkpoint saves. Final adapter/GGUF saving is handled
+        # explicitly below, so intermediate Trainer checkpoints are unnecessary.
+        save_strategy="no",
         save_total_limit=2,
         report_to="none",
     )
