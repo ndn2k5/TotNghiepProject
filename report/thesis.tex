@@ -1,4 +1,4 @@
-% USTH ICT Bachelor Thesis - condensed supervisor revision
+% USTH ICT Bachelor Thesis - Updated from Word document
 % Compile twice with XeLaTeX for contents and references.
 \documentclass[12pt,a4paper,oneside]{report}
 
@@ -96,7 +96,7 @@ for Company Knowledge Retrieval}
 
 \vfill
 \begin{tabular}{r@{\quad}l}
-\textbf{External Supervisor:} & Dr.\ Trần Đình Chí \\[6pt]
+\textbf{External Supervisor:} & ThS.\ Trần Đình Chí \\[6pt]
 \textbf{Internal Supervisor:} & Dr.\ Trần Hoàng Tùng
 \end{tabular}
 
@@ -116,9 +116,13 @@ for Company Knowledge Retrieval}
 \vspace*{4cm}
 \begin{center}To whom it may concern,\end{center}
 \vspace{1.2cm}
-I, \textbf{Trần Đình Chí} (supervisor's name), certify that the thesis/
-internship report of Mr/Ms.\ \textbf{Nguyen Duy Ngoc} (student's name) is
-qualified to be presented in the Internship Jury 2025--2026.
+I, \textbf{Trần Đình Chí}, hereby certify that the Bachelor Thesis entitled
+\textbf{``Development of an Internal AI Chatbot for Company Knowledge Retrieval''}
+submitted by Mr.\ \textbf{Nguyen Duy Ngoc} has been completed under my supervision.
+
+I confirm that this thesis meets the requirements for presentation and
+evaluation before the Internship/Thesis Evaluation Committee in the academic
+year 2025--2026.
 \vspace{4cm}
 \begin{flushright}
 Hanoi, \rule{0.5cm}{0.4pt}/\rule{0.5cm}{0.4pt}/\rule{1.2cm}{0.4pt}\\[0.8cm]
@@ -136,7 +140,7 @@ Hanoi, \rule{0.5cm}{0.4pt}/\rule{0.5cm}{0.4pt}/\rule{1.2cm}{0.4pt}\\[0.8cm]
 \textbf{Abbreviation} & \textbf{Full Form} \\
 \midrule
 AI & Artificial Intelligence \\
-BM25 & Best Match 25 \\
+BM25 & Best Matching 25 \\
 CPU & Central Processing Unit \\
 GGUF & GPT-Generated Unified Format \\
 GPU & Graphics Processing Unit \\
@@ -149,7 +153,7 @@ RAG & Retrieval-Augmented Generation \\
 RRF & Reciprocal Rank Fusion \\
 UI & User Interface \\
 USTH & University of Science and Technology of Hanoi \\
-VRAM & Video Random Access Memory \\
+VRAM & Video Random-Access Memory \\
 \bottomrule
 \end{tabular}
 
@@ -162,40 +166,57 @@ VRAM & Video Random Access Memory \\
 \newpage
 \chapter*{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
-I sincerely thank my external supervisor, Dr.\ Trần Đình Chí, and my internal
-supervisor, Dr.\ Trần Hoàng Tùng, for their guidance and constructive feedback.
-I also thank the faculty of the USTH Department of Information and Communication
-Technology for the academic foundation and resources that supported this work.
-Finally, I am grateful to my family and colleagues for their patience and
-encouragement throughout the project.
+I would like to express my sincere appreciation to my external supervisor,
+\textbf{ThS.\ Trần Đình Chí}, and my internal supervisor, \textbf{Dr.\ Trần Hoàng Tùng},
+for their guidance, valuable suggestions, and support during the development
+of this thesis. Their feedback and advice have been important contributions
+to improving the quality of this work.
+
+I am also grateful to the faculty members of the \textbf{Department of
+Information and Communication Technology} at \textbf{USTH} for providing the
+knowledge, academic environment, and necessary resources that helped me
+complete this thesis.
+
+Finally, I would like to thank my family and colleagues for their understanding,
+encouragement, and support throughout the entire project.
 
 \newpage
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-This thesis presents a fully local Retrieval-Augmented Generation (RAG) chatbot
-for Vietnamese Human Resources policy questions. Twenty policy documents are
-indexed with multilingual sentence embeddings and ChromaDB. A hybrid retriever
-combines dense similarity and BM25 rankings through Reciprocal Rank Fusion,
-then supplies the highest-ranked passages to a Phi-3-Mini GGUF responder.
-On a small, manually labelled 10-query retrieval test, hybrid retrieval reached
-100\% top-1 accuracy compared with 60\% for the dense baseline.
+This thesis presents a fully local Retrieval-Augmented Generation (RAG)
+chatbot designed to answer Vietnamese Human Resources (HR) policy-related
+questions. A total of 20 HR policy documents were processed and indexed using
+multilingual sentence embeddings and ChromaDB. The proposed system applies a
+hybrid retrieval approach that combines dense similarity search and BM25
+ranking using Reciprocal Rank Fusion (RRF). The retrieved relevant passages
+are then provided to a Phi-3-Mini GGUF language model to generate responses.
+In a small retrieval evaluation with 10 manually labelled queries, the hybrid
+retrieval method achieved 100\% top-1 accuracy, while the dense retrieval
+baseline achieved 60\%.
 
-The study also investigates domain adaptation. Qwen2.5-72B-Instruct generated
-4,900 unique question-answer pairs across the 20 policy topics. A keyword-based
-validation classified 82.4\% as clearly HR-related, with no exact duplicate
-questions or predefined off-domain red flags. QLoRA training on an H200 GPU
-completed three epochs in 5.3 minutes. On 20 direct, retrieval-free questions,
-the fine-tuned model increased an automated format/relevance score from 0.62 to
-0.70 and reduced mean latency from 3.9 to 0.9 seconds. However, manual inspection
-still found incorrect policy values and incoherent answers; therefore, the
-automated score is not evidence of factual accuracy. The final system retains
-RAG grounding, while fine-tuning is treated as complementary. The results show
-that hybrid retrieval improves short-query matching and that dataset and
-evaluation quality remain decisive for reliable local domain assistants.
+This study also explores domain adaptation through model fine-tuning. The
+Qwen2.5-72B-Instruct model was used to generate 4,900 unique question-answer
+pairs covering 20 HR policy topics. A keyword-based validation process showed
+that 82.4\% of the generated questions were clearly related to HR topics, with
+no exact duplicate questions or predefined irrelevant cases detected. QLoRA
+fine-tuning was performed on an H200 GPU and completed three training epochs
+in 5.3 minutes. For 20 direct questions without retrieval support, the
+fine-tuned model improved the automated format and relevance score from 0.62
+to 0.70, while reducing the average response time from 3.9 seconds to 0.9
+seconds.
+
+However, manual evaluation still identified incorrect policy information and
+inconsistent answers. Therefore, the automated evaluation score cannot be
+considered sufficient evidence of factual correctness. The final system keeps
+RAG as the main approach for reliable knowledge retrieval, while fine-tuning
+is used as an additional improvement method. The experimental results
+demonstrate that hybrid retrieval provides better matching performance for
+short queries, and that data quality and evaluation methods are important
+factors in building reliable local AI assistants.
 
 \vspace{0.5cm}
 \noindent\textbf{Keywords:} Retrieval-Augmented Generation, Vietnamese NLP,
-BM25, Reciprocal Rank Fusion, QLoRA, local language model.
+BM25, Reciprocal Rank Fusion, QLoRA, Local Language Model.
 
 \newpage
 \pagenumbering{arabic}
@@ -256,30 +277,40 @@ ViQuAD provides a reference point for Vietnamese machine-reading evaluation
 simple whitespace BM25 tokenization, which is efficient but remains a limitation.
 
 \section{Contributions}
-The main contributions are:
+The main contributions of this thesis are summarized as follows:
 \begin{enumerate}[leftmargin=1.2cm,itemsep=2pt]
-  \item a private, offline Vietnamese HR RAG pipeline using local embeddings,
-        ChromaDB, hybrid retrieval, and Phi-3-Mini GGUF inference;
-  \item a comparison of dense and hybrid retrieval on short Vietnamese queries;
-  \item a quality-gated pipeline producing 4,900 unique Vietnamese HR Q\&A pairs;
-  \item a measured H200 QLoRA experiment with an explicit distinction between
-        automated relevance indicators and factual policy correctness.
+  \item \textbf{Private and Offline Vietnamese HR RAG Pipeline:} This thesis
+        develops a private, offline RAG pipeline for Vietnamese HR knowledge
+        retrieval, integrating local embeddings, ChromaDB, hybrid retrieval,
+        and Phi-3-Mini GGUF inference.
+  \item \textbf{Dense and Hybrid Retrieval Comparison:} This thesis compares
+        dense and hybrid retrieval methods for short Vietnamese HR queries in
+        an internal chatbot scenario.
+  \item \textbf{Quality-Gated Vietnamese HR Q\&A Dataset:} This thesis constructs
+        a quality-gated dataset of 4,900 unique Vietnamese HR question-answer
+        pairs for chatbot evaluation and experimentation.
+  \item \textbf{H200 QLoRA Fine-Tuning Experiment:} This thesis conducts a
+        measured QLoRA experiment on the H200 platform using Python and
+        JSON-based evaluation workflows, while distinguishing automated
+        relevance indicators from factual policy correctness.
 \end{enumerate}
 
 \section{Research Questions and Scope}
-The evaluation is organized around three research questions. \textbf{RQ1} asks
-whether combining lexical and dense rankings improves top-document retrieval for
-short Vietnamese HR questions. \textbf{RQ2} asks whether a controlled synthetic
-dataset can shift Phi-3-Mini toward Vietnamese HR language and reduce direct
-inference latency. \textbf{RQ3} asks whether the available automated indicators
-are sufficient to establish factual policy correctness.
+The evaluation is structured around three research questions. \textbf{RQ1}
+examines whether the combination of lexical and dense rankings improves
+top-document retrieval for short Vietnamese HR questions. \textbf{RQ2}
+investigates whether a controlled synthetic dataset can shift Phi-3-Mini toward
+Vietnamese HR-specific language while reducing direct inference latency.
+\textbf{RQ3} assesses whether automated evaluation indicators are sufficient to
+determine factual policy correctness.
 
-RQ1 is addressed by a paired comparison on the same ten labelled queries. RQ2
-uses identical 20-question prompts for the base and adapted models. RQ3 requires
-manual inspection of those outputs and analysis of the scoring code. The scope
-does not include a legal assessment, deployment at a real company, or a formal
-human-subject study. This boundary is important because a technically functional
-chatbot and a validated HR decision-support system are not equivalent.
+RQ1 is addressed through a paired comparison using the same ten labeled queries.
+RQ2 uses identical 20-question prompts for both the base and adapted models.
+RQ3 requires manual inspection of the generated outputs and analysis of the
+scoring code. The scope of this thesis does not include legal assessment,
+deployment in a real company, or a formal human-subject study. This boundary is
+important because a technically functional chatbot is not equivalent to a
+validated HR decision-support system.
 
 % ============================================================
 % CHAPTER 2
@@ -288,20 +319,21 @@ chatbot and a validated HR decision-support system are not equivalent.
 
 The project has four objectives:
 \begin{enumerate}[leftmargin=1.2cm,itemsep=3pt]
-  \item design and implement a fully local Vietnamese HR question-answering
-        system whose source documents remain on the user's machine;
-  \item compare dense retrieval with BM25--vector fusion for short HR queries;
-  \item build and validate a synthetic domain dataset, then measure QLoRA
-        adaptation of Phi-3-Mini;
-  \item evaluate the system transparently, including incorrect outputs and
+  \item Design and implement a fully local Vietnamese HR question-answering
+        system in which source documents remain on the user's machine;
+  \item Compare dense retrieval with BM25--vector fusion for short HR-related
+        queries;
+  \item Construct and validate a synthetic domain-specific dataset, then assess
+        the QLoRA adaptation of Phi-3-Mini;
+  \item Evaluate the system transparently, including incorrect outputs and the
         limitations of small test sets and heuristic metrics.
 \end{enumerate}
 
-The deployed architecture is successful when it retrieves a relevant policy
-source, constructs a grounded prompt, and returns a Vietnamese answer with a
-source reference. The fine-tuning experiment is evaluated separately because
-its direct, retrieval-free test measures model adaptation rather than end-to-end
-RAG correctness.
+The implemented architecture is considered successful when it retrieves a
+relevant policy source, constructs a grounded prompt, and returns a Vietnamese
+answer with a source reference. The fine-tuning experiment is evaluated
+separately because its direct, retrieval-free test measures model adaptation
+rather than end-to-end RAG correctness.
 
 % ============================================================
 % CHAPTER 3
@@ -309,12 +341,14 @@ RAG correctness.
 \chapter{Materials and Methods}
 
 \section{System Architecture}
-Figure~\ref{fig:architecture} shows the offline processing and query paths. At
-indexing time, Vietnamese policy documents are split into overlapping chunks,
-embedded, and stored in ChromaDB. At query time, vector and BM25 retrieval run
-over the same corpus. RRF selects the top passages, which are inserted into a
-Phi-3 chat prompt. The model runs through \texttt{llama-cpp-python}; no company
-document is sent to an external inference API.
+Figure~\ref{fig:architecture} illustrates the offline processing and query paths
+of the proposed system. During indexing, Vietnamese HR policy documents are
+split into overlapping chunks, embedded, and stored in ChromaDB. During
+querying, vector retrieval and BM25 retrieval are performed over the same
+document corpus. Reciprocal rank fusion (RRF) is then applied to select the
+top-ranked passages, which are inserted into a Phi-3 chat prompt. The model is
+executed through \texttt{llama-cpp-python}, ensuring that no company document is
+sent to an external inference API.
 
 \begin{figure}[H]
   \centering
@@ -333,12 +367,12 @@ document is sent to an external inference API.
 \textbf{Stage} & \textbf{Technology} & \textbf{Role} \\
 \midrule
 Documents & 20 UTF-8 policy files & Vietnamese HR knowledge source \\
-Chunking & Recursive splitter, 600 characters, 100 overlap & Preserves local context \\
+Chunking & Paragraph-aware splitter, about 300 characters, 50 overlap & Preserves local policy units \\
 Embedding & multilingual MiniLM, 384 dimensions & Dense semantic representation \\
 Vector store & ChromaDB & Persistent cosine search \\
 Lexical search & BM25Okapi & Exact-term ranking \\
 Fusion & RRF, $k=60$ & Combines vector and lexical ranks \\
-Generation & Phi-3-Mini Q4\_K\_M & Local Vietnamese response generation \\
+Generation & Phi-3-Mini HR Q4\_K\_M & Local Vietnamese response generation \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -346,79 +380,113 @@ Generation & Phi-3-Mini Q4\_K\_M & Local Vietnamese response generation \\
 \section{Knowledge Base and Indexing}
 The knowledge base covers 20 topics, including leave, salary, contracts, social
 insurance, maternity, overtime, remote work, IT security, workplace safety, and
-anti-harassment. The Vietnamese Labour Code provides general legal context for
-these topics \cite{blld2019}, but the demonstration policies are not legal
-interpretations. Eight initial documents were manually authored and twelve were
-generated to broaden topic coverage. The corpus represents a demonstration
-company rather than the policies of a real employer; answers must therefore not
-be interpreted as legal advice.
+anti-harassment. The Vietnamese Labor Code provides general legal context for
+these topics \cite{blld2019}; however, the demonstration policies are not legal
+interpretations. Eight initial documents were manually authored, while twelve
+additional documents were generated to broaden topic coverage. The corpus
+represents a demonstration company rather than the policies of a real employer;
+therefore, the generated answers must not be interpreted as legal advice.
 
-After cleaning, the documents produced 286 stored chunks. Each chunk retains its
+After cleaning, the documents produced 258 text chunks. Each chunk retains its
 source name for attribution. The multilingual MiniLM encoder maps text into
-384-dimensional vectors stored in a persistent ChromaDB collection
-\cite{chromadb2023}. Figure~\ref{fig:topics} summarizes corpus coverage.
+384-dimensional vectors, which are stored in a persistent ChromaDB collection
+\cite{chromadb2023}. Table~\ref{tab:knowledge-base} summarizes the corpus
+coverage and the final number of accepted Q\&A pairs produced from each source.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.78\textwidth]{figures/kb_topics.png}
-  \caption{Topic coverage of the 20-document knowledge base.}
-  \label{fig:topics}
-\end{figure}
+\begin{table}[H]
+\centering
+\small
+\caption{Vietnamese HR knowledge base: source documents and generated data coverage.}
+\label{tab:knowledge-base}
+\begin{tabular}{@{}p{0.5cm}p{4.5cm}p{4.5cm}p{2.5cm}p{1.5cm}@{}}
+\toprule
+No. & Policy topic & Source document & Origin & Q\&A pairs \\
+\midrule
+1 & Leave policy & chinh\_sach\_nghi\_phep.txt & Manual draft & 264 \\
+2 & Employment contracts & hop\_dong\_lao\_dong.txt & Manual draft & 262 \\
+3 & Salary policy & chinh\_sach\_luong.txt & Manual draft & 184 \\
+4 & Company regulations & noi\_quy\_cong\_ty.txt & Manual draft & 338 \\
+5 & Labour discipline & ky\_luat\_lao\_dong.txt & Manual draft & 256 \\
+6 & Employee benefits & phuc\_loi\_nhan\_vien.txt & Manual draft & 282 \\
+7 & Recruitment and training & tuyen\_dung\_dao\_tao.txt & Manual draft & 286 \\
+8 & Social insurance & bao\_hiem\_xa\_hoi.txt & Manual draft & 122 \\
+9 & Overtime policy & lam\_them\_gio.txt & Minimax-M2.7 & 240 \\
+10 & Maternity and women employees & nghi\_thai\_san\_va\_phu\_nu.txt & Minimax-M2.7 & 242 \\
+11 & Remote work & chinh\_sach\_lam\_viec\_tu\_xa.txt & Minimax-M2.7 & 327 \\
+12 & Business travel & cong\_tac\_va\_di\_chuyen.txt & Minimax-M2.7 & 160 \\
+13 & Performance review & danh\_gia\_hieu\_suat.txt & Minimax-M2.7 & 254 \\
+14 & IT security & bao\_mat\_thong\_tin\_it.txt & Minimax-M2.7 & 230 \\
+15 & Special holidays and leave & nghi\_le\_phep\_dac\_biet.txt & Minimax-M2.7 & 287 \\
+16 & Anti-harassment and discrimination & quay\_roi\_phan\_biet\_doi\_xu.txt & Minimax-M2.7 & 300 \\
+17 & Resignation and handover & nghi\_viec\_va\_ban\_giao.txt & Minimax-M2.7 & 287 \\
+18 & Anti-corruption & phong\_chong\_tham\_nhung.txt & Minimax-M2.7 & 179 \\
+19 & Workplace safety & suc\_khoe\_an\_toan\_lao\_dong.txt & Minimax-M2.7 & 219 \\
+20 & Allowances and subsidies & phu\_cap\_va\_tro\_cap.txt & Minimax-M2.7 & 181 \\
+\midrule
+\multicolumn{4}{r}{\textbf{Total}} & \textbf{4,900} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Hybrid Retrieval}
-Dense search retrieves semantically related text, while BM25 emphasizes query
-terms. Their ranked lists are fused using
+Dense search retrieves semantically related text, while BM25 emphasizes exact
+query-term matching. To combine the advantages of both methods, their ranked
+lists are fused using reciprocal rank fusion (RRF), defined as follows:
 \begin{equation}
-S(d)=\alpha\frac{1}{k+r_v(d)+1}+(1-\alpha)\frac{1}{k+r_b(d)+1},
+S(d) = \alpha \frac{1}{k + r_v(d) + 1} + (1 - \alpha) \frac{1}{k + r_b(d) + 1},
+\label{eq:rrf}
 \end{equation}
-where $r_v$ and $r_b$ are the vector and BM25 ranks, $k=60$, and
-$\alpha=0.5$. The top five fused chunks form the generation context. Because
-RRF uses ranks rather than raw scores, no cross-system score calibration is
-needed.
+where $r_v$ and $r_b$ are the vector and BM25 ranks, $k = 60$, and
+$\alpha = 0.5$. The implementation returns a configurable top-$k$ context; the
+deployed answer path defaults to three chunks. Because RRF uses ranks rather
+than raw scores, no cross-system score calibration is needed.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.78\textwidth]{figures/retrieval_flowchart.png}
-  \caption{BM25 and vector rankings combined through RRF.}
+  \caption{Hybrid BM25--vector retrieval workflow using reciprocal rank fusion.}
   \label{fig:retrieval}
 \end{figure}
 
 \section{Answer Generation}
-The responder is Phi-3-Mini-4k-Instruct in GGUF Q4\_K\_M format
-\cite{phi3technical2024}. The prompt contains a Vietnamese instruction, the
-retrieved chunks with source labels, and the user question inside Phi-3 chat
-tokens. Generation uses low temperature and stops at the model's chat boundary.
-Source grounding is achieved by the prompt and retrieval context, not by an
-assumption that the model's parameters contain correct company rules.
+The responder uses Phi-3-Mini-4k-Instruct in GGUF Q4\_K\_M format
+\cite{phi3technical2024}. The prompt includes a Vietnamese instruction,
+retrieved chunks with source labels, and the user question formatted with
+Phi-3 chat tokens. Generation is configured with a low temperature and stops
+at the model's chat boundary. Source grounding is achieved through the retrieved
+context and prompt structure, rather than by assuming that the model parameters
+contain correct company-specific rules.
 
 \section{Implementation and Privacy Controls}
 The implementation separates ingestion, retrieval, and generation into Python
-modules. PDF extraction and chunking create serializable records; embedding code
-owns the ChromaDB collection; the hybrid retriever reads the same chunk set for
-BM25 and vector ranking; and the responder wraps \texttt{llama-cpp-python}.
-This separation permits retrieval tests without loading the 2.32~GB generator
-and makes the source of a failure easier to identify.
+modules. PDF extraction and chunking produce serializable records; the embedding
+module manages the ChromaDB collection; the hybrid retriever uses the same chunk
+set for both BM25 and vector ranking; and the responder wraps
+\texttt{llama-cpp-python}. This modular design allows retrieval tests to be
+performed without loading the 2.32~GB generator model and makes failure sources
+easier to identify.
 
-At startup, the application checks that the GGUF and vector collection exist.
-A user question is normalized, embedded, and sent to both retrieval branches.
-The fused top-five passages are formatted with their source names before local
-generation. The interface returns the generated text together with source
-metadata so the user can inspect the underlying policy rather than treating the
-model output as an authoritative decision.
+At startup, the application checks whether the GGUF model file and vector
+collection are available. A user question is normalized, embedded, and sent to
+both retrieval branches. The fused top-ranked passages, defaulting to three
+context chunks in the answer path, are formatted with their source names before
+local generation. The interface returns the generated text together with source
+metadata, allowing the user to inspect the underlying policy rather than treating
+the model output as an authoritative decision.
 
-Privacy follows from local data flow: policy text, embeddings, prompts, and
-answers remain on the machine during normal operation. The generation pipeline
-used external compute only to create the synthetic research dataset and train
-the adapter; it did not form part of deployed inference. A real organization
-would additionally require access control, encrypted storage, audit logging,
-retention policy, and review of uploaded documents. These controls are outside
-the prototype but are necessary before production use.
+Privacy follows from the local data flow: policy text, embeddings, prompts, and
+answers remain on the machine during normal operation. External computers were
+used only to create the synthetic research dataset and train the adapter; it was
+not part of the deployed inference path. A real organization would additionally
+require access control, encrypted storage, audit logging, retention policies,
+and review procedures for uploaded documents. These controls are outside the
+prototype scope but are necessary before production use.
 
-The principal failure control is abstention through prompt instruction when the
-retrieved context is insufficient. This is weaker than formal entailment. Source
-display therefore remains important, especially for numerical benefits or legal
-questions. No model response should replace an approved policy document or HR
-professional judgement.
+The principal failure control is prompt-instructed abstention when the retrieved
+context is insufficient. However, this mechanism is weaker than formal entailment
+verification. Source display therefore remains important, especially for
+numerical benefits or legal questions. No model response should replace an
+approved policy document or professional HR judgment.
 
 \section{Synthetic Data Generation and Validation}
 An initial fine-tuning attempt used a web-crawled dataset that mixed unrelated
@@ -528,10 +596,11 @@ and per-question wall-clock latency were also recorded.
 Retrieval and generation were evaluated separately to avoid attributing one
 component's failure to another. The retrieval set paired ten questions with a
 gold source-document label. Accuracy@1 and Mean Reciprocal Rank were calculated
-as
+as:
 \begin{equation}
-\mathrm{Acc@1}=\frac{1}{N}\sum_{i=1}^{N}\mathbb{1}[r_i=1],\qquad
-\mathrm{MRR}=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{r_i},
+\mathrm{Acc@1} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}[r_i = 1], \qquad
+\mathrm{MRR} = \frac{1}{N} \sum_{i=1}^{N} \frac{1}{r_i},
+\label{eq:metrics}
 \end{equation}
 where $r_i$ is the rank of the labelled document. Dense and hybrid retrieval
 used the same corpus and queries.
@@ -548,6 +617,14 @@ whether evidence can be found; direct generation metrics measure topical form
 and speed after adaptation. Neither alone measures end-to-end user trust. A
 complete future protocol should combine retrieval, source-grounded generation,
 factual scoring, and human review on a larger held-out set.
+
+All evaluation scripts are implemented in Python 3.10. The retrieval and
+generation tests use \texttt{pandas} for data aggregation, the built-in
+\texttt{re} module for keyword matching, and \texttt{time} for latency
+measurement. Input queries and outputs are stored in JSONL format to ensure
+reproducibility. The scoring logic is encapsulated in
+\texttt{scripts/validate\_qa.py} and \texttt{src/hybrid\_retriever.py}, as
+listed in Appendix~A.
 
 % ============================================================
 % CHAPTER 4
@@ -579,7 +656,7 @@ Mean Reciprocal Rank & 0.72 & \textbf{1.00} \\
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.62\textwidth]{figures/retrieval_comparison.png}
-  \caption{Top-1 retrieval accuracy on the ten-query internal test.}
+  \caption{Compact summary of the ten-query internal retrieval test.}
   \label{fig:retrieval-comparison}
 \end{figure}
 
@@ -655,34 +732,35 @@ support keeping retrieval as the authority. A future comparison should run the
 base and fine-tuned GGUF models through the identical RAG pipeline and score
 answers against source-derived references.
 
-Figure~\ref{fig:demo} shows the existing local interface. Retrieval is fast
-relative to CPU generation, and source labels allow users to verify an answer.
-This verification path is more defensible than presenting model confidence as
-policy correctness.
+Figure~\ref{fig:demo} shows the local CLI after rebuilding the controlled
+Vietnamese index. The statistics view exposes the model file, 258 indexed chunks,
+embedding dimension, and hybrid retrieval configuration. During normal question
+answering, source labels allow users to verify an answer; this is more defensible
+than presenting model confidence as policy correctness.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.82\textwidth]{figures/cli_screenshot.png}
-  \caption{Local Vietnamese HR chatbot session with retrieved context.}
+  \caption{Local Vietnamese HR chatbot statistics after rebuilding the index.}
   \label{fig:demo}
 \end{figure}
 
 \section{Limitations and Threats to Validity}
+This study has three main limitations:
 \begin{itemize}[leftmargin=1.2cm,itemsep=2pt]
-  \item \textbf{Synthetic policies and labels:} the demonstration corpus is not
-        a real company's approved handbook, and generated Q\&A pairs were not
-        exhaustively checked against each source sentence.
-  \item \textbf{Heuristic validation:} keywords and red-flag strings measure
-        topical form, not entailment, numerical correctness, or legal validity.
-  \item \textbf{Small evaluations:} retrieval uses ten labelled queries and
-        direct generation uses twenty questions; confidence intervals and broad
-        generalization claims are not justified.
-  \item \textbf{Different execution paths:} the model comparison omits RAG and
-        therefore does not measure the complete deployed chatbot.
-  \item \textbf{Vietnamese tokenization:} whitespace BM25 does not segment all
-        compound words correctly.
-  \item \textbf{Hardware dependence:} H200 timings demonstrate training
-        efficiency on high-end hardware and do not predict laptop training.
+  \item \textbf{Synthetic Data and Limited Verification:} The corpus is based on
+        demonstration HR policies rather than an approved handbook from a real
+        company. In addition, the generated Q\&A pairs were not exhaustively
+        verified against every source sentence.
+  \item \textbf{Small-Scale and Heuristic Evaluation:} The retrieval and
+        generation evaluations use small test sets, and the automated checks
+        mainly measure topical relevance rather than factual correctness,
+        entailment, or legal validity.
+  \item \textbf{Prototype-Level Deployment Constraints:} The system has not been
+        deployed in a real company environment. Practical concerns such as
+        access control, audit logging, secure storage, Vietnamese tokenization
+        quality, and hardware dependence remain outside the current prototype
+        scope.
 \end{itemize}
 
 % ============================================================
@@ -690,35 +768,38 @@ policy correctness.
 % ============================================================
 \chapter{Conclusion and Perspective}
 
-This project implemented a private Vietnamese HR assistant whose documents,
-retrieval index, and language model run locally. Hybrid BM25--vector retrieval
-improved top-1 source selection from 6/10 to 10/10 on a small internal test,
-showing why lexical and semantic rankings are complementary for short queries.
+This project implemented a private Vietnamese HR assistant in which the
+documents, retrieval index, and language model run locally. Hybrid BM25--vector
+retrieval improved top-1 source selection from 6/10 to 10/10 on a small internal
+test, showing that lexical and semantic rankings are complementary for short
+queries.
 
 The H200 experiment generated 4,900 unique Q\&A pairs and trained a Phi-3-Mini
-QLoRA adapter in 5.3 minutes. Fine-tuning improved the automated topicality/
-format score and reduced direct inference latency, but manual inspection found
-incorrect policy facts. The central conclusion is therefore not that fine-tuning
-solved factual accuracy. Rather, controlled data generation made adaptation more
-domain-focused, while retrieval remained necessary to provide authoritative,
-inspectable facts.
+QLoRA adapter in 5.3 minutes. Fine-tuning improved the automated topicality and
+format score and reduced direct inference latency; however, manual inspection
+still found incorrect policy facts. Therefore, the main conclusion is not that
+fine-tuning solved factual accuracy. Instead, controlled data generation made
+the model more domain-focused, while retrieval remained necessary to provide
+authoritative and inspectable facts.
 
-Future work should (1) attach each generated answer to an exact supporting span,
-(2) use source-grounded reference answers and human HR review, (3) compare base
-and fine-tuned GGUF models inside the same RAG pipeline, (4) adopt Vietnamese
-word segmentation for BM25, and (5) test with an approved real-company handbook.
-These steps would turn the current proof of concept into a credible evaluation
-of practical policy assistance.
+Future work should include: (1) linking each generated answer to an exact
+supporting span, (2) using source-grounded reference answers and human HR review,
+(3) comparing base and fine-tuned GGUF models within the same RAG pipeline,
+(4) adopting Vietnamese word segmentation for BM25, and (5) testing the system
+with an approved real-company handbook. These steps would help transform the
+current proof of concept into a more credible evaluation of practical HR policy
+assistance.
 
 % ============================================================
-% COMPACT REPRODUCIBILITY APPENDIX
+% APPENDIX A: REPRODUCIBILITY MAP
 % ============================================================
 \appendix
 \chapter{Reproducibility Map}
 
-The full source code, generated data, and raw model outputs are kept in the
-project repository rather than reproduced as long listings in this thesis.
-Table~\ref{tab:artifacts} maps each reported result to its local artifact.
+The full source code, generated data, and raw model outputs are stored in the
+project repository rather than reproduced as lengthy listings in this thesis.
+Table~\ref{tab:artifacts} maps each reported result to its corresponding local
+artifact.
 
 \begin{table}[H]
 \centering
@@ -736,7 +817,8 @@ Table~\ref{tab:artifacts} maps each reported result to its local artifact.
 \path{models/phi-3-mini.gguf} & 2.32~GB Q4 artifact with HR fine-tune metadata. \\
 \path{data/eval_scores.csv} & Forty rows containing outputs, flags, scores, and latency. \\
 \path{data/eval_report.txt} & Base/fine-tuned comparison and answer excerpts. \\
-\path{src/hybrid_retriever.py} & BM25, vector search, and RRF implementation. \\
+\path{scripts/reindex\_chromadb.py} & Rebuilds the 20-policy Vietnamese ChromaDB index; default output is 258 chunks. \\
+\path{src/hybrid\_retriever.py} & BM25, vector search, and RRF implementation. \\
 \bottomrule
 \end{tabularx}
 \end{table}

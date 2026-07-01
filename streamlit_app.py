@@ -13,7 +13,12 @@ Features:
 import streamlit as st
 import logging
 import time
+import os
 from pathlib import Path
+
+# Force CPU for embeddings — prevents CUDA context conflict between
+# sentence-transformers and llama_cpp on Windows
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 from src.embeddings import LocalEmbedder, VectorStoreManager   # torch/onnxruntime first
 from src.retriever import Retriever
@@ -58,11 +63,11 @@ def initialize_components():
                 embedder=embedder,
                 use_reranking=False,
             )
-            # Detect model size — BF16 GGUF (~7GB) must run on CPU, Q4 (~2.3GB) can use GPU
-            model_size_gb = model_path.stat().st_size / 1e9
-            gpu_layers = -1 if model_size_gb < 3.5 else 0
+            # Force CPU-only mode (gpu_layers = 0) to prevent CUDA context crashes
+            # in Streamlit's multi-threaded environment on Windows
+            gpu_layers = 0
             if gpu_layers == 0:
-                st.warning(f"⚠️ Model is {model_size_gb:.1f}GB (BF16). Running on CPU — expect ~60s/answer. Download Q4 GGUF for GPU speed.")
+                st.warning(f"⚠️ Running on CPU — expect ~20-30s/answer. Download Q4 GGUF for GPU speed.")
             responder = ResponseGenerator(
                 model_path=str(model_path),
                 language="vi",
